@@ -1,0 +1,253 @@
+/* fallback */
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Material Icons'), local('MaterialIcons-Regular'), url(http://fonts.gstatic.com/s/materialicons/v18/2fcrYFNaTjcS6g4U3t-Y5ZjZjT5FdEJ140U2DJYC3mY.woff2) format('woff2');
+}
+
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+}
+
+* {
+    font-family: 'roboto', sans-serif;
+}
+
+p{
+  font-family: 'Roboto', sans-serif;
+  font-weight: 300;
+  font-size: 10pt;
+  line-height: 17pt;
+}
+
+h2, h3 {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+}
+
+h2 {
+    font-size: 22pt;
+    line-height: 37pt;
+    margin: 0px;
+}
+
+h3 {
+    font-size: 14pt;
+    line-height: 24pt;
+}
+
+h4 {
+    font-size: 12pt;
+    line-height: 20pt;
+    opacity: 1;
+}
+
+a{
+  color:#ffffff;
+}
+
+body{
+  position: absolute;
+  top: 25px;
+  background-color: #eae8e7;
+  color: #767270;
+}
+
+.sidebar {
+  color: #ffffff;
+  background-color: #5da4d9;
+  text-align: left;
+}
+
+.feature-img img {
+  width: 100%;
+}
+
+.sidebar .info{
+  border-bottom: 1px solid #4783c2;
+  padding-left: 0px;
+}
+
+.sidebar .icon .fa {
+    display: inherit;
+    text-align: center;
+}
+
+
+.fa {
+  font-size: 22px;
+}
+
+.fa {
+    display: inline-block;
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.sidebar-item {
+  overflow-x: hidden;
+  margin-top: 10px;
+}
+
+.sidebar .section-item-details p {
+    margin: 0px;
+}
+
+.sidebar .section-item-details {
+    padding-right: 26px;
+    margin-bottom: 30px;
+}
+
+.sidebar .personal h4 {
+    margin: 0px;
+}
+
+.sidebar .skill-line {
+    padding-right: 30px;
+    padding-left: 0px;
+}
+
+.sidebar .skill-line h3 {
+    margin-top: 0px;
+    margin-bottom: 20px;
+}
+
+.sidebar .skill-line span {
+    opacity: initial;
+}
+
+.sidebar .skill-line .progress {
+    background-color: #4783c2;
+    height: 2px;
+    overflow: visible;
+}
+
+.progress {
+    position: relative;
+    height: 4px;
+    display: block;
+    width: 100%;
+    background-color: #acece6;
+    border-radius: 2px;
+    margin: 0.5rem 0 1rem 0;
+    overflow: hidden;
+}
+
+.sidebar .skill-line .determinate {
+    background-color: #ffffff;
+}
+
+.sidebar .skill-line .determinate .fa {
+    font-size: 12px;
+    position: absolute;
+    top: -5px;
+    right: 0px;
+    margin-left: 50%;
+}
+
+.sidebar .social h3 {
+    margin-top: 0px;
+    margin-bottom: 20px;
+}
+
+.social .fa {
+  font-size: 40px;
+  margin-left: 15px;
+}
+
+.section {
+  padding-left: 32px !important;
+  text-align: left;
+}
+
+.section-wrapper {
+  background-color: #ffffff;
+  overflow: hidden;
+  margin-bottom: 24px;
+  padding-bottom: 24px !important;
+}
+
+.section .section-wrapper {
+    background-color: #ffffff;
+    overflow: hidden;
+    margin-bottom: 24px;
+    padding-bottom: 24px !important;
+}
+
+.section .section-wrapper .section-icon {
+    margin-top: 40px;
+}
+
+.section .section-wrapper h2 {
+    margin-top: 30px;
+    margin-bottom: 25px;
+}
+
+.custom-content-wrapper {
+    padding-right: 30px;
+    margin-bottom: 25px;
+    border-bottom: 1px solid #bdbdbd;
+}
+
+.custom-content-wrapper span {
+    color: #5da4d9;
+    margin-top: 0px;
+    font-size: 10pt;
+    line-height: 15pt;
+}
+
+.custom-content-wrapper h3 {
+    margin: 0px;
+    font-size: 12pt;
+    line-height: 20pt;
+  }
+
+.custom-content-wrapper h3 span {
+    color: #767270;
+}
+
+.custom-content-wrapper p {
+    margin-top: 0px;
+    margin-bottom: 25px;
+}
+
+.custom-content-wrapper:last-child {
+    border-bottom: initial;
+}
+
+.section .fa {
+    text-align: center;
+    display: block;
+    font-size: 30pt;
+}
+
+.custom-content {
+    padding-right: 0px !important;
+}
+
+.blue-link {
+  color: #1E88E5 !important;
+  font-size: 15px;
+}
+
+.center {
+  margin-left: auto;
+  margin-right: auto;
+}
