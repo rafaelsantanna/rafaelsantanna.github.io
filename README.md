@@ -1,1 +1,1 @@
-Modelos: http://demo.deviserweb.com/cv/index.html
+Modelo: http://demo.deviserweb.com/cv/index.html
