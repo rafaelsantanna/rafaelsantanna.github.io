@@ -70,6 +70,7 @@ h2.title span.parenteses{
         width: 70px;
         height: 40px;
         text-align: left;
+        font-weight: 400;
     }
     .logo-container .brand-material{
         font-size: 18px;
