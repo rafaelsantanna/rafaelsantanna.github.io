@@ -1,6 +1,6 @@
 FAZER UM LAYOUT NO PHOTOSHOP PRA SEGUIR UM PADRÃO
 
-Utilizar (Gulp, Angular, Firebase se possível)
+Utilizar (Gulp, Angular ou React)
 
 Modelos para se basear:
 https://joashpereira.com/
