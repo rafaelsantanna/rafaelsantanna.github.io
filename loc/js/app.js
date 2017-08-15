@@ -1,23 +1,22 @@
  $(document).ready(function () {
 
-    // $('select').material_select();
-
      $("#nome-heroi").focus();
 
-     //Ajax para listar os Heróis
+     //Ajax preencher o Select de Heróis
      $.ajax({
-         type: "GET",
          url: "https://api-loc-rafaeel16.c9users.io/api/heroes",
+         type: "GET",
+         dataType:"JSON",
          success: function (response) {
-            // if (response != null) {
-            //         var data = response.data;
-            //         var selectbox = $('#herois');
-            //         selectbox.find('option').remove();
-             $.each(data, function (i, item) {
-                //  $('<option>').val(item.id).text(item.name).appendTo(selectbox);
-                  console.log("Nome: " + item.name + " - Icone: " + item.icon);
-             });
-            //} // Fim IF
+             console.log(response);
+            var optionHeroi = "<option value='0'>--Selecione um Herói--</option>";
+            $.each(response, function(i, item) {
+                optionHeroi += "<option value='" + item.id + "'>" + item.name + "</option>";
+            }); //Fim Each
+
+            $("#ddlHeroi").append(optionHeroi);
+            $("#ddlHeroi").material_select();
+
          },
          error: function (e) {
              alert("Erro: " + e);
