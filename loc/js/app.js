@@ -1,5 +1,6 @@
  $(document).ready(function () {
 
+    //Seleciona o input para Cadastro do Herói na página de Cadastro
      $("#nome-heroi").focus();
 
      //Ajax preencher o Select de Heróis
@@ -19,10 +20,33 @@
 
          },
          error: function (e) {
+             console.log("Erro: " + e);
              alert("Erro: " + e);
          }
 
      });
+
+     $.ajax({
+         url: "https://api-loc-rafaeel16.c9users.io/api/positions",
+         type: "GET",
+         dataType: "JSON",
+        success: function(response){
+            console.log(response);
+            var optionPosition = "<option value='0'>--Selecione uma Posição--</option>";
+            $.each(response, function(i, item){
+                optionPosition += "<option value='" + item.id + "'>" + item.name + "</option>";
+            }); //Fim Each
+
+            $("#ddlPosition").append(optionPosition);
+            $("#ddlPosition").material_select();
+        },
+        error: function(e){
+            console.log("Erro: " + e);
+            alert("Erro: " + e);
+        }
+     });
+
+
  });
 
 
