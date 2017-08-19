@@ -9,23 +9,27 @@
 </head>
 
 <body>
+    <div class="row">
+            <div class="col s4 center">
+                <h3>Cadastro Heróis</h3>
+                <form method="POST">
+                    <label for="nome-heroi">Nome:</label>
+                    <input id="nome-heroi" type="text">
+                    <br><br>
+                    <label for="nome-icone">Nome Icone:</label>
+                    <input id="nome-icone" type="text">
+                    <br>
+                    <button type="button" onclick="CadastraHeroi()">Cadastrar</button>
+                </form>
 
-    <h3>Cadastro Heróis</h3>
-    <form method="POST">
-        <label for="nome-heroi">Nome:</label>
-        <input id="nome-heroi" type="text">
-        <br><br>
-        <label for="nome-icone">Nome Icone:</label>
-        <input id="nome-icone" type="text">
-        <br>
-        <button type="button" onclick="CadastraHeroi()">Cadastrar</button>
-    </form>
+                <a href="./index.html">Counters</a>
 
-    <a href="./index.html">Counters</a>
+                <br><br>
 
-    <br><br>
+                <p id="list-heroes"></p>
+            </div>
+    </div>
 
-    <p id="list-heroes"></p>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/js/materialize.min.js"></script>
