@@ -98,6 +98,7 @@
         // console.log(countersheroes_id + " recive Weak");
      }
 
+     // Enviando o POST que vai cadastrar o Counter
      $.ajax({
          type: "POST",
          data: {
