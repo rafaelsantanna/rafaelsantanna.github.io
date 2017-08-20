@@ -1,7 +1,7 @@
  $(document).ready(function () {
 
      //Seleciona o input para Cadastro do Herói na página de Cadastro
-     $("#nome-heroi").focus();
+     $("#name-hero").focus();
 
      //Ajax preencher o Select de Heróis
      $.ajax({
@@ -10,13 +10,13 @@
          dataType: "JSON",
          success: function (response) {
              console.log(response);
-             var optionHeroi = "<option value='0'>--Selecione um Herói--</option>";
+             var optionHeroi = "<option value='0'>--Select Hero--</option>";
              $.each(response, function (i, item) {
                  optionHeroi += "<option value='" + item.id + "'>" + item.name + "</option>";
              }); //Fim Each
 
-             $("#ddlHeroi").append(optionHeroi);
-             $("#ddlHeroi").material_select();
+             $("#ddlHero").append(optionHeroi);
+             $("#ddlHero").material_select();
 
          },
          error: function (e) {
@@ -25,13 +25,14 @@
 
      });
 
+     //Ajax para preencher o Select das Posições
      $.ajax({
          url: "https://api-loc-rafaeel16.c9users.io/api/positions",
          type: "GET",
          dataType: "JSON",
          success: function (response) {
              console.log(response);
-             var optionPosition = "<option value='0'>--Selecione uma Posição--</option>";
+             var optionPosition = "<option value='0'>--Select Postion--</option>";
              $.each(response, function (i, item) {
                  optionPosition += "<option value='" + item.id + "'>" + item.name + "</option>";
              }); //Fim Each
@@ -44,14 +45,39 @@
          }
      });
 
+     //Ajax preencher o Select dos Counters Heroes
+     $.ajax({
+         url: "https://api-loc-rafaeel16.c9users.io/api/countersheroes",
+         type: "GET",
+         dataType: "JSON",
+         success: function (response) {
+             console.log(response);
+             var optionHeroi = "<option value='0'>--Select Hero--</option>";
+             $.each(response, function (i, item) {
+                 optionHeroi += "<option value='" + item.id + "'>" + item.name + "</option>";
+             }); //Fim Each
+
+             $("#ddlCountersHeroesWeaks").append(optionHeroi);
+             $("#ddlCountersHeroesStrongs").append(optionHeroi);
+
+             $("#ddlCountersHeroesWeaks").material_select();
+             $("#ddlCountersHeroesStrongs").material_select();
+
+         },
+         error: function (e) {
+             console.log("Erro: " + e);
+         }
+
+     });
+
 
  });
 
 
  //Função Ajax para cadastrar o herói
  function CadastraHeroi() {
-     var name = $("#nome-heroi").val();
-     var icon = $("#nome-icone").val();
+     var name = $("#name-hero").val();
+     var icon = $("#name-icon").val();
 
      if (name && icon != "") {
          $.ajax({
@@ -62,7 +88,7 @@
              },
              url: "https://api-loc-rafaeel16.c9users.io/api/heroes",
              success: function (data) {
-                 console.log("Herói Cadastrado com sucesso.");
+                 console.log("Hero successfully registered");
 
                  $("#nome-heroi").val("")
                  $("#nome-icone").val("");
@@ -74,7 +100,7 @@
              }
          });
      } else {
-        Materialize.toast("Preencha os dois Campos!",4000);
+         Materialize.toast("Fill the fields!", 4000);
      }
  }
 

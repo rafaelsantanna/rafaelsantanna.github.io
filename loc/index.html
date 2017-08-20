@@ -2,26 +2,60 @@
 <html lang="en">
 
 <head>
-    <title>Principal</title>
+    <title>Main Page</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Materialize css -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/css/materialize.min.css">
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 
 <body>
 
+    <!-- Hero and Position -->
     <h3>Counters</h3>
+    <div class="row">
+        <div class="input-field col s4">
+            <h5>Select Hero</h5>
+            <select class="" name="heroes" id="ddlHero"></select>
+        </div>
 
-        <div class="row">
-            <div class="input-field col s4">
-                <select class="" name="herois" id="ddlHeroi"></select>
+        <div class="input-field col s4">
+            <h5>Selecct Position</h5>
+            <select name="positions" id="ddlPosition"></select>
+        </div>
+    </div>
+    <!-- End Hero and position -->
+    
+    <!-- Add Weaks and Strongs -->
+    <div class="row">
+        <div class="input-field col s4">
+            <h5>Add Weak Heroes</h5>
+            <div class="col s10">
+                <select name="countersHeroesWeaks" id="ddlCountersHeroesWeaks"></select>
             </div>
-
-            <div class="input-field col s4">
-                <select name="positions" id="ddlPosition"></select>
+            <div class="col s2">
+                <a class="btn-floating waves-effect waves-light teal right"><i class="material-icons">add</i></a>
             </div>
         </div>
-            <a href="./cadastro.html">Cadastrar Heroís</a>
+        <div class="input-field col s4">
+            <h5>Add Strong Heroes</h5>
+            <div class="col s10">
+                <select name="countersHeroesStrongs" id="ddlCountersHeroesStrongs"></select>
+            </div>
+            <div class="col s2">
+                <a class="btn-floating waves-effect waves-light teal right"><i class="material-icons">add</i></a>
+            </div>
+        </div>
+    </div>
+    <!-- End Add Weaks and Strongs -->
+
+    <!-- List Weaks And Strongs Heroes -->
+    
+    <!-- End List Weaks and Strong Heroes -->
+
+    <a class="waves-effect waves-light teal btn" href="./cadastro.html">Cadastrar Heroís</a>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/js/materialize.min.js"></script>
