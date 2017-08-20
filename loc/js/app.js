@@ -70,8 +70,54 @@
 
      });
 
-
  });
+
+ //Função Ajax para cadastrar o Counter Weak ou Strong
+ // 0 para Weak e 1 para Strong
+ function Counter(weak_or_strong) {
+     var heroes_id = $("#ddlHero").val();
+     var positions_id = $("#ddlPosition").val();
+     var heroes_weak = $("#ddlCountersHeroesWeaks").val();
+     var heroes_strong = $("#ddlCountersHeroesStrongs").val();
+     var countersheroes_id = 0;
+     var counter = 0;
+    //  console.log(weak_or_strong + " weak or strong");
+    //  console.log(heroes_id + " Hero");
+    //  console.log(positions_id + " Position");
+    //  console.log(heroes_weak + " Weak");
+    //  console.log(heroes_strong + " Strong");
+    //  console.log("-----------");
+     
+     if(weak_or_strong == 1){
+        counter = 1;
+        countersheroes_id = heroes_strong;
+        // console.log(countersheroes_id + " recive Strong")
+     }else {
+        counter = 0;
+        countersheroes_id = heroes_weak;
+        // console.log(countersheroes_id + " recive Weak");
+     }
+
+     $.ajax({
+         type: "POST",
+         data: {
+             "counter":counter,
+             "heroes_id": heroes_id,
+             "positions_id": positions_id,
+             "countersheroes_id":countersheroes_id
+         },
+         url: "https://api-loc-rafaeel16.c9users.io/api/counters",
+         success: function (data) {
+             console.log("Counter successfully registered");
+
+             window.location.reload();
+         },
+         error: function (e) {
+             console.log("Erro: " + e);
+         }
+     });
+
+ }
 
 
  //Função Ajax para cadastrar o herói
@@ -96,7 +142,7 @@
                  window.location.reload();
              },
              error: function (e) {
-                 alert("Erro: " + e);
+                 console.log("Erro: " + e);
              }
          });
      } else {

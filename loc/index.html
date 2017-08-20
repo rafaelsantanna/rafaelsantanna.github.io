@@ -22,12 +22,12 @@
         </div>
 
         <div class="input-field col s4">
-            <h5>Selecct Position</h5>
+            <h5>Select Position</h5>
             <select name="positions" id="ddlPosition"></select>
         </div>
     </div>
     <!-- End Hero and position -->
-    
+
     <!-- Add Weaks and Strongs -->
     <div class="row">
         <div class="input-field col s4">
@@ -36,7 +36,7 @@
                 <select name="countersHeroesWeaks" id="ddlCountersHeroesWeaks"></select>
             </div>
             <div class="col s2">
-                <a class="btn-floating waves-effect waves-light teal right"><i class="material-icons">add</i></a>
+                <a onclick="Counter(0)" class="btn-floating waves-effect waves-light teal right"><i class="material-icons">add</i></a>
             </div>
         </div>
         <div class="input-field col s4">
@@ -45,17 +45,26 @@
                 <select name="countersHeroesStrongs" id="ddlCountersHeroesStrongs"></select>
             </div>
             <div class="col s2">
-                <a class="btn-floating waves-effect waves-light teal right"><i class="material-icons">add</i></a>
+                <a onclick="Counter(1)" class="btn-floating waves-effect waves-light teal right"><i class="material-icons">add</i></a>
             </div>
         </div>
     </div>
     <!-- End Add Weaks and Strongs -->
 
     <!-- List Weaks And Strongs Heroes -->
-    
+    <div class="row">
+        <div class="col s4">
+            <h5>List Weak</h5>
+
+        </div>
+        <div class="col s4">
+            <h5>List Strong</h5>
+
+        </div>
+    </div>
     <!-- End List Weaks and Strong Heroes -->
 
-    <a class="waves-effect waves-light teal btn" href="./cadastro.html">Cadastrar Heroís</a>
+    <!-- <a class="waves-effect waves-light teal btn" href="./cadastro.html">Cadastrar Heroís</a> -->
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/js/materialize.min.js"></script>
