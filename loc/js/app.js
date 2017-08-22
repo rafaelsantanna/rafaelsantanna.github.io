@@ -1,6 +1,6 @@
  $(document).ready(function () {
 
-     //Seleciona o input para Cadastro do Herói na página de Cadastro
+     //Seleciona o input name-hero na página de Cadastro
      $("#name-hero").focus();
 
      //Ajax preencher o Select de Heróis
@@ -69,6 +69,28 @@
          }
 
      });
+
+     var hero_id = 0;
+     $("#ddlHero").on("change", function(){
+        hero_id = $(this).val();
+     });
+    
+     var position_id = 0;
+     $("#ddlPosition").on("change", function(){
+        position_id = $(this).val();
+        
+        // $.ajax({
+        //     url: "https://api-loc-rafaeel16.c9users.io/api/counters/listCounters/heroes_id/"+hero_id+"/positions_id/"+position_id,
+        //     type:"GET",
+        //     dataType: "JSON",
+        //     success: function(response){
+        //         // $.each(response, function(i, item) {
+                    
+        //         // });
+        //     },
+        // });
+     });
+
 
  });
 
