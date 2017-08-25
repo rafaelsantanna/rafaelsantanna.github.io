@@ -70,6 +70,7 @@
 
      });
 
+     //Fazendo a função que captura a mudança do select de herois e também da posição
      var hero_id = 0;
      $("#ddlHero").on("change", function(){
         hero_id = $(this).val();
@@ -79,16 +80,6 @@
      $("#ddlPosition").on("change", function(){
         position_id = $(this).val();
         
-        // $.ajax({
-        //     url: "https://api-loc-rafaeel16.c9users.io/api/counters/listCounters/heroes_id/"+hero_id+"/positions_id/"+position_id,
-        //     type:"GET",
-        //     dataType: "JSON",
-        //     success: function(response){
-        //         // $.each(response, function(i, item) {
-                    
-        //         // });
-        //     },
-        // });
      });
 
 
