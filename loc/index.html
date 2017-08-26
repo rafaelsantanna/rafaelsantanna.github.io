@@ -13,6 +13,10 @@
 
 <body>
 
+    <div class="progress" id="loading" style="display:none;">
+        <div class="indeterminate"></div>
+    </div>
+
     <!-- Hero and Position -->
     <h3>Counters</h3>
     <div class="row">
@@ -56,7 +60,7 @@
         <div class="col s4">
             <h5>List Weak</h5>
             <ul class="collection" id="listWeak">
-        
+
             </ul>
         </div>
         <div class="col s4">
@@ -65,13 +69,11 @@
         </div>
     </div>
 
-    <div>
-        <p>
-            NOTE: You can not delete a Counter after creating it, you need to reload the page.
-            <br>
-            The action responsible for loading the Counters is the Select of Positions.
-        </p>
-    </div>
+    <p>
+        NOTE: You can not delete a Counter after creating it, you need to reload the page.
+        <br> The action responsible for loading the Counters is the Select of Positions.
+    </p>
+
     <!-- End List Weaks and Strong Heroes -->
 
     <!-- <a class="waves-effect waves-light teal btn" href="./cadastro.html">Cadastrar Heroís</a> -->

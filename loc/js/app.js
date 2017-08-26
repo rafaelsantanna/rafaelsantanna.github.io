@@ -120,6 +120,7 @@
  //Função Ajax para cadastrar o Counter Weak ou Strong
  // 0(Zero) para Weak e 1 para Strong
  function Counter(weak_or_strong) {
+     $("#loading").show();
      var heroes_id = $("#ddlHero").val();
      var positions_id = $("#ddlPosition").val();
      var heroes_weak = $("#ddlCountersHeroesWeaks").val();
@@ -154,6 +155,7 @@
          },
          url: "https://api-loc-rafaeel16.c9users.io/api/counters",
          success: function (data) {
+             $("#loading").hide();
              Materialize.toast("Counter successfully registered",4000);
             var nameCounter = "";
 
@@ -213,11 +215,13 @@
 
  // Função para deletar Counters
  function deleteCounter(id){
+     $("#loading").show();
      $.ajax({
          type: "DELETE",
          data:{"id":id},
          url:"https://api-loc-rafaeel16.c9users.io/api/counters/" + id,
          success:function(response){
+             $("#loading").hide();
              $("#counter_"+id).remove();
              Materialize.toast("Counter successfully deleted",4000);
          },
