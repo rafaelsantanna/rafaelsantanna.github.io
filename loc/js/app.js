@@ -97,10 +97,10 @@
                 var listCountersStrongs = "";
                 $.each(response, function(i, item){
                    if(item.counter == 0){
-                       listCountersWeaks += "<li class='collection-item'><div>"+ item.name +"<a href='#!' class='secondary-content'><i class='material-icons'>delete</i></a></div></li>";
+                       listCountersWeaks += "<li class='collection-item' id='counter_"+item.id+"'><div>"+ item.name +"<a href='#' onclick='deleteCounter("+item.id+")' class='secondary-content'><i class='material-icons'>delete</i></a></div></li>";
                    }
                    else{
-                       listCountersStrongs += "<li class='collection-item'><div>"+ item.name +"<a href='#!' class='secondary-content'><i class='material-icons'>delete</i></a></div></li>";
+                       listCountersStrongs += "<li class='collection-item' id='counter_"+item.id+"'><div>"+ item.name +"<a href='#' onclick='deleteCounter("+item.id+")' class='secondary-content'><i class='material-icons'>delete</i></a></div></li>";
                    }
 
                 });
@@ -210,3 +210,19 @@
          CadastraHeroi();
      }
  });
+
+ // Função para deletar Counters
+ function deleteCounter(id){
+     $.ajax({
+         type: "DELETE",
+         data:{"id":id},
+         url:"https://api-loc-rafaeel16.c9users.io/api/counters/" + id,
+         success:function(response){
+             $("#counter_"+id).remove();
+             Materialize.toast("Counter successfully deleted",4000);
+         },
+         error:function(e){
+             console.log("Erro:" + e);
+         }
+     });
+ }
