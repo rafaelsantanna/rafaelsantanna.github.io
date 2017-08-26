@@ -11,68 +11,75 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 
-<body>
+<body class="blue">
 
     <div class="progress" id="loading" style="display:none;">
         <div class="indeterminate"></div>
     </div>
+    <div class="card container" style="margin-left:auto;margin-right:auto;">
+        <!-- Hero and Position -->
+        <h3 class="center">Counters</h3>
+        <div class="container">
+            <div class="row">
+                <div class="input-field col s6">
+                    <h5>Select Hero</h5>
+                    <select class="" name="heroes" id="ddlHero"></select>
+                </div>
 
-    <!-- Hero and Position -->
-    <h3>Counters</h3>
-    <div class="row">
-        <div class="input-field col s4">
-            <h5>Select Hero</h5>
-            <select class="" name="heroes" id="ddlHero"></select>
+                <div class="input-field col s6">
+                    <h5>Select Position</h5>
+                    <select name="positions" id="ddlPosition"></select>
+                </div>
+            </div>
+        </div>
+        <!-- End Hero and position -->
+
+        <!-- Add Weaks and Strongs -->
+        <div class="container">
+            <div class="row">
+                <div class="input-field col s6 card red accent-3">
+                    <h5>Add Weak Heroes</h5>
+                    <div class="col s10">
+                        <select name="countersHeroesWeaks" id="ddlCountersHeroesWeaks"></select>
+                    </div>
+                    <div class="col s2">
+                        <a onclick="Counter(0)" class="btn-floating waves-effect waves-light black right"><i class="material-icons">add</i></a>
+                    </div>
+                </div>
+                <div class="input-field col s6 card green accent-3">
+                    <h5>Add Strong Heroes</h5>
+                    <div class="col s10">
+                        <select name="countersHeroesStrongs" id="ddlCountersHeroesStrongs"></select>
+                    </div>
+                    <div class="col s2">
+                        <a onclick="Counter(1)" class="btn-floating waves-effect waves-light black right"><i class="material-icons">add</i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Add Weaks and Strongs -->
+
+        <!-- List Weaks And Strongs Heroes -->
+        <div class="container">
+            <div class="row">
+                <div class="col s6">
+                    <h5>List Weak</h5>
+                    <ul class="collection" id="listWeak">
+
+                    </ul>
+                </div>
+                <div class="col s6">
+                    <h5>List Strong</h5>
+                    <ul class="collection" id="listStrong"></ul>
+                </div>
+            </div>
         </div>
 
-        <div class="input-field col s4">
-            <h5>Select Position</h5>
-            <select name="positions" id="ddlPosition"></select>
-        </div>
+        <p class="center">
+            NOTE: You can not delete a Counter after creating it, you need to reload the page.
+            <br> The action responsible for loading the Counters is the Select of Positions.
+        </p>
     </div>
-    <!-- End Hero and position -->
-
-    <!-- Add Weaks and Strongs -->
-    <div class="row">
-        <div class="input-field col s4">
-            <h5>Add Weak Heroes</h5>
-            <div class="col s10">
-                <select name="countersHeroesWeaks" id="ddlCountersHeroesWeaks"></select>
-            </div>
-            <div class="col s2">
-                <a onclick="Counter(0)" class="btn-floating waves-effect waves-light teal right"><i class="material-icons">add</i></a>
-            </div>
-        </div>
-        <div class="input-field col s4">
-            <h5>Add Strong Heroes</h5>
-            <div class="col s10">
-                <select name="countersHeroesStrongs" id="ddlCountersHeroesStrongs"></select>
-            </div>
-            <div class="col s2">
-                <a onclick="Counter(1)" class="btn-floating waves-effect waves-light teal right"><i class="material-icons">add</i></a>
-            </div>
-        </div>
-    </div>
-    <!-- End Add Weaks and Strongs -->
-
-    <!-- List Weaks And Strongs Heroes -->
-    <div class="row">
-        <div class="col s4">
-            <h5>List Weak</h5>
-            <ul class="collection" id="listWeak">
-
-            </ul>
-        </div>
-        <div class="col s4">
-            <h5>List Strong</h5>
-            <ul class="collection" id="listStrong"></ul>
-        </div>
-    </div>
-
-    <p>
-        NOTE: You can not delete a Counter after creating it, you need to reload the page.
-        <br> The action responsible for loading the Counters is the Select of Positions.
-    </p>
 
     <!-- End List Weaks and Strong Heroes -->
 

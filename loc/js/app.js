@@ -97,10 +97,10 @@
                 var listCountersStrongs = "";
                 $.each(response, function(i, item){
                    if(item.counter == 0){
-                       listCountersWeaks += "<li class='collection-item' id='counter_"+item.id+"'><div>"+ item.name +"<a href='#' onclick='deleteCounter("+item.id+")' class='secondary-content'><i class='material-icons'>delete</i></a></div></li>";
+                       listCountersWeaks += "<li class='collection-item red accent-3' id='counter_"+item.id+"'><div>"+ item.name +"<a href='#' onclick='deleteCounter("+item.id+")' class='secondary-content'><i class='material-icons black-text'>delete</i></a></div></li>";
                    }
                    else{
-                       listCountersStrongs += "<li class='collection-item' id='counter_"+item.id+"'><div>"+ item.name +"<a href='#' onclick='deleteCounter("+item.id+")' class='secondary-content'><i class='material-icons'>delete</i></a></div></li>";
+                       listCountersStrongs += "<li class='collection-item green accent-3' id='counter_"+item.id+"'><div>"+ item.name +"<a href='#' onclick='deleteCounter("+item.id+")' class='secondary-content'><i class='material-icons black-text'>delete</i></a></div></li>";
                    }
 
                 });
@@ -162,11 +162,11 @@
             //Para não precisar atualizar a página, estou adicionando o Counter a Lista depois do POST
             if(counter == 0){
                 nameCounter = $("#ddlCountersHeroesWeaks option:selected").text();
-                $("#listWeak").append("<li class='collection-item'><div>"+ nameCounter +"<a href='#!' class='secondary-content'><i class='material-icons'>delete</i></a></div></li>");
+                $("#listWeak").append("<li class='collection-item red accent-3'><div>"+ nameCounter +"<a href='#!' class='secondary-content'><i class='material-icons black-text'>delete</i></a></div></li>");
             }
             else{
                 nameCounter = $("#ddlCountersHeroesStrongs option:selected").text();
-                $("#listStrong").append("<li class='collection-item'><div>"+ nameCounter +"<a href='#!' class='secondary-content'><i class='material-icons'>delete</i></a></div></li>");
+                $("#listStrong").append("<li class='collection-item green accent-3'><div>"+ nameCounter +"<a href='#!' class='secondary-content'><i class='material-icons black-text'>delete</i></a></div></li>");
             }
 
          },
