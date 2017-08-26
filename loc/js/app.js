@@ -9,7 +9,7 @@
          type: "GET",
          dataType: "JSON",
          success: function (response) {
-             console.log(response);
+             //console.log(response);
              var optionHeroi = "<option value='0'>--Select Hero--</option>";
              $.each(response, function (i, item) {
                  optionHeroi += "<option value='" + item.id + "'>" + item.name + "</option>";
@@ -31,7 +31,7 @@
          type: "GET",
          dataType: "JSON",
          success: function (response) {
-             console.log(response);
+             //console.log(response);
              var optionPosition = "<option value='0'>--Select Postion--</option>";
              $.each(response, function (i, item) {
                  optionPosition += "<option value='" + item.id + "'>" + item.name + "</option>";
@@ -45,13 +45,13 @@
          }
      });
 
-     //Ajax preencher o Select dos Counters Heroes
+     //Ajax para preencher o Select dos Counters Heroes
      $.ajax({
          url: "https://api-loc-rafaeel16.c9users.io/api/countersheroes",
          type: "GET",
          dataType: "JSON",
          success: function (response) {
-             console.log(response);
+             //console.log(response);
              var optionHeroi = "<option value='0'>--Select Hero--</option>";
              $.each(response, function (i, item) {
                  optionHeroi += "<option value='" + item.id + "'>" + item.name + "</option>";
@@ -70,23 +70,55 @@
 
      });
 
-     //Fazendo a função que captura a mudança do select de herois e também da posição
+     // Função que captura o ID do Herói escolhido no Select
      var hero_id = 0;
      $("#ddlHero").on("change", function(){
         hero_id = $(this).val();
      });
     
+     // Função que captura o Id da Posição no Select e também preenche a lista dos Counters Weak e Strong 
      var position_id = 0;
      $("#ddlPosition").on("change", function(){
         position_id = $(this).val();
         
+        // Limpando a Lista Weak
+        $("#listWeak > li").remove();
+        $("#listStrong > li").remove();
+        
+        // Ajax para trazer a Lista de Counters e preencher a Lista
+        $.ajax({
+            url:"https://api-loc-rafaeel16.c9users.io/api/counters/listCounters/heroes_id/"+ hero_id +"/positions_id/"+position_id,
+            type:"GET",
+            dataType:"JSON",
+            success: function(response){
+                //console.log(response);
+                
+                var listCountersWeaks = "";
+                var listCountersStrongs = "";
+                $.each(response, function(i, item){
+                   if(item.counter == 0){
+                       listCountersWeaks += "<li class='collection-item'><div>"+ item.name +"<a href='#!' class='secondary-content'><i class='material-icons'>delete</i></a></div></li>";
+                   }
+                   else{
+                       listCountersStrongs += "<li class='collection-item'><div>"+ item.name +"<a href='#!' class='secondary-content'><i class='material-icons'>delete</i></a></div></li>";
+                   }
+
+                });
+
+                $("#listWeak").append(listCountersWeaks);
+                $("#listStrong").append(listCountersStrongs);
+            },
+            error:function(e){
+                console.log("Counters not found" + e);
+            }
+        });
      });
 
 
  });
 
  //Função Ajax para cadastrar o Counter Weak ou Strong
- // 0 para Weak e 1 para Strong
+ // 0(Zero) para Weak e 1 para Strong
  function Counter(weak_or_strong) {
      var heroes_id = $("#ddlHero").val();
      var positions_id = $("#ddlPosition").val();
@@ -122,9 +154,19 @@
          },
          url: "https://api-loc-rafaeel16.c9users.io/api/counters",
          success: function (data) {
-             console.log("Counter successfully registered");
+             Materialize.toast("Counter successfully registered",4000);
+            var nameCounter = "";
 
-             window.location.reload();
+            //Para não precisar atualizar a página, estou adicionando o Counter a Lista depois do POST
+            if(counter == 0){
+                nameCounter = $("#ddlCountersHeroesWeaks option:selected").text();
+                $("#listWeak").append("<li class='collection-item'><div>"+ nameCounter +"<a href='#!' class='secondary-content'><i class='material-icons'>delete</i></a></div></li>");
+            }
+            else{
+                nameCounter = $("#ddlCountersHeroesStrongs option:selected").text();
+                $("#listStrong").append("<li class='collection-item'><div>"+ nameCounter +"<a href='#!' class='secondary-content'><i class='material-icons'>delete</i></a></div></li>");
+            }
+
          },
          error: function (e) {
              console.log("Erro: " + e);
@@ -134,7 +176,7 @@
  }
 
 
- //Função Ajax para cadastrar o herói
+ //Função Ajax para cadastrar o herói na página de Cadastro
  function CadastraHeroi() {
      var name = $("#name-hero").val();
      var icon = $("#name-icon").val();
@@ -148,12 +190,10 @@
              },
              url: "https://api-loc-rafaeel16.c9users.io/api/heroes",
              success: function (data) {
-                 console.log("Hero successfully registered");
+                 $("#name-hero").val("")
+                 $("#name-icon").val("");
 
-                 $("#nome-heroi").val("")
-                 $("#nome-icone").val("");
-
-                 window.location.reload();
+                 Materialize.toast("Hero successfully registered");
              },
              error: function (e) {
                  console.log("Erro: " + e);
