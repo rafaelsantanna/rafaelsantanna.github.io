@@ -1,4 +1,4 @@
-var ItemsVue = new Vue({
+var Heroes = new Vue({
     el: '#heroes',
     data: {
         Items: []
@@ -7,6 +7,26 @@ var ItemsVue = new Vue({
         var self = this;
         $.ajax({
             url: "https://api-loc-rafaeel16.c9users.io/api/heroes",
+            method: 'GET',
+            success: function (data) {
+                self.Items = data;
+            },
+            error: function (error) {
+                alert(JSON.stringify(error));
+            }
+        });
+    }
+});
+
+var Positions = new Vue({
+    el: '#positions',
+    data: {
+        Items: []
+    },
+    mounted: function () {
+        var self = this;
+        $.ajax({
+            url: "https://api-loc-rafaeel16.c9users.io/api/positions",
             method: 'GET',
             success: function (data) {
                 self.Items = data;
