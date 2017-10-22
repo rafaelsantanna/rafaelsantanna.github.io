@@ -1,3 +1,5 @@
+# Sistema League of Counter
+
 # Checklist
 
 - A lista de Counters está pronta agora só falta, fazer o front consumir a lista. OK
