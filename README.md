@@ -1,7 +1,5 @@
 FAZER UM LAYOUT NO PHOTOSHOP PRA SEGUIR UM PADRÃO
 
-Utilizar (Gulp, Angular ou React)
-
 Modelos para se basear:
 https://joashpereira.com/
 http://www.creative-portfolios.com/
@@ -24,3 +22,4 @@ eunapolis
 Gtreid
 Profarma
 Sos Comunidades
+Trinks.com (Trabalhei no sistema/app)
