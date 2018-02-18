@@ -2,8 +2,8 @@ var app = new Vue({
   el:'#app',
   
   data: {
-    listHeroes: {},
-    listPositions: {},
+    listHeroesOptions: {},
+    listPositionsOptions: {},
 
   },
 
@@ -18,7 +18,8 @@ var app = new Vue({
     getHeroes: function () {
       axios.get('https://api-loc-rafaeel16.c9users.io/api/heroes').then((response) => {
         console.log(response)
-        this.listHeroes = response.data
+        this.listHeroesOptions = response.data
+        $('#ddlHero').material_select()
       })
       .catch((error) => {
         console.log(error)
