@@ -35,7 +35,10 @@
 
           <div class="input-field col s6">
             <h5>Select Position</h5>
-            <select name="positions" id="ddlPosition"></select>
+            <select name="positions" id="ddlPosition">
+              <option value="0">--Select Position--</option>
+              <option v-for="position in listPositionsOptions" :value="position.id">{{position.name}}</option>
+            </select>
           </div>
         </div>
       </div>

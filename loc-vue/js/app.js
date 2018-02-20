@@ -32,6 +32,12 @@ var app = new Vue({
     getPositions: function () {
       axios.get('https://api-loc-rafaeel16.c9users.io/api/positions').then((response) => {
           console.log(response)
+          this.listPositionsOptions = response.data
+
+          setTimeout(function () {
+            $('#ddlPosition').material_select()
+          }, 0);
+
         })
         .catch((error) => {
           console.log(error)
