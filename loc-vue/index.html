@@ -50,7 +50,10 @@
           <div class="input-field col s6 card red accent-3">
             <h5>Add Weak Heroes</h5>
             <div class="col s10">
-              <select name="countersHeroesWeaks" id="ddlCountersHeroesWeaks"></select>
+              <select name="countersHeroesWeaks" id="ddlCountersHeroesWeaks">
+                <option value="0">--Select Hero--</option>
+                <option v-for="hero in listHeroesWeakOptions" :value="hero.id">{{hero.name}}</option>
+              </select>
             </div>
             <div class="col s2">
               <a onclick="Counter(0)" class="btn-floating waves-effect waves-light black right">
@@ -61,7 +64,10 @@
           <div class="input-field col s6 card green accent-3">
             <h5>Add Strong Heroes</h5>
             <div class="col s10">
-              <select name="countersHeroesStrongs" id="ddlCountersHeroesStrongs"></select>
+              <select name="countersHeroesStrongs" id="ddlCountersHeroesStrongs">
+                <option value="0">--Select Hero--</option>
+                <option v-for="hero in listHeroesStrongOptions" :value="hero.id">{{hero.name}}</option>
+              </select>
             </div>
             <div class="col s2">
               <a onclick="Counter(1)" class="btn-floating waves-effect waves-light black right">

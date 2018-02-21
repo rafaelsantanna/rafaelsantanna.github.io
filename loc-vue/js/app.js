@@ -3,13 +3,15 @@ var app = new Vue({
 
   data: {
     listHeroesOptions: {},
-    listPositionsOptions: {}
+    listPositionsOptions: {},
+    listHeroesWeakOptions: {},
+    listHeroesStrongOptions: {}
   },
 
   mounted() {
     this.getHeroes(),
-    this.getPositions(),
-    this.getCounterHeroes()
+      this.getPositions(),
+      this.getCounterHeroes()
   },
 
   methods: {
@@ -18,9 +20,13 @@ var app = new Vue({
       axios.get('https://api-loc-rafaeel16.c9users.io/api/heroes').then((response) => {
           console.log(response)
           this.listHeroesOptions = response.data
+          this.listHeroesWeakOptions = response.data
+          this.listHeroesStrongOptions = response.data
 
           setTimeout(function () {
             $('#ddlHero').material_select()
+            $('#ddlCountersHeroesWeaks').material_select()
+            $('#ddlCountersHeroesStrongs').material_select()
           }, 0);
 
         })
