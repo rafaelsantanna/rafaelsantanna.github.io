@@ -57,6 +57,39 @@ var app = new Vue({
         .catch((error) => {
           console.log(error)
         })
+    },
+
+    addCounter: function(weak_or_strong) {
+      var heroes_id = $("#ddlHero").val();
+      var positions_id = $("#ddlPosition").val();
+      var heroes_weak = $("#ddlCountersHeroesWeaks").val();
+      var heroes_strong = $("#ddlCountersHeroesStrongs").val();
+      var countersheroes_id = 0;
+      var counter = 0;
+
+      if(weak_or_strong == 1){
+        counter = 1;
+        countersheroes_id = heroes_strong;
+        // console.log(countersheroes_id + " recive Strong")
+     }else {
+        counter = 0;
+        countersheroes_id = heroes_weak;
+        // console.log(countersheroes_id + " recive Weak");
+     }
+
+     axios.post('https://api-loc-rafaeel16.c9users.io/api/counters', {
+      counter:counter,
+      heroes_id: heroes_id,
+      positions_id: positions_id,
+      countersheroes_id:countersheroes_id
+    })
+    .then(function (response) {
+      console.log(response);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+
     }
 
   }
