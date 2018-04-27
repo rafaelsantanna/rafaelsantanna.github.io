@@ -1,0 +1,52 @@
+.menu {
+    background-color: #000;
+    height: 80px;
+    padding: 0 0 0 15px;
+}
+
+.menu .menu__logo {
+    display: inline-block;
+    color: #fff;
+    text-decoration: none;
+    font-size: 30px;
+    height: 80px;
+}
+
+.menu .menu__logo img {
+    position: relative;
+    top: 13px;
+    width: 60px;
+    height: 50px;
+}
+
+.menu ul {
+    float: right;
+}
+
+.menu ul li {
+    display: inline-block;
+    line-height: 80px;
+}
+
+.menu ul li:hover {
+    background-color: #2a9da2;
+}
+
+.menu ul li.active {
+    background-color: #2a9da2;
+}
+
+.menu ul li a {
+    color: #fff;
+    text-decoration: none;
+    display: block;
+    width: 100%;
+    padding: 0 10px;
+}
+
+.background-overlay {
+    width: 100%;
+    height: 100vh;
+    background: url("./img/background.jpeg") no-repeat;
+    background-size: 100%;
+}
