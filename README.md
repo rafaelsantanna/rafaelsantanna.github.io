@@ -1,6 +1,6 @@
 FAZER UM LAYOUT NO PHOTOSHOP PRA SEGUIR UM PADRÃO
 
-Modelos para se basear:
+Modelos para se basear:  
 https://joashpereira.com/  
 http://www.creative-portfolios.com/  
 https://joashpereira.com/templates/material_one_pager  
