@@ -29,18 +29,20 @@ Página {Header,about,skills,portfolio,contato(Email e telefone),footer(rede soc
 
 portfolio:
 
-portoseguro.ba.gov.br/todoscontraoaedes/ (front WordPress) 
+Profarma(sistema)
 
-eunapolis(front WordPress) 
+Mackenzie(Moodle)
 
-Gtreid(front) 
+Bono(Moodle)
 
-Profarma(sistema) 
+Uni Carioca(Moodle)
 
-Sos Comunidades(sistema) 
+Youpluv
 
-Trinks.com (Trabalhei no sistema/app)
-
-Youpluv (api) 
-
-Jeeptour (manutenção WordPress) 
+http://www.gtreid.com
+http://jeeptour.com.br/
+http://www.portoseguro.ba.gov.br/todoscontraoaedes/
+http://eunapolis.ba.gov.br/
+http://soscomunidades.com.br/
+https://www.trinks.com/
+https://github.com/rafaelsantanna - alguns projetos e estudos.
