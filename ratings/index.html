@@ -25,10 +25,6 @@
         
             FB.login();
 
-            FB.getLoginStatus(function(response) {
-                statusChangeCallback(response);
-            });
-
             FB.api(
                 "/{252259148714278}/ratings",
                 function (response) {
@@ -48,6 +44,10 @@
             js.src = "https://connect.facebook.net/en_US/sdk.js";
             fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));
+
+        FB.getLoginStatus(function(response) {
+            statusChangeCallback(response);
+        });
     </script>
 
 </body>
