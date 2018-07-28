@@ -15,11 +15,14 @@
         window.fbAsyncInit = function () {
             FB.init({
                 appId: '438743773276206',
-                autoLogAppEvents: true,
+                cookie: true,
                 xfbml: true,
                 version: 'v3.1'
             });
-            FB.api(
+
+            FB.AppEvents.logPageView();
+
+                        FB.api(
                 "/{252259148714278}/ratings",
                 function (response) {
                     if (response && !response.error) {
@@ -31,7 +34,7 @@
             FB.getLoginStatus(function(response) {
                 statusChangeCallback(response);
             });
-            //FB.login();
+            FB.login();
         };
 
         (function (d, s, id) {
