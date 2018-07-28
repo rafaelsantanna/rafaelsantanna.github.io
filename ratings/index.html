@@ -38,6 +38,8 @@
                     if (response && !response.error) {
                         console.log(response);
                         document.getElementById('ratings').innerHTML = JSON.stringify(response.data);
+                    } else {
+                        console.log(response);
                     }
                 }
             );
