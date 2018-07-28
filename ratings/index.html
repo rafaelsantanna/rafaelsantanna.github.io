@@ -9,7 +9,7 @@
 </head>
 
 <body>
-    fb
+    <div id="ratings"></div>
 
     <script>
         window.fbAsyncInit = function () {
@@ -26,18 +26,18 @@
                 if (response.authResponse) {
                 console.log('Welcome!  Fetching your information.... ');
                 FB.api('/me', function(response) {
-                console.log('Good to see you, ' + response.name + '.');
+                    console.log('Good to see you, ' + response.name + '.');
                 });
                 } else {
-                console.log('User cancelled login or did not fully authorize.');
+                    console.log('User cancelled login or did not fully authorize.');
                 }
             });
 
-            FB.api(
-                "/252259148714278/ratings?access_token=EAAGPCP7A6C4BAJqJ39XWJDXktuXahJHcONAOIa2higbAZAQB0YZBlEMisNGKzAPFSLRMrjCTrDOwwH29UGzcglQo0SxbDsZABpLV3Q8JJRHB6ugiH9KVZBM1EZCN9ipVgS766QXhqpryLIPBfNK2kZADTylSs31yZBEI4zwig6IIEyChEviN3mDhwPZBSdwRuqq6ZB549QbDZCbAZDZD",
+            FB.api("/252259148714278/ratings?access_token=EAAGPCP7A6C4BAJqJ39XWJDXktuXahJHcONAOIa2higbAZAQB0YZBlEMisNGKzAPFSLRMrjCTrDOwwH29UGzcglQo0SxbDsZABpLV3Q8JJRHB6ugiH9KVZBM1EZCN9ipVgS766QXhqpryLIPBfNK2kZADTylSs31yZBEI4zwig6IIEyChEviN3mDhwPZBSdwRuqq6ZB549QbDZCbAZDZD",
                 function (response) {
                     if (response && !response.error) {
                         console.log(response);
+                        document.getElementById('ratings').innerHTML(response);
                     }
                 }
             );
