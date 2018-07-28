@@ -37,7 +37,7 @@
                 function (response) {
                     if (response && !response.error) {
                         console.log(response);
-                        document.getElementById('ratings').innerHTML = response;
+                        document.getElementById('ratings').innerHTML = response.data;
                     }
                 }
             );
