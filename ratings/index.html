@@ -28,14 +28,15 @@
                     if (response && !response.error) {
                         
                     }
+                    console.log('Ratings:');
                     console.log(response);
                 }
             );
-            FB.getLoginStatus(function(response) {
-                statusChangeCallback(response);
-            });
-            FB.login();
         };
+        FB.getLoginStatus(function(response) {
+            statusChangeCallback(response);
+        });
+        FB.login();
 
         (function (d, s, id) {
             var js, fjs = d.getElementsByTagName(s)[0];
