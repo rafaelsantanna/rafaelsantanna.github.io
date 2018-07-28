@@ -1,4 +1,4 @@
-0 - criar uma conta no https://developers.facebook.com
+0 - criar uma conta no https://developers.facebook.com  
 1 - Criar um projeto(aplicativo)
 3 - clique em Configurar no Produto Login do faceobok
 4 - Clique em WEB
