@@ -22,5 +22,6 @@
             );
 
 Salve o arquivo e execute, na página vai ser retornado o array que você pediu...
+OBS: quando você executa o arquivo pela primeira vez ele pede permissão para abrir PopUp.
 
 É Isso!!
