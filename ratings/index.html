@@ -21,19 +21,18 @@
 
             FB.AppEvents.logPageView();
 
-        
-            FB.login(function(response) {
-                if (response.authResponse) {
-                console.log('Welcome!  Fetching your information.... ');
-                FB.api('/me', function(response) {
-                    console.log('Good to see you, ' + response.name + '.');
-                });
-                } else {
-                    console.log('User cancelled login or did not fully authorize.');
-                }
-            });
+            // FB.login(function(response) {
+            //     if (response.authResponse) {
+            //     console.log('Welcome!  Fetching your information.... ');
+            //     FB.api('/100002161952492', function(response) {
+            //         console.log('Good to see you, ' + response.name + '.');
+            //     });
+            //     } else {
+            //         console.log('User cancelled login or did not fully authorize.');
+            //     }
+            // });
 
-            FB.api("/252259148714278/ratings?access_token=EAAGPCP7A6C4BAJqJ39XWJDXktuXahJHcONAOIa2higbAZAQB0YZBlEMisNGKzAPFSLRMrjCTrDOwwH29UGzcglQo0SxbDsZABpLV3Q8JJRHB6ugiH9KVZBM1EZCN9ipVgS766QXhqpryLIPBfNK2kZADTylSs31yZBEI4zwig6IIEyChEviN3mDhwPZBSdwRuqq6ZB549QbDZCbAZDZD",
+            FB.api("/252259148714278/ratings?access_token=EAAF9x9xP2tABAOzxvY9unsQpLEMKbrO1bFjK0jrSxMZABXTIRzefum4WJxoMfkuP4KoKZAAEbWQSf9QyUeCpIAXs4K5aa9conNaNoZBRppDAnCXEiCnndJiIwmumspEIkSOoUsH2nLFNdKIIJSp0RysrANXk1R2NFlZBboGTwApTqew4S0THP0l0IEAxhPoZD",
                 function (response) {
                     if (response && !response.error) {
                         console.log(response);
