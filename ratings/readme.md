@@ -7,11 +7,12 @@
 7 - Pegue o ID do aplicativo  
 8 - Esse ID você vai colocar no código Javascript no campo, appId: '0000000000'  
 9 - Acesse a tool explorer - https://developers.facebook.com/tools/explorer/  
-10 - Clique em Obter Token(acesso do usuário) e marque a opção manage_pages e depois obter token  
+10 - Clique em Obter Token(acesso do usuário) e marque a opção manage_pages e public_pages e depois obter token  
 11 - Preenche esse input e faça uma requisição para me/accounts, clique em enviar  
 12 - Copie o access_token e o ID referente a sua página do facebook(você tem que ser admin/moderador da página para ela aparecer ai)  
 13 - No código javascript você vai ver uma linha que começa assim FB.api e nela você vai preencher com o ID da pagina e o access_token:
     O primeiro numero que aparece antes de ratings é onde você vai colocar o ID, e você vai preencher o access_token no parametro após ratings, o código vai ficar assim.  
+OBS - Este Post explica como criar um access_token que não expira, então gere esse access_token e substitua: https://medium.com/@Jenananthan/how-to-create-non-expiry-facebook-page-token-6505c642d0b1  
 
       FB.api("/252259148714278/ratings?access_token=EAAGPCP7A6C4BAJqJ39XWJDXktuXahJHcONAOIa2higbAZAQB0YZBlEMisNGKzAPFSLRMrjCTrDOwwH29UGzcglQo0SxbDsZABpLV3Q8JJRHB6ugiH9KVZBM1EZCN9ipVgS766QXhqpryLIPBfNK2kZADTylSs31yZBEI4zwig6IIEyChEviN3mDhwPZBSdwRuqq6ZB549QbDZCbAZDZD",
                 function (response) {
