@@ -7,7 +7,7 @@
 7 - Pegue o ID do aplicativo  
 8 - Esse ID você vai colocar no código Javascript no campo, appId: '0000000000'  
 9 - Acesse a tool explorer - https://developers.facebook.com/tools/explorer/  
-10 - Clique em Obter Token(acesso do usuário) e marque a opção manage_pages e public_pages e depois obter token  
+10 - Clique em Obter Token(acesso do usuário) e marque a opção manage_pages e publish_pages e depois obter token  
 11 - Preenche esse input e faça uma requisição para me/accounts, clique em enviar  
 12 - Copie o access_token e o ID referente a sua página do facebook(você tem que ser admin/moderador da página para ela aparecer ai)  
 13 - No código javascript você vai ver uma linha que começa assim FB.api e nela você vai preencher com o ID da pagina e o access_token:
