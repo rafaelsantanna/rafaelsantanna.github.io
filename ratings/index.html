@@ -21,12 +21,6 @@
 
             FB.AppEvents.logPageView();
 
-            FB.api("https://graph.facebook.com/oauth/access_token?client_id=APP_ID&client_secret=APP_SECRET&grant_type=fb_exchange_token&fb_exchange_token=EXISTING_ACCESS_TOKEN",
-                function(response) {
-
-                }
-            );
-
             FB.api("/252259148714278/ratings?access_token=EAAG4f1aFfHQBANbpZAYZCQ0kSpbqrxwzQ7F7bZBoHoGrFgQt3AjnNCXd6ULKx2GyeAeSU8ZAQraoZCay7m0P376cN05MOZBOKZChBlyngjrEP1ILS2NdXVHq73LzhNIk7UoCJkIkxX3CeEzWV341duW7XQKPtavIg970oF2lM3bHgZDZD",
                 function (response) {
                     if (response && !response.error) {
