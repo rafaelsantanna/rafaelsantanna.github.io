@@ -1,3 +1,66 @@
-.carousel-item img{
+.logo {
+    max-width: 180px;
+}
+
+.navbar-top {
+    padding: .5rem 2rem;
+}
+.navbar-top .nav-item .nav-link {
+    padding: 0 .5rem;
+    border-right: 1px solid #c9c9c9;
+}
+.navbar-top .nav-item:nth-child(4) .nav-link {
+    border-right: unset;
+}
+.navbar-top .nav-item.call-center a {
+    border-right: unset;
+    font-weight: 600;
+    color: #244a87;
+}
+
+.navbar-bottom {
+    padding: .5rem 2rem;
+    background-color: #244a87;
+    color: #c9c9c9;
+}
+
+.navbar-bottom .nav-item {
+    padding: .5rem;
+}
+
+.navbar-bottom .nav-item .nav-link {
+    color: #c9c9c9;
+    padding: 0;
+    font-weight: 600;
+}
+
+.navbar-bottom .nav-item:hover .nav-link {
+    color: #fff;
+}
+
+.navbar-bottom .nav-item .nav-link.active {
+    color: #c9c9c9;
+}
+
+.navbar-bottom .nav-item .nav-link.active:after {
+    content: "";
+    display: block;
+    width: 40px;
+    border-bottom: 2px solid #fff;
+}
+
+[for="input-search"]{
+    font-weight: 600;
+}
+.input-search {
+    background-color: #2f75bb;
+    color: #fff;
+    border-radius: 5px;
+    border: unset;
+    width: 240px;
+    height: 30px;
+}
+
+.carousel-item img {
     max-height: 450px;
 }

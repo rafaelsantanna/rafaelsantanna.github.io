@@ -15,20 +15,22 @@
 
     <header>
 
-        <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-top">
-            <a class="navbar-brand" href="#">Logo</a>
+        <nav class="navbar navbar-expand-lg navbar-light navbar-top">
+            <a class="navbar-brand logo" href="#">
+              <img class="img-fluid" src="./images/logo.png" alt="">
+            </a>
             <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button> -->
             <div class="ml-auto">
-              <ul class="navbar-nav">
+              <ul class="navbar-nav align-items-center">
                 <li class="nav-item"><a class="nav-link" href="">Trabalhe no IMEB</a></li>
                 <li class="nav-item"><a class="nav-link" href="">Para Médico</a></li>
                 <li class="nav-item"><a class="nav-link" href="">Agendamento de Exames</a></li>
                 <li class="nav-item"><a class="nav-link" href="">Resultados</a></li>
-                <li class="nav-item">
+                <li class="nav-item call-center">
                   <a class="nav-link" href="">
-                    Central de atendimento
+                    Central de atendimento <br>
                     (61) 3326-0033
                   </a>
                 </li>
@@ -36,10 +38,10 @@
             </div>
         </nav>
 
-        <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-bottom justify-content-between">
+        <nav class="navbar navbar-expand-lg navbar-light navbar-bottom justify-content-between">
           <div>
             <ul class="navbar-nav">
-              <li class="nav-item"><a class="nav-link" href="">EXAMES</a></li>
+              <li class="nav-item"><a class="nav-link active" href="">EXAMES</a></li>
               <li class="nav-item"><a class="nav-link" href="">CONVÊNIOS</a></li>
               <li class="nav-item"><a class="nav-link" href="">UNIDADES</a></li>
               <li class="nav-item"><a class="nav-link" href="">SOBRE O IMEB</a></li>
@@ -47,8 +49,8 @@
             </ul>
           </div>
           <div>
-            <label for="">Pesquisar</label>
-            <input type="text">
+            <label for="input-search">PESQUISAR</label>
+            <input id="input-search" class="input-search" type="text">
           </div>
         </nav>
 
