@@ -122,3 +122,6 @@
     max-width: 350px;
     border-bottom: 2px solid #2f75bb;
 }
+.max-w-100.border-title:after {
+    max-width: unset;
+}
