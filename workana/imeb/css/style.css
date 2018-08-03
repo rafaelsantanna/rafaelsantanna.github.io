@@ -2,6 +2,7 @@
     max-width: 180px;
 }
 
+/* Navbar Top */
 .navbar-top {
     padding: .5rem 2rem;
 }
@@ -18,6 +19,7 @@
     color: #244a87;
 }
 
+/* Navbar Bottom */
 .navbar-bottom {
     padding: .5rem 2rem;
     background-color: #244a87;
@@ -44,6 +46,7 @@
     border-bottom: 2px solid #fff;
 }
 
+/* Input de Pesquisa */
 [for="input-search"]{
     font-weight: 600;
 }
@@ -56,10 +59,12 @@
     height: 30px;
 }
 
+/* Carousel */
 .carousel-item img {
     max-height: 450px;
 }
 
+/* Exames */
 .exams {}
 .exams__title h2 {
     color: #244a87;
@@ -82,4 +87,29 @@
     text-align: justify;
     font-size: 0.9rem;
     color: #244a87;
+}
+
+/* Menu Exames */
+.menu-exams {
+
+}
+.menu-exams__block {
+    background-color: #2f75bb;
+    padding: 15px;
+}
+.menu-exams__block.menu-exams__block--bg-color {
+    background-color: #244a87;
+}
+.menu-exams__block a {
+    color: #fff;
+    font-weight: 600;
+    text-transform: uppercase;
+    text-decoration: unset;
+    display: block;
+}
+.menu-exams__block figure {
+    margin-bottom: 5px;
+}
+.menu-exams__block img {
+    max-width: 80px;
 }

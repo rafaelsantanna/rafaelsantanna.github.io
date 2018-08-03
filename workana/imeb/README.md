@@ -11,10 +11,11 @@ O Projeto é para desenvolvimento de uma home page em bootstrap, podendo ser na 
 - [ ] Rodapé com mapa do site;  
 - [ ] Adicionar Icones;  
 - [ ] Rodar ferramentas de performance;  
-- [ ] Buildar Sass do Bootstrap somente com o necessáiro;
-- [ ] Verificar Fonts;
-- [ ] Aplicar SEO;
-- [ ] Validar responsividade;
-- [ ] Validar Layout;
+- [ ] Buildar Sass do Bootstrap somente com o necessáiro;  
+- [ ] Verificar Fonts;  
+- [ ] Aplicar SEO;  
+- [ ] Validar responsividade;  
+- [ ] Validar Layout;  
+- [ ] Rodar Autoprefixer;  
   
 Deverá ser desenvolvido com foco em código otimizado para carregamento rápido; será entregue PSD para desenvolvimento;  
