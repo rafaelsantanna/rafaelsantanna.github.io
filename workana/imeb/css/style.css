@@ -108,6 +108,7 @@
     color: #244a87;
     margin-bottom: .5rem;
     line-height: 1;
+    text-transform: uppercase;
 }
 .section-title h2 span {
     display: block;
