@@ -64,19 +64,21 @@
     max-height: 450px;
 }
 
-/* Exames */
-.exams {}
-.exams__image {}
-.exams__title-block {
+/* Article - Padrão dos artigos */
+.article__image {}
+.article__title {
     text-align: center;
     font-size: 1rem;
     color: #2f75bb;
 }
-.exams__paragraph {
+.article__paragraph {
     text-align: justify;
     font-size: 0.9rem;
     color: #244a87;
 }
+
+/* Exames */
+.exams {}
 
 /* Menu Exames */
 .menu-exams {
