@@ -66,17 +66,6 @@
 
 /* Exames */
 .exams {}
-.exams__title h2 {
-    color: #244a87;
-    margin-bottom: .5rem;
-}
-.border-title:after {
-    content: "";
-    display: block;
-    width: 100%;
-    max-width: 350px;
-    border-bottom: 2px solid #2f75bb;
-}
 .exams__image {}
 .exams__title-block {
     text-align: center;
@@ -112,4 +101,23 @@
 }
 .menu-exams__block img {
     max-width: 80px;
+}
+
+/* Helpers */
+.section-title h2 {
+    color: #244a87;
+    margin-bottom: .5rem;
+    line-height: 1;
+}
+.section-title h2 span {
+    display: block;
+    color: #2f75bb;
+    line-height: 1;
+}
+.border-title:after {
+    content: "";
+    display: block;
+    width: 100%;
+    max-width: 350px;
+    border-bottom: 2px solid #2f75bb;
 }
