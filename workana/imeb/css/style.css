@@ -115,6 +115,16 @@
     margin: 0 15px;
 }
 
+/* O que estão falando sobre o IMEB */
+.talking-about-imeb figure {
+    margin-bottom: 0;
+}
+.talking-about-imeb__text span{
+    float: right;
+    color: #244a87;
+    font-weight: 600;
+}
+
 /* Helpers */
 .section-title h2 {
     color: #244a87;
