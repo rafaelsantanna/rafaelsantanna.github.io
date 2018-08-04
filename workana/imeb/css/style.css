@@ -65,13 +65,13 @@
 }
 
 /* Article - Padrão dos artigos */
-.article__image {}
-.article__title {
+.article-image {}
+.article-title {
     text-align: center;
     font-size: 1rem;
     color: #2f75bb;
 }
-.article__paragraph {
+.article-paragraph {
     text-align: justify;
     font-size: 0.9rem;
     color: #244a87;
