@@ -125,6 +125,20 @@
     font-weight: 600;
 }
 
+/* Unidades / Filiais */
+.units-imeb__companies {
+    overflow-y: scroll;
+    max-height: 420px;
+}
+.units-imeb__companies h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0;
+    color: #244a87;
+}
+.units-imeb__companies p {
+    color: #244a87;
+}
+
 /* Helpers */
 .section-title h2 {
     color: #244a87;
