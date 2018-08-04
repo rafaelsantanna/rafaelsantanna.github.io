@@ -105,6 +105,16 @@
     max-width: 80px;
 }
 
+/* Sobre o IMEB / Banners */
+.about-imeb__banners-wrap {
+    display: flex;
+    justify-content: center
+}
+.about-imeb__banners-wrap img {
+    max-width: 250px;
+    margin: 0 15px;
+}
+
 /* Helpers */
 .section-title h2 {
     color: #244a87;
