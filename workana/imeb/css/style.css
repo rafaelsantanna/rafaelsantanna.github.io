@@ -1,10 +1,13 @@
 .logo {
     max-width: 180px;
+    min-width: 100px;
 }
 
 /* Navbar Top */
 .navbar-top {
     padding: .5rem 2rem;
+    display: flex;
+    justify-content: space-between;
 }
 .navbar-top .nav-item .nav-link {
     padding: 0 .5rem;
@@ -17,6 +20,7 @@
     display: flex;
     align-items: center;
     margin-left: 10px;
+    white-space: nowrap;
 }
 .navbar-top .nav-item.call-center a {
     border-right: unset;
@@ -171,9 +175,12 @@
     display: flex;
     justify-content: center
 }
+.about-imeb__banners-wrap figure {
+    margin: 10px;
+}
 .about-imeb__banners-wrap img {
+    width: 100%;
     max-width: 250px;
-    margin: 0 15px;
 }
 
 /* O que estão falando sobre o IMEB */
@@ -342,4 +349,34 @@
 }
 .max-w-100.border-title:after {
     max-width: unset;
+}
+
+@media (max-width: 767.98px) { 
+    .about-imeb__paragraph {
+        order: 12;
+    }
+    .about-imeb__carousel {
+        order: 1;
+    }
+ }
+
+@media (max-width: 575.98px) {
+    .section-title h2 {
+        padding-left: 15px;
+    }
+    .talking-about-imbe-image {
+        display: flex;
+        justify-content: center;
+    }
+
+    .units-imeb__companies::-webkit-scrollbar {
+        width: 0.8em;
+    }
+     
+    .units-imeb__companies::-webkit-scrollbar-track {
+        border: unset;
+    }
+    .newslatter__input input {
+        max-width: 200px;
+    }
 }
