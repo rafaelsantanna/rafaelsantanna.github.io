@@ -57,13 +57,25 @@
 }
 
 /* Input de Pesquisa */
-[for="input-search"]{
+.icon-search {
+    display: inline-block;
+    background: url("../images/icon-search.png");
+    width: 20px;
+    height: 20px;
+    background-size: 20px;
+    margin-right: 5px;
+}
+[for="input-search"] {
     font-weight: 600;
+    margin-bottom: 0;
+    margin-right: 5px;
+    font-size: 15px;
 }
 .input-search {
     background-color: #2f75bb;
     color: #fff;
-    border-radius: 5px;
+    padding: 5px 10px;  
+    border-radius: 10px;
     border: unset;
     width: 240px;
     height: 30px;
