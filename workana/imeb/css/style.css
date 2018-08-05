@@ -157,7 +157,6 @@
 /* Footer */
 .footer {
     background: url('../images/bg-footer.jpg');
-    padding: 25px 0;
 }
 .footer ul {
     padding-left: 0;
@@ -187,6 +186,17 @@
     color: #fff;
     font-weight: 400;
     text-transform: initial;
+}
+
+.copyright {
+    background-color: #fff;
+}
+.copyright p {
+    color: #2f75bb;
+    font-weight: 600;
+}
+.copyright img {
+    max-width: 80px;
 }
 
 /* Helpers */
