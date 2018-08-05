@@ -68,6 +68,9 @@
     padding: 10px;
     justify-content: flex-end;
 }
+.caorousel-indicators--top {
+    top: -35px;
+}
 .carousel-indicators li {
     background-color: #244a87;
     width: 15px;
