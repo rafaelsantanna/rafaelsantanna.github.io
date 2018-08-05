@@ -142,16 +142,60 @@
 /* Newslatter */
 .newslatter {
     background-color: #0054a6;
+    position: relative;
+}
+.newslatter__text {
+    position: unset;
 }
 .newslatter__text h2 {
     color: #fff;
+    text-transform: uppercase;
+}
+.newslatter__text span {
+    width: 100%;
+    max-width: 370px;
+    height: 2px;
+    background-color: #fff;
+    position: absolute;
+    left: 0;
 }
 .newslatter__text p {
     color: #fff;
+    margin-top: 15px;
+    font-size: 14px;
+    font-weight: 600;
 }
 .newslatter__input {
     display: flex;
-    align-items: flex-end;
+    align-items: center;
+}
+.newslatter__input span {
+    margin-right: 8px;
+}
+.newslatter__input span img {
+    width: 30px;
+}
+.newslatter__input input {
+    width: 100%;
+    max-width: 320px;
+    border-radius: 15px;
+    outline: none;
+    border-color: transparent;
+    padding: 5px 15px;
+    margin-right: 10px;
+    color: #2f75bb;
+}
+.newslatter input::placeholder {
+    color: #2f75bb;
+    font-size: 14px;
+  }
+.newslatter__input a {
+    color: #fff;
+    font-weight: 600;
+    background-color: #2f75bb;
+    text-decoration: none;
+    padding: 5px 25px;
+    border-radius: 15px;
 }
 
 /* Footer */
