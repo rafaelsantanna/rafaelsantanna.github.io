@@ -13,10 +13,20 @@
 .navbar-top .nav-item:nth-child(4) .nav-link {
     border-right: unset;
 }
+.navbar-top .nav-item.nav-item.call-center {
+    display: flex;
+    align-items: center;
+    margin-left: 10px;
+}
 .navbar-top .nav-item.call-center a {
     border-right: unset;
     font-weight: 600;
     color: #244a87;
+    display: inline-block
+}
+.navbar-top .nav-item.call-center img {
+    display: inline-block;
+    width: 25px;
 }
 
 /* Navbar Bottom */
