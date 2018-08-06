@@ -63,11 +63,10 @@
 /* Input de Pesquisa */
 .icon-search {
     display: inline-block;
-    background: url("../images/icon-search.png");
-    width: 20px;
+    background: url(../images/icon-search.png) no-repeat;
+    width: 40px;
     height: 20px;
     background-size: 20px;
-    margin-right: 5px;
 }
 [for="input-search"] {
     font-weight: 600;
@@ -81,8 +80,12 @@
     padding: 5px 10px;  
     border-radius: 10px;
     border: unset;
-    width: 240px;
+    width: 100%;
+    max-width: 240px;
     height: 30px;
+}
+.input-search::placeholder {
+    color: transparent;
 }
 
 /* Carousel */
@@ -351,6 +354,13 @@
     max-width: unset;
 }
 
+@media (max-width: 925px) {
+    .navbar-bottom .nav-item .nav-link {
+        font-size: 0.8rem;
+        white-space: nowrap;
+    }
+}
+
 @media (max-width: 767.98px) { 
     .about-imeb__paragraph {
         order: 12;
@@ -361,22 +371,38 @@
  }
 
 @media (max-width: 575.98px) {
+    /* HELPERS */
     .section-title h2 {
         padding-left: 15px;
     }
-    .talking-about-imbe-image {
+
+    /* Sessão sobre o IMEB */
+    .talking-about-imeb-image {
         display: flex;
         justify-content: center;
     }
 
+    /* Sessão unidades */
     .units-imeb__companies::-webkit-scrollbar {
         width: 0.8em;
     }
-     
     .units-imeb__companies::-webkit-scrollbar-track {
         border: unset;
     }
+
+    /* Newslatter */
     .newslatter__input input {
         max-width: 200px;
+    }
+
+    /* Pesquisa */
+    .icon-search {
+        width: 30px;
+    }
+    [for="input-search"] {
+        display: none;
+    }
+    .input-search::placeholder {
+        color: #fff;
     }
 }
