@@ -154,7 +154,7 @@
 }
 .menu-exams__block {
     background-color: #2f75bb;
-    padding: 15px;
+    padding: 15px 0;
 }
 .menu-exams__block.menu-exams__block--bg-color {
     background-color: #244a87;
@@ -404,5 +404,10 @@
     }
     .input-search::placeholder {
         color: #fff;
+    }
+
+    /* menu exames */
+    .menu-exams__block a {
+        font-size: 0.7rem;
     }
 }
