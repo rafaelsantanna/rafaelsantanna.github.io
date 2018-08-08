@@ -263,7 +263,11 @@
     max-width: 300px;
     padding: 3px 10px;
 }
-.contact-us__form-group textarea {
+.contact-us__textarea {
+    display: flex;
+    justify-content: space-between;
+}
+.contact-us__textarea textarea {
     border-radius: 10px;
     width: 100%;
     max-width: 300px;
@@ -488,4 +492,23 @@
     .menu-exams__block a {
         font-size: 0.7rem;
     }
+
+    /* Formulário de contato */
+    .contact-us__content h3 {
+        font-size: 1.3rem;
+    }
+    .contact-us__form-group {
+        display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    }
+    .contact-us__form-group input[type="text"] {
+        display: block;
+        margin: 5px 0;
+    }
+    .contact-us__textarea {
+        flex-wrap: wrap;
+    }
+    
 }
