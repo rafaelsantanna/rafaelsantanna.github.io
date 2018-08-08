@@ -227,6 +227,56 @@
     color: #244a87;
 }
 
+/* Fale Conosco */
+.contact-us figure {
+    margin: 0;
+}
+.contact-us figure img {
+    max-height: 370px;
+}
+.contact-us__content {
+    background: url('../images/bg-forms.jpg');
+}
+.contact-us__content h3 {
+    font-size: 2rem;
+    color: #fff;
+    max-width: 640px;
+    margin: 0 auto;
+}
+.contact-us__form {
+    max-width: 440px;
+    width: 100%;
+}
+.contact-us__form-group .ico {
+    margin-right: 10px;
+}
+.contact-us__form-group label {
+    width: 90px;
+    color: #fff;
+}
+.contact-us__form-group input {
+    border-radius: 10px;
+    border: none;
+}
+.contact-us__form-group input[type="text"] {
+    width: 100%;
+    max-width: 300px;
+    padding: 3px 10px;
+}
+.contact-us__form-group textarea {
+    border-radius: 10px;
+    width: 100%;
+    max-width: 300px;
+    padding: 3px 10px;
+}
+.contact-us__form input[type="submit"] {
+    cursor: pointer;
+    background-color: #fff;
+    color: #244a87;
+    font-weight: 600;
+    padding: 3px 20px;
+}
+
 /* Newslatter */
 .newslatter {
     background-color: #0054a6;
@@ -352,6 +402,34 @@
 }
 .max-w-100.border-title:after {
     max-width: unset;
+}
+
+/* Icons */
+.ico {
+    width: 30px;
+    height: 30px;
+    display: inline-block;
+    background-size: 30px;
+    background-repeat: no-repeat
+}
+
+.ico-name {
+    background-image: url('../images/ico-name.png');
+}
+.ico-email {
+    background-image: url('../images/ico-email.png');
+}
+.ico-telephone {
+    background-image: url('../images/ico-telephone.png');
+}
+.ico-subject {
+    background-image: url('../images/ico-subject.png');
+}
+.ico-message {
+    background-image: url('../images/ico-message.png');
+}
+.ico-submit {
+    background-image: url('../images/ico-submit.png');
 }
 
 @media (max-width: 925px) {

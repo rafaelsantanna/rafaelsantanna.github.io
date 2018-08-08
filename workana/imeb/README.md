@@ -6,10 +6,12 @@ O Projeto é para desenvolvimento de uma home page em bootstrap, podendo ser na 
 - [x] Rodapé com mapa do site;  
 - [x] Adicionar Icones;  
 - [x] Matérias gratuitos;  
+- [x] Fale Conosco;  
 - [ ] Slide com fotos e textos (Falta texto);  
-- [ ] Integração com Youtube dos últimos vídeos publicados;  
-- [ ] Fale Conosco;  
-- [ ] Mapa;  
 - [ ] Rodar Autoprefixer;  
+  
+Próxima entrega:  
+- [ ] Integração com Youtube dos últimos vídeos publicados;  
+- [ ] Mapa;  
   
 Deverá ser desenvolvido com foco em código otimizado para carregamento rápido; será entregue PSD para desenvolvimento;  
