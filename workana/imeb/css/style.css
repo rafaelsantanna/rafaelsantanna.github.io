@@ -201,6 +201,13 @@
     overflow-y: scroll;
     max-height: 420px;
 }
+.units-imeb__companies > div {
+    cursor: pointer;
+    padding: 5px;
+}
+.units-imeb__companies > div:hover {
+    background-color: rgba(201,201,201, .35);
+}
 .units-imeb__companies::-webkit-scrollbar {
     width: 1.5em;
 }
