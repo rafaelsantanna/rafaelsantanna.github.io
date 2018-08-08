@@ -92,6 +92,27 @@
 .carousel .carousel-item img {
     max-height: 440px;
 }
+.carousel .carousel-caption {
+    position: absolute;
+    top: 40px;
+    left: 30px;
+    width: 100%;
+    max-width: 500px;
+}
+.carousel .carousel-caption h5{
+    padding: 20px;
+    background-color: rgba(36, 74, 135, .8);
+    color: #fff;
+    font-weight: 600;
+    font-size: 2rem;
+}
+.carousel .carousel-caption p{
+    padding: 5px;
+    background-color: rgba(47, 117, 187, .8);
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 600;
+}
 .carousel-indicators {
     bottom: unset;
     padding: 10px;

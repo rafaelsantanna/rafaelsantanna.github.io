@@ -8,7 +8,7 @@ O Projeto é para desenvolvimento de uma home page em bootstrap, podendo ser na 
 - [x] Matérias gratuitos;  
 - [x] Fale Conosco;  
 - [x] Criar função para alterar as imagens em Unidades; 
-- [ ] Slide com fotos e textos (Falta texto); 
+- [x] Slide com fotos e textos (Falta texto); 
 - [ ] Fazer ScrollTo - Menu;  (Ficou a cargo do Raphael);  
 - [ ] Rodar Autoprefixer;  
   
