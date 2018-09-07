@@ -1,2 +1,2 @@
 Referências:  
-https://bootstrapious.com/p/bootstrap-sidebar  
+https://github.com/Mango/slideout
