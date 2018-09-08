@@ -14,6 +14,9 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="./css/bootstrap.min.css">
 
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
     <!-- Custom CSS -->
     <link rel="stylesheet" href="./css/style.css">
 
@@ -23,46 +26,261 @@
 
     <nav id="menu-mobile">
         <div class="patient">
-            <span>nome</span>
-            <span>idade</span>
+            <img src="./images/profile.jpg" alt="">
+            <span>Markinho Zuk</span>
+            <span>34 anos</span>
         </div>
-        <ul>
-            <li><a href="">Avaliações Clínicas</a></li>
+        <ul class="menu-items">
+            <li class="active"><a href="">Avaliações Clínicas</a></li>
             <li><a href="">Antrompometria</a></li>
+            <li><a href="">Aval. Laboratoriais</a></li>
+            <li><a href="">Estudo Alimentar</a></li>
+            <li><a href="">Prescrição Dietética</a></li>
+            <li><a href="">Evolução e Conduta</a></li>
+            <li><a href="">Material de Apoio</a></li>
+            <li><a href="">Finalizar Consulta</a></li>
         </ul>
     </nav>
-    
+
     <div id="main">
-        <header>
-            <nav>
-                <ul>
-                    <li><a href="">Agenda</a></li>
-                    <li><a href="">Cadastros</a></li>
-                    <li><a href="">Tabelas</a></li>
-                    <li><a href="">Consultas</a></li>
-                    <li><a href="">Configurações</a></li>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
+            <a class="navbar-brand" href="#">Logo</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Agenda <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Cadastros</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Tabelas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Consultas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Configurações</a>
+                    </li>
                 </ul>
-            </nav>
-            <div class="user-info">
-                <img src="" alt="">
-                <span class="user-info__name"></span>
+                <div class="user-info">
+                    <img src="" alt="">
+                    <span class="user-info__name"></span>
+                </div>
             </div>
-        </header>
-        <div class="page">
-            <div>Estatura</div>
-            <div>Circunferências</div>
-            <div>Classificação Peso</div>
-            <div>Peso</div>
-            <div>Classificação Nutricional</div>
-            <div>Classificação de Risco DCV</div>
-            <div>Bioimpedância</div>
-            <div>Pregas Cutâneas</div>
+        </nav>
+
+        <div class="page mt-3">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-md-6 col-sm-12 col-12 mb-3">
+                        <div class="card p-2">
+                            <h3>Estatura</h3>
+                            <h4>Estatura por Envergadura</h4>
+                            <form>
+                                <div class="form-group">
+                                    <label for="">Estatura (m)</label>
+                                    <input type="text" class="form-control">
+
+                                    <label for="">Alt. do Joelho (cm)</label>
+                                    <input type="text" class="form-control">
+
+                                    <label for="">Est. p/ Joelho (cm)</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-sm-12 col-12 mb-3">
+                        <div class="card p-2">
+                            <h3>Peso</h3>
+                            <form>
+                                <div class="form-group">
+                                    <label for="">Peso atual(kg)</label>
+                                    <input type="text" class="form-control">
+
+                                    <label for="">Peso Usual(kg)</label>
+                                    <input type="text" class="form-control">
+
+                                    <label for="">Peso Saúdavel(kg)</label>
+                                    <input type="text" class="form-control">
+
+                                    <label for="">Alter. de Peso(%)</label>
+                                    <input type="text" class="form-control">
+
+                                    <label for="">IMC Altura(kg/m²)</label>
+                                    <input type="text" class="form-control">
+
+                                    <label for="">Classificação IMC</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-sm-12 col-12 mb-3">
+                        <div class="card p-2">
+                            <h3>Circunferências</h3>
+                            <form>
+                                <div class="form-group">
+                                    <label for="">Braço (cm)</label>
+                                    <input type="text" class="form-control">
+
+                                    <label for="">Prega Tricipital (mm)</label>
+                                    <input type="text" class="form-control">
+
+                                    <label for="">Muscular do Braço (cm)</label>
+                                    <input type="text" class="form-control">
+
+                                    <label for="">Abdômen (cm)</label>
+                                    <input type="text" class="form-control">
+
+                                    <label for="">Cintura (cm)</label>
+                                    <input type="text" class="form-control">
+
+                                    <label for="">Quadril (cm)</label>
+                                    <input type="text" class="form-control">
+
+                                    <label for="">Relação Cintura / Quadril</label>
+                                    <input type="text" class="form-control">
+
+                                    <label for="">Índice de Coincidade</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-sm-12 col-12 mb-3">
+                        <div class="card p-2">
+                            <h3>Classif. Peso(kg)</h3>
+                            <form>
+                                <div class="form-group">Gordura Absoluta</label>
+                                    <input type="text" class="form-control">
+
+                                    <label for="">Massa Magra</label>
+                                    <input type="text" class="form-control">
+
+                                    <label for="">Peso Ideal (Guedes)</label>
+                                    <input type="text" class="form-control">
+
+                                    <label for="">Excesso</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-sm-12 col-12 mb-3">
+                        <div class="card p-2">
+                            <h3>Classificação Nutricional</h3>
+                            <form>
+                                <div class="form-group">
+                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-sm-12 col-12 mb-3">
+                        <div class="card p-2">
+                            <h3>Classificação de Risco DCV</h3>
+                            <form>
+                                <div class="form-group">
+                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-sm-12 col-12 mb-3">
+                        <div class="card p-2">
+                            <h3>Bioimpedância</h3>
+                            <form>
+                                <div class="form-group">
+                                    <label for="">% Gordura</label>
+                                    <input type="text" class="form-control">
+
+                                    <label for="">Classificação</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-sm-12 col-12 mb-3">
+                        <div class="card p-2">
+                            <h3>Pregas Cutâneas (mm)</h3>
+                            <h4>Protocolo</h4>
+                            <form>
+                                <div class="form-group">
+                                    <label for="">Tricipital</label>
+                                    <input type="text" class="form-control">
+
+                                    <label for="">Subescapular</label>
+                                    <input type="text" class="form-control">
+
+                                    <label for="">Axiliar Média</label>
+                                    <input type="text" class="form-control">
+
+                                    <label for="">Supra Ilíaca</label>
+                                    <input type="text" class="form-control">
+
+                                    <label for="">Abdominal</label>
+                                    <input type="text" class="form-control">
+
+                                    <label for="">Peitoral</label>
+                                    <input type="text" class="form-control">
+
+                                    <label for="">Coxa</label>
+                                    <input type="text" class="form-control">
+
+                                    <label for="">Bíceps</label>
+                                    <input type="text" class="form-control">
+
+                                    <label for="">Panturilha</label>
+                                    <input type="text" class="form-control">
+
+                                    <label for="">Somatório</label>
+                                    <input type="text" class="form-control">
+
+                                    <label for="">% Gordura</label>
+                                    <input type="text" class="form-control">
+
+                                    <input type="text" class="form-control">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-sm-12 col-12 mb-3">
+                        <div class="card p-2">
+                            <h3>Observação</h3>
+                            <form>
+                                <div class="form-group">
+                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
             <div class="actions-buttons">
-                <!-- Fazer botão de ação like google -->
-                <button>Excluir</button>
-                <button>Salvar Alterações</button>
-                <button>Salvar Inclusão</button>
+                
             </div>
+
         </div>
     </div>
 

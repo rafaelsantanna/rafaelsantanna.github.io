@@ -6,6 +6,6 @@ var slideout = new Slideout({
   });
 
   // Toggle button
-  document.querySelector('.toggle-button').addEventListener('click', function() {
-    slideout.toggle();
-});
+//   document.querySelector('.toggle-button').addEventListener('click', function() {
+//     slideout.toggle();
+// });

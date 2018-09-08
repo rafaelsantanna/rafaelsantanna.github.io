@@ -1,11 +1,12 @@
-/* ---------------------------------------------------
-    SIDEBAR STYLE
------------------------------------------------------ */
 body {
-    width: 100%;
-    height: 100%;
-  }
-  
+  width: 100%;
+  height: 100%;
+}
+
+/* ---------------------------------------------------
+    SIDEBAR STYLE LIB
+----------------------------------------------------- */
+ 
   .slideout-menu {
     position: fixed;
     top: 0;
@@ -16,8 +17,9 @@ body {
     -webkit-overflow-scrolling: touch;
     z-index: 0;
     display: none;
-    background-color: mediumslateblue;
+    background-color: #ffffff;
     color: #fff;
+    border-right: 1px solid #f2f2f2;
   }
   
   .slideout-menu-left {
@@ -46,10 +48,62 @@ body {
     display: block;
   }
 
+/* ---------------------------------------------------
+    SIDEBAR MOBILE STYLE
+----------------------------------------------------- */
 
+.patient {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #f2f2f2;
+  height: 180px;
+}
+
+.patient img {
+  width: 100%;
+  max-width: 100px;
+  border: 5px solid white;
+  box-sizing: content-box;
+  border-radius: 5px;
+}
+
+.patient span {
+  color: #949494;
+}
+
+.menu-items {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+}
+
+.menu-items li {
+  width: 100%;
+  text-align: center;
+  padding: 10px 0;
+}
+
+.menu-items li.active {
+  background-color: #e6e6e6;
+}
+
+.menu-items li a {
+  color: #949494;
+  text-decoration: none;
+
+}
 
 /* ---------------------------------------------------
-    CONTENT STYLE
+    PAGE STYLE
+----------------------------------------------------- */
+
+/* ---------------------------------------------------
+    FLOAT BUTTON STYLE
 ----------------------------------------------------- */
 
 
