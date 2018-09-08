@@ -76,7 +76,7 @@ body {
   }
 
   .navbar-collapse {
-    height: 410px;
+    height: 100vh;
     overflow: scroll;
   }
 
