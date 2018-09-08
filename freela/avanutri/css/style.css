@@ -74,4 +74,10 @@ body {
   #sidebar-mobile {
     display: block;
   }
+
+  .navbar-collapse {
+    height: 410px;
+    overflow: scroll;
+  }
+
 }
