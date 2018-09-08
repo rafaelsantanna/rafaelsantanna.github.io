@@ -24,29 +24,12 @@
 
 <body>
 
-    <nav id="menu-mobile">
-        <div class="patient">
-            <img src="./images/profile.jpg" alt="">
-            <span>Markinho Zuk</span>
-            <span>34 anos</span>
-        </div>
-        <ul class="menu-items">
-            <li><a href="">Avaliações Clínicas</a></li>
-            <li class="active"><a href="">Antrompometria</a></li>
-            <li><a href="">Aval. Laboratoriais</a></li>
-            <li><a href="">Estudo Alimentar</a></li>
-            <li><a href="">Prescrição Dietética</a></li>
-            <li><a href="">Evolução e Conduta</a></li>
-            <li><a href="">Material de Apoio</a></li>
-            <li><a href="">Finalizar Consulta</a></li>
-        </ul>
-    </nav>
-
     <div id="main">
+
         <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
             <a class="navbar-brand" href="#">Logo</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
@@ -72,7 +55,28 @@
                     <img src="" alt="">
                     <span class="user-info__name"></span>
                 </div>
+
+                <nav id="sidebar-mobile">
+                    <div class="patient">
+                        <img src="./images/profile.jpg" alt="">
+                        <span>Markinho Zuk</span>
+                        <span>34 anos</span>
+                    </div>
+                    <ul class="menu-items">
+                        <li><a href="">Avaliações Clínicas</a></li>
+                        <li class="active"><a href="">Antrompometria</a></li>
+                        <li><a href="">Aval. Laboratoriais</a></li>
+                        <li><a href="">Estudo Alimentar</a></li>
+                        <li><a href="">Prescrição Dietética</a></li>
+                        <li><a href="">Evolução e Conduta</a></li>
+                        <li><a href="">Material de Apoio</a></li>
+                        <li><a href="">Finalizar Consulta</a></li>
+                    </ul>
+                </nav>
+                
             </div>
+
+
         </nav>
 
         <div class="page mt-3">
@@ -287,11 +291,10 @@
     <!-- Javascript -->
     <script src="./js/jquery-3.3.1.min.js"></script>
     <script src="./js/bootstrap.min.js"></script>
-    <script src="./js/slideout.min.js"></script>
-
 
     <!-- development version, includes helpful console warnings -->
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script> -->
+
     <!-- production version, optimized for size and speed -->
     <!-- Quando subir a aplicação mude a cdn/arquivo para obter velocidade -->
     <!-- <script src="https://cdn.jsdelivr.net/npm/vue"></script> -->

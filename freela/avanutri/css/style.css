@@ -4,53 +4,12 @@ body {
 }
 
 /* ---------------------------------------------------
-    SIDEBAR STYLE LIB
------------------------------------------------------ */
- 
-  .slideout-menu {
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    width: 256px;
-    min-height: 100vh;
-    overflow-y: scroll;
-    -webkit-overflow-scrolling: touch;
-    z-index: 0;
-    display: none;
-    background-color: #ffffff;
-    color: #fff;
-    border-right: 1px solid #f2f2f2;
-  }
-  
-  .slideout-menu-left {
-    left: 0;
-  }
-  
-  .slideout-menu-right {
-    right: 0;
-  }
-  
-  .slideout-panel {
-    position: relative;
-    z-index: 1;
-    will-change: transform;
-    background-color: #FFF; /* A background-color is required */
-    min-height: 100vh;
-  }
-  
-  .slideout-open,
-  .slideout-open body,
-  .slideout-open .slideout-panel {
-    overflow: hidden;
-  }
-  
-  .slideout-open .slideout-menu {
-    display: block;
-  }
-
-/* ---------------------------------------------------
     SIDEBAR MOBILE STYLE
 ----------------------------------------------------- */
+
+#sidebar-mobile {
+  display: none;
+}
 
 .patient {
   display: flex;
@@ -80,6 +39,7 @@ body {
   align-items: center;
   margin: 0;
   padding: 0;
+  list-style-type: none;
 }
 
 .menu-items li {
@@ -110,6 +70,8 @@ body {
 /* ---------------------------------------------------
     MEDIAQUERIES
 ----------------------------------------------------- */
-@media (max-width: 768px) {
-
+@media (max-width: 767.98px) { 
+  #sidebar-mobile {
+    display: block;
+  }
 }
