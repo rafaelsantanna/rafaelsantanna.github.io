@@ -6,7 +6,6 @@ body {
 /* ---------------------------------------------------
     MENU STYLE
 ----------------------------------------------------- */
-
 nav.navbar {
   background-color: #1D8C9F;
 }
@@ -27,7 +26,7 @@ nav.navbar {
   color: #fff;
 }
 
-.user-info img{
+.user-info img {
   width: 50px;
   border-radius: 50%;
 }
@@ -39,7 +38,6 @@ nav.navbar {
 /* ---------------------------------------------------
     SIDEBAR STYLE
 ----------------------------------------------------- */
-
 #sidebar {
   background-color: #f8f9fa;
 }
@@ -99,17 +97,13 @@ nav.navbar {
 /* ---------------------------------------------------
     SIDEBAR MOBILE STYLE
 ----------------------------------------------------- */
-
 #sidebar-mobile {
   display: none;
 }
 
-
-
 /* ---------------------------------------------------
     PAGE STYLE
 ----------------------------------------------------- */
-
 .card__title {
   font-size: 1.2rem;
   color: #999;
@@ -119,24 +113,37 @@ nav.navbar {
   justify-content: flex-end;
   margin-bottom: 5px;
 }
+
 .custom-form-inline label {
   margin-right: 10px;
 }
+
 .custom-form-inline input {
   width: 100%;
   max-width: 138px;
 }
 
+.classification-title {
+  background-color: #FFF59D;
+  text-align: center;
+  color: #595959;
+}
+
+.form-control[readonly].answer, .answer {
+  background-color: #81C784;
+  color: #2b2b2b;
+}
 
 /* ---------------------------------------------------
     FLOAT BUTTON STYLE
 ----------------------------------------------------- */
-
-
+/* ---------------------------------------------------
+    HELLPERS
+----------------------------------------------------- */
 /* ---------------------------------------------------
     MEDIAQUERIES
 ----------------------------------------------------- */
-@media (max-width: 767.98px) { 
+@media (max-width: 767.98px) {
   #sidebar-mobile {
     display: block;
   }
@@ -149,7 +156,6 @@ nav.navbar {
   .user-info {
     display: none;
   }
-
 }
 
 @media(max-width: 375px) {
