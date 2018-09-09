@@ -151,3 +151,9 @@ nav.navbar {
   }
 
 }
+
+@media(max-width: 375px) {
+  .custom-form-inline input {
+    max-width: 85px;
+  }
+}
