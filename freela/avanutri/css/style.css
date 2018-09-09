@@ -4,11 +4,44 @@ body {
 }
 
 /* ---------------------------------------------------
-    SIDEBAR MOBILE STYLE
+    MENU STYLE
 ----------------------------------------------------- */
 
-#sidebar-mobile {
-  display: none;
+nav.navbar {
+  background-color: #1D8C9F;
+}
+
+.nav-link {
+  color: #fff;
+}
+
+.nav-link:hover {
+  color: #f0f0f0;
+}
+
+.user-info {
+  width: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  color: #fff;
+}
+
+.user-info img{
+  width: 50px;
+  border-radius: 50%;
+}
+
+.navbar-dark .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255, 255, 255, 1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+}
+
+/* ---------------------------------------------------
+    SIDEBAR STYLE
+----------------------------------------------------- */
+
+#sidebar {
+  background-color: #f8f9fa;
 }
 
 .patient {
@@ -16,7 +49,6 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: #f2f2f2;
   height: 180px;
 }
 
@@ -45,38 +77,56 @@ body {
 .menu-items li {
   width: 100%;
   text-align: center;
-  padding: 10px 0;
+  height: 45px;
+  line-height: 45px;
 }
 
 .menu-items li.active {
-  background-color: #e6e6e6;
+  background-color: #fff;
+}
+
+.menu-items li:hover {
+  background-color: #fff;
 }
 
 .menu-items li a {
   color: #949494;
   text-decoration: none;
-
+  display: inline-block;
+  width: 100%;
 }
 
 /* ---------------------------------------------------
-    MENU STYLE
+    SIDEBAR MOBILE STYLE
 ----------------------------------------------------- */
 
-.user-info {
-  width: 160px;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
+#sidebar-mobile {
+  display: none;
 }
 
-.user-info img{
-  width: 50px;
-  border-radius: 50%;
-}
+
 
 /* ---------------------------------------------------
     PAGE STYLE
 ----------------------------------------------------- */
+
+.card__title {
+  font-size: 1.2rem;
+  color: #999;
+}
+
+.custom-form-inline {
+  justify-content: flex-end;
+  margin-bottom: 5px;
+}
+.custom-form-inline label {
+  margin-right: 10px;
+}
+.custom-form-inline input {
+  width: 100%;
+  max-width: 138px;
+}
+
 
 /* ---------------------------------------------------
     FLOAT BUTTON STYLE
