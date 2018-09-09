@@ -59,6 +59,22 @@ body {
 }
 
 /* ---------------------------------------------------
+    MENU STYLE
+----------------------------------------------------- */
+
+.user-info {
+  width: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.user-info img{
+  width: 50px;
+  border-radius: 50%;
+}
+
+/* ---------------------------------------------------
     PAGE STYLE
 ----------------------------------------------------- */
 
@@ -78,6 +94,10 @@ body {
   .navbar-collapse {
     height: 80vh;
     overflow: scroll;
+  }
+
+  .user-info {
+    display: none;
   }
 
 }
