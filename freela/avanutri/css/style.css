@@ -122,11 +122,6 @@ nav.navbar {
   justify-content: center;
 }
 
-.menu-items li a img {
-  width: 30px;
-  display: none;
-}
-
 /* ---------------------------------------------------
     SIDEBAR MOBILE STYLE
 ----------------------------------------------------- */
@@ -137,6 +132,20 @@ nav.navbar {
 /* ---------------------------------------------------
     PAGE STYLE
 ----------------------------------------------------- */
+.action-buttons {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.action-buttons .btn {
+  margin-right: 10px;
+  color: #fff;
+}
+
+.action-buttons i {
+  margin-right: 5px;
+}
+
 .card__title {
   font-size: 1.2rem;
   color: #999;
