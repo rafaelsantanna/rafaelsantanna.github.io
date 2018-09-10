@@ -307,6 +307,16 @@ nav.navbar {
   .user-info {
     display: none;
   }
+
+  .patient span {
+    color: #fff;
+  }
+  .menu-items li a {
+    color: #fff;
+  }
+  .menu-items li.active a {
+    color: #000;
+  }
 }
 
 @media(max-width: 375px) {
