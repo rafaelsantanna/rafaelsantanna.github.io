@@ -183,6 +183,7 @@ nav.navbar {
 }
 
 .fab {
+  display: none;
   position: fixed;
   bottom: 16px;
   right: 16px;
@@ -328,6 +329,10 @@ nav.navbar {
   }
   .menu-items li.active a {
     color: #000;
+  }
+
+  .fab {
+    display: block;
   }
 }
 
