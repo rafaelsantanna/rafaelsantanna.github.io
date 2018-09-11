@@ -116,8 +116,16 @@ nav.navbar {
   background-color: #fff;
 }
 
+.menu-items li.active a {
+  color: #1D8C9F;
+}
+
 .menu-items li:hover {
   background-color: #fff;
+}
+
+.menu-items li:hover a {
+  color: #1D8C9F;
 }
 
 .menu-items li:last-child {
@@ -164,6 +172,10 @@ nav.navbar {
 
 .action-buttons .btn {
   margin-right: 10px;
+  color: #fff;
+}
+.action-buttons .btn:last-child {
+  margin-right: 0;
   color: #fff;
 }
 
@@ -341,7 +353,7 @@ nav.navbar {
 /* ---------------------------------------------------
     MEDIAQUERIES
 ----------------------------------------------------- */
-@media (max-width: 768.98px) {
+@media (max-width: 768px) {
   #sidebar-mobile {
     display: block;
   }
@@ -366,7 +378,7 @@ nav.navbar {
     color: #fff;
   }
   .menu-items li.active a {
-    color: #000;
+    color: #1D8C9F;
   }
 
   .fab {
