@@ -10,16 +10,23 @@ nav.navbar {
   background-color: #1D8C9F;
 }
 
+.navbar-nav .nav-item {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-nav .nav-item .nav-link {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-nav .nav-item i {
+  font-size: 30px;
+  margin-right: 10px;
+}
+
 .navbar-nav .nav-item.active .nav-link {
   font-weight: 500;
-}
-
-.nav-link {
-  color: #fff;
-}
-
-.nav-link:hover {
-  color: #f0f0f0;
 }
 
 .user-info {
@@ -324,6 +331,10 @@ nav.navbar {
   .navbar-collapse {
     height: 80vh;
     overflow: scroll;
+  }
+
+  .navbar-nav .nav-item.dropdown {
+    display: block;
   }
 
   .user-info {
