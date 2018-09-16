@@ -14,6 +14,9 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
         crossorigin="anonymous">
 
+    <!-- Font Open Sans -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
     <!-- Custom CSS -->
     <link rel="stylesheet" href="./css/style.css">
 
@@ -21,7 +24,7 @@
 
 <body>
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="menu-top navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="#">
             <img class="logo" src="./images/logo-avanutri.gif" alt="Logo">
         </a>
@@ -32,7 +35,7 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
-            <ul class="navbar-nav mr-auto">
+            <ul class="navbar-nav">
                 <li class="nav-item active">
                     <a class="nav-link" href="#">Assine Já <span class="sr-only">(current)</span></a>
                 </li>
@@ -40,7 +43,7 @@
                     <a class="nav-link" href="#">Eventos</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Fale Conosco   </a>
+                    <a class="nav-link" href="#">Fale Conosco</a>
                 </li>
             </ul>
 
@@ -48,17 +51,86 @@
     </nav>
 
     <div class="page">
-        <div class="container-fluid">
+        <div class="container">
             <div class="row">
-
+                <div class="col-md-4 container-login">
+                    <div class="wrapper">
+                        <form class="login">
+                            <p class="title">Log in</p>
+                            <input type="text" placeholder="Username" autofocus />
+                            <i class="fa fa-user"></i>
+                            <input type="password" placeholder="Password" />
+                            <i class="fa fa-key"></i>
+                            <a href="#">Esqueceu sua senha?</a>
+                            <button>
+                                <i class="spinner"></i>
+                                <span class="state">Log in</span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-md-8 news">
+                    <h3>Novidades</h3>
+                    <div class="news__content">
+                        <div class="news__item">
+                            <h4>
+                                INFANTÔMETRO VERTICAL AVANUTRI <span>1/9/2017</span>
+                            </h4>
+                            <p>Lançamento, o único no mercado com certificação do IMI - INMETRO, fabricado no Brasil,
+                                em ABS, leve, transportável, higienizável e o maior da categoria. Só R$85,00 em até 12x
+                                no cartão.</p>
+                        </div>
+                        <div class="news__item">
+                            <h4>
+                                WhatsApp Avanutri 15/8/2016 <span>17/4/2017</span>
+                            </h4>
+                            <p>Lançamento, o único no mercado com certificação do IMI - INMETRO, fabricado no Brasil,
+                                em ABS, leve, transportável, higienizável e o maior da categoria. Só R$85,00 em até 12x
+                                no cartão.</p>
+                        </div>
+                        <div class="news__item">
+                            <h4>
+                                PAQUÍMETRO AVANUTRI <span>19/9/2017</span>
+                            </h4>
+                            <p>Chegou o PAQUÍMETRO DA AVANUTRI, ÚNICO no país com certificação do IMI/INMETRO. Acesse
+                                www.loja.avanutri.com.br e confira!!! Só R$85,00 em até 12x no cartão.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row sponsors">
+                <div class="col-md-12">
+                    <h3>Patrocinadores</h3>
+                </div>
+                <div class="col-md-3 sponsors__item">
+                    <a href="http://www.loja.avanutri.com.br/prod,idloja,29892,idproduto,5479759,estadiometro-estadiometro-portatil-avanutri---preto-bege">
+                        <img src="./images/estadiometro-portatil.jpg">
+                    </a>
+                </div>
+                <div class="col-md-3 sponsors__item">
+                    <a href="http://www.loja.avanutri.com.br/prod,idloja,29892,idproduto,5486784,plicometro---adipometro-plicometro-clinico-branco-avanutri">
+                        <img src="./images/adipometro-plicometro.jpg">
+                    </a>
+                </div>
+                <div class="col-md-3 sponsors__item">
+                    <a href="http://www.loja.avanutri.com.br/prod,idloja,29892,idproduto,5376656,infantometro-infantometro-portatil-horizontal-avanutri----azul
+                    ">
+                        <img src="./images/infantometro.jpg">
+                    </a>
+                </div>
+                <div class="col-md-3 sponsors__item">
+                    <a href="http://www.loja.avanutri.com.br/prod,idloja,29892,idproduto,5077554,trena-antropometrica-trena-antropometrica-base-em-aluminio---com-risco-cardiaco-e-imc">
+                        <img src="./images/trena-antropometrica.jpg">
+                    </a>
+                </div>
             </div>
         </div>
 
     </div>
-    </div>
 
     <!-- Javascript -->
-    <script src="./js/jquery-3.3.1.min.js"></script>
+    <script src="
+                                        ./js/jquery-3.3.1.min.js"> </script>
     <script src="./js/bootstrap.min.js"></script>
 
     <!-- development version, includes helpful console warnings -->
