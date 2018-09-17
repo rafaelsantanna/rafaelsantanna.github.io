@@ -56,24 +56,31 @@
                 <div class="col-md-4 container-login">
                     <div class="wrapper">
                         <form class="login">
-                            <p class="title">Log in</p>
-                            <input type="text" placeholder="Username" autofocus />
+                            <p class="title">Login</p>
+                            <input class="input-login" type="text" placeholder="login" autofocus />
                             <i class="fa fa-user"></i>
-                            <input type="password" placeholder="Password" />
+                            <input class="input-password" type="password" placeholder="Senha" />
                             <i class="fa fa-key"></i>
-                            <a href="#">Esqueceu sua senha?</a>
+                            <input type="checkbox">
+                            <label class="primary-color" for="">Auto login</label>
+                            <div>
+                                <a href="#">Esqueceu sua senha?</a>
+                            </div>
+                            <div>
+                                <a href="#">Assine Já!</a>
+                            </div>
                             <button>
                                 <i class="spinner"></i>
-                                <span class="state">Log in</span>
+                                <span class="state">Login</span>
                             </button>
                         </form>
                     </div>
                 </div>
                 <div class="col-md-8 news">
-                    <h3>Novidades</h3>
+                    <h3 class="news__title">Novidades</h3>
                     <div class="news__content">
                         <div class="news__item">
-                            <h4>
+                            <h4 class="news__item-title">
                                 INFANTÔMETRO VERTICAL AVANUTRI <span>1/9/2017</span>
                             </h4>
                             <p>Lançamento, o único no mercado com certificação do IMI - INMETRO, fabricado no Brasil,
@@ -81,7 +88,7 @@
                                 no cartão.</p>
                         </div>
                         <div class="news__item">
-                            <h4>
+                            <h4 class="news__item-title">
                                 WhatsApp Avanutri 15/8/2016 <span>17/4/2017</span>
                             </h4>
                             <p>Lançamento, o único no mercado com certificação do IMI - INMETRO, fabricado no Brasil,
@@ -89,7 +96,7 @@
                                 no cartão.</p>
                         </div>
                         <div class="news__item">
-                            <h4>
+                            <h4 class="news__item-title">
                                 PAQUÍMETRO AVANUTRI <span>19/9/2017</span>
                             </h4>
                             <p>Chegou o PAQUÍMETRO DA AVANUTRI, ÚNICO no país com certificação do IMI/INMETRO. Acesse
@@ -100,7 +107,7 @@
             </div>
             <div class="row sponsors">
                 <div class="col-md-12">
-                    <h3>Patrocinadores</h3>
+                    <h3 class="sponsors__title">Patrocinadores</h3>
                 </div>
                 <div class="col-md-3 sponsors__item">
                     <a href="http://www.loja.avanutri.com.br/prod,idloja,29892,idproduto,5479759,estadiometro-estadiometro-portatil-avanutri---preto-bege">
@@ -129,17 +136,8 @@
     </div>
 
     <!-- Javascript -->
-    <script src="
-                                        ./js/jquery-3.3.1.min.js"> </script>
+    <script src="./js/jquery-3.3.1.min.js"> </script>
     <script src="./js/bootstrap.min.js"></script>
-
-    <!-- development version, includes helpful console warnings -->
-    <!-- <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script> -->
-
-    <!-- production version, optimized for size and speed -->
-    <!-- Quando subir a aplicação mude a cdn/arquivo para obter velocidade -->
-    <!-- <script src="https://cdn.jsdelivr.net/npm/vue"></script> -->
-
     <script src="./js/app.js"></script>
 </body>
 

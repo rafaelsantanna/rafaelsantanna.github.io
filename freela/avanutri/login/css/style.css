@@ -5,7 +5,7 @@ body {
 }
 
 :root {
-    --color-main: #00988e;
+    --primary-color: #00988e;
 }
 
 /* ---------------------------------------------------
@@ -24,20 +24,51 @@ body {
 }
 
 .menu-top .navbar-nav .nav-link {
-    color: var(--color-main);
+    color: var(--primary-color);
     margin: 0 3px;
+    padding: 6px;
+    border-top-left-radius: 10px;
+    text-transform: uppercase;
 }
 
 .menu-top .navbar-nav .active>.nav-link,
-.menu-top .navbar-nav .nav-link:hover {
+.menu-top .navbar-nav .active>.nav-link:hover {
     color: #fff;
-    background-color: var(--color-main);
-    border-top-left-radius: 10px;
+    background-color: var(--primary-color);
+}
+
+.menu-top .navbar-nav .nav-link:hover {
+    color: var(--primary-color);
+    background-color: #e8e8e8;
 }
 
 /* ---------------------------------------------------
     PAGE STYLE
 ----------------------------------------------------- */
+.sponsors {
+    margin-top: 1rem;
+}
+
+.sponsors__item {
+    display: flex;
+    justify-content: center;
+}
+
+.news__title, .sponsors__title {
+    color: var(--primary-color);
+}
+
+.news__item-title {
+    font-size: 1rem;
+    font-weight: bold;
+}
+.news__item-title span {
+    color: var(--primary-color);
+    font-size: 0.9rem;
+}
+.news__item p {
+    font-size: 0.9rem;
+}
 
 /* ---------------------------------------------------
     LOGIN FORM STYLE
@@ -95,7 +126,8 @@ body {
     transform: rotateZ(-45deg);
 }
 
-.container-login .login input {
+.container-login .login .input-login,
+.container-login .login .input-password {
     display: block;
     padding: 15px 10px;
     margin-bottom: 10px;
@@ -119,7 +151,7 @@ body {
 .container-login .login input:focus {
     outline: none;
     color: #444;
-    border-color: #2196F3;
+    border-color: var(--primary-color);
     border-left-width: 35px;
 }
 
@@ -131,12 +163,12 @@ body {
 
 .container-login .login a {
     font-size: 0.8em;
-    color: #2196F3;
+    color: var(--primary-color);
     text-decoration: none;
 }
 
 .container-login .login .title {
-    color: #444;
+    color: var(--primary-color);
     font-size: 1.2em;
     font-weight: bold;
     margin: 10px 0 30px 0;
@@ -148,7 +180,7 @@ body {
     width: 100%;
     height: 100%;
     padding: 10px 10px;
-    background: #2196F3;
+    background: var(--primary-color);
     color: #fff;
     display: block;
     border: none;
@@ -162,10 +194,11 @@ body {
     transform: rotateZ(0deg);
     transition: all 0.1s ease-out;
     border-bottom-width: 7px;
+    cursor: pointer;
 }
 
 .container-login .login button .spinner {
-    display: block;
+    display: none;
     width: 40px;
     height: 40px;
     position: absolute;
@@ -183,7 +216,7 @@ body {
 }
 
 .container-login .login:not(.loading) button:hover {
-    box-shadow: 0px 1px 3px #2196F3;
+    box-shadow: 0px 1px 3px var(--primary-color);
 }
 
 .container-login .login:not(.loading) button:focus {
@@ -193,6 +226,11 @@ body {
 /* ---------------------------------------------------
     HELLPERS
 ----------------------------------------------------- */
+
+.primary-color {
+    color: var(--primary-color);
+}
+
 /* ---------------------------------------------------
     MEDIAQUERIES
 ----------------------------------------------------- */
