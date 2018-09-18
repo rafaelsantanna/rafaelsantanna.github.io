@@ -237,9 +237,6 @@ body {
     MEDIAQUERIES
 ----------------------------------------------------- */
 @media (max-width: 768px) {
-    .page {
-        margin-top: 1.5rem;
-    }
     .container-login {
         margin-bottom: 1rem;
     }
