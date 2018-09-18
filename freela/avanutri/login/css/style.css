@@ -244,4 +244,8 @@ body {
     }
 }
 
-@media(max-width: 375px) {}
+@media(max-width: 375px) {
+    .logo {
+        max-width: 200px;
+    }
+}
