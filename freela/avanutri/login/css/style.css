@@ -26,9 +26,10 @@ body {
 .menu-top .navbar-nav .nav-link {
     color: var(--primary-color);
     margin: 0 3px;
-    padding: 6px;
+    padding: 7px;
     border-top-left-radius: 10px;
     text-transform: uppercase;
+    font-size: 0.8rem;
 }
 
 .menu-top .navbar-nav .active>.nav-link,
