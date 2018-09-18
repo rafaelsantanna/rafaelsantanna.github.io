@@ -30,18 +30,18 @@ body {
     padding: 7px;
     border-top-left-radius: 10px;
     text-transform: uppercase;
-    font-size: 0.8rem;
+    font-size: 0.9rem;
 }
 
-.menu-top .navbar-nav .active>.nav-link,
+/* .menu-top .navbar-nav .active>.nav-link,
 .menu-top .navbar-nav .active>.nav-link:hover {
     color: #fff;
     background-color: var(--primary-color);
-}
+} */
 
 .menu-top .navbar-nav .nav-link:hover {
-    color: var(--primary-color);
-    background-color: #e8e8e8;
+    color: #fff;
+    background-color: var(--primary-color);
 }
 
 /* ---------------------------------------------------
@@ -239,6 +239,9 @@ body {
 @media (max-width: 768px) {
     .page {
         margin-top: 1.5rem;
+    }
+    .container-login {
+        margin-bottom: 1rem;
     }
     .container-login .wrapper {
         align-items: center;
