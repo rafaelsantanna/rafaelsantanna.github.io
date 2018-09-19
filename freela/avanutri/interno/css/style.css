@@ -128,10 +128,10 @@ nav.navbar {
   color: #1D8C9F;
 }
 
-.menu-items li:last-child {
+.end-consult {
   background-color: #CAE98B;
 }
-.menu-items li:last-child a {
+.end-consult a {
   color: #4CAF50;
   font-weight: bold;
 }
@@ -350,6 +350,25 @@ nav.navbar {
 /* ---------------------------------------------------
     HELLPERS
 ----------------------------------------------------- */
+
+/* ---------------------------------------------------
+    CUSTOM DROPDOWN
+----------------------------------------------------- */
+
+.menu-items li.custom-dropdown {
+  display: list-item;
+  height: inherit;
+}
+
+.custom-dropdown-menu {
+  display: none;
+  background-color: #eee;
+}
+
+.menu-items li.custom-dropdown:hover a {
+  background-color: #eee;
+}
+
 /* ---------------------------------------------------
     MEDIAQUERIES
 ----------------------------------------------------- */
