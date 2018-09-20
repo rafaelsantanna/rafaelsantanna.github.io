@@ -118,6 +118,7 @@ nav.navbar {
 
 .menu-items li.active a {
   color: #1D8C9F;
+  font-weight: 600;
 }
 
 .menu-items li:hover {
@@ -126,12 +127,16 @@ nav.navbar {
 
 .menu-items li:hover a {
   color: #1D8C9F;
+  font-weight: 600;
 }
 
-.end-consult {
+.menu-items .end-consult {
   background-color: #CAE98B;
 }
-.end-consult a {
+.menu-items .end-consult:hover {
+  background-color: #CAE98B;
+}
+.menu-items .end-consult a {  
   color: #4CAF50;
   font-weight: bold;
 }
@@ -360,13 +365,65 @@ nav.navbar {
   height: inherit;
 }
 
+.custom-dropdown {
+  transition: 0.15s ease;
+}
+.custom-dropdown a.active .arrow {
+  -webkit-transform: rotate(45deg) translate(-5px, -5px);
+          transform: rotate(45deg) translate(-5px, -5px);
+}
+.custom-dropdown a.active .arrow:before {
+  -webkit-transform: translate(10px, 0);
+          transform: translate(10px, 0);
+}
+.custom-dropdown a.active .arrow:after {
+  -webkit-transform: rotate(90deg) translate(10px, 0);
+          transform: rotate(90deg) translate(10px, 0);
+}
+
 .custom-dropdown-menu {
   display: none;
+  margin: 0;
+  padding: 0;
+}
+
+.custom-dropdown-menu li {
   background-color: #eee;
 }
 
-.menu-items li.custom-dropdown:hover a {
-  background-color: #eee;
+.custom-dropdown-menu li a {
+  justify-content: center;
+}
+
+/* Arrow dropdown */
+.arrow {
+  width: 13px;
+  height: 13px;
+  display: inline-block;
+  position: relative;
+  bottom: -5px;
+  left: -10px;
+  transition: 0.4s ease;
+  margin-top: 2px;
+  text-align: left;
+  -webkit-transform: rotate(45deg);
+          transform: rotate(45deg);
+}
+.arrow:before, .arrow:after {
+  position: absolute;
+  content: "";
+  display: inline-block;
+  width: 12px;
+  height: 3px;
+  background-color: #949494;
+  transition: 0.4s ease;
+}
+.arrow:after {
+  position: absolute;
+  -webkit-transform: rotate(90deg);
+          transform: rotate(90deg);
+  top: -5px;
+  left: 5px;
 }
 
 /* ---------------------------------------------------

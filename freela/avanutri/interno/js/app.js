@@ -11,10 +11,10 @@ dropdown.forEach(function(item){
     var child = parent.querySelector('.custom-dropdown-menu');
     if(child.style.display == 'block') {
       child.style.display = 'none';
-      child.classList.remove('open');
+      this.classList.remove('active');
     } else {
       child.style.display = 'block';
-      child.classList.add('open');
+      this.classList.add('active');
     }
     
   });
