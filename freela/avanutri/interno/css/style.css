@@ -460,6 +460,9 @@ nav.navbar {
   .menu-items li.active a {
     color: #1D8C9F;
   }
+  .menu-items li a span {
+    font-size: 16px;
+  }
 
   .fab {
     display: block;
