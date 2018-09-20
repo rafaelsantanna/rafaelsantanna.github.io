@@ -418,6 +418,10 @@ nav.navbar {
   background-color: #949494;
   transition: 0.4s ease;
 }
+.custom-dropdown:hover .arrow:before,
+.custom-dropdown:hover .arrow:after {
+  background-color: #1D8C9F !important;
+}
 .arrow:after {
   position: absolute;
   -webkit-transform: rotate(90deg);
@@ -465,5 +469,8 @@ nav.navbar {
 @media(max-width: 375px) {
   .custom-form-inline input {
     max-width: 85px;
+  }
+  .arrow:before, .arrow:after {
+    background-color: #fff;
   }
 }
