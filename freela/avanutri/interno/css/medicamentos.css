@@ -1,9 +1,54 @@
+/* TABLE */
+.medicine-table {
+
+}
+
 .btn-actions-table a{
     font-size: 1.5rem;
     margin-left: 5px;
 }
 
+.btn-include {
+    margin-left: 1rem;
+}
+
+.container-search {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.container-search .input-search {
+    max-width: 300px;
+}
+
 .ico-search {
     background-color: var(--primary-color);
     color: #fff;
+}
+
+/* ---------------------------------------------------
+    MEDIAQUERIES
+----------------------------------------------------- */
+
+@media(max-width: 425px) {
+    .action-buttons-table {
+        flex-direction: column;
+    }
+    .btn-include {
+        max-width: 300px;
+        margin: 10px auto;
+        margin-top: 10px;
+        margin-left: 0;
+    }
+    
+    .container-search {
+        justify-content: center;
+    }
+    .container-search .input-search {
+        max-width: 355px;
+    }
+
+    .medicine-table thead th {
+        white-space: nowrap;
+    }
 }

@@ -107,7 +107,7 @@
     </nav>
 
     <!-- PAGE -->
-    <div class="container-fluid">
+    <div class="container-fluid page-medicamentos">
         <div class="row">
 
             <!-- SIDEBAR DESKTOP -->
@@ -189,19 +189,19 @@
 
                 <div class="row">
                     <!-- BUTTON AND SEARCH -->
-                    <div class="col-md-5 offset-md-7 d-flex align-items-center mb-3 action-buttons">
-                        <div class="input-group">
+                    <div class="col-md-12 d-flex mb-3 action-buttons-table">
+                        <div class="input-group container-search">
                             <div class="input-group-prepend">
                                 <span class="input-group-text ico-search" id="basic-addon1">
                                     <i class="fas fa-search mr-0"></i>
                                 </span>
                             </div>
-                            <input id="search" type="text" class="form-control" placeholder="Pesquisar..." aria-label="Pesquisar..."
+                            <input id="search" type="text" class="form-control input-search" placeholder="Pesquisar..." aria-label="Pesquisar..."
                                 aria-describedby="basic-addon1">
                         </div>
 
-                        <button id="btn-include" class="ml-3 btn btn-success" data-toggle="modal" data-target="#modalEditInclude">
-                            <i class="fas fa-plus-circle"></i>Incluir Novo
+                        <button id="btn-include" class="btn-include btn btn-success" data-toggle="modal" data-target="#modalEditInclude">
+                            <i class="fas fa-plus-circle mr-1"></i>Incluir Novo
                         </button>
                     </div>
                 </div>
@@ -209,7 +209,7 @@
                 <div class="row">
                     <div class="col-md-12 table-responsive">
                         <!-- TABLE -->
-                        <table class="table">
+                        <table class="table medicine-table">
                             <thead>
                                 <tr>
                                     <th>Medicamento</th>
@@ -255,26 +255,6 @@
 
             </div>
 
-        </div>
-    </div>
-
-    <!-- FLOAT ACTION BUTTON -->
-    <div class="fab">
-        <div class="background-overlay"></div>
-        <div class="trigger"><span>+</span></div>
-        <div class="actions">
-            <div class="action trash-ico">
-                <i class="fas fa-trash-alt"></i>
-                <div class="tooltip">Excluir</div>
-            </div>
-            <div class="action edit-ico">
-                <i class="far fa-edit"></i>
-                <div class="tooltip">Salvar Alteração</div>
-            </div>
-            <div class="action save-ico">
-                <i class="fas fa-save"></i>
-                <div class="tooltip">Salvar Inclusão</div>
-            </div>
         </div>
     </div>
 
