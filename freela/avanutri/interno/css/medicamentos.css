@@ -2,3 +2,8 @@
     font-size: 1.5rem;
     margin-left: 5px;
 }
+
+.ico-search {
+    background-color: var(--primary-color);
+    color: #fff;
+}
