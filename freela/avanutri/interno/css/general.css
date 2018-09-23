@@ -1,13 +1,18 @@
 body {
   width: 100%;
   height: 100%;
+  font-family: "Open Sans", sans-serif;
+}
+
+:root {
+  --primary-color: #1D8C9F;
 }
 
 /* ---------------------------------------------------
     MENU STYLE
 ----------------------------------------------------- */
 nav.navbar {
-  background-color: #1D8C9F;
+  background-color: var(--primary-color);
 }
 
 .navbar-nav .nav-item {
@@ -59,7 +64,7 @@ nav.navbar {
 
 .dropdown-menu .dropdown-item:hover {
   background-color: #fff;
-  color: #1D8C9F;
+  color: var(--primary-color);
   font-weight: 600;
 }
 
@@ -119,7 +124,7 @@ nav.navbar {
 }
 
 .menu-items li.active a {
-  color: #1D8C9F;
+  color: var(--primary-color);
   font-weight: 600;
 }
 
@@ -128,7 +133,7 @@ nav.navbar {
 }
 
 .menu-items li:hover a {
-  color: #1D8C9F;
+  color: var(--primary-color);
 }
 
 .menu-items .end-consult {
@@ -159,7 +164,7 @@ nav.navbar {
 }
 
 .dropdown-item {
-  color: #1D8C9F;
+  color: var(--primary-color);
 }
 
 /* ---------------------------------------------------
@@ -258,7 +263,7 @@ nav.navbar {
 
 .fab .trigger {
   position: relative;
-  background: #1D8C9F;
+  background: var(--primary-color);
   color: #fff;
   height: 56px;
   width: 56px;
@@ -386,7 +391,7 @@ nav.navbar {
     color: #fff;
   }
   .menu-items li.active a {
-    color: #1D8C9F;
+    color: var(--primary-color);
   }
 
   .fab {

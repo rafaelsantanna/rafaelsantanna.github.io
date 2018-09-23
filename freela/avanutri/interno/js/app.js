@@ -1,9 +1,10 @@
+// FLOAT ACTION BUTTON
 $('.fab').click(function() {
   $(this).toggleClass('open');
 });
 
+// DROPDOWN CUSTOM
 var dropdown = document.querySelectorAll('.custom-dropdown');
-
 dropdown.forEach(function(item){
   item.querySelector('a').addEventListener('click', function(event) {
     event.preventDefault();
@@ -16,6 +17,6 @@ dropdown.forEach(function(item){
       child.style.display = 'block';
       this.classList.add('active');
     }
-    
   });
 });
+
