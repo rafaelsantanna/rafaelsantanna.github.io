@@ -19,8 +19,8 @@
         crossorigin="anonymous">
 
     <!-- Custom CSS -->
-    <!-- O Estilo da página antropometria está todo aqui -->
     <link rel="stylesheet" href="./css/general.css">
+    <link rel="stylesheet" href="./css/medicamentos.css">
 
 </head>
 
@@ -183,17 +183,59 @@
 
             <!-- CONTENT PAGE -->
             <div class="col-md-10 col-sm-12 col-12 pt-3">
-                <div class="row mb-3 d-md-block d-none">
-                    <div class="col-md-12 action-buttons">
-                        <button id="btn-delete" class="btn btn-danger"><i class="fas fa-trash-alt"></i>Excluir</button>
-                        <button id="btn-save-edit" class="btn btn-primary"><i class="far fa-edit"></i>Salvar
-                            Alteração</button>
-                        <button id="btn-save" class="btn btn-success"><i class="far fa-save"></i>Salvar
-                            Inclusão</button>
+
+                <div class="row">
+                    <div class="col-md-4 offset-md-8 d-flex align-items-center mb-3 action-buttons">
+
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">
+                                    <i class="fas fa-search"></i>
+                                </span>
+                            </div>
+                            <input type="text" class="form-control" placeholder="Usuário" aria-label="Usuário"
+                                aria-describedby="basic-addon1">
+                        </div>
+
+                        <button id="btn-include" class="ml-3 btn btn-success"><i class="far fa-save"></i>Incluir Novo</button>
                     </div>
                 </div>
-                <div class="row">
 
+                <div class="row">
+                    <div class="col-md-12 table-responsive">
+
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Medicamento</th>
+                                    <th>Princípio ativo</th>
+                                    <th>Categoria</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>A Curitybana</td>
+                                    <td>Ácido Acetil Salicílico</td>
+                                    <td>Antiagregante Plaquetário</td>
+                                    <td class="">
+                                        <a href=""><i class="fas fa-trash-alt"></i></a>
+                                        <a href=""><i class="far fa-edit"></i></a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>A Curitybana</td>
+                                    <td>Ácido Acetil Salicílico</td>
+                                    <td>Antiagregante Plaquetário</td>
+                                    <td class="">
+                                        <a href=""><i class="fas fa-trash-alt"></i></a>
+                                        <a href=""><i class="far fa-edit"></i></a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
                 </div>
 
             </div>
