@@ -27,7 +27,7 @@
     <meta name="msapplication-tap-highlight" content="no" />
     <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
     <!-- This is a wide open CSP declaration. To lock this down for production, see below. -->
-    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline' gap:; style-src 'self' 'unsafe-inline'; media-src *" />
+    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline' gap:; style-src * 'self' 'unsafe-inline'; media-src *" />
     <!-- Good default declaration:
     * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
     * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
@@ -38,22 +38,43 @@
     -->
     <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: 'unsafe-inline' https://ssl.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *" /> -->
 
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!--Import materialize.css-->
-    <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
 
     <link rel="stylesheet" type="text/css" href="css/index.css" />
-    
+
     <title>Avanutri App</title>
 </head>
 
 <body>
-    <div class="app">
-        
+    <div class="app page-login">
+        <div class="container">
+            <div class="row wrapper-logo">
+                <img src="./img/logo-avanutri.png" alt="">
+            </div>
+            <div class="row">
+                <form class="col s12 form-login">
+                    <div class="input-field col s12">
+                        <input id="username" type="text" class="validate" placeholder="nome de usuário">
+                        <label for="username">Usuário</label>
+                    </div>
+                    <div class="input-field col s12">
+                        <input id="password" type="password" class="validate" placeholder="digite sua senha">
+                        <label for="password">Senha</label>
+                    </div>
+                    <button class="btn waves-effect waves-light btn-submit" type="submit" name="action">ENTRAR</button>
+                    <a href="#">Esqueci minha senha</a>
+                </form>
+            </div>
+        </div>
     </div>
 
-    <!--JavaScript at end of body for optimized loading-->
-    <script type="text/javascript" src="js/materialize.min.js"></script>
+    </div>
+
     <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/materialize.min.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
 </body>
 

@@ -17,12 +17,8 @@
  * under the License.
  */
 
-
-@font-face {
-    font-family: 'Material Icons';
-    font-style: normal;
-    font-weight: 400;
-    src: url(https://fonts.gstatic.com/s/materialicons/v41/flUhRq6tzZclQEJ-Vdg-IuiaDsNc.woff2) format('woff2');
+:root {
+    --primary-color: #00988e;
 }
 
 * {
@@ -43,14 +39,54 @@ body {
     margin: 0px;
     padding: 0px;
     width: 100%;
-    font-family: 'Material Icons';
+    background-color: #fff;
 }
 
-/* Portrait layout (default) */
 .app {}
 
+/* PAGE LOGIN */
+.page-login {
+    height: 100vh;
+    color: var(--primary-color);
+}
 
+.page-login .wrapper-logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 200px;
+    margin-bottom: 0;
+}
 
+.page-login .wrapper-logo img{
+    width: 100%;
+    max-width: 200px;
+}
+
+.page-login .form-login {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.page-login .input-field>label {
+    color: var(--primary-color);
+}
+
+.page-login .input-field input {
+    color: var(--primary-color);
+}
+
+.page-login .input-field input::placeholder {
+    color: var(--primary-color);
+}
+
+.page-login .btn-submit {
+    width: 100%;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
 
 @keyframes fade {
     from {
