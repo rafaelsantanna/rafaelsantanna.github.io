@@ -1,22 +1,3 @@
-/*
- * Licensed to the Apache Software Foundation (ASF) under one
- * or more contributor license agreements.  See the NOTICE file
- * distributed with this work for additional information
- * regarding copyright ownership.  The ASF licenses this file
- * to you under the Apache License, Version 2.0 (the
- * "License"); you may not use this file except in compliance
- * with the License.  You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied.  See the License for the
- * specific language governing permissions and limitations
- * under the License.
- */
-
 :root {
     --primary-color: #00988e;
 }
@@ -42,13 +23,13 @@ body {
     background-color: #fff;
 }
 
-/* PÁGINA LOGIN */
-.page-login {
+/* LOGIN */
+#login {
     height: 100vh;
     color: var(--primary-color);
 }
 
-.page-login .wrapper-logo {
+#login .wrapper-logo {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -56,78 +37,102 @@ body {
     margin-bottom: 0;
 }
 
-.page-login .wrapper-logo img{
+#login .wrapper-logo img{
     width: 100%;
     max-width: 200px;
 }
 
-.page-login .form-login {
+#login .form-login {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
-.page-login .input-field>label {
+#login .input-field>label {
     color: var(--primary-color);
 }
 
-.page-login .input-field input {
+#login .input-field input {
     color: var(--primary-color);
 }
 
-.page-login .input-field input::placeholder {
+#login .input-field input::placeholder {
     color: var(--primary-color);
 }
 
-.page-login .btn-submit {
+#login .btn-submit {
     width: 100%;
     font-weight: 600;
     margin-bottom: 0.8rem;
 }
 
-.page-login .forgot-account {
+#login .forgot-account {
     color: var(--primary-color);
     font-size: 16px;
 }
-/* FIM PÁGINA LOGIN */
+/* FIM LOGIN */
 
-/* PÁGINA  ESQUECI A SENHA */
-.page-forgot-account .nav-wrapper {
+/* ESQUECI A SENHA */
+#forgot-account .nav-wrapper {
     padding: 0 15px;
     display: flex;
     background-color: var(--primary-color);
 }
-.page-forgot-account .description {
+#forgot-account .description {
     color: var(--primary-color);
     max-width: 220px;
     margin: 30px auto 0 auto;
     text-align: center;
 }
-.page-forgot-account .wrapper-email {
+#forgot-account .wrapper-email {
     margin-top: 1rem;
 }
-.page-forgot-account .btn {
+#forgot-account .btn {
     background-color: var(--primary-color);
     margin-top: 30px;
     width: 100%;
 }
-/* FIM PÁGINA  ESQUECI A SENHA */
+/* FIM ESQUECI A SENHA */
 
-/* HELPERS */
+/* DADOS ANTROPOMÉTRICOS DO USUÁRIO */
+#user-anthropometric-data .collection{
+    margin-top: 1rem;
+    border: 0;
+}
+
+#user-anthropometric-data .collection-item {
+    color: var(--primary-color);
+    border: 0;
+}
+#user-anthropometric-data .collection-item:nth-child(odd) {
+    background-color: #f5f5f5;
+}
+#user-anthropometric-data .collection-item .secondary-content {
+    font-weight: 600;
+    color: var(--primary-color);
+}
+/* FIM DADOS ANTROPOMÉTRICOS DO USUÁRIO */
+
+/* STYLE GERAL */
+.row {
+    margin-bottom: 0;
+}
+
+nav .nav-wrapper {
+    padding: 0 15px;
+    display: flex;
+    background-color: var(--primary-color);
+}
 .title {
     margin: 0 16px;
     text-align: left;
     font-size: 20px;
     font-weight: 600;
 }
-/* FIM HELPERS */
+/* FIM STYLE GERAL */
 
-/* RESET VALUES */
-.row {
-    margin-bottom: 0;
-}
-
+/* ANIMAÇÕES */
 @keyframes fade {
     from {
         opacity: 1.0;
@@ -160,3 +165,4 @@ body {
     animation: fade 3000ms infinite;
     -webkit-animation: fade 3000ms infinite;
 }
+/* FIM ANIMAÇÕES */
