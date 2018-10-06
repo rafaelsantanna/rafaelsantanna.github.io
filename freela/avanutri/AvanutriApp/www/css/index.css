@@ -112,6 +112,38 @@ body {
     font-weight: 600;
     color: var(--primary-color);
 }
+
+#user-anthropometric-data .custom-data-group {
+    margin-top: 1rem;
+    display: flex;
+    color: var(--primary-color);
+}
+#user-anthropometric-data .custom-data-group .date {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    flex: 1;
+    background-color: #f5f5f5;
+    margin-right: 2px;
+}
+#user-anthropometric-data .custom-data-group .date span:last-child,
+#user-anthropometric-data .custom-data-group .data > div span:last-child {
+    font-weight: 600;
+}
+#user-anthropometric-data .custom-data-group .data {
+    flex: 1;
+}
+#user-anthropometric-data .custom-data-group .data > div {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    background-color: #f5f5f5;
+    padding: 5px 0;
+}
+#user-anthropometric-data .custom-data-group .data > div:first-child {
+    margin-bottom: 2px;
+}
 /* FIM DADOS ANTROPOMÉTRICOS DO USUÁRIO */
 
 /* STYLE GERAL */
