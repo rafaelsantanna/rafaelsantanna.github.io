@@ -82,7 +82,7 @@ body {
 #forgot-account .description {
     color: var(--primary-color);
     max-width: 220px;
-    margin: 30px auto 0 auto;
+    margin: 25px auto 0 auto;
     text-align: center;
 }
 #forgot-account .wrapper-email {
@@ -146,9 +146,38 @@ body {
 }
 /* FIM DADOS ANTROPOMÉTRICOS DO USUÁRIO */
 
+/*  PRESCRIÇÃO DIETÉTICA*/
+#dietary-prescription {
+    
+}
+
+#dietary-prescription .collapsible-header {
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: var(--primary-color);
+}
+#dietary-prescription .collapsible-header .meal {
+    font-size: 1rem;
+}
+#dietary-prescription .collapsible-header .time-and-place {
+    text-align: center;
+}
+#dietary-prescription .collapsible-header .time-and-place span:last-child {
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+/*  FIM PRESCRIÇÃO DIETÉTICA*/
+
 /* STYLE GERAL */
 .row {
     margin-bottom: 0;
+}
+
+nav {
+    margin-bottom: 10px;
 }
 
 nav .nav-wrapper {
