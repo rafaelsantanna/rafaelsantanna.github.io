@@ -178,8 +178,46 @@ body {
 /* FIM LISTA DE SUBSTITUIÇÃO */
 
 /* LISTA DE COMPRAS */
-#shopping-list {
+#grocery-list nav {
+    margin-bottom: 2px;
+}
+#grocery-list .list-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 15px;
+    border-bottom: 1px solid #efefef;
+    height: 50px;
+}
 
+#grocery-list .list-item label {
+    color: #555;
+    flex: 1;
+}
+
+#grocery-list .list-item__wrap-right {
+    display: flex;
+    align-items: center;
+}
+
+#grocery-list .list-item__quantity {
+    margin-right: 10px;
+}
+
+#grocery-list .list-item__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-left: 10px;
+    border-left: 1px solid #efefef;
+    height: 50px;
+}
+#grocery-list .list-item__icon img {
+    width: 25px;
+}
+#grocery-list [type="checkbox"]:checked ~ span {
+    text-decoration: line-through;
+    color: #ccc; 
 }
 /* FIM LISTA DE COMPRAS */
 
@@ -204,6 +242,16 @@ nav .nav-wrapper {
     font-weight: 600;
 }
 /* FIM STYLE GERAL */
+
+/* HELPERS */
+.p-0 {
+    padding: 0!important;
+}
+.m-0 {
+    margin: 0!important;
+}
+/* HELPERS */
+
 
 /* ANIMAÇÕES */
 @keyframes fade {
