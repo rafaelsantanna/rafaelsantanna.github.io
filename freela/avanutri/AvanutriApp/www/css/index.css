@@ -171,6 +171,18 @@ body {
 
 /*  FIM PRESCRIÇÃO DIETÉTICA*/
 
+/* LISTA DE SUBSTITUIÇÃO */
+#replacement-list {
+
+}
+/* FIM LISTA DE SUBSTITUIÇÃO */
+
+/* LISTA DE COMPRAS */
+#shopping-list {
+
+}
+/* FIM LISTA DE COMPRAS */
+
 /* STYLE GERAL */
 .row {
     margin-bottom: 0;
