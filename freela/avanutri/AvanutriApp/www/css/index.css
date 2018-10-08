@@ -226,13 +226,70 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 60px;
+    height: 70px;
     padding: 0 15px;
     font-size: 1rem;
     color: #555;
     border-bottom: solid 1px #ccc;
 }
 /* FIM NOTIFICAÇÕES */
+
+/* RECEITAS NUTRICIONAIS */
+#nutritional-recipes .collection {
+    border:none;
+}
+#nutritional-recipes .collection .collection-item {
+    font-size: 1rem;
+    color: var(--primary-color);
+    padding: 15px 20px;
+}
+/* FIM RECEITAS NUTRICIONAIS */
+
+/* DETALHES DA RECEITA */
+#tabs-recipe {
+    margin-bottom: 5px;
+}
+#recipe-details .tabs .tab a {
+    color: rgba(0, 152, 142, .7);
+}
+#recipe-details .tabs .tab a:hover, .tabs .tab a.active {
+    color: var(--primary-color);
+}
+#recipe-details .tabs .tab a:focus, .tabs .tab a:focus.active {
+    background-color: rgba(0, 152, 142, .05);
+}
+#recipe-details .tabs .indicator {
+    background-color: var(--primary-color);
+}
+
+#recipe-details #ingredients,
+#recipe-details #method-of-preparation {
+    padding: 0 15px;
+}
+#recipe-details #ingredients .header-list,
+#recipe-details #method-of-preparation .header-list  {
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+    font-size: 1.2rem;
+    background-color: #efefef;
+    color: var(--primary-color);
+    margin: 10px 0 0 0;
+}
+#recipe-details #ingredients ul li {
+    list-style-type: disc;
+    margin: 0 30px 5px;
+    text-align: justify;
+    font-size: 1rem;
+}
+#recipe-details #method-of-preparation ul li {
+    list-style-type: decimal;
+    margin: 0 30px 5px;
+    text-align: justify;
+    font-size: 1rem;
+}
+
+/* FIM DETALHES DA RECEITA */
 
 /* STYLE GERAL */
 .row {
