@@ -32,7 +32,7 @@
     <div id="app">
 
         <!-- Login -->
-        <div id="login" style="display:none;">
+        <div id="login">
             <div class="row wrapper-logo">
                 <img src="./img/logo-avanutri.png" alt="">
             </div>
@@ -46,17 +46,17 @@
                         <input id="password" type="password" class="validate" placeholder="digite sua senha">
                         <label for="password">Senha</label>
                     </div>
-                    <button class="btn waves-effect waves-light btn-submit" type="submit" name="action">ENTRAR</button>
-                    <a class="forgot-account" href="./home">Esqueci minha senha</a>
+                    <a class="btn waves-effect waves-light btn-submit" onclick="navigateTo(event,'#login','#user-anthropometric-data');">ENTRAR</a>
+                    <a class="forgot-account" href="#" onclick="navigateTo(event,'#login','#forgot-account');">Esqueci minha senha</a>
                 </form>
             </div>
         </div>
 
         <!-- Esqueci a senha -->
-        <div id="forgot-account" style="display:none;">
+        <div id="forgot-account">
             <nav>
                 <div class="nav-wrapper">
-                    <a href="#" class=""><i class="material-icons">arrow_back</i></a>
+                    <a href="#" class="" onclick="navigateTo(event,'#forgot-account', '#login');"><i class="material-icons">arrow_back</i></a>
                     <div class="title">Esqueci minha senha</div>
                 </div>
             </nav>
@@ -77,10 +77,10 @@
         </div>
 
         <!-- Dados antropométricos atuais do usuário -->
-        <div id="user-anthropometric-data" style="display:none;">
+        <div id="user-anthropometric-data">
             <nav>
                 <div class="nav-wrapper">
-                    <a href="#" class=""><i class="material-icons">arrow_back</i></a>
+                    <!-- <a href="#" class=""><i class="material-icons">arrow_back</i></a> -->
                     <div class="title">Dados Antropométricos</div>
                 </div>
             </nav>
@@ -223,7 +223,7 @@
         </div>
 
         <!-- Prescrição dietética -->
-        <div id="dietary-prescription" style="display: none;">
+        <div id="dietary-prescription">
             <nav>
                 <div class="nav-wrapper">
                     <a href="#" class=""><i class="material-icons">arrow_back</i></a>
@@ -434,7 +434,7 @@
         </div>
 
         <!-- Lista de substituição -->
-        <div id="replacement-list" style="display: none;">
+        <div id="replacement-list">
             <nav>
                 <div class="nav-wrapper">
                     <a href="#" class=""><i class="material-icons">arrow_back</i></a>
@@ -484,7 +484,7 @@
         </div>
 
         <!-- Lista de compras -->
-        <div id="grocery-list" style="display: none;">
+        <div id="grocery-list">
             <nav>
                 <div class="nav-wrapper">
                     <a href="#" class=""><i class="material-icons">arrow_back</i></a>
@@ -534,7 +534,7 @@
         </div>
 
         <!-- Configuração de notificações -->
-        <div id="notifications" style="display: none;">
+        <div id="notifications">
             <nav class="m-0">
                 <div class="nav-wrapper">
                     <a href="#" class=""><i class="material-icons">arrow_back</i></a>
@@ -562,7 +562,7 @@
         </div>
 
         <!-- Receitas nutricionais -->
-        <div id="nutritional-recipes" style="display:none;">
+        <div id="nutritional-recipes">
             <nav>
                 <div class="nav-wrapper">
                     <a href="#" class=""><i class="material-icons">arrow_back</i></a>
@@ -590,7 +590,7 @@
         </div>
 
         <!-- Detalhes da receita -->
-        <div id="recipe-details" style="display:none;">
+        <div id="recipe-details">
             <nav class="m-0">
                 <div class="nav-wrapper">
                     <a href="#" class=""><i class="material-icons">arrow_back</i></a>

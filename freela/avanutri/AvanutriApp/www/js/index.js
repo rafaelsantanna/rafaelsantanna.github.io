@@ -7,3 +7,9 @@ document.addEventListener('DOMContentLoaded', function() {
 // INIT Tabs recipe details
 var tabs = document.querySelector('#tabs-recipe');
 M.Tabs.init(tabs);
+
+function navigateTo(event, origin, destiny) {
+  event.preventDefault();
+  document.querySelector(destiny).style.display = 'block';
+  document.querySelector(origin).style.display = 'none';
+}
