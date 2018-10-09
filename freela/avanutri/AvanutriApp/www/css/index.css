@@ -288,8 +288,15 @@ body {
     text-align: justify;
     font-size: 1rem;
 }
-
 /* FIM DETALHES DA RECEITA */
+
+/* ORIENTAÇÃO NUTRICIONAL */
+#nutritional-orientation .text-content {
+    color: var(--primary-color);
+    font-size: 1.1rem;
+    text-align: justify;
+}
+/* FIM ORIENTAÇÃO NUTRICIONAL */
 
 /* STYLE GERAL */
 .row {
