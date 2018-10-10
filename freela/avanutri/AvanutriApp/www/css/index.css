@@ -23,6 +23,10 @@ body {
     background-color: #fff;
 }
 
+#content {
+    padding-bottom: 56px;
+}
+
 /* LOGIN */
 #login {
     height: 100vh;
@@ -325,6 +329,13 @@ body {
     position: fixed;
     bottom: 0;
     left: 0;
+    margin-bottom: 0;
+    display: flex;
+    justify-content: space-around;
+}
+#navigation-bottom .navigation-item{
+    flex: 1;
+    text-align: center;
 }
 /* FIM NAVIGATIONS BOTTOM */
 
