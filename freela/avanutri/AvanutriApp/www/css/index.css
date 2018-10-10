@@ -75,7 +75,7 @@ body {
 
 /* ESQUECI A SENHA */
 #forgot-account {
-    display: none;
+
 }
 #forgot-account .nav-wrapper {
     padding: 0 15px;
@@ -100,7 +100,7 @@ body {
 
 /* DADOS ANTROPOMÉTRICOS DO USUÁRIO */
 #user-anthropometric-data {
-    display: none;
+    
 }
 #user-anthropometric-data .collection{
     margin-top: 1rem;
@@ -154,7 +154,7 @@ body {
 
 /*  PRESCRIÇÃO DIETÉTICA*/
 #dietary-prescription {
-    display: none;
+    
 }
 
 #dietary-prescription .collapsible-header {
@@ -179,13 +179,13 @@ body {
 
 /* LISTA DE SUBSTITUIÇÃO */
 #replacement-list {
-    display: none;
+    
 }
 /* FIM LISTA DE SUBSTITUIÇÃO */
 
 /* LISTA DE COMPRAS */
 #grocery-list {
-    display: none;
+    
 }
 #grocery-list nav {
     margin-bottom: 2px;
@@ -232,7 +232,7 @@ body {
 
 /* NOTIFICAÇÕES */
 #notifications {
-    display: none;
+    
 }
 #notifications .switch label {
     display: flex;
@@ -248,7 +248,7 @@ body {
 
 /* RECEITAS NUTRICIONAIS */
 #nutritional-recipes {
-    display: none;
+    
 }
 #nutritional-recipes .collection {
     border:none;
@@ -262,7 +262,7 @@ body {
 
 /* DETALHES DA RECEITA */
 #recipe-details {
-    display: none;
+    
 }
 #tabs-recipe {
     margin-bottom: 5px;
@@ -310,7 +310,7 @@ body {
 
 /* ORIENTAÇÃO NUTRICIONAL */
 #nutritional-orientation {
-    display: none;
+    
 }
 #nutritional-orientation .text-content {
     color: var(--primary-color);
@@ -318,6 +318,15 @@ body {
     text-align: justify;
 }
 /* FIM ORIENTAÇÃO NUTRICIONAL */
+
+/* NAVIGATIONS BOTTOM */
+#navigation-bottom {
+    background-color: var(--primary-color);
+    position: fixed;
+    bottom: 0;
+    left: 0;
+}
+/* FIM NAVIGATIONS BOTTOM */
 
 /* STYLE GERAL */
 .row {

@@ -13,3 +13,5 @@ function navigateTo(event, origin, destiny) {
   document.querySelector(destiny).style.display = 'block';
   document.querySelector(origin).style.display = 'none';
 }
+
+$('#content').load('../pages/login.html');
