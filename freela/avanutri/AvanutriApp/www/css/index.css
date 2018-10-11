@@ -358,11 +358,12 @@ nav .nav-wrapper {
     padding: 0 15px;
     display: flex;
     background-color: var(--primary-color);
+    justify-content: space-between;
 }
 .title {
     margin: 0 16px;
     text-align: left;
-    font-size: 20px;
+    font-size: 1.3rem;
     font-weight: 600;
 }
 /* FIM STYLE GERAL */

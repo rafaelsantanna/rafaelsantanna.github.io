@@ -12,3 +12,9 @@ function initTabs() {
   var tabs = document.querySelector('#tabs-recipe');
   M.Tabs.init(tabs);
 }
+
+function openSidemenu(e) {
+  e.preventDefault();
+  $('.sidenav').sidenav();
+  $('.sidenav').sidenav('open');
+}

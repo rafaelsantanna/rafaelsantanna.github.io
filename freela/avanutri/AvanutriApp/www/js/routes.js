@@ -8,7 +8,6 @@ function navigateTo(page, event) {
     }
 
     limparTemplate();
-
     $('#content').load('../pages/' + page + '.html');
 
     //Condição para mostrar o menu inferior
@@ -22,11 +21,16 @@ function navigateTo(page, event) {
             initAccordion();
         },100);
     }
-    
+
     //Iniciando abas
     if(page == 'recipe-details') {
         setTimeout(function() {
             initTabs();
         },500);
+    }
+
+    // Fechando o sidemenu
+    if(page == 'notifications') {
+        $('.sidenav').sidenav('close');
     }
 }
