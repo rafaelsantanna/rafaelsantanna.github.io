@@ -15,11 +15,15 @@ function navigateTo(page, event) {
     if(page != 'forgot-account' && page != 'login'){
         $('#footer').load('../pages/navigation-bottom.html');
     }
+
+    // Iniciando accordion
     if(page == 'dietary-prescription' || page == 'replacement-list') {
         setTimeout(function() {
             initAccordion();
         },100);
     }
+    
+    //Iniciando abas
     if(page == 'recipe-details') {
         setTimeout(function() {
             initTabs();

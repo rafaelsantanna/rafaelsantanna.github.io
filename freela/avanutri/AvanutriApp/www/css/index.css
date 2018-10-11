@@ -333,9 +333,15 @@ body {
     display: flex;
     justify-content: space-around;
 }
-#navigation-bottom .navigation-item{
+#navigation-bottom .navigation-item {
     flex: 1;
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#navigation-bottom .navigation-item img {
+    width: 100%;
+    max-width: 25px;
 }
 /* FIM NAVIGATIONS BOTTOM */
 
