@@ -25,8 +25,8 @@ function navigateTo(page, event) {
     //Iniciando abas
     if(page == 'recipe-details') {
         setTimeout(function() {
-            initTabs();
-        },500);
+            $('.tabs').tabs();
+        }, 100);
     }
 
     // Fechando o sidemenu
