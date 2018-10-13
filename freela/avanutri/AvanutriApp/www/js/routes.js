@@ -2,7 +2,8 @@ function limparTemplate() {
     $('#content').html('');
 }
 
-function navigateTo(page, event) {
+function navigateTo(page, event, self) {
+    var self = self;
     if (event != undefined) {
         event.preventDefault();
     }
@@ -10,9 +11,14 @@ function navigateTo(page, event) {
     limparTemplate();
     $('#content').load('../pages/' + page + '.html');
 
-    //Condição para mostrar o menu inferior
-    if(page != 'forgot-account' && page != 'login'){
-        $('#footer').load('../pages/navigation-bottom.html');
+    // Condição que verifica se o menu inferior está escondido, se sim mostre
+    if($('#navigation-bottom').css('display', 'none')){
+        $('#navigation-bottom').css('display', 'flex');
+    }
+
+    //Condição para esconder o menu inferior se for 'x' página
+    if(page == 'forgot-account' || page == 'login'){
+        $('#navigation-bottom').css('display', 'none');
     }
 
     // Iniciando accordion
@@ -33,4 +39,8 @@ function navigateTo(page, event) {
     if(page == 'notifications') {
         $('.sidenav').sidenav('close');
     }
+    
+    setTimeout(function() {
+        activeMenuIcon(self);
+    }, 100);
 }

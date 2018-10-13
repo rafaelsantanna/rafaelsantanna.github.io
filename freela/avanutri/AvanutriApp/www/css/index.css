@@ -325,12 +325,12 @@ body {
 
 /* NAVIGATIONS BOTTOM */
 #navigation-bottom {
+    display: none;
     background-color: var(--primary-color);
     position: fixed;
     bottom: 0;
     left: 0;
     margin-bottom: 0;
-    display: flex;
     justify-content: space-around;
 }
 #navigation-bottom .navigation-item {
@@ -368,6 +368,36 @@ nav .nav-wrapper {
 }
 /* FIM STYLE GERAL */
 
+/* ICONS*/
+.icon {
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.icon-resume {
+    background-image: url('../img/icons/resume.svg');
+}
+.icon-resume.active {
+    background-color: red;
+}
+.icon-contract {
+    background-image: url('../img/icons/contract.svg');
+}
+.icon-groceries {
+    background-image: url('../img/icons/groceries.svg');
+}
+.icon-recipe {
+    background-image: url('../img/icons/recipe.svg');
+}
+.icon-swap {
+    background-image: url('../img/icons/swap.svg');
+}
+.icon-text-document {
+    background-image: url('../img/icons/text-document.svg');
+}
+/* FIM ICONS*/
 /* HELPERS */
 .p-0 {
     padding: 0!important;

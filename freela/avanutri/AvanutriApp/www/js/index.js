@@ -7,8 +7,15 @@ function initAccordion() {
     M.Collapsible.init(elems, 'accordion');
 }
 
+// Init side menu
 function openSidemenu(e) {
   e.preventDefault();
   $('.sidenav').sidenav();
   $('.sidenav').sidenav('open');
+}
+
+// Set active icon menu bottom
+function activeMenuIcon(self) {
+  var el = $(self).children('.icon')[0];
+  document.querySelector(el).classList.add('active');
 }
