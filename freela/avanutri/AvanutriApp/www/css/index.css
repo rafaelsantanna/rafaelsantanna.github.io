@@ -78,13 +78,11 @@ body {
 /* FIM LOGIN */
 
 /* ESQUECI A SENHA */
-#forgot-account {
-
-}
 #forgot-account .nav-wrapper {
     padding: 0 15px;
     display: flex;
     background-color: var(--primary-color);
+    justify-content: initial;
 }
 #forgot-account .description {
     color: var(--primary-color);
@@ -265,8 +263,8 @@ body {
 /* FIM RECEITAS NUTRICIONAIS */
 
 /* DETALHES DA RECEITA */
-#recipe-details {
-    
+#recipe-details .nav-wrapper{
+    justify-content: initial;
 }
 #tabs-recipe {
     margin-bottom: 5px;
