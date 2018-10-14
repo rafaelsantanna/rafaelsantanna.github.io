@@ -39,8 +39,14 @@ function navigateTo(page, event, self) {
     if(page == 'notifications') {
         $('.sidenav').sidenav('close');
     }
-    
-    setTimeout(function() {
+
+    // Condição para ativar o primeiro icone do menu inferior após o login
+    if($(self).hasClass('btn-login-enter')) {
+        var active = $('#navigation-bottom .navigation-item:first');
+        activeMenuIcon(active);
+    } else {
+        //Ativar icones do menu inferior
         activeMenuIcon(self);
-    }, 100);
+    }
+
 }

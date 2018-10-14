@@ -16,6 +16,6 @@ function openSidemenu(e) {
 
 // Set active icon menu bottom
 function activeMenuIcon(self) {
-  var el = $(self).children('.icon')[0];
-  document.querySelector(el).classList.add('active');
+  $('.navigation-item').children('.icon').removeClass('active');
+  $(self).children('.icon').addClass('active');
 }

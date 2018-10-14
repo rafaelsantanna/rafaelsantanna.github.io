@@ -65,7 +65,7 @@ body {
     color: var(--primary-color);
 }
 
-#login .btn-submit {
+#login .btn-login-enter {
     width: 100%;
     font-weight: 600;
     margin-bottom: 0.8rem;
@@ -382,20 +382,37 @@ nav .nav-wrapper {
 .icon-resume.active {
     background-color: red;
 }
+
 .icon-contract {
     background-image: url('../img/icons/contract.svg');
 }
+.icon-contract.active {
+    background-color: red;
+}
+
 .icon-groceries {
     background-image: url('../img/icons/groceries.svg');
+}
+.icon-groceries.active {
+    background-color: red;
 }
 .icon-recipe {
     background-image: url('../img/icons/recipe.svg');
 }
+.icon-recipe.active {
+    background-color: red;
+}
 .icon-swap {
     background-image: url('../img/icons/swap.svg');
 }
+.icon-swap.active {
+    background-color: red;
+}
 .icon-text-document {
     background-image: url('../img/icons/text-document.svg');
+}
+.icon-text-document.active {
+    background-color: red;
 }
 /* FIM ICONS*/
 /* HELPERS */
