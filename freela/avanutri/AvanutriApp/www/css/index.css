@@ -324,12 +324,13 @@ body {
 /* NAVIGATIONS BOTTOM */
 #navigation-bottom {
     display: none;
-    background-color: var(--primary-color);
+    background-color: #e6e6e6;
     position: fixed;
     bottom: 0;
     left: 0;
     margin-bottom: 0;
     justify-content: space-around;
+    height: 60px;
 }
 #navigation-bottom .navigation-item {
     flex: 1;
@@ -368,8 +369,8 @@ nav .nav-wrapper {
 
 /* ICONS*/
 .icon {
-    width: 25px;
-    height: 25px;
+    width: 30px;
+    height: 30px;
     cursor: pointer;
     background-size: cover;
     background-repeat: no-repeat;
@@ -379,6 +380,8 @@ nav .nav-wrapper {
 }
 .icon-resume.active {
     background-image: url('../img/icons/resume-active.svg');
+    margin-bottom: 8px;
+    transition: .4s;
 }
 
 .icon-contract {
@@ -386,6 +389,8 @@ nav .nav-wrapper {
 }
 .icon-contract.active {
     background-image: url('../img/icons/contract-active.svg');
+    margin-bottom: 8px;
+    transition: .4s;
 }
 
 .icon-groceries {
@@ -393,26 +398,35 @@ nav .nav-wrapper {
 }
 .icon-groceries.active {
     background-image: url('../img/icons/groceries-active.svg');
+    margin-bottom: 8px;
+    transition: .4s;
 }
 .icon-recipe {
     background-image: url('../img/icons/recipe.svg');
 }
 .icon-recipe.active {
     background-image: url('../img/icons/recipe-active.svg');
+    margin-bottom: 8px;
+    transition: .4s;
 }
 .icon-swap {
     background-image: url('../img/icons/swap.svg');
 }
 .icon-swap.active {
     background-image: url('../img/icons/swap-active.svg');
+    margin-bottom: 8px;
+    transition: .4s;
 }
 .icon-text-document {
     background-image: url('../img/icons/text-document.svg');
 }
 .icon-text-document.active {
     background-image: url('../img/icons/text-document-active.svg');
+    margin-bottom: 8px;
+    transition: .4s;
 }
 /* FIM ICONS*/
+
 /* HELPERS */
 .p-0 {
     padding: 0!important;
