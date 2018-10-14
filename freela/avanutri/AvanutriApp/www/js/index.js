@@ -1,5 +1,5 @@
-// Página de login
-$('#content').load('../pages/login.html');
+  // Página de login
+  $('#content').load('./pages/login.html');
 
 // Initial all accordion
 function initAccordion() {
