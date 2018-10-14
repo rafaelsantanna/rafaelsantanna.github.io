@@ -377,6 +377,7 @@ nav .nav-wrapper {
 }
 .icon-resume {
     background-image: url('../img/icons/resume.svg');
+    transition: .4s;
 }
 .icon-resume.active {
     background-image: url('../img/icons/resume-active.svg');
@@ -386,6 +387,7 @@ nav .nav-wrapper {
 
 .icon-contract {
     background-image: url('../img/icons/contract.svg');
+    transition: .4s;
 }
 .icon-contract.active {
     background-image: url('../img/icons/contract-active.svg');
@@ -395,6 +397,7 @@ nav .nav-wrapper {
 
 .icon-groceries {
     background-image: url('../img/icons/groceries.svg');
+    transition: .4s;
 }
 .icon-groceries.active {
     background-image: url('../img/icons/groceries-active.svg');
@@ -403,6 +406,7 @@ nav .nav-wrapper {
 }
 .icon-recipe {
     background-image: url('../img/icons/recipe.svg');
+    transition: .4s;
 }
 .icon-recipe.active {
     background-image: url('../img/icons/recipe-active.svg');
@@ -411,6 +415,7 @@ nav .nav-wrapper {
 }
 .icon-swap {
     background-image: url('../img/icons/swap.svg');
+    transition: .4s;
 }
 .icon-swap.active {
     background-image: url('../img/icons/swap-active.svg');
@@ -419,6 +424,7 @@ nav .nav-wrapper {
 }
 .icon-text-document {
     background-image: url('../img/icons/text-document.svg');
+    transition: .4s;
 }
 .icon-text-document.active {
     background-image: url('../img/icons/text-document-active.svg');

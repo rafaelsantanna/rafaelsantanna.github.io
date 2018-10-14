@@ -8,9 +8,9 @@ function navigateTo(page, event, self) {
     $('#content nav~div').css({
         'position': 'relative'
     }).animate({
-        left: '100px',
+        left: '50px',
         opacity: 0,
-    }, 400);
+    }, 300);
     
 
     // Timeout para dar tempo de executar a animação
@@ -40,20 +40,20 @@ function navigateTo(page, event, self) {
                 initAccordion();
             }, 100);
         }
-        
-        // Fechando o sidemenu
-        if (page == 'notifications') {
-            $('.sidenav').sidenav('close');
-        }
-        
-        // Condição para ativar o primeiro icone do menu inferior após o login
-        if ($(self).hasClass('btn-login-enter')) {
-            var active = $('#navigation-bottom .navigation-item:first');
-            activeMenuIcon(active);
-        } else {
-            //Ativar icones do menu inferior
-            activeMenuIcon(self);
-        }
-        
-    }, 400);
+
+    }, 300);
+    
+    // Fechando o sidemenu
+    if (page == 'notifications') {
+        $('.sidenav').sidenav('close');
+    }
+
+    // Condição para ativar o primeiro icone do menu inferior após o login
+    if ($(self).hasClass('btn-login-enter')) {
+        var active = $('#navigation-bottom .navigation-item:first');
+        activeMenuIcon(active);
+    } else {
+        //Ativar icones do menu inferior
+        activeMenuIcon(self);
+    }
 }
