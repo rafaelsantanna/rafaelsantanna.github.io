@@ -380,39 +380,39 @@ nav .nav-wrapper {
     background-image: url('../img/icons/resume.svg');
 }
 .icon-resume.active {
-    background-color: red;
+    background-image: url('../img/icons/resume-active.svg');
 }
 
 .icon-contract {
     background-image: url('../img/icons/contract.svg');
 }
 .icon-contract.active {
-    background-color: red;
+    background-image: url('../img/icons/contract-active.svg');
 }
 
 .icon-groceries {
     background-image: url('../img/icons/groceries.svg');
 }
 .icon-groceries.active {
-    background-color: red;
+    background-image: url('../img/icons/groceries-active.svg');
 }
 .icon-recipe {
     background-image: url('../img/icons/recipe.svg');
 }
 .icon-recipe.active {
-    background-color: red;
+    background-image: url('../img/icons/recipe-active.svg');
 }
 .icon-swap {
     background-image: url('../img/icons/swap.svg');
 }
 .icon-swap.active {
-    background-color: red;
+    background-image: url('../img/icons/swap-active.svg');
 }
 .icon-text-document {
     background-image: url('../img/icons/text-document.svg');
 }
 .icon-text-document.active {
-    background-color: red;
+    background-image: url('../img/icons/text-document-active.svg');
 }
 /* FIM ICONS*/
 /* HELPERS */
@@ -420,7 +420,7 @@ nav .nav-wrapper {
     padding: 0!important;
 }
 .m-0 {
-    margin: 0!important;
+    margin: 0!important;    
 }
 /* HELPERS */
 
