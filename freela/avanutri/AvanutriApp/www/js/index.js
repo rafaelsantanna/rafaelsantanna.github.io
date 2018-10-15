@@ -19,3 +19,5 @@ function activeMenuIcon(self) {
   $('.navigation-item').children('.icon').removeClass('active');
   $(self).children('.icon').addClass('active');
 }
+
+// M.toast({html: 'Usuário ou Senha Inválidos!', classes: 'red darken-2'});
