@@ -24,7 +24,21 @@ body {
 }
 
 #content {
-    padding-bottom: 56px;
+    padding-bottom: 60px;
+}
+
+#content div nav {
+    position: fixed;
+    top: 0;
+    z-index: 10;
+}
+
+#content > div:not(#login) {
+    padding-top: 56px;
+}
+#content > div#dietary-prescription,
+#content > div#replacement-list {
+    padding-top: 66px;
 }
 
 /* LOGIN */
@@ -156,7 +170,7 @@ body {
 
 /*  PRESCRIÇÃO DIETÉTICA*/
 #dietary-prescription {
-    
+
 }
 
 #dietary-prescription .collapsible-header {
