@@ -389,12 +389,12 @@ nav .nav-wrapper {
     background-size: cover;
     background-repeat: no-repeat;
 }
-.icon-resume {
-    background-image: url('../img/icons/resume.svg');
+.icon-ruler {
+    background-image: url('../img/icons/ruler.svg');
     transition: .4s;
 }
-.icon-resume.active {
-    background-image: url('../img/icons/resume-active.svg');
+.icon-ruler.active {
+    background-image: url('../img/icons/ruler-active.svg');
     margin-bottom: 8px;
     transition: .4s;
 }
