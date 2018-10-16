@@ -91,6 +91,15 @@ body {
 }
 /* FIM LOGIN */
 
+/* SIDENAV */
+.user-view {
+    height: 200px;
+    display: flex;
+    align-items: center;
+    background-color: #e6e6e6;
+}
+/* FIM SIDENAV */
+
 /* ESQUECI A SENHA */
 #forgot-account .nav-wrapper {
     padding: 0 15px;
