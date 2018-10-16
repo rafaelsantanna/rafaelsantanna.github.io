@@ -1,184 +1,47 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml version="1.0" encoding="iso-8859-1"?>
 <!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
-
-<svg
-   xmlns:dc="http://purl.org/dc/elements/1.1/"
-   xmlns:cc="http://creativecommons.org/ns#"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-   xmlns:svg="http://www.w3.org/2000/svg"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   version="1.1"
-   id="Capa_1"
-   x="0px"
-   y="0px"
-   viewBox="0 0 512 512"
-   style="enable-background:new 0 0 512 512;"
-   xml:space="preserve"
-   width="512px"
-   height="512px"
-   sodipodi:docname="contract.svg"
-   inkscape:version="0.92.2 2405546, 2018-03-11"><metadata
-   id="metadata312"><rdf:RDF><cc:Work
-       rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
-         rdf:resource="http://purl.org/dc/dcmitype/StillImage" /></cc:Work></rdf:RDF></metadata><defs
-   id="defs310" /><sodipodi:namedview
-   pagecolor="#ffffff"
-   bordercolor="#666666"
-   borderopacity="1"
-   objecttolerance="10"
-   gridtolerance="10"
-   guidetolerance="10"
-   inkscape:pageopacity="0"
-   inkscape:pageshadow="2"
-   inkscape:window-width="1280"
-   inkscape:window-height="720"
-   id="namedview308"
-   showgrid="false"
-   inkscape:zoom="0.8984375"
-   inkscape:cx="2.7826087"
-   inkscape:cy="256"
-   inkscape:window-x="0"
-   inkscape:window-y="0"
-   inkscape:window-maximized="1"
-   inkscape:current-layer="Capa_1" />
-<g
-   id="g245"
-   style="fill:#7b7b7b;fill-opacity:1">
-	<g
-   id="g243"
-   style="fill:#7b7b7b;fill-opacity:1">
-		<path
-   d="M498.791,161.127c-17.545-17.546-46.094-17.545-63.645,0.004c-5.398,5.403-39.863,39.896-45.128,45.166V87.426    c0-12.02-4.681-23.32-13.181-31.819L334.412,13.18C325.913,4.68,314.612,0,302.592,0H45.018c-24.813,0-45,20.187-45,45v422    c0,24.813,20.187,45,45,45h300c24.813,0,45-20.187,45-45V333.631L498.79,224.767C516.377,207.181,516.381,178.715,498.791,161.127    z M300.019,30c2.834,0,8.295-0.491,13.18,4.393l42.426,42.427c4.76,4.761,4.394,9.978,4.394,13.18h-60V30z M360.018,467    c0,8.271-6.728,15-15,15h-300c-8.271,0-15-6.729-15-15V45c0-8.271,6.729-15,15-15h225v75c0,8.284,6.716,15,15,15h75v116.323    c0,0-44.254,44.292-44.256,44.293l-21.203,21.204c-1.646,1.646-2.888,3.654-3.624,5.863l-21.214,63.64    c-1.797,5.39-0.394,11.333,3.624,15.35c4.023,4.023,9.968,5.419,15.35,3.624l63.64-21.213c2.209-0.736,4.217-1.977,5.863-3.624    l1.82-1.82V467z M326.378,312.427l21.213,21.213l-8.103,8.103l-31.819,10.606l10.606-31.82L326.378,312.427z M368.8,312.422    l-21.213-21.213c11.296-11.305,61.465-61.517,72.105-72.166l21.213,21.213L368.8,312.422z M477.573,203.558l-15.463,15.476    l-21.213-21.213l15.468-15.481c5.852-5.849,15.366-5.848,21.214,0C483.426,188.19,483.457,197.673,477.573,203.558z"
-   fill="#FFFFFF"
-   id="path241"
-   style="fill:#7b7b7b;fill-opacity:1" />
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px" viewBox="0 0 496.941 496.941" style="enable-background:new 0 0 496.941 496.941;" xml:space="preserve" width="512px" height="512px">
+<g>
+	<g>
+		<g>
+			<path d="M475.299,106.918l-12.047-3.765c-3.012-0.753-6.024-1.506-9.788-1.506c-13.553,0-25.6,9.035-30.118,21.835l-6.776,20.329     v-15.059V128c0-2.259-1.506-4.518-3.012-6.024L290.076,2.259C288.57,0.753,286.311,0,284.805,0H43.111     c-4.518,0-7.529,3.012-7.529,7.529v23.341H7.723c-4.518,0-7.529,3.012-7.529,7.529v451.012c0,4.518,3.012,7.529,7.529,7.529     h365.929c4.518,0,7.529-3.012,7.529-7.529v-23.341h27.859c4.518,0,7.529-3.012,7.529-7.529V356.894l21.082-28.612l0.753-2.259     l56.471-179.953C500.899,129.506,491.864,112.188,475.299,106.918z M292.334,25.6l98.635,94.871h-98.635V25.6z M366.123,481.882     H15.252V45.929h20.329v412.612c0,4.518,3.012,7.529,7.529,7.529h323.012V481.882z M402.264,451.012h-0.753H50.64V15.059h226.635     V128c0,4.518,3.012,7.529,7.529,7.529h117.459V192l-35.388,111.435v2.259l1.506,95.624c0,3.012,2.259,6.024,5.271,6.776     c3.012,0.753,6.776,0,8.282-3.012l20.329-27.106V451.012z M382.687,377.976l-1.506-62.494l37.647,12.047L382.687,377.976z      M481.323,141.553l-54.212,172.424l-43.671-14.306L437.652,128c3.012-8.282,12.047-13.553,20.329-10.541l12.047,3.765     C479.064,123.482,484.334,133.271,481.323,141.553z" fill="#7b7b7b"/>
+			<path d="M101.84,135.529h108.424c4.518,0,7.529-3.012,7.529-7.529V51.2c0-4.518-3.012-7.529-7.529-7.529H101.84     c-4.518,0-7.529,3.012-7.529,7.529V128C94.311,131.765,98.076,135.529,101.84,135.529z M109.37,58.729h93.365v61.741H109.37     V58.729z" fill="#7b7b7b"/>
+			<path d="M86.782,206.306h228.894c4.518,0,7.529-3.012,7.529-7.529c0-4.518-3.012-7.529-7.529-7.529H86.782     c-4.518,0-7.529,3.012-7.529,7.529C79.252,203.294,82.264,206.306,86.782,206.306z" fill="#7b7b7b"/>
+			<path d="M86.782,261.271h228.894c4.518,0,7.529-3.012,7.529-7.529s-3.012-7.529-7.529-7.529H86.782     c-4.518,0-7.529,3.012-7.529,7.529S82.264,261.271,86.782,261.271z" fill="#7b7b7b"/>
+			<path d="M86.782,316.235h228.894c4.518,0,7.529-3.012,7.529-7.529s-3.012-7.529-7.529-7.529H86.782     c-4.518,0-7.529,3.012-7.529,7.529S82.264,316.235,86.782,316.235z" fill="#7b7b7b"/>
+			<path d="M322.452,363.671c0-4.518-3.012-7.529-7.529-7.529H86.782c-4.518,0-7.529,3.012-7.529,7.529s3.012,7.529,7.529,7.529     h228.894C319.44,371.2,322.452,367.435,322.452,363.671z" fill="#7b7b7b"/>
+			<path d="M347.299,411.106H233.605c-4.518,0-7.529,3.012-7.529,7.529s3.012,7.529,7.529,7.529h112.941     c4.518,0,7.529-3.012,7.529-7.529S351.064,411.106,347.299,411.106z" fill="#7b7b7b"/>
+		</g>
 	</g>
 </g>
-<g
-   id="g251"
-   style="fill:#7b7b7b;fill-opacity:1">
-	<g
-   id="g249"
-   style="fill:#7b7b7b;fill-opacity:1">
-		<path
-   d="M285.018,150h-210c-8.284,0-15,6.716-15,15s6.716,15,15,15h210c8.284,0,15-6.716,15-15S293.302,150,285.018,150z"
-   fill="#FFFFFF"
-   id="path247"
-   style="fill:#7b7b7b;fill-opacity:1" />
-	</g>
+<g>
 </g>
-<g
-   id="g257"
-   style="fill:#7b7b7b;fill-opacity:1">
-	<g
-   id="g255"
-   style="fill:#7b7b7b;fill-opacity:1">
-		<path
-   d="M225.018,210h-150c-8.284,0-15,6.716-15,15s6.716,15,15,15h150c8.284,0,15-6.716,15-15S233.302,210,225.018,210z"
-   fill="#FFFFFF"
-   id="path253"
-   style="fill:#7b7b7b;fill-opacity:1" />
-	</g>
+<g>
 </g>
-<g
-   id="g263"
-   style="fill:#7b7b7b;fill-opacity:1">
-	<g
-   id="g261"
-   style="fill:#7b7b7b;fill-opacity:1">
-		<path
-   d="M225.018,270h-150c-8.284,0-15,6.716-15,15s6.716,15,15,15h150c8.284,0,15-6.716,15-15S233.302,270,225.018,270z"
-   fill="#FFFFFF"
-   id="path259"
-   style="fill:#7b7b7b;fill-opacity:1" />
-	</g>
+<g>
 </g>
-<g
-   id="g269"
-   style="fill:#7b7b7b;fill-opacity:1">
-	<g
-   id="g267"
-   style="fill:#7b7b7b;fill-opacity:1">
-		<path
-   d="M225.018,330h-150c-8.284,0-15,6.716-15,15s6.716,15,15,15h150c8.284,0,15-6.716,15-15S233.302,330,225.018,330z"
-   fill="#FFFFFF"
-   id="path265"
-   style="fill:#7b7b7b;fill-opacity:1" />
-	</g>
+<g>
 </g>
-<g
-   id="g275"
-   style="fill:#7b7b7b;fill-opacity:1">
-	<g
-   id="g273"
-   style="fill:#7b7b7b;fill-opacity:1">
-		<path
-   d="M285.018,422h-90c-8.284,0-15,6.716-15,15s6.716,15,15,15h90c8.284,0,15-6.716,15-15S293.302,422,285.018,422z"
-   fill="#FFFFFF"
-   id="path271"
-   style="fill:#7b7b7b;fill-opacity:1" />
-	</g>
+<g>
 </g>
-<g
-   id="g277"
-   style="fill:#7b7b7b;fill-opacity:1">
+<g>
 </g>
-<g
-   id="g279"
-   style="fill:#7b7b7b;fill-opacity:1">
+<g>
 </g>
-<g
-   id="g281"
-   style="fill:#7b7b7b;fill-opacity:1">
+<g>
 </g>
-<g
-   id="g283"
-   style="fill:#7b7b7b;fill-opacity:1">
+<g>
 </g>
-<g
-   id="g285"
-   style="fill:#7b7b7b;fill-opacity:1">
+<g>
 </g>
-<g
-   id="g287"
-   style="fill:#7b7b7b;fill-opacity:1">
+<g>
 </g>
-<g
-   id="g289"
-   style="fill:#7b7b7b;fill-opacity:1">
+<g>
 </g>
-<g
-   id="g291"
-   style="fill:#7b7b7b;fill-opacity:1">
+<g>
 </g>
-<g
-   id="g293"
-   style="fill:#7b7b7b;fill-opacity:1">
+<g>
 </g>
-<g
-   id="g295"
-   style="fill:#7b7b7b;fill-opacity:1">
-</g>
-<g
-   id="g297"
-   style="fill:#7b7b7b;fill-opacity:1">
-</g>
-<g
-   id="g299"
-   style="fill:#7b7b7b;fill-opacity:1">
-</g>
-<g
-   id="g301"
-   style="fill:#7b7b7b;fill-opacity:1">
-</g>
-<g
-   id="g303"
-   style="fill:#7b7b7b;fill-opacity:1">
-</g>
-<g
-   id="g305"
-   style="fill:#7b7b7b;fill-opacity:1">
+<g>
 </g>
 </svg>
