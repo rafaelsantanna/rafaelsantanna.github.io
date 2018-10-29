@@ -1,0 +1,132 @@
+/* TABLE */
+
+
+.btn-actions-table .edit-button{
+    font-size: 1.5rem;
+    margin-left: 3px;
+    color: var(--primary-color);
+}
+
+.btn-actions-table .btn{
+    font-size: 0.8rem;
+    margin-left: 3px;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.btn-primary:hover {
+    color: #fff;
+    background-color: #2c6771;
+    border-color: #2c6771;
+}
+
+.btn-include {
+    margin-left: 1rem;
+}
+
+.container-search {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.container-search .input-search {
+    max-width: 300px;
+}
+
+.ico-search {
+    background-color: var(--primary-color);
+    color: #fff;
+}
+
+.table-scroll {
+    height: 465px;
+    overflow: auto;
+}
+
+.table, .table td {
+    text-align: center;
+    padding: 0.3rem;
+    vertical-align: initial;
+}
+
+/* ---------------------------------------------------
+    CARD
+----------------------------------------------------- */
+
+.card-responsive {
+    width: 100%;
+}
+
+.card-scroll {
+    height: 110px;
+    overflow: auto;
+}
+
+.form-inline .badge {
+    margin-right: 10px;
+}
+
+.agenda {
+
+}
+
+
+/* ---------------------------------------------------
+    SCROLL STYLE
+----------------------------------------------------- */
+@media(min-width: 1200px){
+    .units-imeb__companies::-webkit-scrollbar {
+        width: 0.2em;
+    }
+
+    .units-imeb__companies::-webkit-scrollbar-thumb {
+        height: 6px;
+        background-clip: padding-box;
+        -webkit-border-radius: 15px;
+        background-color: #ccc;
+        -webkit-box-shadow: inset -1px -1px 0px rgba(0, 0, 0, 0.05), inset 1px 1px 0px rgba(0, 0, 0, 0.05);
+    }
+}
+/* ---------------------------------------------------
+    MEDIAQUERIES
+----------------------------------------------------- */
+
+@media(max-width: 425px) {
+    .action-buttons-table {
+        flex-direction: column;
+    }
+
+    .btn-include {
+        max-width: 300px;
+        margin: 10px auto;
+        margin-top: 10px;
+        margin-left: 0;
+    }
+    
+    .container-search {
+        justify-content: center;
+    }
+
+    .container-search .input-search {
+        max-width: 355px;
+    }
+
+    .pacientes-table thead th {
+        white-space: nowrap;
+    }
+
+    .card-responsive {
+        padding: 0.5rem;
+    }
+
+    .card-row-mobile {
+        padding: 0.5rem;
+    }
+
+    .table-scroll {
+        margin-bottom: 25px;
+    }
+}
