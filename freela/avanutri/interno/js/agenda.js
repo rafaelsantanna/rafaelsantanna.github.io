@@ -19,7 +19,7 @@ $(document).ready(function () {
       locale: 'pt-BR',
       themeSystem: 'bootstrap4',
       height: 525,
-      events: 'http://api-agenda-rafaeel16.c9users.io/api/schedules',
+      events: 'https://api-agenda-rafaeel16.c9users.io/api/schedules',
       dayClick: function (date, jsEvent, view) {
         //reset input
         $('#titleSchedule').val('');
@@ -60,7 +60,7 @@ $(document).ready(function () {
       var time = $('#timeSchedule').val();
   
       $.ajax({
-        url: 'http://api-agenda-rafaeel16.c9users.io/api/schedules',
+        url: 'https://api-agenda-rafaeel16.c9users.io/api/schedules',
         type: "POST",
         data: {
           'title': title,
@@ -112,7 +112,7 @@ $(document).ready(function () {
     var id = $('#info-id').val();
     $.ajax({
       type: "DELETE",
-      url: 'http://api-agenda-rafaeel16.c9users.io/api/schedules/' + id,
+      url: 'https://api-agenda-rafaeel16.c9users.io/api/schedules/' + id,
       success: function (data) {
         var element = '[data-id="' + $('#info-id').val() + '"]';
         $(element).remove();
@@ -147,7 +147,7 @@ $(document).ready(function () {
   
     $.ajax({
       type: "PUT",
-      url: 'http://api-agenda-rafaeel16.c9users.io/api/schedules/' + id,
+      url: 'https://api-agenda-rafaeel16.c9users.io/api/schedules/' + id,
       data:{
         'title': title,
         'start': start,
