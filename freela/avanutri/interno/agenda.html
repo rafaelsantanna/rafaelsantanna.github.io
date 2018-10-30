@@ -27,8 +27,8 @@
     <!-- Datepicker -->
     <link rel="stylesheet" href="./css/datepicker.min.css">
 
-    <!-- Material UI Time Picker -->
-    <link rel="stylesheet" href="./css/mdtimepicker.min.css">
+    <!-- Timepicker -->
+    <link rel="stylesheet" href="./css/jquery.timepicker.css">
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="./css/general.css">
@@ -239,7 +239,14 @@
                 </div>
             </div>
             <div class="mb-3">
-                <input type="text" id="timeSchedule"/>
+                <div class="input-group">
+                    <form action="" autocomplete="off">
+                        <input type="text" id="timeSchedule" class="form-control" data-time-format="H:i" data-step="30" data-min-time="00:00" data-max-time="23:30" data-show-2400="true"/>
+                    </form>
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-time"></span>
+                    </span>
+                </div>
             </div>
             <div class="d-flex justify-content-end">
                 <button id="saveSchedule" class="btn btn-primary">Salvar</button>
@@ -303,8 +310,8 @@
     <!-- Datepicker -->
     <script src="./js/datepicker.min.js"></script>
 
-    <!-- Material UI Timepicker -->
-    <script src="./js/mdtimepicker.min.js"></script>
+    <!-- Timepicker -->
+    <script src="./js/jquery.timepicker.js"></script>
 
     <!-- Tradução Full Calendar -->
     <script src="./js/locale/pt-br.js"></script>
