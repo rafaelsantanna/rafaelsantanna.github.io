@@ -28,20 +28,40 @@
     box-shadow: 0 24px 38px 3px rgba(0,0,0,0.14), 0 9px 46px 8px rgba(0,0,0,0.12), 0 11px 15px -7px rgba(0,0,0,0.2);
     -webkit-border-radius: 2px;
     border-radius: 2px;
+    position: relative;
+}
+
+#modalSchedule .btn-close, #modalScheduleInfos .btn-close {
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: rgba(0,0,0,0.54);
+    border-radius: 50%;
+    position: absolute;
+    right: 6px;
+    top: 6px;
+}
+#modalSchedule .btn-close:hover, #modalScheduleInfos .btn-close:hover {
+    background-color: #f5f5f5;
 }
 
 /* MODAL SCHEDULE */
-#modalSchedule .btn-close, #modalScheduleInfos .btn-close {
-    display: flex;
-    justify-content: flex-end;
-}
-
 #modalSchedule #titleSchedule {
     border: 0;
     outline: 0;
     font-size: 24px;
     color: #212121;
     height: 28px;
+    margin-left: 35px;
+}
+
+#modalSchedule .content .ico--custom {
+    width: 35px;
+    display: flex;
+    align-items: center;
 }
 
 #modalSchedule #saveSchedule {

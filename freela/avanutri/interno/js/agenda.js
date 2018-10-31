@@ -21,8 +21,9 @@ $(document).ready(function () {
     dayClick: function (date, jsEvent, view) {
       //reset input
       $('#titleSchedule').val('');
-      $('#timeSchedule').val('');
+      $('#timeSchedule').val('12:00');
       $('#patientSchedule').val(0);
+      
       // set date
       $('#modalSchedule #dateSchedule').val(date.format());
 
@@ -40,12 +41,12 @@ $(document).ready(function () {
   });
 
   //Close modal Schedule
-  $('#modalSchedule .bg-overlay, #modalSchedule .btn-close i').click(function () {
+  $('#modalSchedule .bg-overlay, #modalSchedule .btn-close').click(function () {
     $('#modalSchedule').hide();
   });
 
   //Close modal Schedule Infos
-  $('#modalScheduleInfos .bg-overlay, #modalScheduleInfos .btn-close i').click(function () {
+  $('#modalScheduleInfos .bg-overlay, #modalScheduleInfos .btn-close').click(function () {
     $('#modalScheduleInfos').hide();
   });
 
