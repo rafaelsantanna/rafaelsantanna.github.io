@@ -31,7 +31,7 @@
     position: relative;
 }
 
-#modalSchedule .btn-close, #modalScheduleInfos .btn-close {
+#modalSchedule .btn-close {
     cursor: pointer;
     width: 40px;
     height: 40px;
@@ -43,9 +43,11 @@
     position: absolute;
     right: 6px;
     top: 6px;
+    transition: .4s;
 }
 #modalSchedule .btn-close:hover, #modalScheduleInfos .btn-close:hover {
     background-color: #f5f5f5;
+    transition: .4s;
 }
 
 /* MODAL SCHEDULE */
@@ -74,13 +76,48 @@
 }
 
 /* MODAL SCHEDULE INFO */
-#modalScheduleInfos .btn-actions-modal a {
-    margin: 0 10px;
-    font-size: 18px;
+
+#modalScheduleInfos .content .btn-actions-modal {
+    position: absolute;
+    right: 6px;
+    top: 6px;
+    align-items: center;
+}
+
+#modalScheduleInfos .content .btn-actions-modal a {
+    text-decoration: none;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: rgba(0,0,0,0.54);
+    border-radius: 50%;
+    transition: .4s;
+}
+
+#modalScheduleInfos .content .btn-actions-modal a:hover {
+    background-color: #f5f5f5;
+    transition: .4s;
+}
+
+#modalScheduleInfos .content .btn-actions-modal a i {
+    color: rgba(0,0,0,0.54);
+    font-size: 16px;
 }
 
 #modalScheduleInfos .wrapper-infos-edit {
     display: none;
+}
+
+#modalScheduleInfos .wrapper-infos {
+    margin-top: 15px;
+}
+
+#modalScheduleInfos #info-title {
+    font-size: 24px;
+    line-height: 1.2;
+    max-width: 300px;
 }
 
 /* CALENDAR HEADER */
