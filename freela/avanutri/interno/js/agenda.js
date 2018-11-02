@@ -4,6 +4,7 @@ $(document).ready(function () {
   //Initialize Datepicker
   $('[data-toggle="datepicker"]').datepicker({
     language: 'pt-BR',
+    format:'dd/mm/yyyy',
     autoHide:true,
     zIndex: 100000,
     startView: 1,
@@ -25,8 +26,8 @@ $(document).ready(function () {
       $('#patientSchedule').val(0);
       
       // set date
-      $('#modalSchedule #dateSchedule').val(date.format());
-
+      $('#modalSchedule #dateSchedule').val(date.format('l'));
+    
       // show modal schedule
       $('#modalSchedule').css('display', 'flex');
     },
@@ -57,7 +58,10 @@ $(document).ready(function () {
     var start = $('#dateSchedule').val();
     var patient = $('#patientSchedule option:selected').text();
     var time = $('#timeSchedule').val();
-
+    
+    // Formatting to the fullcalendar pattern
+    start = moment(moment(start, ['DD-MM-YYYY', 'MM-DD-YYYY'])).format('YYYY-MM-DD');
+    
     $.ajax({
       url: 'https://api-agenda-rafaeel16.c9users.io/api/schedules',
       type: "POST",
@@ -96,7 +100,7 @@ function scheduleInfos(element) {
   $('#info-id').val(id);
   $('#info-title').text(title);
   $('#info-patient').text(patient);
-  $('#info-date').text(date);
+  $('#info-date').text(moment(date).format('l'));
   $('#info-time').text(time);
 
   // show modal schedule
@@ -161,6 +165,8 @@ function updateEvent() {
   var title = $('#info-title-edit').val();
   var start = $('#info-date-edit').val();
   var time = $('#info-time-edit').val();
+
+  start = moment(moment(start, ['DD-MM-YYYY', 'MM-DD-YYYY'])).format('YYYY-MM-DD');
 
   $.ajax({
     type: "PUT",
