@@ -106,10 +106,6 @@
     font-size: 16px;
 }
 
-#modalScheduleInfos .wrapper-infos-edit {
-    display: none;
-}
-
 #modalScheduleInfos .wrapper-infos {
     margin-top: 15px;
 }
@@ -117,7 +113,39 @@
 #modalScheduleInfos #info-title {
     font-size: 24px;
     line-height: 1.2;
-    max-width: 300px;
+    max-width: 340px;
+}
+
+#modalScheduleInfos .wrapper-infos .info-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+#modalScheduleInfos .wrapper-infos .info-item p {
+    margin: 0 10px;
+    font-size: 18px;
+}
+
+/* MODAL SCHEDULE INFO EDIT */
+
+#modalScheduleInfos .wrapper-infos-edit {
+    display: none;
+}
+
+#modalScheduleInfos #info-title-edit {
+    border: 0;
+    outline: 0;
+    font-size: 24px;
+    color: #212121;
+    height: 28px;
+    margin-left: 35px;
+}
+
+#modalScheduleInfos .ico--custom {
+    width: 35px;
+    display: flex;
+    align-items: center;
 }
 
 /* CALENDAR HEADER */

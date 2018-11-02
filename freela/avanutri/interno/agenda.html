@@ -239,7 +239,8 @@
                 <div class="input-group">
                     <i class="far fa-clock ico--custom"></i>
                     <form action="" autocomplete="off">
-                        <input type="text" id="timeSchedule" class="form-control" data-time-format="H:i" data-step="30" data-min-time="00:00" data-max-time="23:30" data-show-2400="true"/>
+                        <input type="text" id="timeSchedule" class="form-control" data-time-format="H:i" data-step="30"
+                            data-min-time="00:00" data-max-time="23:30" data-show-2400="true" />
                     </form>
                 </div>
             </div>
@@ -257,9 +258,6 @@
             <input id="info-id" type="hidden">
 
             <div class="d-flex justify-content-end btn-actions-modal">
-                <a href="#" onclick="changeContentModalUpdate()">
-                    <i class="fas fa-edit"></i>
-                </a>
                 <a href="#" onclick="removeEvent()">
                     <i class="fas fa-trash"></i>
                 </a>
@@ -269,26 +267,59 @@
             </div>
 
             <div class="wrapper-infos-edit">
-                <div class="mb-2">
+
+                <div class="mb-3">
                     <input id="info-title-edit" type="text" placeholder="Adicionar título">
                 </div>
-                <div class="mb-2">
-                    <span class="ico"></span>
-                    <input id="info-date-edit" type="date">
+
+                <div class="mb-3">
+                    <div class="input-group">
+                        <i class="far fa-calendar-alt ico--custom"></i>
+                        <input id="info-date-edit" data-toggle="datepicker" type="text" class="form-control" name="date">
+                    </div>
                 </div>
-                <div class="mb-2">
-                    <span class="ico"></span>
-                    <input type="time" name="" id="info-time-edit">
+                <div class="mb-3">
+                    <div class="input-group">
+                        <i class="far fa-clock ico--custom"></i>
+                        <form action="" autocomplete="off">
+                            <input type="text" id="info-time-edit" class="form-control" data-time-format="H:i"
+                                data-step="30" data-min-time="00:00" data-max-time="23:30" data-show-2400="true" />
+                        </form>
+                    </div>
                 </div>
+
+                <hr>
+
                 <div class="d-flex justify-content-end">
                     <button onclick="updateEvent()" class="btn btn-primary">Salvar</button>
                 </div>
             </div>
+
             <div class="wrapper-infos">
-                <p id="info-title"></p>
-                <p id="info-patient"></p>
-                <p id="info-date"></p>
-                <p id="info-time"></p>
+                <div>
+                    <p id="info-title"></p>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-user ico--custom"></i>
+                    <p id="info-patient"></p>
+                </div>
+
+                <div class="info-item">
+                    <i class="far fa-calendar-alt ico--custom"></i>
+                    <p id="info-date"></p>
+                </div>
+
+                <div class="info-item">
+                    <i class="far fa-clock ico--custom"></i>
+                    <p id="info-time"></p>
+                </div>
+
+                <hr>
+
+                <div class="d-flex justify-content-end">
+                    <button onclick="changeContentModalUpdate()" class="btn btn-primary"><i class="fas fa-edit"></i>
+                        Editar</button>
+                </div>
             </div>
         </div>
     </div>
