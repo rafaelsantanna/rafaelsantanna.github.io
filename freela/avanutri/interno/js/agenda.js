@@ -17,16 +17,16 @@ $(document).ready(function () {
   //Setup Fullcalendar
   $('#calendar').fullCalendar({
     locale: 'pt-BR',
+    defaultView: 'agendaWeek',
+    allDaySlot: false,
     themeSystem: 'bootstrap4',
     height: 525,
     events: 'https://api-agenda-rafaeel16.c9users.io/api/schedules',
     dayClick: function (date, jsEvent, view) {
       //reset input
       $('#titleSchedule').val('');
-      $('#timeSchedule').val('12:00');
       $('#patientSchedule').val(0);
-      
-      // set date
+      $('#timeSchedule').val(date.format('LT'));
       $('#modalSchedule #dateSchedule').val(date.format('l'));
     
       // show modal schedule
@@ -35,9 +35,8 @@ $(document).ready(function () {
     eventRender: function (event, element) {
       $(element)[0].setAttribute('data-id', event.id);
       $(element)[0].setAttribute('data-title', event.title);
-      $(element)[0].setAttribute('data-start', event.start._i);
+      $(element)[0].setAttribute('data-start', event.start);
       $(element)[0].setAttribute('data-patient', event.patient);
-      $(element)[0].setAttribute('data-time', event.time);
       $(element)[0].setAttribute('onclick', 'scheduleInfos(this)');
     }
   });
@@ -54,14 +53,16 @@ $(document).ready(function () {
 
   //Save Schedule
   $('#saveSchedule').click(function () {
-    var id = Math.floor(Math.random() * 100) + 1; // get return api
     var title = $('#titleSchedule').val();
-    var start = $('#dateSchedule').val();
+    var date = $('#dateSchedule').val();
     var patient = $('#patientSchedule option:selected').text();
     var time = $('#timeSchedule').val();
     
     // Formatting to the fullcalendar pattern
-    start = moment(moment(start, ['DD-MM-YYYY', 'MM-DD-YYYY'])).format('YYYY-MM-DD');
+    var formattedDate = moment(moment(date, ['DD-MM-YYYY', 'MM-DD-YYYY'])).format('YYYY-MM-DD');
+    
+    // Concatenate to date and time format fullcalendar
+    var start = formattedDate + 'T' + time + '-03:00';
     
     $.ajax({
       url: 'https://api-agenda-rafaeel16.c9users.io/api/schedules',
@@ -74,7 +75,7 @@ $(document).ready(function () {
       },
       success: function (data) {
         $('#calendar').fullCalendar('renderEvent', {
-          id: id,
+          id: data.last_insert_id,
           title: title,
           start: start,
           patient: patient,
@@ -95,14 +96,13 @@ function scheduleInfos(element) {
   var id = $(element).data('id');
   var title = $(element).data('title');
   var patient = $(element).data('patient');
-  var date = $(element).data('start');
-  var time = $(element).data('time');
+  var start = $(element).data('start');
 
   $('#info-id').val(id);
   $('#info-title').text(title);
   $('#info-patient').text(patient);
-  $('#info-date').text(moment(date).format('l'));
-  $('#info-time').text(time);
+  $('#info-date').text(moment(start).format('l'));
+  $('#info-time').text(moment(start).format('LT'));
 
   // show modal schedule
   $('#modalScheduleInfos').css('display', 'flex');
