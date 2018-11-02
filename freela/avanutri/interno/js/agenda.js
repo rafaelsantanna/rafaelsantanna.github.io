@@ -12,6 +12,7 @@ $(document).ready(function () {
 
   //Initialize Clockpicker
   $('#timeSchedule').timepicker();
+  $('#info-time-edit').timepicker();
   
   //Setup Fullcalendar
   $('#calendar').fullCalendar({
