@@ -190,3 +190,22 @@
     color: #212121;
 }
 /* END CALENDAR */
+
+/* MEDIA QUERIES */
+
+@media(max-width: 425px) {
+    #calendar .fc-header-toolbar h2 {
+        font-size: 1.3rem;
+    }
+    #calendar .fc-day-header span {
+        font-size: 0.9rem;
+        display: flex;
+        justify-content: center;
+    }
+}
+
+@media(max-width: 320px) {
+    #calendar .fc-day-header span {
+        font-size: 0.7rem;
+    }
+}
