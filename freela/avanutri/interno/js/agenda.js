@@ -4,8 +4,8 @@ $(document).ready(function () {
   //Initialize Datepicker
   $('[data-toggle="datepicker"]').datepicker({
     language: 'pt-BR',
-    format:'dd/mm/yyyy',
-    autoHide:true,
+    format: 'dd/mm/yyyy',
+    autoHide: true,
     zIndex: 100000,
     startView: 1,
   });
@@ -13,7 +13,7 @@ $(document).ready(function () {
   //Initialize Clockpicker
   $('#timeSchedule').timepicker();
   $('#info-time-edit').timepicker();
-  
+
   //Setup Fullcalendar
   $('#calendar').fullCalendar({
     locale: 'pt-BR',
@@ -28,7 +28,7 @@ $(document).ready(function () {
       $('#patientSchedule').val(0);
       $('#timeSchedule').val(date.format('LT'));
       $('#modalSchedule #dateSchedule').val(date.format('l'));
-    
+
       // show modal schedule
       $('#modalSchedule').css('display', 'flex');
     },
@@ -57,13 +57,10 @@ $(document).ready(function () {
     var date = $('#dateSchedule').val();
     var patient = $('#patientSchedule option:selected').text();
     var time = $('#timeSchedule').val();
-    
-    // Formatting to the fullcalendar pattern
-    var formattedDate = moment(moment(date, ['DD-MM-YYYY', 'MM-DD-YYYY'])).format('YYYY-MM-DD');
-    
-    // Concatenate to date and time format fullcalendar
-    var start = formattedDate + 'T' + time + '-03:00';
-    
+
+
+    var start = formatToPatternFullcalendar(date, time);
+
     $.ajax({
       url: 'https://api-agenda-rafaeel16.c9users.io/api/schedules',
       type: "POST",
@@ -139,7 +136,7 @@ function changeContentModalUpdate() {
   $('#info-date-edit').val(date);
   $('#info-time-edit').val(time);
 
-  
+
   $('#modalScheduleInfos .wrapper-infos').hide();
   $('#modalScheduleInfos .wrapper-infos-edit').show();
 
@@ -157,25 +154,24 @@ function changeContentModalUpdate() {
     });
     return this;
   };
-  
+
   $('#info-title-edit').focus().setCursorPosition(0);
 }
 
 function updateEvent() {
   var id = $('#info-id').val();
   var title = $('#info-title-edit').val();
-  var start = $('#info-date-edit').val();
+  var date = $('#info-date-edit').val();
   var time = $('#info-time-edit').val();
 
-  start = moment(moment(start, ['DD-MM-YYYY', 'MM-DD-YYYY'])).format('YYYY-MM-DD');
+  start = formatToPatternFullcalendar(date, time);
 
   $.ajax({
     type: "PUT",
     url: 'https://api-agenda-rafaeel16.c9users.io/api/schedules/' + id,
-    data:{
+    data: {
       'title': title,
-      'start': start,
-      'time': time
+      'start': start
     },
     success: function () {
       //reset calendar after update
@@ -186,4 +182,14 @@ function updateEvent() {
       console.log("Erro: " + e);
     }
   });
+}
+
+function formatToPatternFullcalendar(date, time) {
+  // Formatting to the fullcalendar pattern
+  var formattedDate = moment(moment(date, ['DD-MM-YYYY', 'MM-DD-YYYY'])).format('YYYY-MM-DD');
+
+  // Concatenate to date and time formdateat fullcalendar
+  var start = formattedDate + 'T' + time + '-03:00';
+
+  return start;
 }
