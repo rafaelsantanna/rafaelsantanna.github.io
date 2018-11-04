@@ -67,29 +67,35 @@ $(document).ready(function () {
 
     var start = formatToPatternFullcalendar(date, time);
 
-    $.ajax({
-      url: 'https://api-agenda-rafaeel16.c9users.io/api/schedules',
-      type: "POST",
-      data: {
-        'title': title,
-        'start': start,
-        'time': time,
-        'patient': patient
-      },
-      success: function (data) {
-        $('#calendar').fullCalendar('renderEvent', {
-          id: data.last_insert_id,
-          title: title,
-          start: start,
-          patient: patient,
-          time: time
-        });
-        $('#modalSchedule').modal('hide');
-      },
-      error: function (e) {
-        console.log("Erro: " + e);
-      }
-    });
+    if(title == '' || patient == '' || start == '') {
+      mensagemAlerta('Mensagem genérica!!', 'primary');
+    } else {
+      $.ajax({
+        url: 'https://api-agenda-rafaeel16.c9users.io/api/schedules',
+        type: "POST",
+        data: {
+          'title': title,
+          'start': start,
+          'time': time,
+          'patient': patient
+        },
+        success: function (data) {
+          $('#calendar').fullCalendar('renderEvent', {
+            id: data.last_insert_id,
+            title: title,
+            start: start,
+            patient: patient,
+            time: time
+          });
+          $('#modalSchedule').modal('hide');
+          mensagemAlerta('Agendamento criado com sucesso!', 'primary');
+        },
+        error: function (e) {
+          console.log("Erro: " + e);
+        }
+      });
+    }
+
   });
 });
 
@@ -128,6 +134,7 @@ function removeEvent() {
       var element = '[data-id="' + $('#info-id').val() + '"]';
       $(element).remove();
       $('#modalScheduleInfos').modal('hide');
+      mensagemAlerta('Agendamento deletado com sucesso!', 'danger');
     },
     error: function (e) {
       console.log("Erro: " + e);
@@ -191,6 +198,7 @@ function updateEvent() {
       //reset calendar after update
       $('#calendar').fullCalendar('refetchEvents');
       $("#modalScheduleInfos").modal('hide');
+      mensagemAlerta('Agendamento atualizado com sucesso!', 'primary');
     },
     error: function (e) {
       console.log("Erro: " + e);
@@ -206,4 +214,36 @@ function formatToPatternFullcalendar(date, time) {
   var start = formattedDate + 'T' + time + '-03:00';
 
   return start;
+}
+
+function mensagemAlerta(mensagem, colorClass) {
+  $('body').append(`
+  <div class="alert alert-${colorClass} alert-message" role="alert">
+  ${mensagem}
+  </div>`);
+
+  var widthScreen = $(document).width();
+
+  if(widthScreen > 567) {
+    $('.alert-message').css({
+      'position':'fixed',
+      'right': '5px',
+      'top': '10px',
+    }).fadeIn(400);
+  } else {
+    $('.alert-message').css({
+      'position':'fixed',
+      'right': '0',
+      'left': '0',
+      'top': '0',
+      'border-radius': '0',
+      'opacity': '.95'
+    }).fadeIn(400);
+  }
+
+  setTimeout(function() {
+    $('.alert-message').fadeOut(400,function(){
+      $('.alert-message').remove();
+    });
+  }, 3000);
 }
