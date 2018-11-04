@@ -17,8 +17,14 @@ $(document).ready(function () {
   //Setup Fullcalendar
   $('#calendar').fullCalendar({
     locale: 'pt-BR',
+    header: {
+      left: 'today prev,next title',
+      center: '',
+      right: ''
+    },
     defaultView: 'agendaWeek',
     allDaySlot: false,
+    titleFormat: 'MMMM YYYY',
     themeSystem: 'bootstrap4',
     height: 525,
     events: 'https://api-agenda-rafaeel16.c9users.io/api/schedules',
