@@ -211,7 +211,7 @@ function formatToPatternFullcalendar(date, time) {
   var formattedDate = moment(moment(date, ['DD-MM-YYYY', 'MM-DD-YYYY'])).format('YYYY-MM-DD');
 
   // Concatenate to date and time formdateat fullcalendar
-  var start = formattedDate + 'T' + time + '-03:00';
+  var start = formattedDate + 'T' + time + '-02:00';
 
   return start;
 }
