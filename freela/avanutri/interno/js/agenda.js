@@ -36,7 +36,7 @@ $(document).ready(function () {
       $('#modalSchedule #dateSchedule').val(date.format('l'));
 
       // show modal schedule
-      $('#modalSchedule').css('display', 'flex');
+      $('#modalSchedule').modal();
     },
     eventRender: function (event, element) {
       $(element)[0].setAttribute('data-id', event.id);
@@ -84,7 +84,7 @@ $(document).ready(function () {
           patient: patient,
           time: time
         });
-        $('#modalSchedule').hide();
+        $('#modalSchedule').modal('hide');
       },
       error: function (e) {
         console.log("Erro: " + e);
@@ -108,11 +108,15 @@ function scheduleInfos(element) {
   $('#info-time').text(moment(start).format('LT'));
 
   // show modal schedule
-  $('#modalScheduleInfos').css('display', 'flex');
+  $('#modalScheduleInfos').modal();
 
   // when opening the modal returns to the default
   $('#modalScheduleInfos .wrapper-infos').show();
+  $('#modalScheduleInfos .btn-edit-event').show();
+  $('#modalScheduleInfos .btn-remove-event').show();
+  
   $('#modalScheduleInfos .wrapper-infos-edit').hide();
+  $('#modalScheduleInfos .btn-update-event').hide();
 }
 
 function removeEvent() {
@@ -123,7 +127,7 @@ function removeEvent() {
     success: function (data) {
       var element = '[data-id="' + $('#info-id').val() + '"]';
       $(element).remove();
-      $('#modalScheduleInfos').hide();
+      $('#modalScheduleInfos').modal('hide');
     },
     error: function (e) {
       console.log("Erro: " + e);
@@ -144,7 +148,11 @@ function changeContentModalUpdate() {
 
 
   $('#modalScheduleInfos .wrapper-infos').hide();
-  $('#modalScheduleInfos .wrapper-infos-edit').show();
+  $('#modalScheduleInfos .btn-edit-event').hide();
+  $('#modalScheduleInfos .btn-remove-event').hide();
+
+  $('#modalScheduleInfos .wrapper-infos-edit').fadeIn(400);
+  $('#modalScheduleInfos .btn-update-event').fadeIn(400);
 
   $.fn.setCursorPosition = function (pos) {
     this.each(function (index, elem) {
@@ -182,7 +190,7 @@ function updateEvent() {
     success: function () {
       //reset calendar after update
       $('#calendar').fullCalendar('refetchEvents');
-      $("#modalScheduleInfos").hide();
+      $("#modalScheduleInfos").modal('hide');
     },
     error: function (e) {
       console.log("Erro: " + e);

@@ -209,115 +209,117 @@
         </div>
     </div>
 
-    <!-- Modal Schedule -->
-    <div id="modalSchedule">
-        <div class="bg-overlay"></div>
-        <div class="content">
-            <div class="btn-close">
-                <i class="fas fa-times"></i>
-            </div>
-            <div class="mb-3">
-                <input id="titleSchedule" type="text" placeholder="Adicionar título">
-            </div>
-            <div class="input-group mb-3">
-                <i class="fas fa-user ico--custom"></i>
-                <select class="custom-select" id="patientSchedule">
-                    <option value="0">Selecione um paciente</option>
-                    <option value="1">Manuela</option>
-                    <option value="2">Patricia</option>
-                    <option value="3">Patrick</option>
-                    <option value="4">Thiago</option>
-                </select>
-            </div>
-            <div class="mb-3">
-                <div class="input-group">
-                    <i class="far fa-calendar-alt ico--custom"></i>
-                    <input id="dateSchedule" data-toggle="datepicker" type="text" class="form-control" name="date">
+    <div class="modal fade" id="modalSchedule" tabindex="-1" role="dialog" aria-labelledby="modalSchedule" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <input id="titleSchedule" type="text" placeholder="Adicionar título">
+                    </div>
+                    <div class="input-group mb-3">
+                        <i class="fas fa-user ico--custom"></i>
+                        <select class="custom-select" id="patientSchedule">
+                            <option value="0">Selecione um paciente</option>
+                            <option value="1">Manuela</option>
+                            <option value="2">Patricia</option>
+                            <option value="3">Patrick</option>
+                            <option value="4">Thiago</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <div class="input-group">
+                            <i class="far fa-calendar-alt ico--custom"></i>
+                            <input id="dateSchedule" data-toggle="datepicker" type="text" class="form-control" name="date">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <form class="input-group" action="" autocomplete="off">
+                            <i class="far fa-clock ico--custom"></i>
+                            <input type="text" id="timeSchedule" class="form-control" data-time-format="H:i" data-step="30"
+                                data-min-time="00:00" data-max-time="23:30" data-show-2400="true" />
+                        </form>
+                    </div>
                 </div>
-            </div>
-            <div class="mb-3">
-                <form class="input-group" action="" autocomplete="off">
-                    <i class="far fa-clock ico--custom"></i>
-                    <input type="text" id="timeSchedule" class="form-control" data-time-format="H:i" data-step="30"
-                        data-min-time="00:00" data-max-time="23:30" data-show-2400="true" />
-                </form>
-            </div>
-            <hr>
-            <div class="d-flex justify-content-end">
-                <button id="saveSchedule" class="btn btn-primary">Salvar</button>
+                <div class="modal-footer">
+                    <div class="d-flex justify-content-end">
+                        <button id="saveSchedule" class="btn btn-primary">Salvar</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- Modal infos schedule -->
-    <div id="modalScheduleInfos">
-        <div class="bg-overlay"></div>
-        <div class="content">
-
-            <input id="info-id" type="hidden">
-
-            <div class="d-flex justify-content-end btn-actions-modal">
-                <a href="#" onclick="removeEvent()">
-                    <i class="fas fa-trash"></i>
-                </a>
-                <a class="btn-close" href="#">
-                    <i class="fas fa-times"></i>
-                </a>
-            </div>
-
-            <div class="wrapper-infos-edit">
-
-                <div class="mb-3">
-                    <input id="info-title-edit" type="text" placeholder="Adicionar título">
+    <div class="modal fade" id="modalScheduleInfos" tabindex="-1" role="dialog" aria-labelledby="modalScheduleInfos"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="btn-header-modal">
+                    <a class="btn-remove-event" href="#" onclick="removeEvent()">
+                        <i class="fas fa-trash"></i>
+                    </a>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
+                <div class="modal-body">
+                    <div class="content">
 
-                <div class="mb-3">
-                    <div class="input-group">
-                        <i class="far fa-calendar-alt ico--custom"></i>
-                        <input id="info-date-edit" data-toggle="datepicker" type="text" class="form-control" name="date">
+                        <input id="info-id" type="hidden">
+
+                        <div class="wrapper-infos-edit">
+
+                            <div class="mb-3">
+                                <input id="info-title-edit" type="text" placeholder="Adicionar título">
+                            </div>
+
+                            <div class="mb-3">
+                                <div class="input-group">
+                                    <i class="far fa-calendar-alt ico--custom"></i>
+                                    <input id="info-date-edit" data-toggle="datepicker" type="text" class="form-control"
+                                        name="date">
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <div class="input-group">
+                                    <i class="far fa-clock ico--custom"></i>
+                                    <form action="" autocomplete="off">
+                                        <input type="text" id="info-time-edit" class="form-control" data-time-format="H:i"
+                                            data-step="30" data-min-time="00:00" data-max-time="23:30" data-show-2400="true" />
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="wrapper-infos">
+                            <div>
+                                <p id="info-title"></p>
+                            </div>
+                            <div class="info-item">
+                                <i class="fas fa-user ico--custom"></i>
+                                <p id="info-patient"></p>
+                            </div>
+
+                            <div class="info-item">
+                                <i class="far fa-calendar-alt ico--custom"></i>
+                                <p id="info-date"></p>
+                            </div>
+
+                            <div class="info-item">
+                                <i class="far fa-clock ico--custom"></i>
+                                <p id="info-time"></p>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="mb-3">
-                    <div class="input-group">
-                        <i class="far fa-clock ico--custom"></i>
-                        <form action="" autocomplete="off">
-                            <input type="text" id="info-time-edit" class="form-control" data-time-format="H:i"
-                                data-step="30" data-min-time="00:00" data-max-time="23:30" data-show-2400="true" />
-                        </form>
+                <div class="modal-footer">
+                    <div class="d-flex justify-content-end">
+                        <button onclick="changeContentModalUpdate()" class="btn btn-primary btn-edit-event"><i class="fas fa-edit"></i>
+                            Editar</button>
+                        <button onclick="updateEvent()" class="btn btn-primary btn-update-event">Salvar</button>
                     </div>
-                </div>
-
-                <hr>
-
-                <div class="d-flex justify-content-end">
-                    <button onclick="updateEvent()" class="btn btn-primary">Salvar</button>
-                </div>
-            </div>
-
-            <div class="wrapper-infos">
-                <div>
-                    <p id="info-title"></p>
-                </div>
-                <div class="info-item">
-                    <i class="fas fa-user ico--custom"></i>
-                    <p id="info-patient"></p>
-                </div>
-
-                <div class="info-item">
-                    <i class="far fa-calendar-alt ico--custom"></i>
-                    <p id="info-date"></p>
-                </div>
-
-                <div class="info-item">
-                    <i class="far fa-clock ico--custom"></i>
-                    <p id="info-time"></p>
-                </div>
-
-                <hr>
-
-                <div class="d-flex justify-content-end">
-                    <button onclick="changeContentModalUpdate()" class="btn btn-primary"><i class="fas fa-edit"></i>
-                        Editar</button>
                 </div>
             </div>
         </div>
