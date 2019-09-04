@@ -1,0 +1,144 @@
+* {
+  margin: 0;
+  padding: 0;
+  outline: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  font-family: 'Open Sans', sans-serif;
+}
+
+html, body {
+  height: 100%;
+}
+
+.menu-container {
+  background-color: #626fe4;
+  color: #fff;
+}
+
+.menu-container .menu {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  padding: 10px 15px;
+  margin-bottom: 15px;
+}
+
+.menu-container .menu .menu-logout img {
+  cursor: pointer;
+  width: 25px;
+  height: 25px;
+}
+
+.container-description {
+  text-align: center;
+  padding: 0 15px;
+}
+
+.container-description .text-description {
+  font-size: 16px;
+}
+
+@media (max-width: 575.98px) {
+  .container-description .text-description {
+    font-size: 14px;
+  }
+}
+
+.flex-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  margin-top: 15px;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.flex-container .card {
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  border-radius: 10px;
+  width: 100%;
+  max-width: 270px;
+  height: 355px;
+  overflow: hidden;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  margin: 10px;
+}
+
+.flex-container .card-content {
+  padding: 20px;
+  position: relative;
+}
+
+.flex-container .card-cancel-sign {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  top: 15px;
+  right: 15px;
+  opacity: .5;
+  cursor: pointer;
+}
+
+.flex-container .card-cancel-sign:hover {
+  opacity: .75;
+}
+
+.flex-container .card-image {
+  width: 100%;
+  height: 200px;
+}
+
+.flex-container .card-description {
+  font-size: 14px;
+  margin: 15px 0;
+  text-align: center;
+}
+
+.flex-container .card-btn {
+  background-color: #626fe4;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 20px 15px;
+  text-transform: capitalize;
+  -webkit-transition: .4s all;
+  transition: .4s all;
+  width: 100%;
+}
+
+.flex-container .card-btn:hover {
+  background-color: #3647dd;
+  -webkit-transition: .4s all;
+  transition: .4s all;
+}
+
+.flex-container .card-btn:disabled {
+  background-color: #626fe4;
+  color: rgba(255, 255, 255, 0.8);
+  cursor: not-allowed;
+}
+
+.mt-3 {
+  margin-top: 1rem;
+}
+/*# sourceMappingURL=index.css.map */
