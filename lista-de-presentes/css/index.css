@@ -138,6 +138,74 @@ html, body {
   cursor: not-allowed;
 }
 
+.modal {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  height: 100vh;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.modal__content {
+  background-color: #fff;
+  border-radius: 6px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  height: 200px;
+  width: 300px;
+}
+
+.modal__content label {
+  font-size: 18px;
+  font-family: 'Open Sans', sans-serif;
+  margin-bottom: 15px;
+}
+
+.modal__content input {
+  border-radius: 6px;
+  border: 1px solid #aaa;
+  padding: 10px;
+  margin-bottom: 15px;
+}
+
+.modal__content button {
+  background-color: #626fe4;
+  border: none;
+  border-radius: 6px;
+  color: #fff;
+  cursor: pointer;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 16px;
+  padding: 5px 20px;
+}
+
+.modal__content button:hover {
+  background-color: #3647dd;
+  -webkit-transition: .4s all;
+  transition: .4s all;
+}
+
 .mt-3 {
   margin-top: 1rem;
 }
