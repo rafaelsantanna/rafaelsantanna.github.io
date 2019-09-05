@@ -16,7 +16,7 @@
     data: {
       userName: "",
       products: [],
-      showModal: true
+      showModal: this.checkCookie('username')
     },
     mounted: function () {
       this.loadProducts();
@@ -48,7 +48,7 @@
       },
       login: function() {
         var vm = this;
-        vm.setCookie("username", vm.userName, 365);
+        vm.setCookie("username", self.userName, 365);
         vm.showModal = false;
       },
       getCookie: function(cname) {
@@ -70,6 +70,13 @@
         d.setTime(d.getTime() + (exdays*24*60*60*1000));
         var expires = "expires="+ d.toUTCString();
         window.document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+      },
+      checkCookie: function(cname) {
+        var user = getCookie(cname);
+        if (user != "") {
+          return true
+        } 
+          return false;
       }
     }
   })
