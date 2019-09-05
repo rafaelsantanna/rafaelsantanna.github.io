@@ -16,7 +16,7 @@
     data: {
       userName: "",
       products: [],
-      showModal: this.getCookie().length > 0 ? true:false
+      showModal: this.getCookie("username").length > 0 ? true:false
     },
     mounted: function () {
       this.loadProducts();
