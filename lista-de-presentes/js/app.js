@@ -16,7 +16,7 @@
     data: {
       userName: "",
       products: [],
-      showModal: this.checkCookie('username')
+      showModal: false
     },
     mounted: function () {
       this.loadProducts();
