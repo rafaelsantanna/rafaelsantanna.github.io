@@ -48,7 +48,7 @@
       },
       login: function() {
         var vm = this;
-        vm.setCookie("username", self.userName, 365);
+        vm.setCookie("username", vm.userName, 365);
         vm.showModal = false;
       },
       getCookie: function(cname) {
