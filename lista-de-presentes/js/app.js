@@ -16,11 +16,14 @@
     data: {
       userName: "",
       products: [],
-      showModal: !this.checkCookie('username')
+      showModal: true
     },
     mounted: function () {
+      var vm = this;
       this.loadProducts();
-      console.log(this.showModal);
+      var isLogged = this.checkCookie('username');
+      isLogged ? vm.showModal = false : vm.showModal = true;
+      console.log(vm.showModal);
     },
     methods: {
       addItemGiftList: function(productId) {
