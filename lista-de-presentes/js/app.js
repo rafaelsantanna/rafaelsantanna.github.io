@@ -11,6 +11,16 @@
   // Initialize Firebase
   firebase.initializeApp(firebaseConfig);
 
+  function addItemGiftList(nameProduct) {
+    var data = {
+      name: nameProduct,
+      imgUrl: '',
+      signed: false,
+    };
+
+    return firebase.database().ref().child('products').push(data);
+}
+
   var app = new Vue({
     el: '#app',
     data: {
@@ -30,15 +40,6 @@
       }
     },
     methods: {
-      addItemGiftList: function(nameProduct) {
-          var data = {
-            name: nameProduct,
-            imgUrl: '',
-            signed: false,
-          };
-      
-          return firebase.database().ref().child('products').push(data);
-      },
       signItemGiftList: function(productId) {
         var vm = this;
         firebase.database().ref('products/' + productId).update({
