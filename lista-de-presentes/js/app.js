@@ -22,8 +22,12 @@
       var vm = this;
       this.loadProducts();
       var isLogged = this.checkCookie('username');
-      isLogged ? vm.showModal = false : vm.showModal = true;
-      console.log(vm.showModal);
+      if(isLogged) {
+        vm.showModal = false;
+        vm.userName = vm.getCookie('username');
+      } else {
+        vm.showModal = true;
+      }
     },
     methods: {
       addItemGiftList: function(productId) {
