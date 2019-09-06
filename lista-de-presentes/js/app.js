@@ -76,7 +76,8 @@
         window.document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
       },
       checkCookie: function(cname) {
-        var user = getCookie(cname);
+        var vm = this;
+        var user = vm.getCookie(cname);
         if (user != "") {
           return true
         } 
