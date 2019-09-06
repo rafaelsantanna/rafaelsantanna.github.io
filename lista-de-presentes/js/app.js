@@ -30,7 +30,16 @@
       }
     },
     methods: {
-      addItemGiftList: function(productId) {
+      addItemGiftList: function(nameProduct) {
+          var data = {
+            name: nameProduct,
+            imgUrl: '',
+            signed: false,
+          };
+      
+          return firebase.database().ref().child('products').push(data);
+      },
+      signItemGiftList: function(productId) {
         var vm = this;
         firebase.database().ref('products/' + productId).update({
           signed: true,
