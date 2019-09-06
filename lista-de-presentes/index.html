@@ -29,7 +29,7 @@
         <div class="flex-container">
             <div class="card" v-for="item in products">
                 <div class="card-content">
-                    <img class="card-cancel-sign" src="./img/cancel.svg" v-if="item.signed" @click="removeItemGiftList(item.id)" />
+                    <img class="card-cancel-sign" src="./img/cancel.svg" v-if="item.signed && item.userSigned == userName" @click="removeItemGiftList(item.id)" />
                     <img class="card-image" :src="item.imgUrl" />
                     <p class="card-description">{{item.name}}</p>
                 </div>

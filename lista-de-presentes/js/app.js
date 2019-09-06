@@ -33,11 +33,12 @@
       addItemGiftList: function(productId) {
         firebase.database().ref('products/' + productId).update({
           signed: true,
+          userSigned: vm.userName
         });
       },
       removeItemGiftList: function(productId) {
         firebase.database().ref('products/' + productId).update({
-          signed: false,
+          signed: false
         });
       },
       loadProducts: function() {
@@ -49,7 +50,8 @@
               id: item.key,
               name: item.val().name,
               imgUrl: item.val().imgUrl,
-              signed: item.val().signed
+              signed: item.val().signed,
+              userSigned: item.val().userSigned
             });
           });
         });
