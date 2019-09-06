@@ -16,10 +16,11 @@
     data: {
       userName: "",
       products: [],
-      showModal: false
+      showModal: !this.checkCookie('username')
     },
     mounted: function () {
       this.loadProducts();
+      console.log(this.showModal);
     },
     methods: {
       addItemGiftList: function(productId) {
