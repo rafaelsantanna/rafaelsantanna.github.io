@@ -31,6 +31,7 @@
     },
     methods: {
       addItemGiftList: function(productId) {
+        var vm = this;
         firebase.database().ref('products/' + productId).update({
           signed: true,
           userSigned: vm.userName
