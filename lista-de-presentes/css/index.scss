@@ -99,9 +99,10 @@ html, body {
             transition: .4s all;
         }
         &:disabled {
-            background-color: #626fe4;
+            background-color: #e4626f;
             color: rgba(255,255,255,.8);
             cursor: not-allowed;
+            font-weight: 600;
         }
     }
 }

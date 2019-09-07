@@ -135,9 +135,10 @@ html, body {
 }
 
 .flex-container .card-btn:disabled {
-  background-color: #626fe4;
+  background-color: #e4626f;
   color: rgba(255, 255, 255, 0.8);
   cursor: not-allowed;
+  font-weight: 600;
 }
 
 .modal {
