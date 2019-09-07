@@ -68,7 +68,6 @@ html, body {
   border-radius: 10px;
   width: 100%;
   max-width: 270px;
-  height: 355px;
   overflow: hidden;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -84,6 +83,9 @@ html, body {
 }
 
 .flex-container .card-content {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
   padding: 20px;
   position: relative;
 }

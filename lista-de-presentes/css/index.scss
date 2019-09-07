@@ -52,7 +52,6 @@ html, body {
         border-radius: 10px;
         width: 100%;
         max-width: 270px;
-        height: 355px;
         overflow: hidden;
         display: flex;
         flex-direction: column;
@@ -60,6 +59,7 @@ html, body {
         margin: 10px;
     }
     .card-content {
+        flex: 1;
         padding: 20px;
         position: relative;
     }
