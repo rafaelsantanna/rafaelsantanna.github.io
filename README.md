@@ -1,5 +1,6 @@
 Portfolio:
 
+Solo Bahia  
 IMEB  
 Systemplate  
 Avanutri(Front APP)  
@@ -9,7 +10,7 @@ Mackenzie(Moodle)
 Bono Educação(Moodle)  
 Unicarioca(Moodle)  
 TIM (Moodle)  
-Escola superior de redes(RNP) (Moodle)  
+RNP - Escola superior de redes (Moodle)  
 Youpluv  
 http://www.gtreid.com  
 http://jeeptour.com.br/  
