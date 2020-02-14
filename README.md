@@ -1,20 +1,25 @@
 Portfolio:
 
-Solo Bahia  
-IMEB  
-Systemplate  
-Avanutri(Front APP)  
-Avanutri Web  
-Profarma(sistema)  
-Mackenzie(Moodle)  
-Bono Educação(Moodle)  
-Unicarioca(Moodle)  
-TIM (Moodle)  
+Solo Bahia (Front)  
+IMEB (Front)  
+Systemplate (Sistema PHP)  
+Avanutri (Front APP)  
+Avanutri Web (Front)  
+Profarma (Sistema Asp.net)  
+Mackenzie (Moodle)  
+Bono Educação (Moodle)  
+Unicarioca (Moodle)  
+TIM Connect (Moodle)  
 RNP - Escola superior de redes (Moodle)  
-Youpluv  
-http://www.gtreid.com  
-http://jeeptour.com.br/  
-http://www.portoseguro.ba.gov.br/todoscontraoaedes/  
-http://eunapolis.ba.gov.br/  
-http://soscomunidades.com.br/  
-https://www.trinks.com/  (Sugestão de pedidos, Landing page, Pagamento Online, Temas de apps e estabelecimentos, E-mail marketing, entre várias outras telas do sistema)...
+Unissuam (Moodle)  
+ITDP (Moodle)  
+IPOG (Moodle)  
+Geniantis (Moodle)  
+Enauta (Moodle) 
+Youpluv (TCC, Rest API PHP)  
+http://www.gtreid.com (Front)  
+http://jeeptour.com.br/ (Wordpress)  
+http://www.portoseguro.ba.gov.br/todoscontraoaedes/ (Front/WP)  
+http://eunapolis.ba.gov.br/ (Front/WP)  
+http://soscomunidades.com.br/ (Sistema Asp.net)    
+https://www.trinks.com/  (Front/Aps.net) (Sugestão de pedidos, Landing page, Pagamento Online, Temas de apps e estabelecimentos, E-mail marketing, entre várias outras telas do sistema)...
