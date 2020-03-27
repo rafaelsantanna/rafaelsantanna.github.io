@@ -1,11 +1,13 @@
 Portfolio:
-
-Solo Bahia (Front)  
+Elio Winter(Front)
+Forneria Gagliasso (Front)
+Solo Bahia (Front)  http://solobahia.com/
+Olocardor(Front)  
 IMEB (Front)  
 Systemplate (Sistema PHP)  
 Avanutri (Front APP)  
 Avanutri Web (Front)  
-Profarma (Sistema Asp.net)  
+  
 Mackenzie (Moodle)  
 Bono Educação (Moodle)  
 Unicarioca (Moodle)  
@@ -16,10 +18,15 @@ ITDP (Moodle)
 IPOG (Moodle)  
 Geniantis (Moodle)  
 Enauta (Moodle) 
+Moodle Smart (Moodle)
+Super Estagiários (Moodle)
+W1 Finance (Moodle)  
+  
 Youpluv (TCC, Rest API PHP)  
 http://www.gtreid.com (Front)  
 http://jeeptour.com.br/ (Wordpress)  
 http://www.portoseguro.ba.gov.br/todoscontraoaedes/ (Front/WP)  
 http://eunapolis.ba.gov.br/ (Front/WP)  
-http://soscomunidades.com.br/ (Sistema Asp.net)    
+http://soscomunidades.com.br/ (Sistema Asp.net)  
+Profarma (Sistema Asp.net)  
 https://www.trinks.com/  (Front/Aps.net) (Sugestão de pedidos, Landing page, Pagamento Online, Temas de apps e estabelecimentos, E-mail marketing, entre várias outras telas do sistema)...
