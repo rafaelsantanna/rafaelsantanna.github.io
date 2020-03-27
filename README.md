@@ -1,7 +1,7 @@
 Portfolio:
-Elio Winter(Front)
-Forneria Gagliasso (Front)
-Solo Bahia (Front)  http://solobahia.com/
+Elio Winter(Front)  
+Forneria Gagliasso (Front)  
+Solo Bahia (Front)  http://solobahia.com/  
 Olocardor(Front)  
 IMEB (Front)  
 Systemplate (Sistema PHP)  
