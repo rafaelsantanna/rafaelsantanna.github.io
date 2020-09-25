@@ -8,35 +8,35 @@ Systemplate (Sistema Laravel / React)
 Avanutri (Front APP)  
 Avanutri Web (Front)  
 
-## Moodle
-Mackenzie 
-Bono Educação 
-Unicarioca 
-TIM Connect 
-RNP - Escola superior de redes 
-Unissuam 
-ITDP 
-IPOG 
-Geniantis 
-Enauta 
-Moodle Smart 
-Super Estagiários 
-W1 Finance 
+## Moodle  
+Mackenzie  
+Bono Educação  
+Unicarioca  
+TIM Connect  
+RNP - Escola superior de redes  
+Unissuam  
+ITDP  
+IPOG  
+Geniantis  
+Enauta  
+Moodle Smart  
+Super Estagiários  
+W1 Finance  
 ABRH  
-ClubeG2
-Elevagro
-Enauta
-Eplanners
-Fabercastell
-IBP
-Keune
-LearningFlix
-MedSkill
-Sapura
-Sistel
-Souzacruz
-W1Finance
-
+ClubeG2  
+Elevagro  
+Enauta  
+Eplanners  
+Fabercastell  
+IBP  
+Keune  
+LearningFlix  
+MedSkill  
+Sapura  
+Sistel  
+Souzacruz  
+W1Finance  
+Smart Events  
   
 Youpluv (TCC, Rest API PHP)  
 http://www.gtreid.com (Front)  
