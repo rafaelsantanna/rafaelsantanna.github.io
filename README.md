@@ -1,5 +1,5 @@
 <div align="center">
-  <img alt="Logo" src="https://raw.githubusercontent.com/rafaelsantanna/v4/main/src/images/logo.png" width="100" />
+  <img alt="Logo" src="https://github.com/rafaelsantanna/rafaelsantanna.github.io/blob/master/src/images/logo.png?raw=true" width="100" />
 </div>
 
 ## 🛠 Installation & Set Up
