@@ -1,24 +1,18 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-08-10T12:30:33.0042433Z",
+  "generatedAt": "2026-08-10T15:10:00.000Z",
   "title": "Design System: Rafael Sant' Anna Portfolio",
   "extensions": {
     "colorMeta": {
-      "mineral-paper": { "role": "neutral", "displayName": "Mineral Paper", "canonical": "oklch(95.5% 0.018 84)", "tonalRamp": ["oklch(15% 0.018 84)", "oklch(27% 0.018 84)", "oklch(39% 0.018 84)", "oklch(51% 0.018 84)", "oklch(63% 0.018 84)", "oklch(75% 0.018 84)", "oklch(87% 0.018 84)", "oklch(95.5% 0.018 84)"] },
-      "charcoal-ink": { "role": "neutral", "displayName": "Charcoal Ink", "canonical": "oklch(21% 0.045 254)", "tonalRamp": ["oklch(15% 0.045 254)", "oklch(27% 0.045 254)", "oklch(39% 0.045 254)", "oklch(51% 0.045 254)", "oklch(63% 0.045 254)", "oklch(75% 0.045 254)", "oklch(87% 0.045 254)", "oklch(95% 0.045 254)"] },
-      "committed-cobalt": { "role": "primary", "displayName": "Committed Cobalt", "canonical": "oklch(51% 0.22 260)", "tonalRamp": ["oklch(15% 0.12 260)", "oklch(27% 0.17 260)", "oklch(39% 0.2 260)", "oklch(51% 0.22 260)", "oklch(63% 0.19 260)", "oklch(75% 0.14 260)", "oklch(87% 0.08 260)", "oklch(95% 0.03 260)"] },
-      "signal-orange": { "role": "secondary", "displayName": "Signal Orange", "canonical": "oklch(70% 0.19 48)", "tonalRamp": ["oklch(15% 0.09 48)", "oklch(27% 0.13 48)", "oklch(39% 0.17 48)", "oklch(51% 0.19 48)", "oklch(63% 0.19 48)", "oklch(75% 0.16 48)", "oklch(87% 0.09 48)", "oklch(95% 0.03 48)"] }
+      "signal-room": { "role": "neutral", "displayName": "Signal Room", "canonical": "oklch(15% 0.035 245)" },
+      "signal-room-deep": { "role": "neutral", "displayName": "Signal Room Deep", "canonical": "oklch(10.5% 0.03 245)" },
+      "ice": { "role": "neutral", "displayName": "Ice", "canonical": "oklch(96% 0.015 225)" },
+      "edge-cyan": { "role": "secondary", "displayName": "Edge Cyan", "canonical": "oklch(76% 0.15 210)" },
+      "electric-blue": { "role": "primary", "displayName": "Electric Blue", "canonical": "oklch(58% 0.2 255)" }
     },
-    "typographyMeta": {
-      "display": { "displayName": "Display", "purpose": "Hero statements and page promises." },
-      "body": { "displayName": "Body", "purpose": "Case studies, service explanations, and CV narrative." },
-      "label": { "displayName": "Coordinate Label", "purpose": "Indexes, states, dates, and route annotations." }
-    },
-    "shadows": [],
     "motion": [
       { "name": "ease-out", "value": "cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "Reveal and state transitions that settle quickly." },
-      { "name": "duration-fast", "value": "160ms", "purpose": "Hover and focus feedback." },
-      { "name": "duration-medium", "value": "320ms", "purpose": "Navigation and component transitions." }
+      { "name": "signal-scan", "value": "5s", "purpose": "A single portrait scan that communicates a live system." }
     ],
     "breakpoints": [
       { "name": "wide-nav", "value": "72rem" },
@@ -28,56 +22,28 @@
     ]
   },
   "components": [
-    {
-      "name": "Primary Button",
-      "kind": "button",
-      "refersTo": "button-primary",
-      "description": "The default route into contact or a selected action.",
-      "html": "<a class=\"ds-btn-primary\" href=\"#\">Discuss a project <span aria-hidden=\"true\">↗</span></a>",
-      "css": ".ds-btn-primary{display:inline-flex;align-items:center;justify-content:space-between;gap:1.5rem;min-height:3.35rem;padding:.78rem 1.1rem;border-radius:.45rem;background:var(--cobalt,oklch(51% .22 260));color:var(--on-color,oklch(97% .012 84));font:650 .94rem Geologica,sans-serif;text-decoration:none;transition:background 160ms,transform 160ms}.ds-btn-primary:hover{background:var(--cobalt-deep,oklch(35% .17 259));transform:translateY(-3px)}.ds-btn-primary:focus-visible{outline:3px solid var(--signal,oklch(70% .19 48));outline-offset:4px}"
-    },
-    {
-      "name": "Signal Button",
-      "kind": "button",
-      "refersTo": "button-signal",
-      "description": "The closing CTA and strongest operational waypoint.",
-      "html": "<a class=\"ds-btn-signal\" href=\"#\">Discuss a project <span aria-hidden=\"true\">↗</span></a>",
-      "css": ".ds-btn-signal{display:inline-flex;align-items:center;justify-content:space-between;gap:1.5rem;min-height:3.35rem;padding:.78rem 1.1rem;border-radius:.45rem;background:var(--signal,oklch(70% .19 48));color:var(--ink,oklch(21% .045 254));font:650 .94rem Geologica,sans-serif;text-decoration:none;transition:background 160ms,transform 160ms}.ds-btn-signal:hover{background:oklch(87% .09 63);transform:translateY(-3px)}.ds-btn-signal:focus-visible{outline:3px solid var(--ink,oklch(21% .045 254));outline-offset:4px}"
-    },
-    {
-      "name": "Technology Chip",
-      "kind": "chip",
-      "refersTo": "technology-chip",
-      "description": "A factual, non-interactive technology label.",
-      "html": "<span class=\"ds-chip\">TypeScript</span>",
-      "css": ".ds-chip{display:inline-flex;padding:.35rem .7rem;border:1px solid currentColor;border-radius:999px;color:var(--ink,oklch(21% .045 254));font:620 .75rem Geologica,sans-serif;line-height:1}"
-    },
-    {
-      "name": "Route Navigation",
-      "kind": "nav",
-      "description": "Compact navigation with a visible current route and committed contact destination.",
-      "html": "<nav class=\"ds-nav\" aria-label=\"Primary\"><a aria-current=\"page\" href=\"#\">Work</a><a href=\"#\">Services</a><a class=\"ds-nav-contact\" href=\"#\">Contact</a></nav>",
-      "css": ".ds-nav{display:flex;align-items:center;gap:1.5rem;font:560 .83rem Geologica,sans-serif}.ds-nav a{min-height:2.75rem;display:inline-flex;align-items:center;color:var(--ink,oklch(21% .045 254));text-decoration:none}.ds-nav a[aria-current=page]{border-bottom:2px solid var(--cobalt,oklch(51% .22 260))}.ds-nav-contact{padding:0 1rem;border:1px solid currentColor;border-radius:999px}.ds-nav-contact:hover{background:var(--ink,oklch(21% .045 254));color:var(--paper,oklch(95.5% .018 84))}.ds-nav a:focus-visible{outline:3px solid var(--signal,oklch(70% .19 48));outline-offset:4px}"
-    },
-    {
-      "name": "Evidence Row",
-      "kind": "card",
-      "description": "An alternating case surface that pairs real evidence with operational context.",
-      "html": "<article class=\"ds-evidence\"><span>01 / 05</span><h3>EdgeData</h3><p>Infrastructure operations inside the customer network.</p><a href=\"#\">Read case study →</a></article>",
-      "css": ".ds-evidence{display:grid;gap:1rem;padding:2rem;background:var(--paper,oklch(95.5% .018 84));color:var(--ink,oklch(21% .045 254));border-top:1px solid oklch(78% .035 250/.68);font-family:'Atkinson Hyperlegible Next',sans-serif}.ds-evidence span{color:var(--cobalt,oklch(51% .22 260));font:620 .875rem Geologica,sans-serif;letter-spacing:.09em}.ds-evidence h3{margin:0;font:650 1.9rem/1.02 Geologica,sans-serif}.ds-evidence p{margin:0;max-width:46ch;line-height:1.62}.ds-evidence a{color:var(--cobalt,oklch(51% .22 260));font-weight:650;text-underline-offset:.3em}.ds-evidence a:focus-visible{outline:3px solid var(--signal,oklch(70% .19 48));outline-offset:4px}"
-    }
+    { "name": "Operational Status Rail", "kind": "navigation", "description": "A cyan status line that communicates role, focus, location, and availability." },
+    { "name": "Signal Portrait", "kind": "media", "description": "Rafael's real portrait integrated with a grid, cyan scan, live status, and expertise labels." },
+    { "name": "Evidence Row", "kind": "case-study", "description": "Large alternating project evidence with real media and operational context." }
   ],
   "narrative": {
-    "northStar": "The Systems Atlas",
-    "overview": "The interface feels like a precise operational map opened on a bright desk: routes, coordinates, annotations, and project evidence form a coherent working surface. It is mechanical, warm, and decisive. The system is static-first and progressively enhanced, rejecting terminal cosplay, generic AI marketing, editorial-magazine styling, and template-like card grids.",
-    "keyCharacteristics": ["Asymmetric maps and flows explain relationships instead of decorating empty space.", "Cobalt fields establish identity; orange marks actions and operational waypoints.", "Alternating evidence rows replace interchangeable card grids.", "Semantic structure serves people, search engines, and agents from the same source.", "Responsive composition reflows deliberately at 72rem, 60rem, 48rem, and 23rem."],
-    "rules": [
-      { "name": "The Committed Cobalt Rule", "body": "Cobalt must carry the identity across major moments; never reduce it to a tiny generic accent.", "section": "colors" },
-      { "name": "The Signal Rule", "body": "Orange marks an action, status, or turning point. If it cannot be explained operationally, remove it.", "section": "colors" },
-      { "name": "The One Display Move Rule", "body": "A screen may have one dominant typographic gesture. Supporting headings step down clearly and never compete with the H1.", "section": "typography" },
-      { "name": "The Flat-by-Default Rule", "body": "Surfaces remain flat at rest. If a component needs a permanent shadow to separate from its background, the tonal hierarchy is wrong.", "section": "elevation" }
+    "northStar": "Signal Room",
+    "overview": "A cinematic operations room using deep navy, cyan signals, electric-blue fields, ice contrast, and Rafael's real portrait.",
+    "keyCharacteristics": [
+      "The portrait creates a strong personal focal point without imitating terminal aesthetics.",
+      "Cyan communicates live state and actions; electric blue carries brand depth.",
+      "Light evidence fields interrupt the dark room and keep long-form work legible.",
+      "Motion is progressive enhancement and reduced-motion safe."
     ],
-    "dos": ["Do use real screenshots or authored system diagrams to explain a project.", "Do preserve at least 16px body text, 44px targets, strong focus, semantic headings, and reduced-motion parity.", "Do adapt long bilingual copy through reflow, wrapping, and fluid type rather than clipping.", "Do connect every service promise to verifiable experience and a direct contact path.", "Do keep cobalt committed and orange scarce according to the named rules."],
-    "donts": ["Don't make a cheap copy of Ruben Marcus's black, green, terminal-inspired portfolio.", "Don't use generic AI tool marketing with neon gradients, glass panels, vague claims, and empty futuristic decoration.", "Don't use editorial-magazine styling with display serifs, tiny mono labels, and ornamental rules.", "Don't use repeated identical card grids and framework-logo walls without evidence or context.", "Don't revive the legacy Simplefolio layout, generic developer slogans, or unclear calls to action.", "Don't publish fictional projects, inflated metrics, implied client endorsements, or keyword stuffing."]
+    "rules": [
+      { "name": "The Electric Field Rule", "body": "Electric blue must carry the identity across major moments.", "section": "colors" },
+      { "name": "The Signal Rule", "body": "Cyan marks an action, live status, or turning point.", "section": "colors" },
+      { "name": "The One Display Move Rule", "body": "A screen may have one dominant typographic gesture.", "section": "typography" }
+    ],
+    "donts": [
+      "Do not use orange.",
+      "Do not copy Ruben Marcus's green terminal or portrait treatment.",
+      "Do not publish fictional projects or inflated metrics."
+    ]
   }
 }

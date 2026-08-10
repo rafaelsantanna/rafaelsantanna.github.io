@@ -14,11 +14,12 @@ Position Rafael Sant' Anna as a senior software engineer who turns complex opera
 
 ## Brand Personality
 
-Mechanical, warm, and decisive. The voice is specific, commercially useful, and technically credible without posturing. The interface should feel like an operational atlas assembled by an experienced engineer, not a developer template.
+Technical, cinematic, and decisive. The voice is specific, commercially useful, and technically credible without posturing. The interface should feel like a live signal room operated by an experienced engineer, not a developer template.
 
 ## Anti-references
 
-- A cheap copy of Ruben Marcus's black, green, terminal-inspired portfolio.
+- A cheap copy of Ruben Marcus's black, green, terminal-inspired portfolio or portrait treatment.
+- Warm cream and orange palettes, which do not match Rafael's preferred visual identity.
 - Generic AI tool marketing with neon gradients, glass panels, vague claims, and empty futuristic decoration.
 - Editorial-magazine styling with display serifs, tiny mono labels, and ornamental rules.
 - Repeated identical card grids and framework-logo walls without evidence or context.
@@ -31,7 +32,7 @@ Mechanical, warm, and decisive. The voice is specific, commercially useful, and 
 2. **Complexity made legible.** Use maps, flows, and precise language to show how Rafael thinks about operations and systems.
 3. **Commercial clarity.** Make availability, services, project fit, and contact routes obvious without aggressive sales tactics.
 4. **Human and machine readable.** Semantic HTML, concise facts, structured data, Markdown alternatives, and complete bilingual content are one system.
-5. **Distinctive without spectacle.** Motion and visual systems must strengthen hierarchy and understanding while protecting performance.
+5. **Signal, not spectacle.** Navy, cyan, photography, motion, and visual systems must strengthen hierarchy and understanding while protecting performance.
 
 ## Accessibility & Inclusion
 

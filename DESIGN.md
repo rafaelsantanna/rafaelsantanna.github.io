@@ -1,17 +1,16 @@
 ---
 name: Rafael Sant' Anna Portfolio
-description: An operational atlas for a senior engineer who builds the software behind complex operations.
+description: A cinematic signal room for a senior engineer who builds the software behind complex operations.
 colors:
-  mineral-paper: "oklch(95.5% 0.018 84)"
-  mineral-paper-strong: "oklch(90.5% 0.034 82)"
-  mineral-paper-soft: "oklch(98% 0.01 84)"
-  charcoal-ink: "oklch(21% 0.045 254)"
-  charcoal-ink-soft: "oklch(38% 0.045 252)"
-  muted-coordinate: "oklch(49% 0.035 250)"
-  committed-cobalt: "oklch(51% 0.22 260)"
-  cobalt-deep: "oklch(35% 0.17 259)"
-  signal-orange: "oklch(70% 0.19 48)"
-  on-color: "oklch(97% 0.012 84)"
+  signal-room: "oklch(15% 0.035 245)"
+  signal-room-deep: "oklch(10.5% 0.03 245)"
+  signal-room-raised: "oklch(20% 0.045 245)"
+  ice: "oklch(96% 0.015 225)"
+  mist: "oklch(83% 0.035 225)"
+  edge-cyan: "oklch(76% 0.15 210)"
+  edge-cyan-soft: "oklch(86% 0.09 210)"
+  electric-blue: "oklch(58% 0.2 255)"
+  electric-blue-deep: "oklch(40% 0.16 255)"
 typography:
   display:
     fontFamily: "Geologica, Arial Narrow, sans-serif"
@@ -57,22 +56,22 @@ spacing:
   section-lg: "clamp(4.5rem, 9vw, 9rem)"
 components:
   button-primary:
-    backgroundColor: "{colors.committed-cobalt}"
-    textColor: "{colors.on-color}"
+    backgroundColor: "{colors.electric-blue}"
+    textColor: "{colors.ice}"
     typography: "{typography.label}"
     rounded: "{rounded.sm}"
     padding: "0.78rem 1.1rem"
     height: "3.35rem"
   button-signal:
-    backgroundColor: "{colors.signal-orange}"
-    textColor: "{colors.charcoal-ink}"
+    backgroundColor: "{colors.edge-cyan}"
+    textColor: "{colors.signal-room-deep}"
     typography: "{typography.label}"
     rounded: "{rounded.sm}"
     padding: "0.78rem 1.1rem"
     height: "3.35rem"
   technology-chip:
-    backgroundColor: "{colors.mineral-paper}"
-    textColor: "{colors.charcoal-ink}"
+    backgroundColor: "{colors.signal-room}"
+    textColor: "{colors.ice}"
     rounded: "{rounded.pill}"
     padding: "0.35rem 0.7rem"
 ---
@@ -81,41 +80,38 @@ components:
 
 ## Overview
 
-**Creative North Star: "The Systems Atlas"**
+**Creative North Star: "Signal Room"**
 
-The interface feels like a precise operational map opened on a bright desk: routes, coordinates, annotations, and project evidence form a coherent working surface. It is mechanical, warm, and decisive. Asymmetry creates energy, while repeated alignments, labeled stages, and generous reading rhythm keep complex material legible.
+The interface feels like a high-trust operations room during an important deployment: deep navy surfaces, cyan signals, electric-blue fields, live system coordinates, and project evidence create a focused working atmosphere. Rafael's real portrait anchors the human presence. The visual energy takes cues from premium technical portfolios while avoiding green terminal cosplay and preserving a distinct EdgeData-informed palette.
 
 The system is static-first and progressively enhanced. Motion reveals relationships without controlling comprehension; the same hierarchy remains intact with JavaScript disabled, reduced motion enabled, long Portuguese copy, or a 320px viewport. It explicitly rejects terminal cosplay, generic AI marketing, editorial-magazine styling, and template-like card grids.
 
 **Key Characteristics:**
 - Asymmetric maps and flows explain relationships instead of decorating empty space.
-- Cobalt fields establish identity; orange marks actions and operational waypoints.
+- Cyan marks live signals and actions; electric blue carries brand depth and major fields.
 - Alternating evidence rows replace interchangeable card grids.
 - Semantic structure serves people, search engines, and agents from the same source.
 - Responsive composition reflows deliberately at 72rem, 60rem, 48rem, and 23rem.
 
 ## Colors
 
-Warm mineral neutrals make the portfolio feel human and usable during a working day. Blue-charcoal carries reading contrast, committed cobalt owns the brand, and signal orange is deliberately scarce.
+Deep navy creates the room, ice carries reading contrast, cyan communicates active state, and electric blue owns the brand. Orange is not used.
 
 ### Primary
-- **Committed Cobalt:** the large brand surface for service fields, case alternation, primary buttons, system maps, and active navigation.
-- **Cobalt Deep:** the interaction state for primary actions and the darkest route field.
+- **Signal Room / Deep:** the default canvas, navigation, hero, and technical fields.
+- **Electric Blue / Deep:** the committed brand field for primary actions, case alternation, and experience sections.
 
 ### Secondary
-- **Signal Orange:** the action and waypoint color for availability, selected nodes, and the closing CTA. It never becomes ambient decoration.
+- **Edge Cyan:** live status, active navigation, focus, selected nodes, and the closing CTA.
 
 ### Neutral
-- **Mineral Paper:** the default canvas and light card surface.
-- **Mineral Paper Strong:** the warmer separating field for selected sections.
-- **Mineral Paper Soft:** the lightest foreground surface inside cobalt diagrams.
-- **Charcoal Ink:** all primary copy and structural strokes.
-- **Charcoal Ink Soft:** long-form supporting copy.
+- **Ice:** primary copy and the contrasting selected-work field.
+- **Mist:** long-form supporting copy.
 - **Muted Coordinate:** metadata, dates, and secondary annotations.
 
-**The Committed Cobalt Rule.** Cobalt must carry the identity across major moments; never reduce it to a tiny generic accent.
+**The Electric Field Rule.** Electric blue must carry the identity across major moments; never reduce it to a tiny generic accent.
 
-**The Signal Rule.** Orange marks an action, status, or turning point. If it cannot be explained operationally, remove it.
+**The Signal Rule.** Cyan marks an action, live status, or turning point. If it cannot be explained operationally, remove it.
 
 ## Typography
 
@@ -136,7 +132,7 @@ Warm mineral neutrals make the portfolio feel human and usable during a working 
 
 ## Elevation
 
-The system uses no resting shadows. Depth comes from cobalt and mineral tonal fields, alternating composition, borders, overlap, and responsive movement. Interactive elements move by at most 3px; focus is expressed with a visible orange outline rather than a glow.
+The system uses no resting shadows. Depth comes from navy, electric-blue, cyan, and ice tonal fields, alternating composition, borders, overlap, and responsive movement. Interactive elements move by at most 3px; focus is expressed with a visible cyan outline rather than a glow.
 
 **The Flat-by-Default Rule.** Surfaces remain flat at rest. If a component needs a permanent shadow to separate from its background, the tonal hierarchy is wrong.
 
@@ -146,10 +142,10 @@ Components are tactile and confident, with meaningful states and a complete non-
 
 ### Buttons
 - **Shape:** gently technical corners (0.45rem), never generic pill buttons except the navigation contact control.
-- **Primary:** committed cobalt with light mineral text and at least 3.35rem height.
-- **Signal:** orange with charcoal text, reserved for the closing project CTA.
-- **Hover / Focus:** translate upward by 3px on hover; retain a 3px orange focus-visible outline with 4px offset.
-- **Quiet:** transparent mineral surface with a one-pixel structural border.
+- **Primary:** electric blue with ice text and at least 3.35rem height.
+- **Signal:** cyan with deep navy text, reserved for the closing project CTA.
+- **Hover / Focus:** translate upward by 3px on hover; retain a 3px cyan focus-visible outline with 4px offset.
+- **Quiet:** transparent navy surface with a one-pixel structural border.
 
 ### Chips
 - **Style:** compact technology labels use a transparent or inherited surface, a one-pixel border, pill radius, and factual text only.
@@ -157,18 +153,18 @@ Components are tactile and confident, with meaningful states and a complete non-
 
 ### Cards / Containers
 - **Corner Style:** media surfaces use the large 1.6rem radius; evidence rows remain mostly square and structural.
-- **Background:** alternate mineral and cobalt fields to create rhythm and context.
+- **Background:** alternate deep navy, electric-blue, and ice fields to create rhythm and context.
 - **Shadow Strategy:** none; refer to the flat-by-default rule.
 - **Border:** one-pixel lines separate timelines, service routes, and navigation.
 - **Internal Padding:** fluid spacing from 1.5rem to 5rem according to density and viewport.
 
 ### Navigation
-- Desktop navigation is a compact horizontal route with an outlined contact destination and cobalt locale switch.
+- Desktop navigation is a compact horizontal route below a cyan operational status rail, with an outlined contact destination and cyan locale switch.
 - At 72rem and below it becomes a native button-controlled two-row map; at 48rem it becomes two columns with 44px minimum targets.
-- The active route is visible through a cobalt underline and `aria-current`, never color alone.
+- The active route is visible through a cyan underline and `aria-current`, never color alone.
 
 ### System Maps
-- Connected SVG nodes use a cobalt field, mineral surfaces, orange waypoints, and explicit captions.
+- Connected SVG nodes use a deep navy field, ice surfaces, cyan waypoints, and explicit captions.
 - Diagram motion draws existing routes only; reduced motion shows the complete map immediately.
 
 ## Do's and Don'ts
@@ -178,7 +174,7 @@ Components are tactile and confident, with meaningful states and a complete non-
 - **Do** preserve at least 16px body text, 44px targets, strong focus, semantic headings, and reduced-motion parity.
 - **Do** adapt long bilingual copy through reflow, wrapping, and fluid type rather than clipping.
 - **Do** connect every service promise to verifiable experience and a direct contact path.
-- **Do** keep cobalt committed and orange scarce according to the named rules.
+- **Do** keep electric blue committed and cyan operational according to the named rules.
 
 ### Don't:
 - **Don't** make a cheap copy of Ruben Marcus's black, green, terminal-inspired portfolio.

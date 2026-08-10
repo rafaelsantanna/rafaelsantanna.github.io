@@ -23,7 +23,9 @@
    Do instead: use the 1200×630 PNG for Open Graph while project SVGs remain available to page content and structured data.
 
 ## User Directives
-1. **[2026-08-10] Impeccable is mandatory from design through final QA**
+1. **[2026-08-10] Signal Room is the portfolio's visual direction**
+   Do instead: use deep navy, cyan, electric blue, real photography, and operational UI motifs; never use orange.
+2. **[2026-08-10] Impeccable is mandatory from design through final QA**
    Do instead: maintain PRODUCT.md and DESIGN.md, then run responsive, accessibility, critique, audit, and polish passes.
-2. **[2026-08-10] English is canonical and Portuguese uses pt-BR**
+3. **[2026-08-10] English is canonical and Portuguese uses pt-BR**
    Do instead: mirror public content under `/pt/` and emit canonical plus hreflang metadata.

@@ -1,29 +1,42 @@
 ---
-import SystemMap from '@/components/SystemMap.astro';
 import { cases, clients, copy, identity, localize, services, withLocale, type Locale } from '@/data/content';
 interface Props { locale: Locale }
 const { locale } = Astro.props;
 const t = copy[locale];
 ---
 
-<section class="hero shell">
-  <div class="hero__copy">
-    <p class="availability"><span aria-hidden="true"></span>{t.availability}</p>
-    <h1>{t.heroTitle}</h1>
-    <p class="hero__intro">{t.heroIntro}</p>
-    <div class="button-row">
-      <a class="button button--primary" href={withLocale(locale, 'contact')}>{t.discuss}<span aria-hidden="true">↗</span></a>
-      <a class="button button--quiet" href="#selected-work">{t.seeWork}<span aria-hidden="true">↓</span></a>
+<section class="hero-stage">
+  <div class="hero shell">
+    <div class="hero__copy">
+      <p class="availability"><span aria-hidden="true"></span>{t.availability}</p>
+      <h1>
+        {locale === 'pt' ? <>Eu construo o software por trás de <span>operações complexas.</span></> : <>I build the software behind <span>complex operations.</span></>}
+      </h1>
+      <p class="hero__intro">{t.heroIntro}</p>
+      <div class="button-row">
+        <a class="button button--primary" href={withLocale(locale, 'contact')}>{t.discuss}<span aria-hidden="true">↗</span></a>
+        <a class="button button--quiet" href="#selected-work">{t.seeWork}<span aria-hidden="true">↓</span></a>
+      </div>
+      <dl class="hero__facts" aria-label={locale === 'pt' ? 'Resumo profissional' : 'Professional summary'}>
+        <div><dt>10+</dt><dd>{locale === 'pt' ? 'anos em software' : 'years in software'}</dd></div>
+        <div><dt>15+</dt><dd>{locale === 'pt' ? 'projetos LMS/LXP' : 'LMS/LXP projects'}</dd></div>
+        <div><dt>200+</dt><dd>{locale === 'pt' ? 'melhorias em 6 meses' : 'improvements in 6 months'}</dd></div>
+      </dl>
     </div>
-    <dl class="hero__facts" aria-label={locale === 'pt' ? 'Resumo profissional' : 'Professional summary'}>
-      <div><dt>10+</dt><dd>{locale === 'pt' ? 'anos em software' : 'years in software'}</dd></div>
-      <div><dt>15+</dt><dd>{locale === 'pt' ? 'projetos LMS/LXP' : 'LMS/LXP projects'}</dd></div>
-      <div><dt>200+</dt><dd>{locale === 'pt' ? 'melhorias em 6 meses' : 'improvements in 6 months'}</dd></div>
-    </dl>
-  </div>
-  <div class="hero__map" data-reveal>
-    <p class="map-caption"><span>SYS.MAP / 01</span>{locale === 'pt' ? 'Da operação ao resultado' : 'From operation to outcome'}</p>
-    <SystemMap locale={locale} />
+    <figure class="hero-portrait" data-reveal>
+      <div class="hero-portrait__frame">
+        <div class="hero-portrait__grid" aria-hidden="true"></div>
+        <img src="/images/rafael-santanna.jpg" alt={locale === 'pt' ? 'Rafael Sant’ Anna, engenheiro de software sênior' : 'Rafael Sant’ Anna, senior software engineer'} width="1200" height="1200" />
+        <div class="hero-portrait__scan" aria-hidden="true"></div>
+      </div>
+      <figcaption><span>RS / 01</span>{identity.location}</figcaption>
+      <p class="hero-portrait__status"><span aria-hidden="true"></span>{locale === 'pt' ? 'DISPONÍVEL PARA PROJETOS REMOTOS' : 'AVAILABLE FOR REMOTE PROJECTS'}</p>
+      <ul class="hero-portrait__signals" aria-label={locale === 'pt' ? 'Áreas de atuação' : 'Areas of expertise'}>
+        <li>B2B SaaS</li>
+        <li>{locale === 'pt' ? 'Automação com IA' : 'AI automation'}</li>
+        <li>{locale === 'pt' ? 'Sistemas internos' : 'Internal systems'}</li>
+      </ul>
+    </figure>
   </div>
 </section>
 

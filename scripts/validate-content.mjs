@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { existsSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
-import { cases, services } from '../src/data/content.ts';
+import { cases, selectedWork, services } from '../src/data/content.ts';
 import { machineRoutes } from '../src/data/machine.ts';
 
 const locales = ['en', 'pt'];
@@ -9,6 +9,8 @@ const forbidden = [/\[TODO\]/i, /Unknown Developer/i, /if I'm not mistaken/i, /â
 
 assert.equal(cases.length, 5, 'Expected exactly five launch case studies');
 assert.equal(services.length, 5, 'Expected exactly five launch services');
+assert.equal(selectedWork.length, 2, 'Expected only two additional high-impact projects');
+assert.ok(selectedWork.every((item) => item.title !== 'SOS Bolsas de Estudo Online'), 'Removed project must not return');
 assert.equal(new Set(cases.map((item) => item.slug)).size, cases.length, 'Case slugs must be unique');
 assert.equal(new Set(services.map((item) => item.slug)).size, services.length, 'Service slugs must be unique');
 

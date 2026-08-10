@@ -255,12 +255,12 @@ export const cases: CaseStudy[] = [
       en: [
         'An integrated Grupo Profarma platform served more than 10,000 users.',
         'A retail maintenance system centralized accounts, alerts, history, due dates, and validation across 226 stores.',
-        'Delivered operational systems for additional contexts including engineering, scholarships, logistics, and public-facing complaint workflows.',
+        'Delivered operational systems for additional contexts including engineering, logistics, and public-facing complaint workflows.',
       ],
       pt: [
         'Uma plataforma integrada do Grupo Profarma atendeu mais de 10.000 usuários.',
         'Um sistema de manutenção centralizou contas, alertas, históricos, vencimentos e validações em 226 lojas.',
-        'Entrega de sistemas operacionais para outros contextos, incluindo engenharia, bolsas de estudo, logística e fluxos públicos de reclamação.',
+        'Entrega de sistemas operacionais para outros contextos, incluindo engenharia, logística e fluxos públicos de reclamação.',
       ],
     },
     technologies: ['ASP.NET MVC', 'ASP.NET Web API', 'C#', 'SQL Server', 'Entity Framework', 'Ionic', 'Vue.js'],
@@ -389,14 +389,6 @@ export const selectedWork = [
       pt: 'Telas de gestão web e aplicação mobile para profissionais de nutrição e fluxos administrativos.',
     },
     technologies: ['Web', 'Mobile', 'Administrative systems'],
-  },
-  {
-    title: 'SOS Bolsas de Estudo Online',
-    description: {
-      en: 'A platform connecting students with partner institutions offering scholarships.',
-      pt: 'Uma plataforma conectando estudantes a instituições parceiras com ofertas de bolsas de estudo.',
-    },
-    technologies: ['ASP.NET', 'SQL Server', 'Web platform'],
   },
 ];
 

@@ -18,21 +18,32 @@ const items = [
 ---
 
 <header class="site-header">
-  <a class="brand-mark" href={withLocale(locale)} aria-label={`${identity.name}, ${locale === 'pt' ? 'página inicial' : 'home'}`}>
-    <span class="brand-mark__node" aria-hidden="true"></span>
-    <span>rafael<span class="brand-mark__light">santanna</span></span>
-  </a>
-  <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav" hidden>
-    <span class="menu-toggle__label">Menu</span>
-    <span class="menu-toggle__lines" aria-hidden="true"></span>
-  </button>
-  <nav id="site-nav" class="site-nav" aria-label={locale === 'pt' ? 'Navegação principal' : 'Primary navigation'}>
-    {items.map(([path, label]) => (
-      <a href={withLocale(locale, path)} aria-current={routePath === path || routePath.startsWith(`${path}/`) ? 'page' : undefined}>{label}</a>
-    ))}
-    <a class="site-nav__contact" href={withLocale(locale, 'contact')}>{t.nav.contact}</a>
-    <a class="locale-switch" href={alternatePath(locale, routePath)} lang={locale === 'en' ? 'pt-BR' : 'en'}>{t.switchLocale}</a>
-  </nav>
+  <div class="status-rail" aria-label={locale === 'pt' ? 'Resumo de atuação' : 'Professional focus'}>
+    <div class="status-rail__track">
+      <span>{locale === 'pt' ? 'ENGENHEIRO DE SOFTWARE SÊNIOR' : 'SENIOR SOFTWARE ENGINEER'}</span>
+      <span>B2B SAAS</span>
+      <span>{locale === 'pt' ? 'AUTOMAÇÃO COM IA' : 'AI AUTOMATION'}</span>
+      <span>{locale === 'pt' ? 'VISEU, PORTUGAL' : 'BASED IN PORTUGAL'}</span>
+      <span>{locale === 'pt' ? 'FREELANCE REMOTO' : 'REMOTE FREELANCE'}</span>
+    </div>
+  </div>
+  <div class="site-header__main">
+    <a class="brand-mark" href={withLocale(locale)} aria-label={`${identity.name}, ${locale === 'pt' ? 'página inicial' : 'home'}`}>
+      <span class="brand-mark__node" aria-hidden="true"></span>
+      <span>rafael<span class="brand-mark__light">santanna</span><b>.dev</b></span>
+    </a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav" hidden>
+      <span class="menu-toggle__label">Menu</span>
+      <span class="menu-toggle__lines" aria-hidden="true"></span>
+    </button>
+    <nav id="site-nav" class="site-nav" aria-label={locale === 'pt' ? 'Navegação principal' : 'Primary navigation'}>
+      {items.map(([path, label]) => (
+        <a href={withLocale(locale, path)} aria-current={routePath === path || routePath.startsWith(`${path}/`) ? 'page' : undefined}>{label}</a>
+      ))}
+      <a class="site-nav__contact" href={withLocale(locale, 'contact')}>{t.nav.contact}</a>
+      <a class="locale-switch" href={alternatePath(locale, routePath)} lang={locale === 'en' ? 'pt-BR' : 'en'}>{t.switchLocale}</a>
+    </nav>
+  </div>
 </header>
 
 <script>

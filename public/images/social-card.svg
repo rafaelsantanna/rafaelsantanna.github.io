@@ -1,18 +1,34 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
-  <rect width="1200" height="630" fill="#f4f0e5"/>
-  <path d="M0 88h1200M0 542h1200M88 0v630M1112 0v630" stroke="#acb1c0" stroke-opacity=".45"/>
-  <g fill="none" stroke="#314fcc" stroke-width="5">
-    <path d="M742 146h168c48 0 48 74 96 74h92"/>
-    <path d="M742 146v250h174c52 0 52 84 104 84h78"/>
-    <path d="M910 220v176"/>
+  <defs>
+    <pattern id="grid" width="54" height="54" patternUnits="userSpaceOnUse">
+      <path d="M54 0H0V54" fill="none" stroke="#49d8ef" stroke-opacity=".1"/>
+    </pattern>
+    <clipPath id="portrait-cut"><path d="M760 86h344l56 56v410H816l-56-56z"/></clipPath>
+  </defs>
+  <rect width="1200" height="630" fill="#07131e"/>
+  <rect width="1200" height="630" fill="url(#grid)"/>
+  <rect width="1200" height="38" fill="#18c9e5"/>
+  <text x="52" y="26" fill="#07131e" font-family="Arial, sans-serif" font-size="14" font-weight="700" letter-spacing="3">SENIOR SOFTWARE ENGINEER</text>
+  <text x="400" y="26" fill="#07131e" font-family="Arial, sans-serif" font-size="14" font-weight="700" letter-spacing="3">B2B SAAS</text>
+  <text x="642" y="26" fill="#07131e" font-family="Arial, sans-serif" font-size="14" font-weight="700" letter-spacing="3">AI AUTOMATION</text>
+  <text x="982" y="26" fill="#07131e" font-family="Arial, sans-serif" font-size="14" font-weight="700" letter-spacing="3">PORTUGAL</text>
+  <circle cx="60" cy="91" r="7" fill="#18c9e5"/>
+  <text x="82" y="100" fill="#eaf6fa" font-family="Arial, sans-serif" font-size="25" font-weight="700">rafaelsantanna<tspan fill="#18c9e5">.dev</tspan></text>
+  <text x="52" y="210" fill="#eaf6fa" font-family="Arial, sans-serif" font-size="67" font-weight="700">I build the software</text>
+  <text x="52" y="288" fill="#eaf6fa" font-family="Arial, sans-serif" font-size="67" font-weight="700">behind</text>
+  <text x="52" y="366" fill="#18c9e5" font-family="Arial, sans-serif" font-size="67" font-weight="700">complex operations.</text>
+  <text x="52" y="444" fill="#a7c4ce" font-family="Arial, sans-serif" font-size="24">B2B platforms · internal systems · AI automation</text>
+  <rect x="52" y="494" width="318" height="58" fill="#285cf3"/>
+  <text x="78" y="531" fill="#edf6fa" font-family="Arial, sans-serif" font-size="21" font-weight="700">rafaelsantanna.github.io</text>
+  <g clip-path="url(#portrait-cut)">
+    <rect x="760" y="86" width="400" height="466" fill="#285cf3"/>
+    <image href="rafael-santanna.jpg" x="735" y="66" width="455" height="520" preserveAspectRatio="xMidYMid slice" opacity=".78"/>
+    <rect x="760" y="86" width="400" height="466" fill="#285cf3" opacity=".27"/>
+    <rect x="760" y="86" width="400" height="466" fill="url(#grid)"/>
   </g>
-  <g fill="#f29442" stroke="#f4f0e5" stroke-width="5">
-    <circle cx="742" cy="146" r="13"/><circle cx="910" cy="220" r="13"/><circle cx="1098" cy="480" r="13"/>
-  </g>
-  <text x="88" y="152" fill="#314fcc" font-family="Arial, sans-serif" font-size="25" font-weight="700" letter-spacing="4">RAFAEL SANT' ANNA</text>
-  <text x="88" y="275" fill="#202b46" font-family="Arial, sans-serif" font-size="72" font-weight="700">The software behind</text>
-  <text x="88" y="357" fill="#202b46" font-family="Arial, sans-serif" font-size="72" font-weight="700">complex operations.</text>
-  <text x="88" y="456" fill="#526078" font-family="Arial, sans-serif" font-size="29">B2B platforms · AI automation · senior full-stack engineering</text>
-  <rect x="88" y="505" width="330" height="49" rx="9" fill="#314fcc"/>
-  <text x="112" y="538" fill="#f8f2e5" font-family="Arial, sans-serif" font-size="21" font-weight="700">rafaelsantanna.github.io</text>
+  <path d="M760 86h344l56 56v410H816l-56-56z" fill="none" stroke="#18c9e5" stroke-opacity=".55"/>
+  <rect x="724" y="178" width="126" height="42" fill="#07131e" stroke="#18c9e5"/>
+  <text x="744" y="205" fill="#8deeff" font-family="Arial, sans-serif" font-size="15" font-weight="700" letter-spacing="2">B2B SAAS</text>
+  <rect x="1002" y="428" width="158" height="42" fill="#18c9e5"/>
+  <text x="1018" y="455" fill="#07131e" font-family="Arial, sans-serif" font-size="13" font-weight="700" letter-spacing="1">REMOTE · OPEN</text>
 </svg>
