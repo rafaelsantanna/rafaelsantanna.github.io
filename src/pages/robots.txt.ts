@@ -1,7 +1,7 @@
 export function GET() {
   return new Response(`User-agent: *
-Allow: /
 Content-Signal: ai-train=no, search=yes, ai-input=yes
+Allow: /
 
 User-agent: GPTBot
 Disallow: /
