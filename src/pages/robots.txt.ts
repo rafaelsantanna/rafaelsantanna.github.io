@@ -22,7 +22,7 @@ User-agent: Applebot-Extended
 Disallow: /
 
 # Search and agent input are welcome. Model training is not licensed.
-# Content-Signal: ai-train=no, search=yes, ai-input=yes
-Sitemap: https://rafaelsantanna.github.io/sitemap-index.xml
+Content-Signal: ai-train=no, search=yes, ai-input=yes
+Sitemap: https://rafaelsantanna.github.io/sitemap.xml
 `, { headers: { 'Content-Type': 'text/plain; charset=utf-8' } });
 }

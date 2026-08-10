@@ -30,6 +30,7 @@ for (const file of htmlFiles) {
   assert.match(html, /hreflang="(?:en|pt-BR)"/, `Missing hreflang in ${file}`);
   assert.match(html, /type="text\/markdown"/, `Missing Markdown alternate in ${file}`);
   assert.match(html, /application\/ld\+json/, `Missing JSON-LD in ${file}`);
+  assert.match(html, /"@type":"WebPage"/, `Missing WebPage schema in ${file}`);
   assert.match(html, /hreflang="x-default"/, `Missing x-default hreflang in ${file}`);
   assert.match(html, /property="og:image" content="https:\/\/rafaelsantanna\.github\.io\/images\/social-card\.png"/, `Missing raster Open Graph image in ${file}`);
   assert.doesNotMatch(html, /href=""/, `Empty href in ${file}`);
@@ -49,7 +50,7 @@ for (const file of htmlFiles) {
   }
 }
 
-for (const required of ['robots.txt', 'llms.txt', 'llms-full.txt', 'AGENTS.md', 'ai-index.json', 'sitemap-index.xml']) {
+for (const required of ['robots.txt', 'llms.txt', 'llms-full.txt', 'AGENTS.md', 'ai-index.json', 'sitemap.xml', 'sitemap-index.xml']) {
   assert.ok(existsSync(join(dist, required)), `Missing generated file: ${required}`);
 }
 
@@ -59,7 +60,10 @@ assert.equal(markdownFiles.length, 34, `Expected 34 Markdown alternatives, found
 const robots = readFileSync(join(dist, 'robots.txt'), 'utf8');
 assert.match(robots, /OAI-SearchBot/);
 assert.match(robots, /User-agent: GPTBot\nDisallow: \//);
-assert.match(robots, /ai-train=no, search=yes, ai-input=yes/);
+assert.match(robots, /^Content-Signal: ai-train=no, search=yes, ai-input=yes$/m);
+
+const sitemap = readFileSync(join(dist, 'sitemap.xml'), 'utf8');
+assert.equal((sitemap.match(/<url>/g) || []).length, 34, 'Expected 34 direct sitemap URLs');
 
 const aiIndex = JSON.parse(readFileSync(join(dist, 'ai-index.json'), 'utf8'));
 assert.equal(aiIndex.protocols.mcp, false);

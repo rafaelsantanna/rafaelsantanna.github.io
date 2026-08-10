@@ -49,6 +49,19 @@ const breadcrumbSchema = path ? {
 const schemas = [
   {
     '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: fullTitle,
+    description,
+    url: canonical.toString(),
+    inLanguage: locale === 'pt' ? 'pt-BR' : 'en',
+    isPartOf: {
+      '@type': 'WebSite',
+      name: `${identity.name} Portfolio`,
+      url: new URL('/', Astro.site).toString(),
+    },
+  },
+  {
+    '@context': 'https://schema.org',
     '@type': 'Person',
     name: identity.name,
     jobTitle: identity.role[locale],
