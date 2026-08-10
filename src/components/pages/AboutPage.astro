@@ -1,0 +1,57 @@
+---
+import SystemMap from '@/components/SystemMap.astro';
+import { clients, copy, identity, timeline, type Locale } from '@/data/content';
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const t = copy[locale];
+---
+
+<section class="page-hero page-hero--about shell">
+  <p class="section-index">03 / {t.nav.about.toUpperCase()}</p>
+  <h1>{t.aboutTitle}</h1>
+  <p>{t.aboutIntro}</p>
+</section>
+
+<section class="about-map shell" data-reveal>
+  <div>
+    <p class="eyebrow">{identity.location}</p>
+    <h2>{locale === 'pt' ? 'Do requisito ao sistema em produção.' : 'From requirement to production system.'}</h2>
+    <p>{locale === 'pt'
+      ? 'Rafael trabalha entre produto, frontend, backend, dados e integração. A especialidade não é uma tecnologia isolada, mas a capacidade de tornar regras operacionais complexas claras, testáveis e sustentáveis.'
+      : 'Rafael works across product, frontend, backend, data, and integration. The specialty is not one isolated technology, but the ability to make complex operational rules clear, testable, and maintainable.'}</p>
+  </div>
+  <SystemMap locale={locale} />
+</section>
+
+<section class="timeline shell">
+  <div class="section-heading section-heading--compact" data-reveal>
+    <p class="section-index">01 / {locale === 'pt' ? 'TRAJETÓRIA' : 'TIMELINE'}</p>
+    <h2>{locale === 'pt' ? 'Mais de uma década entregando sistemas.' : 'More than a decade shipping systems.'}</h2>
+  </div>
+  <ol>
+    {timeline.map((item) => (
+      <li data-reveal><time>{item.period}</time><div><strong>{item.company}</strong><span>{item.role[locale]}</span></div></li>
+    ))}
+  </ol>
+</section>
+
+<section class="experience-context">
+  <div class="shell">
+    <p class="section-index">02 / {locale === 'pt' ? 'EXPERIÊNCIA' : 'EXPERIENCE'}</p>
+    <h2>{locale === 'pt' ? 'Projetos em educação, varejo, infraestrutura, logística, saúde e operações empresariais.' : 'Projects across education, retail, infrastructure, logistics, healthcare, and enterprise operations.'}</h2>
+    <div class="experience-context__names">{clients.map((client) => <span>{client}</span>)}</div>
+    <p class="small-meta">{locale === 'pt' ? 'Organizações citadas como contexto de projetos no currículo profissional.' : 'Organizations cited as project context in the professional CV.'}</p>
+  </div>
+</section>
+
+<section class="portrait-note shell" data-reveal>
+  <figure class="portrait-note__frame">
+    <img src="/images/rafael-santanna.jpg" alt={locale === 'pt' ? 'Retrato profissional de Rafael Sant’ Anna' : 'Professional portrait of Rafael Sant’ Anna'} width="400" height="400" />
+    <figcaption>RAFAEL / VISEU · PT</figcaption>
+  </figure>
+  <div>
+    <p class="section-index">03 / {locale === 'pt' ? 'PESSOA' : 'PERSON'}</p>
+    <h2>{locale === 'pt' ? 'Engenharia com contexto, responsabilidade e comunicação direta.' : 'Engineering with context, ownership, and direct communication.'}</h2>
+    <p>{locale === 'pt' ? 'Rafael trabalha próximo de produto, operações e engenharia para transformar necessidades ambíguas em decisões claras, entregas incrementais e sistemas sustentáveis.' : 'Rafael works closely with product, operations, and engineering to turn ambiguous needs into clear decisions, incremental delivery, and maintainable systems.'}</p>
+  </div>
+</section>

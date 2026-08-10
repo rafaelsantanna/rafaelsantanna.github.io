@@ -1,0 +1,137 @@
+---
+import Header from '@/components/Header.astro';
+import Footer from '@/components/Footer.astro';
+import '@/styles/global.css';
+import { alternatePath, copy, identity, type Locale } from '@/data/content';
+
+interface Props {
+  locale: Locale;
+  title: string;
+  description: string;
+  routePath: string;
+  image?: string;
+  pageSchema?: Record<string, unknown> | Array<Record<string, unknown>>;
+}
+
+const { locale, title, description, routePath, image = '/images/social-card.png', pageSchema } = Astro.props;
+const t = copy[locale];
+const path = routePath.replace(/^\/+|\/+$/g, '');
+const canonicalPath = locale === 'pt' ? `/pt/${path}${path ? '/' : ''}` : `/${path}${path ? '/' : ''}`;
+const canonical = new URL(canonicalPath, Astro.site);
+const alternative = new URL(alternatePath(locale, path), Astro.site);
+const fullTitle = path ? `${title} | ${identity.name}` : `${identity.name} | ${identity.role[locale]}`;
+const imageUrl = new URL(image, Astro.site);
+const markdownPath = `/markdown/${locale}/${path || 'index'}.md`;
+const breadcrumbSchema = path ? {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      name: locale === 'pt' ? 'Início' : 'Home',
+      item: new URL(locale === 'pt' ? '/pt/' : '/', Astro.site).toString(),
+    },
+    ...(path.includes('/') ? [{
+      '@type': 'ListItem',
+      position: 2,
+      name: path.startsWith('work/') ? t.nav.work : t.nav.services,
+      item: new URL(`/${locale === 'pt' ? 'pt/' : ''}${path.split('/')[0]}/`, Astro.site).toString(),
+    }] : []),
+    {
+      '@type': 'ListItem',
+      position: path.includes('/') ? 3 : 2,
+      name: title,
+      item: canonical.toString(),
+    },
+  ],
+} : undefined;
+const schemas = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    name: identity.name,
+    jobTitle: identity.role[locale],
+    description,
+    url: new URL(locale === 'pt' ? '/pt/' : '/', Astro.site).toString(),
+    email: `mailto:${identity.email}`,
+    telephone: identity.phoneDisplay,
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: 'Viseu',
+      addressCountry: 'PT',
+    },
+    sameAs: [identity.github, identity.linkedin, identity.edgeData],
+    knowsAbout: ['B2B SaaS', 'Internal systems', 'React', 'Laravel', 'Node.js', '.NET', 'LMS', 'RAG', 'AI automation'],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: `${identity.name} Portfolio`,
+    url: new URL('/', Astro.site).toString(),
+    inLanguage: ['en', 'pt-BR'],
+  },
+  ...(breadcrumbSchema ? [breadcrumbSchema] : []),
+  ...(Array.isArray(pageSchema) ? pageSchema : pageSchema ? [pageSchema] : []),
+];
+---
+
+<!doctype html>
+<html lang={locale === 'pt' ? 'pt-BR' : 'en'}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script is:inline>document.documentElement.classList.add('js');</script>
+    <meta name="theme-color" content="#f4f0e5" />
+    <meta name="color-scheme" content="light" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <meta name="author" content={identity.name} />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang={locale === 'en' ? 'pt-BR' : 'en'} href={alternative} />
+    <link rel="alternate" hreflang="x-default" href={new URL(`/${path}${path ? '/' : ''}`, Astro.site)} />
+    <link rel="alternate" type="text/markdown" href={markdownPath} title={`${title} in Markdown`} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preload" href="/fonts/geologica-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/atkinson-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={imageUrl} />
+    <meta property="og:locale" content={locale === 'pt' ? 'pt_BR' : 'en_US'} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={imageUrl} />
+    {schemas.map((schema) => <script type="application/ld+json" set:html={JSON.stringify(schema)} />)}
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">{t.skip}</a>
+    <Header locale={locale} routePath={path} />
+    <main id="main-content">
+      <slot />
+    </main>
+    <Footer locale={locale} />
+    <script>
+      const reveal = () => {
+        const items = document.querySelectorAll('[data-reveal]');
+        if (!('IntersectionObserver' in window) || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          items.forEach((item) => item.setAttribute('data-visible', 'true'));
+          return;
+        }
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.setAttribute('data-visible', 'true');
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { rootMargin: '0px 0px -8% 0px', threshold: 0.12 });
+        items.forEach((item) => observer.observe(item));
+      };
+      reveal();
+    </script>
+  </body>
+</html>

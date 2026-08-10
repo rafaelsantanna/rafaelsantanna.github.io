@@ -1,0 +1,133 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import HomePage from '@/components/pages/HomePage.astro';
+import ListingPage from '@/components/pages/ListingPage.astro';
+import CasePage from '@/components/pages/CasePage.astro';
+import ServicePage from '@/components/pages/ServicePage.astro';
+import AboutPage from '@/components/pages/AboutPage.astro';
+import CvPage from '@/components/pages/CvPage.astro';
+import ContactPage from '@/components/pages/ContactPage.astro';
+import AgentsPage from '@/components/pages/AgentsPage.astro';
+import { cases, copy, identity, localize, services, type Locale } from '@/data/content';
+
+type PageKind = 'home' | 'work' | 'services' | 'case' | 'service' | 'about' | 'cv' | 'contact' | 'agents';
+interface PageProps { locale: Locale; kind: PageKind; routePath: string; slug?: string }
+
+export function getStaticPaths() {
+  const pages: Array<{ path?: string; props: PageProps }> = [];
+  for (const locale of ['en', 'pt'] as const) {
+    const prefix = locale === 'pt' ? 'pt/' : '';
+    pages.push({ path: locale === 'pt' ? 'pt' : undefined, props: { locale, kind: 'home', routePath: '' } });
+    for (const [routePath, kind] of [
+      ['work', 'work'],
+      ['services', 'services'],
+      ['about', 'about'],
+      ['cv', 'cv'],
+      ['contact', 'contact'],
+      ['for-agents', 'agents'],
+    ] as const) {
+      pages.push({ path: `${prefix}${routePath}`, props: { locale, kind, routePath } });
+    }
+    for (const item of cases) {
+      pages.push({ path: `${prefix}work/${item.slug}`, props: { locale, kind: 'case', routePath: `work/${item.slug}`, slug: item.slug } });
+    }
+    for (const service of services) {
+      pages.push({ path: `${prefix}services/${service.slug}`, props: { locale, kind: 'service', routePath: `services/${service.slug}`, slug: service.slug } });
+    }
+  }
+  return pages.map(({ path, props }) => ({ params: { path }, props }));
+}
+
+const { locale, kind, routePath, slug } = Astro.props as PageProps;
+const t = copy[locale];
+const caseItem = kind === 'case' ? cases.find((item) => item.slug === slug) : undefined;
+const serviceItem = kind === 'service' ? services.find((item) => item.slug === slug) : undefined;
+
+if (kind === 'case' && !caseItem) throw new Error(`Unknown case study: ${slug}`);
+if (kind === 'service' && !serviceItem) throw new Error(`Unknown service: ${slug}`);
+
+const metadata = (() => {
+  if (caseItem) return { title: caseItem.title, description: localize(caseItem.summary, locale) };
+  if (serviceItem) return { title: localize(serviceItem.title, locale), description: localize(serviceItem.summary, locale) };
+  const map = {
+    home: { title: identity.role[locale], description: t.heroIntro },
+    work: { title: t.workTitle, description: t.workIntro },
+    services: { title: t.nav.services, description: t.servicesPageIntro },
+    about: { title: t.nav.about, description: t.aboutIntro },
+    cv: { title: t.cvTitle, description: t.aboutIntro },
+    contact: { title: t.nav.contact, description: t.contactIntro },
+    agents: { title: t.nav.agents, description: t.agentIntro },
+  } as const;
+  return map[kind as keyof typeof map];
+})();
+
+const pageSchema = (() => {
+  if (caseItem) {
+    return {
+      '@context': 'https://schema.org',
+      '@type': caseItem.schemaType,
+      name: caseItem.title,
+      description: localize(caseItem.summary, locale),
+      creator: { '@type': 'Person', name: identity.name },
+      image: new URL(caseItem.image, Astro.site).toString(),
+      url: new URL(`/${locale === 'pt' ? 'pt/' : ''}work/${caseItem.slug}/`, Astro.site).toString(),
+      applicationCategory: caseItem.schemaType === 'SoftwareApplication' ? 'BusinessApplication' : undefined,
+      operatingSystem: caseItem.schemaType === 'SoftwareApplication' ? 'Web' : undefined,
+    };
+  }
+  if (serviceItem) {
+    return {
+      '@context': 'https://schema.org',
+      '@type': 'Service',
+      name: localize(serviceItem.title, locale),
+      description: localize(serviceItem.summary, locale),
+      provider: { '@type': 'Person', name: identity.name },
+      areaServed: 'Worldwide',
+      serviceType: localize(serviceItem.title, locale),
+    };
+  }
+  if (kind === 'home') {
+    return [
+      {
+        '@context': 'https://schema.org',
+        '@type': 'ProfessionalService',
+        name: identity.name,
+        description: t.heroIntro,
+        email: identity.email,
+        telephone: identity.phoneDisplay,
+        areaServed: 'Worldwide',
+        address: { '@type': 'PostalAddress', addressLocality: 'Viseu', addressCountry: 'PT' },
+      },
+      {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: [
+          {
+            '@type': 'Question',
+            name: locale === 'pt' ? 'Em quais projetos Rafael trabalha?' : 'What projects does Rafael work on?',
+            acceptedAnswer: { '@type': 'Answer', text: locale === 'pt' ? 'SaaS B2B, sistemas internos, LMS/LXP, aplicações mobile, modernização de plataformas e automação com IA.' : 'B2B SaaS, internal systems, LMS/LXP, mobile applications, platform modernization, and AI automation.' },
+          },
+          {
+            '@type': 'Question',
+            name: locale === 'pt' ? 'Rafael está disponível para projetos freelance?' : 'Is Rafael available for freelance projects?',
+            acceptedAnswer: { '@type': 'Answer', text: identity.availability[locale] },
+          },
+        ],
+      },
+    ];
+  }
+  return undefined;
+})();
+---
+
+<BaseLayout locale={locale} title={metadata.title} description={metadata.description} routePath={routePath} image={'image' in metadata ? metadata.image : undefined} pageSchema={pageSchema}>
+  {kind === 'home' && <HomePage locale={locale} />}
+  {kind === 'work' && <ListingPage locale={locale} type="work" />}
+  {kind === 'services' && <ListingPage locale={locale} type="services" />}
+  {kind === 'case' && caseItem && <CasePage locale={locale} item={caseItem} />}
+  {kind === 'service' && serviceItem && <ServicePage locale={locale} service={serviceItem} />}
+  {kind === 'about' && <AboutPage locale={locale} />}
+  {kind === 'cv' && <CvPage locale={locale} />}
+  {kind === 'contact' && <ContactPage locale={locale} />}
+  {kind === 'agents' && <AgentsPage locale={locale} />}
+</BaseLayout>

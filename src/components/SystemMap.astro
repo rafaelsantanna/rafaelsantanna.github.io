@@ -1,0 +1,37 @@
+---
+import type { Locale } from '@/data/content';
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const labels = locale === 'pt'
+  ? ['OPERAÇÃO', 'INTERFACE', 'REGRAS', 'DADOS', 'AUTOMAÇÃO', 'RESULTADO']
+  : ['OPERATION', 'INTERFACE', 'RULES', 'DATA', 'AUTOMATION', 'OUTCOME'];
+---
+
+<svg class="system-map" viewBox="0 0 720 560" role="img" aria-labelledby="map-title map-desc">
+  <title id="map-title">{locale === 'pt' ? 'Mapa de sistemas conectados' : 'Connected systems map'}</title>
+  <desc id="map-desc">{locale === 'pt' ? 'Um fluxo visual conecta operação, interface, regras, dados, automação e resultado.' : 'A visual flow connects operation, interface, rules, data, automation, and outcome.'}</desc>
+  <defs>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M 32 0 L 0 0 0 32" fill="none" stroke="currentColor" stroke-opacity=".13" stroke-width="1" />
+    </pattern>
+  </defs>
+  <rect class="system-map__grid" width="720" height="560" rx="28" fill="url(#grid)" />
+  <g class="system-map__routes" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <path pathLength="1" d="M112 102 H286 C336 102 332 188 382 188 H598" />
+    <path pathLength="1" d="M112 102 V310 H312 C362 310 356 422 406 422 H602" />
+    <path pathLength="1" d="M382 188 V310" />
+    <path pathLength="1" d="M598 188 V422" />
+  </g>
+  <g class="system-map__nodes">
+    <g transform="translate(64 66)"><rect width="144" height="72" rx="14" /><text x="72" y="43">{labels[0]}</text></g>
+    <g transform="translate(286 152)"><rect width="192" height="72" rx="14" /><text x="96" y="43">{labels[1]}</text></g>
+    <g transform="translate(516 152)"><rect width="164" height="72" rx="14" /><text x="82" y="43">{labels[2]}</text></g>
+    <g transform="translate(226 274)"><rect width="172" height="72" rx="14" /><text x="86" y="43">{labels[3]}</text></g>
+    <g transform="translate(318 386)"><rect width="176" height="72" rx="14" /><text x="88" y="43">{labels[4]}</text></g>
+    <g class="system-map__node--signal" transform="translate(516 386)"><rect width="164" height="72" rx="14" /><text x="82" y="43">{labels[5]}</text></g>
+  </g>
+  <g class="system-map__coordinates" aria-hidden="true">
+    <text x="28" y="28">41.21 N</text><text x="616" y="536">07.91 W</text>
+    <circle cx="112" cy="102" r="8" /><circle cx="382" cy="188" r="8" /><circle cx="598" cy="422" r="8" />
+  </g>
+</svg>

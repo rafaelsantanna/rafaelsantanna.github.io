@@ -1,0 +1,45 @@
+---
+import { cases, copy, localize, withLocale, type Locale, type Service } from '@/data/content';
+interface Props { locale: Locale; service: Service }
+const { locale, service } = Astro.props;
+const t = copy[locale];
+const evidence = service.evidence.map((slug) => cases.find((item) => item.slug === slug)).filter(Boolean);
+---
+
+<article class="detail-page service-detail">
+  <header class="detail-hero shell">
+    <a class="back-link" href={withLocale(locale, 'services')}><span aria-hidden="true">←</span>{t.backServices}</a>
+    <div class="detail-hero__heading">
+      <div><p class="eyebrow">{service.index} / {t.nav.services}</p><h1>{localize(service.title, locale)}</h1></div>
+    </div>
+    <p class="detail-hero__summary">{localize(service.summary, locale)}</p>
+  </header>
+
+  <div class="service-blueprint shell" data-reveal>
+    <div class="service-blueprint__route" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+    <section>
+      <p class="section-index">01</p><h2>{t.fit}</h2>
+      <ul>{service.idealFor[locale].map((item) => <li>{item}</li>)}</ul>
+    </section>
+    <section>
+      <p class="section-index">02</p><h2>{t.deliverables}</h2>
+      <ul>{service.deliverables[locale].map((item) => <li>{item}</li>)}</ul>
+    </section>
+  </div>
+
+  <section class="evidence-list shell">
+    <div class="section-heading section-heading--compact" data-reveal><p class="section-index">03</p><h2>{t.evidence}</h2></div>
+    {evidence.map((item) => item && (
+      <a class="evidence-row" href={withLocale(locale, `work/${item.slug}`)} data-reveal>
+        <span>{item.title}</span><small>{localize(item.summary, locale)}</small><b aria-hidden="true">↗</b>
+      </a>
+    ))}
+  </section>
+
+  <section class="detail-tech shell" data-reveal>
+    <p class="section-index">04</p><h2>{t.technologies}</h2>
+    <ul class="tag-list">{service.technologies.map((technology) => <li>{technology}</li>)}</ul>
+  </section>
+
+  <div class="detail-actions shell"><a class="button button--signal" href={withLocale(locale, 'contact')}>{t.discuss}<span aria-hidden="true">↗</span></a></div>
+</article>

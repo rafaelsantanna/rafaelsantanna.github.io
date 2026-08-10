@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760">
+  <rect width="1200" height="760" fill="#f0eadc"/>
+  <g fill="none" stroke="#314fcc" stroke-width="5"><path d="M152 192h246c58 0 58 92 116 92h178c62 0 62-92 124-92h232"/><path d="M514 284v220h304"/><path d="M152 192v404h360"/><path d="M818 504v92h230"/></g>
+  <g font-family="Arial, sans-serif" font-weight="700" text-anchor="middle">
+    <g transform="translate(70 144)"><rect width="164" height="96" rx="14" fill="#314fcc"/><text x="82" y="57" fill="#f8f2e5" font-size="20">226 STORES</text></g>
+    <g transform="translate(398 236)"><rect width="232" height="96" rx="14" fill="#202b46"/><text x="116" y="50" fill="#f8f2e5" font-size="20">WORKFLOWS</text><text x="116" y="75" fill="#a8b7ef" font-size="15">rules + approvals</text></g>
+    <g transform="translate(692 144)"><rect width="250" height="96" rx="14" fill="#f29442"/><text x="125" y="50" fill="#202b46" font-size="20">10,000+ USERS</text><text x="125" y="75" fill="#202b46" font-size="15">teams + roles</text></g>
+    <g transform="translate(942 144)"><rect width="188" height="96" rx="14" fill="#314fcc"/><text x="94" y="57" fill="#f8f2e5" font-size="20">MESSAGES</text></g>
+    <g transform="translate(662 456)"><rect width="312" height="96" rx="14" fill="#314fcc"/><text x="156" y="50" fill="#f8f2e5" font-size="20">CENTRAL OPERATIONS</text><text x="156" y="75" fill="#a8b7ef" font-size="15">history + deadlines + alerts</text></g>
+    <g transform="translate(376 548)"><rect width="272" height="96" rx="14" fill="#202b46"/><text x="136" y="57" fill="#f8f2e5" font-size="20">FIELD TEAMS</text></g>
+    <g transform="translate(966 548)"><rect width="164" height="96" rx="14" fill="#f29442"/><text x="82" y="57" fill="#202b46" font-size="20">AUDIT</text></g>
+  </g>
+  <g fill="#f29442" stroke="#f0eadc" stroke-width="5"><circle cx="152" cy="192" r="12"/><circle cx="514" cy="284" r="12"/><circle cx="818" cy="192" r="12"/><circle cx="818" cy="504" r="12"/><circle cx="1048" cy="596" r="12"/></g>
+  <text x="70" y="82" fill="#314fcc" font-family="Arial, sans-serif" font-size="22" font-weight="700" letter-spacing="3">ENTERPRISE OPERATIONS / SERVICE MAP</text>
+</svg>

@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#f4f0e5"/>
+  <path d="M0 88h1200M0 542h1200M88 0v630M1112 0v630" stroke="#acb1c0" stroke-opacity=".45"/>
+  <g fill="none" stroke="#314fcc" stroke-width="5">
+    <path d="M742 146h168c48 0 48 74 96 74h92"/>
+    <path d="M742 146v250h174c52 0 52 84 104 84h78"/>
+    <path d="M910 220v176"/>
+  </g>
+  <g fill="#f29442" stroke="#f4f0e5" stroke-width="5">
+    <circle cx="742" cy="146" r="13"/><circle cx="910" cy="220" r="13"/><circle cx="1098" cy="480" r="13"/>
+  </g>
+  <text x="88" y="152" fill="#314fcc" font-family="Arial, sans-serif" font-size="25" font-weight="700" letter-spacing="4">RAFAEL SANT' ANNA</text>
+  <text x="88" y="275" fill="#202b46" font-family="Arial, sans-serif" font-size="72" font-weight="700">The software behind</text>
+  <text x="88" y="357" fill="#202b46" font-family="Arial, sans-serif" font-size="72" font-weight="700">complex operations.</text>
+  <text x="88" y="456" fill="#526078" font-family="Arial, sans-serif" font-size="29">B2B platforms · AI automation · senior full-stack engineering</text>
+  <rect x="88" y="505" width="330" height="49" rx="9" fill="#314fcc"/>
+  <text x="112" y="538" fill="#f8f2e5" font-family="Arial, sans-serif" font-size="21" font-weight="700">rafaelsantanna.github.io</text>
+</svg>

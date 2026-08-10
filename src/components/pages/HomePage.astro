@@ -1,0 +1,91 @@
+---
+import SystemMap from '@/components/SystemMap.astro';
+import { cases, clients, copy, identity, localize, services, withLocale, type Locale } from '@/data/content';
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const t = copy[locale];
+---
+
+<section class="hero shell">
+  <div class="hero__copy">
+    <p class="availability"><span aria-hidden="true"></span>{t.availability}</p>
+    <h1>{t.heroTitle}</h1>
+    <p class="hero__intro">{t.heroIntro}</p>
+    <div class="button-row">
+      <a class="button button--primary" href={withLocale(locale, 'contact')}>{t.discuss}<span aria-hidden="true">↗</span></a>
+      <a class="button button--quiet" href="#selected-work">{t.seeWork}<span aria-hidden="true">↓</span></a>
+    </div>
+    <dl class="hero__facts" aria-label={locale === 'pt' ? 'Resumo profissional' : 'Professional summary'}>
+      <div><dt>10+</dt><dd>{locale === 'pt' ? 'anos em software' : 'years in software'}</dd></div>
+      <div><dt>15+</dt><dd>{locale === 'pt' ? 'projetos LMS/LXP' : 'LMS/LXP projects'}</dd></div>
+      <div><dt>200+</dt><dd>{locale === 'pt' ? 'melhorias em 6 meses' : 'improvements in 6 months'}</dd></div>
+    </dl>
+  </div>
+  <div class="hero__map" data-reveal>
+    <p class="map-caption"><span>SYS.MAP / 01</span>{locale === 'pt' ? 'Da operação ao resultado' : 'From operation to outcome'}</p>
+    <SystemMap locale={locale} />
+  </div>
+</section>
+
+<section id="selected-work" class="section section--work">
+  <div class="shell section-heading" data-reveal>
+    <p class="section-index">01 / {locale === 'pt' ? 'PROJETOS' : 'WORK'}</p>
+    <div><h2>{t.proofTitle}</h2><p>{t.proofIntro}</p></div>
+  </div>
+  <div class="work-ledger">
+    {cases.map((item, index) => (
+      <article class:list={['work-row', index % 2 ? 'work-row--reverse' : '']} data-reveal>
+        <a class="work-row__visual" href={withLocale(locale, `work/${item.slug}`)} aria-label={`${t.viewCase}: ${item.title}`}>
+          <img src={item.image} alt={localize(item.imageAlt, locale)} width={item.imageWidth} height={item.imageHeight} loading={index > 1 ? 'lazy' : 'eager'} />
+          <span class="work-row__coordinate">{String(index + 1).padStart(2, '0')} / 05</span>
+        </a>
+        <div class="work-row__copy">
+          <p class="eyebrow">{localize(item.eyebrow, locale)}</p>
+          <h3><a href={withLocale(locale, `work/${item.slug}`)}>{item.title}</a></h3>
+          <p>{localize(item.summary, locale)}</p>
+          <ul class="tag-list" aria-label={t.technologies}>
+            {item.technologies.slice(0, 5).map((technology) => <li>{technology}</li>)}
+          </ul>
+          <a class="text-link" href={withLocale(locale, `work/${item.slug}`)}>{t.viewCase}<span aria-hidden="true">→</span></a>
+        </div>
+      </article>
+    ))}
+  </div>
+  <div class="shell section-end"><a class="button button--outline" href={withLocale(locale, 'work')}>{t.nav.work}<span aria-hidden="true">→</span></a></div>
+</section>
+
+<section class="section services-field">
+  <div class="shell section-heading section-heading--dark" data-reveal>
+    <p class="section-index">02 / {locale === 'pt' ? 'SERVIÇOS' : 'SERVICES'}</p>
+    <div><h2>{t.servicesTitle}</h2><p>{t.servicesIntro}</p></div>
+  </div>
+  <div class="shell service-lines">
+    {services.map((service) => (
+      <a class="service-line" href={withLocale(locale, `services/${service.slug}`)} data-reveal>
+        <span class="service-line__index">{service.index}</span>
+        <span class="service-line__main"><strong>{localize(service.title, locale)}</strong><small>{localize(service.summary, locale)}</small></span>
+        <span class="service-line__arrow" aria-hidden="true">↗</span>
+      </a>
+    ))}
+  </div>
+</section>
+
+<section class="section trust-strip" data-reveal>
+  <div class="shell trust-strip__intro">
+    <p class="section-index">03 / {locale === 'pt' ? 'CONTEXTO' : 'CONTEXT'}</p>
+    <h2>{locale === 'pt' ? 'Experiência em projetos para organizações que operam em escala.' : 'Experience in projects for organizations operating at scale.'}</h2>
+  </div>
+  <div class="trust-strip__names" aria-label={locale === 'pt' ? 'Organizações citadas no currículo' : 'Organizations cited in the CV'}>
+    {clients.map((client) => <span>{client}</span>)}
+  </div>
+  <p class="shell trust-strip__note">{locale === 'pt' ? 'Nomes apresentados como contexto de projetos, sem uso de logos ou alegação de endosso.' : 'Names are presented as project context, without logos or implied endorsement.'}</p>
+</section>
+
+<section class="cta-field shell" data-reveal>
+  <p class="section-index">04 / {locale === 'pt' ? 'CONTATO' : 'CONTACT'}</p>
+  <div>
+    <h2>{locale === 'pt' ? 'Qual operação precisa ficar mais clara?' : 'Which operation needs to become clearer?'}</h2>
+    <p>{identity.availability[locale]}. {identity.location}.</p>
+  </div>
+  <a class="button button--signal" href={withLocale(locale, 'contact')}>{t.discuss}<span aria-hidden="true">↗</span></a>
+</section>

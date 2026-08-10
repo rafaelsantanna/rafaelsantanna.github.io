@@ -1,0 +1,41 @@
+---
+import { copy, identity, type Locale } from '@/data/content';
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const t = copy[locale];
+const emailSubject = encodeURIComponent(locale === 'pt' ? 'Novo projeto freelance' : 'Freelance project inquiry');
+const whatsappText = encodeURIComponent(locale === 'pt' ? 'Olá Rafael, gostaria de conversar sobre um projeto.' : 'Hello Rafael, I would like to discuss a project.');
+---
+
+<section class="contact-page shell">
+  <div class="contact-page__heading">
+    <p class="availability"><span aria-hidden="true"></span>{t.availability}</p>
+    <h1>{t.contactTitle}</h1>
+    <p>{t.contactIntro}</p>
+  </div>
+  <div class="contact-routes">
+    <a href={`mailto:${identity.email}?subject=${emailSubject}`}>
+      <span class="contact-routes__index">01</span>
+      <span><strong>{t.email}</strong><small>{identity.email}</small></span>
+      <b aria-hidden="true">↗</b>
+    </a>
+    <a href={`https://wa.me/${identity.phoneE164}?text=${whatsappText}`} rel="noreferrer">
+      <span class="contact-routes__index">02</span>
+      <span><strong>{t.whatsapp}</strong><small>{identity.phoneDisplay}</small></span>
+      <b aria-hidden="true">↗</b>
+    </a>
+    <a href={identity.linkedin} rel="me noreferrer">
+      <span class="contact-routes__index">03</span>
+      <span><strong>LinkedIn</strong><small>/in/devrafaelsantanna</small></span>
+      <b aria-hidden="true">↗</b>
+    </a>
+  </div>
+  <aside class="contact-brief" data-reveal>
+    <p class="section-index">{locale === 'pt' ? 'UM BOM PRIMEIRO CONTATO' : 'A USEFUL FIRST MESSAGE'}</p>
+    <ul>
+      <li>{locale === 'pt' ? 'O problema operacional ou objetivo do produto.' : 'The operational problem or product goal.'}</li>
+      <li>{locale === 'pt' ? 'Quem utilizará o sistema e em qual contexto.' : 'Who will use the system and in what context.'}</li>
+      <li>{locale === 'pt' ? 'Prazo, estágio atual e principais restrições.' : 'Timeline, current stage, and primary constraints.'}</li>
+    </ul>
+  </aside>
+</section>

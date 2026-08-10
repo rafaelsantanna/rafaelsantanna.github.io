@@ -1,0 +1,60 @@
+---
+import { cases, copy, localize, selectedWork, services, withLocale, type Locale } from '@/data/content';
+interface Props { locale: Locale; type: 'work' | 'services' }
+const { locale, type } = Astro.props;
+const t = copy[locale];
+---
+
+<section class="page-hero shell">
+  <p class="section-index">{type === 'work' ? '01 / WORK' : '02 / SERVICES'}</p>
+  <h1>{type === 'work' ? t.workTitle : t.servicesPageTitle}</h1>
+  <p>{type === 'work' ? t.workIntro : t.servicesPageIntro}</p>
+</section>
+
+{type === 'work' ? (
+  <>
+    <section class="case-index shell" aria-label={t.workTitle}>
+      {cases.map((item, index) => (
+        <article class="case-index__item" data-reveal>
+          <div class="case-index__number">{String(index + 1).padStart(2, '0')}</div>
+          <div class="case-index__image"><img src={item.image} alt={localize(item.imageAlt, locale)} width="1200" height="760" loading={index ? 'lazy' : 'eager'} /></div>
+          <div class="case-index__copy">
+            <p class="eyebrow">{localize(item.eyebrow, locale)}</p>
+            <h2><a href={withLocale(locale, `work/${item.slug}`)}>{item.title}</a></h2>
+            <p>{localize(item.summary, locale)}</p>
+            <a class="text-link" href={withLocale(locale, `work/${item.slug}`)}>{t.viewCase}<span aria-hidden="true">→</span></a>
+          </div>
+        </article>
+      ))}
+    </section>
+    <section class="selected-notes shell">
+      <div class="section-heading section-heading--compact" data-reveal>
+        <p class="section-index">+ / {locale === 'pt' ? 'OUTROS' : 'MORE'}</p>
+        <h2>{locale === 'pt' ? 'Outros projetos selecionados' : 'Additional selected projects'}</h2>
+      </div>
+      <div class="selected-notes__list">
+        {selectedWork.map((item) => (
+          <article data-reveal>
+            <h3>{item.title}</h3>
+            <p>{localize(item.description, locale)}</p>
+            <p class="small-meta">{item.technologies.join(' · ')}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+  </>
+) : (
+  <section class="service-index shell" aria-label={t.nav.services}>
+    {services.map((service) => (
+      <article class="service-index__item" data-reveal>
+        <span class="service-index__number">{service.index}</span>
+        <div>
+          <h2><a href={withLocale(locale, `services/${service.slug}`)}>{localize(service.title, locale)}</a></h2>
+          <p>{localize(service.summary, locale)}</p>
+          <ul class="tag-list">{service.technologies.map((technology) => <li>{technology}</li>)}</ul>
+        </div>
+        <a class="service-index__link" href={withLocale(locale, `services/${service.slug}`)} aria-label={`${t.viewService}: ${localize(service.title, locale)}`}>↗</a>
+      </article>
+    ))}
+  </section>
+)}

@@ -1,0 +1,58 @@
+---
+import { alternatePath, copy, identity, withLocale, type Locale } from '@/data/content';
+
+interface Props {
+  locale: Locale;
+  routePath: string;
+}
+
+const { locale, routePath } = Astro.props;
+const t = copy[locale];
+const items = [
+  ['work', t.nav.work],
+  ['services', t.nav.services],
+  ['about', t.nav.about],
+  ['cv', t.nav.cv],
+  ['for-agents', t.nav.agents],
+] as const;
+---
+
+<header class="site-header">
+  <a class="brand-mark" href={withLocale(locale)} aria-label={`${identity.name}, ${locale === 'pt' ? 'página inicial' : 'home'}`}>
+    <span class="brand-mark__node" aria-hidden="true"></span>
+    <span>rafael<span class="brand-mark__light">santanna</span></span>
+  </a>
+  <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav" hidden>
+    <span class="menu-toggle__label">Menu</span>
+    <span class="menu-toggle__lines" aria-hidden="true"></span>
+  </button>
+  <nav id="site-nav" class="site-nav" aria-label={locale === 'pt' ? 'Navegação principal' : 'Primary navigation'}>
+    {items.map(([path, label]) => (
+      <a href={withLocale(locale, path)} aria-current={routePath === path || routePath.startsWith(`${path}/`) ? 'page' : undefined}>{label}</a>
+    ))}
+    <a class="site-nav__contact" href={withLocale(locale, 'contact')}>{t.nav.contact}</a>
+    <a class="locale-switch" href={alternatePath(locale, routePath)} lang={locale === 'en' ? 'pt-BR' : 'en'}>{t.switchLocale}</a>
+  </nav>
+</header>
+
+<script>
+  const toggle = document.querySelector('.menu-toggle');
+  const nav = document.querySelector('.site-nav');
+  if (toggle instanceof HTMLButtonElement && nav instanceof HTMLElement) {
+    toggle.hidden = false;
+    nav.setAttribute('data-enhanced', 'true');
+    const close = () => {
+      toggle.setAttribute('aria-expanded', 'false');
+      nav.removeAttribute('data-open');
+    };
+    toggle.addEventListener('click', () => {
+      const open = toggle.getAttribute('aria-expanded') === 'true';
+      toggle.setAttribute('aria-expanded', String(!open));
+      nav.toggleAttribute('data-open', !open);
+    });
+    nav.querySelectorAll('a').forEach((link) => link.addEventListener('click', close));
+    window.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') close();
+    });
+  }
+</script>

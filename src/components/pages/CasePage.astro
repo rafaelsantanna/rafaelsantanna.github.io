@@ -1,0 +1,47 @@
+---
+import { copy, localize, withLocale, type CaseStudy, type Locale } from '@/data/content';
+interface Props { locale: Locale; item: CaseStudy }
+const { locale, item } = Astro.props;
+const t = copy[locale];
+---
+
+<article class="detail-page">
+  <header class="detail-hero shell">
+    <a class="back-link" href={withLocale(locale, 'work')}><span aria-hidden="true">←</span>{t.backWork}</a>
+    <div class="detail-hero__heading">
+      <div>
+        <p class="eyebrow">{localize(item.eyebrow, locale)}</p>
+        <h1>{item.title}</h1>
+      </div>
+      <dl>
+        <div><dt>{locale === 'pt' ? 'Papel' : 'Role'}</dt><dd>{localize(item.role, locale)}</dd></div>
+        <div><dt>{locale === 'pt' ? 'Período' : 'Period'}</dt><dd>{localize(item.period, locale)}</dd></div>
+      </dl>
+    </div>
+    <p class="detail-hero__summary">{localize(item.summary, locale)}</p>
+  </header>
+
+  <figure class="detail-visual shell" data-reveal>
+    <img src={item.image} alt={localize(item.imageAlt, locale)} width={item.imageWidth} height={item.imageHeight} />
+    <figcaption>{localize(item.imageAlt, locale)}</figcaption>
+  </figure>
+
+  <div class="detail-body shell">
+    <section data-reveal><p class="section-index">01</p><h2>{t.context}</h2><p>{localize(item.context, locale)}</p></section>
+    <section data-reveal><p class="section-index">02</p><h2>{t.challenge}</h2><p>{localize(item.challenge, locale)}</p></section>
+    <section data-reveal><p class="section-index">03</p><h2>{t.solution}</h2><p>{localize(item.solution, locale)}</p></section>
+    <section class="detail-outcomes" data-reveal>
+      <p class="section-index">04</p><h2>{t.outcomes}</h2>
+      <ol>{item.outcomes[locale].map((outcome) => <li>{outcome}</li>)}</ol>
+    </section>
+    <section class="detail-tech" data-reveal>
+      <p class="section-index">05</p><h2>{t.technologies}</h2>
+      <ul class="tag-list">{item.technologies.map((technology) => <li>{technology}</li>)}</ul>
+    </section>
+  </div>
+
+  <div class="detail-actions shell">
+    {item.externalUrl && item.externalLabel && <a class="button button--primary" href={item.externalUrl} rel="noreferrer">{localize(item.externalLabel, locale)}<span aria-hidden="true">↗</span></a>}
+    <a class="button button--outline" href={withLocale(locale, 'contact')}>{t.discuss}<span aria-hidden="true">→</span></a>
+  </div>
+</article>

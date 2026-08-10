@@ -1,0 +1,54 @@
+---
+import { copy, identity, timeline, type Locale } from '@/data/content';
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const t = copy[locale];
+const skills = [
+  ['Frontend', 'React, React Native, Vue.js, AngularJS, TypeScript, JavaScript, HTML5, CSS3, Tailwind CSS'],
+  ['Backend', 'Node.js, Laravel, PHP, .NET/C#, ASP.NET Core, ASP.NET MVC, REST APIs'],
+  [locale === 'pt' ? 'Bancos de dados' : 'Databases', 'PostgreSQL, MySQL, SQL Server'],
+  [locale === 'pt' ? 'Mobile e automação' : 'Mobile and automation', 'React Native, Ionic, RAG, intelligent assistants, Telegram bots, WhatsApp automation'],
+];
+---
+
+<section class="page-hero cv-hero shell">
+  <p class="section-index">04 / CV</p>
+  <h1>{t.cvTitle}</h1>
+  <p>{locale === 'pt' ? 'Mais de 10 anos construindo plataformas SaaS, LMS/LXP, marketplaces, aplicações mobile, sistemas empresariais e automações com IA.' : 'More than 10 years building SaaS platforms, LMS/LXP products, marketplaces, mobile applications, enterprise systems, and AI automation.'}</p>
+  <a class="button button--primary" href="/cv/rafael-sant-anna-cv.pdf" download>{t.downloadCv}<span aria-hidden="true">↓</span></a>
+</section>
+
+<div class="cv-layout shell">
+  <aside class="cv-sidebar" data-reveal>
+    <p class="eyebrow">{identity.name}</p>
+    <p>{identity.role[locale]}<br />{identity.location}</p>
+    <a href={`mailto:${identity.email}`}>{identity.email}</a>
+    <a href={identity.linkedin} rel="me noreferrer">LinkedIn</a>
+    <a href={identity.github} rel="me noreferrer">GitHub</a>
+    <div class="cv-language">
+      <strong>{locale === 'pt' ? 'Idiomas' : 'Languages'}</strong>
+      <span>{locale === 'pt' ? 'Português nativo' : 'Portuguese, native'}</span>
+      <span>{locale === 'pt' ? 'Inglês intermediário, B1' : 'English, intermediate B1'}</span>
+    </div>
+  </aside>
+  <div class="cv-main">
+    <section data-reveal>
+      <p class="section-index">01</p><h2>{locale === 'pt' ? 'Resumo' : 'Summary'}</h2>
+      <p>{locale === 'pt' ? 'Engenheiro de software sênior especializado em React, Vue.js, Laravel, Node.js, .NET/C#, React Native e arquiteturas orientadas a APIs. Experiência transformando operações complexas em produtos escaláveis, com foco em interfaces administrativas, integrações, relatórios, automação e RAG.' : 'Senior software engineer specializing in React, Vue.js, Laravel, Node.js, .NET/C#, React Native, and API-oriented architectures. Experienced in turning complex operations into scalable products, with a focus on administrative interfaces, integrations, reporting, automation, and RAG.'}</p>
+    </section>
+    <section data-reveal>
+      <p class="section-index">02</p><h2>{locale === 'pt' ? 'Experiência profissional' : 'Professional experience'}</h2>
+      <ol class="cv-timeline">
+        {timeline.map((item) => <li><time>{item.period}</time><div><strong>{item.company}</strong><span>{item.role[locale]}</span></div></li>)}
+      </ol>
+    </section>
+    <section data-reveal>
+      <p class="section-index">03</p><h2>{locale === 'pt' ? 'Competências técnicas' : 'Technical skills'}</h2>
+      <dl class="skill-ledger">{skills.map(([label, value]) => <div><dt>{label}</dt><dd>{value}</dd></div>)}</dl>
+    </section>
+    <section data-reveal>
+      <p class="section-index">04</p><h2>{locale === 'pt' ? 'Formação' : 'Education'}</h2>
+      <p>{locale === 'pt' ? 'Bacharelado em Sistemas de Informação, Fundação Educacional Unificada Campograndense, 2014-2017.' : 'Bachelor\'s degree in Information Systems, Fundação Educacional Unificada Campograndense, 2014-2017.'}</p>
+    </section>
+  </div>
+</div>

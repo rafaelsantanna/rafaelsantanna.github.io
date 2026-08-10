@@ -1,0 +1,25 @@
+---
+import { copy, identity, withLocale, type Locale } from '@/data/content';
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const t = copy[locale];
+---
+
+<footer class="site-footer">
+  <div class="site-footer__signal" aria-hidden="true">
+    <span></span><span></span><span></span><span></span>
+  </div>
+  <div class="site-footer__main">
+    <div>
+      <p class="site-footer__title">{t.footerLine}</p>
+      <p>{identity.location} · {identity.availability[locale]}</p>
+    </div>
+    <nav aria-label={locale === 'pt' ? 'Navegação do rodapé' : 'Footer navigation'}>
+      <a href={`mailto:${identity.email}`}>{identity.email}</a>
+      <a href={identity.linkedin} rel="me noreferrer">LinkedIn</a>
+      <a href={identity.github} rel="me noreferrer">GitHub</a>
+      <a href={withLocale(locale, 'for-agents')}>{t.nav.agents}</a>
+    </nav>
+  </div>
+  <p class="site-footer__meta">© {new Date().getFullYear()} {identity.name}. {locale === 'pt' ? 'Construído como HTML estático e acessível.' : 'Built as static, accessible HTML.'}</p>
+</footer>
