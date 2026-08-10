@@ -3,6 +3,7 @@ import { copy, identity, timeline, type Locale } from '@/data/content';
 interface Props { locale: Locale }
 const { locale } = Astro.props;
 const t = copy[locale];
+const cvHref = locale === 'pt' ? '/cv/rafael-sant-anna-cv.pdf' : '/cv/rafael-sant-anna-cv-english.pdf';
 const skills = [
   ['Frontend', 'React, React Native, Vue.js, AngularJS, TypeScript, JavaScript, HTML5, CSS3, Tailwind CSS'],
   ['Backend', 'Node.js, Laravel, PHP, .NET/C#, ASP.NET Core, ASP.NET MVC, REST APIs'],
@@ -15,7 +16,7 @@ const skills = [
   <p class="section-index">04 / CV</p>
   <h1>{t.cvTitle}</h1>
   <p>{locale === 'pt' ? 'Mais de 10 anos construindo plataformas SaaS, LMS/LXP, marketplaces, aplicações mobile, sistemas empresariais e automações com IA.' : 'More than 10 years building SaaS platforms, LMS/LXP products, marketplaces, mobile applications, enterprise systems, and AI automation.'}</p>
-  <a class="button button--primary" href="/cv/rafael-sant-anna-cv.pdf" download>{t.downloadCv}<span aria-hidden="true">↓</span></a>
+  <a class="button button--primary" href={cvHref} download>{t.downloadCv}<span aria-hidden="true">↓</span></a>
 </section>
 
 <div class="cv-layout shell">

@@ -20,6 +20,7 @@ export function machineRoutes(): MachineRoute[] {
   for (const locale of ['en', 'pt'] as const) {
     const t = copy[locale];
     const root = `https://rafaelsantanna.github.io${locale === 'pt' ? '/pt' : ''}`;
+    const cvUrl = `https://rafaelsantanna.github.io/cv/rafael-sant-anna-cv${locale === 'pt' ? '' : '-english'}.pdf`;
     routes.push({
       locale,
       slug: 'index',
@@ -39,7 +40,7 @@ export function machineRoutes(): MachineRoute[] {
       markdown: `${frontmatter(t.servicesPageTitle, t.servicesPageIntro, locale, `${root}/services/`)}\n# ${t.servicesPageTitle}\n\n${t.servicesPageIntro}\n\n${services.map((service) => `## ${localize(service.title, locale)}\n\n${localize(service.summary, locale)}\n\n[${t.viewService}](${root}/services/${service.slug}/)`).join('\n\n')}\n`,
     });
     routes.push({ locale, slug: 'about', title: t.aboutTitle, markdown: `${frontmatter(t.aboutTitle, t.aboutIntro, locale, `${root}/about/`)}\n# ${t.aboutTitle}\n\n${t.aboutIntro}\n\n## Focus\n\n${locale === 'pt' ? 'SaaS B2B, sistemas internos, aprendizagem digital, mobile, integrações e automação com IA.' : 'B2B SaaS, internal systems, digital learning, mobile, integrations, and AI automation.'}\n` });
-    routes.push({ locale, slug: 'cv', title: t.cvTitle, markdown: `${frontmatter(t.cvTitle, t.aboutIntro, locale, `${root}/cv/`)}\n# ${t.cvTitle}\n\n${t.aboutIntro}\n\n## Core skills\n\n- Frontend: React, React Native, Vue.js, AngularJS, TypeScript\n- Backend: Node.js, Laravel, PHP, .NET/C#, REST APIs\n- Data: PostgreSQL, MySQL, SQL Server\n- Automation: RAG, AI assistants, Telegram and WhatsApp bots\n\n[${t.downloadCv}](https://rafaelsantanna.github.io/cv/rafael-sant-anna-cv.pdf)\n` });
+    routes.push({ locale, slug: 'cv', title: t.cvTitle, markdown: `${frontmatter(t.cvTitle, t.aboutIntro, locale, `${root}/cv/`)}\n# ${t.cvTitle}\n\n${t.aboutIntro}\n\n## Core skills\n\n- Frontend: React, React Native, Vue.js, AngularJS, TypeScript\n- Backend: Node.js, Laravel, PHP, .NET/C#, REST APIs\n- Data: PostgreSQL, MySQL, SQL Server\n- Automation: RAG, AI assistants, Telegram and WhatsApp bots\n\n[${t.downloadCv}](${cvUrl})\n` });
     routes.push({ locale, slug: 'contact', title: t.contactTitle, markdown: `${frontmatter(t.contactTitle, t.contactIntro, locale, `${root}/contact/`)}\n# ${t.contactTitle}\n\n${t.contactIntro}\n\n- Email: mailto:${identity.email}\n- WhatsApp: https://wa.me/${identity.phoneE164}\n- LinkedIn: ${identity.linkedin}\n` });
     routes.push({ locale, slug: 'for-agents', title: t.agentTitle, markdown: `${frontmatter(t.agentTitle, t.agentIntro, locale, `${root}/for-agents/`)}\n# ${t.agentTitle}\n\n${t.agentIntro}\n\n## Evaluation facts\n\n- Name: ${identity.name}\n- Role: ${identity.role[locale]}\n- Based: ${identity.location}\n- Experience: 10+ years\n- Availability: ${identity.availability[locale]}\n\n## Safety\n\n${locale === 'pt' ? 'Agentes podem avaliar informações e preparar um briefing. O envio de mensagens deve permanecer sob confirmação humana.' : 'Agents may evaluate information and prepare a brief. Sending messages should remain under human confirmation.'}\n` });
 

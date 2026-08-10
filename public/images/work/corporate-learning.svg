@@ -6,7 +6,7 @@
     <path d="M0 80h1200M0 160h1200M0 240h1200M0 320h1200M0 400h1200M0 480h1200M0 560h1200M0 640h1200"/>
     <path d="M80 0v760M160 0v760M240 0v760M320 0v760M400 0v760M480 0v760M560 0v760M640 0v760M720 0v760M800 0v760M880 0v760M960 0v760M1040 0v760M1120 0v760"/>
   </g>
-  <text x="70" y="78" fill="#ff7a18" font-family="Arial, sans-serif" font-size="22" font-weight="700" letter-spacing="3">LEARNING ECOSYSTEM / FEEDBACK LOOP</text>
+  <text x="70" y="78" fill="#18c9e5" font-family="Arial, sans-serif" font-size="22" font-weight="700" letter-spacing="3">LEARNING ECOSYSTEM / FEEDBACK LOOP</text>
   <g fill="none" stroke="#f7f1e5" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
     <path d="M210 248h158c58 0 58 94 116 94h166c62 0 62-104 124-104h190"/>
     <path d="M484 342v196h170"/>
@@ -16,10 +16,10 @@
   <g font-family="Arial, sans-serif" font-weight="700" text-anchor="middle">
     <g transform="translate(70 198)"><rect width="280" height="100" rx="18" fill="#f7f1e5"/><text x="140" y="48" fill="#152342" font-size="20">AUDIENCES</text><text x="140" y="74" fill="#53617a" font-size="15">roles + access</text></g>
     <g transform="translate(368 292)"><rect width="232" height="100" rx="18" fill="#f7f1e5"/><text x="116" y="48" fill="#152342" font-size="20">JOURNEYS</text><text x="116" y="74" fill="#53617a" font-size="15">paths + progress</text></g>
-    <g transform="translate(650 188)"><rect width="248" height="100" rx="18" fill="#ff7a18"/><text x="124" y="48" fill="#152342" font-size="20">CONTENT</text><text x="124" y="74" fill="#152342" font-size="15">courses + formats</text></g>
+    <g transform="translate(650 188)"><rect width="248" height="100" rx="18" fill="#18c9e5"/><text x="124" y="48" fill="#071525" font-size="20">CONTENT</text><text x="124" y="74" fill="#071525" font-size="15">courses + formats</text></g>
     <g transform="translate(918 188)"><rect width="212" height="100" rx="18" fill="#f7f1e5"/><text x="106" y="48" fill="#152342" font-size="20">ANALYTICS</text><text x="106" y="74" fill="#53617a" font-size="15">signals + reports</text></g>
     <g transform="translate(330 488)"><rect width="308" height="100" rx="18" fill="#8da8ef"/><text x="154" y="48" fill="#152342" font-size="20">INTEGRATIONS</text><text x="154" y="74" fill="#152342" font-size="15">identity + enterprise data</text></g>
     <g transform="translate(654 488)"><rect width="304" height="100" rx="18" fill="#f7f1e5"/><text x="152" y="48" fill="#152342" font-size="20">IMPROVEMENT</text><text x="152" y="74" fill="#53617a" font-size="15">feedback + automation</text></g>
   </g>
-  <g fill="#ff7a18" stroke="#0d399d" stroke-width="5"><circle cx="210" cy="248" r="12"/><circle cx="484" cy="342" r="12"/><circle cx="774" cy="238" r="12"/><circle cx="1024" cy="238" r="12"/><circle cx="484" cy="538" r="12"/><circle cx="806" cy="538" r="12"/></g>
+  <g fill="#18c9e5" stroke="#0d399d" stroke-width="5"><circle cx="210" cy="248" r="12"/><circle cx="484" cy="342" r="12"/><circle cx="774" cy="238" r="12"/><circle cx="1024" cy="238" r="12"/><circle cx="484" cy="538" r="12"/><circle cx="806" cy="538" r="12"/></g>
 </svg>

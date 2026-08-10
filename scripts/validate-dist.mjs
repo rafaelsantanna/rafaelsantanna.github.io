@@ -54,6 +54,13 @@ for (const required of ['robots.txt', 'llms.txt', 'llms-full.txt', 'AGENTS.md', 
   assert.ok(existsSync(join(dist, required)), `Missing generated file: ${required}`);
 }
 
+for (const cv of ['rafael-sant-anna-cv.pdf', 'rafael-sant-anna-cv-english.pdf']) {
+  assert.ok(existsSync(join(dist, 'cv', cv)), `Missing CV: ${cv}`);
+}
+
+assert.match(readFileSync(join(dist, 'cv', 'index.html'), 'utf8'), /rafael-sant-anna-cv-english\.pdf/, 'English CV page must link to the English PDF');
+assert.match(readFileSync(join(dist, 'pt', 'cv', 'index.html'), 'utf8'), /rafael-sant-anna-cv\.pdf/, 'Portuguese CV page must link to the Portuguese PDF');
+
 const markdownFiles = files.filter((file) => file.includes(`${join('markdown', '')}`) && file.endsWith('.md'));
 assert.equal(markdownFiles.length, 34, `Expected 34 Markdown alternatives, found ${markdownFiles.length}`);
 
