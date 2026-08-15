@@ -4,7 +4,7 @@ interface Props { locale: Locale }
 const { locale } = Astro.props;
 const t = copy[locale];
 const featuredCases = cases.slice(0, 3);
-const featuredServices = services.slice(0, 2);
+const featuredServices = services;
 ---
 
 <section class="hero-stage" aria-labelledby="hero-title">
