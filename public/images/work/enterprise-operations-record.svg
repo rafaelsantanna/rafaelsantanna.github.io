@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760" role="img" aria-labelledby="title description">
+  <title id="title">Enterprise operations delivery record</title>
+  <desc id="description">A case artifact highlighting an enterprise platform serving more than 10,000 users and retail maintenance across 226 stores.</desc>
+  <rect width="1200" height="760" fill="#0d399d"/>
+  <rect width="1200" height="96" fill="#071525"/>
+  <g stroke="#9cdce8" stroke-opacity=".12">
+    <path d="M0 228h1200M0 380h1200M0 532h1200"/>
+    <path d="M150 96v580M300 96v580M450 96v580M600 96v580M750 96v580M900 96v580M1050 96v580"/>
+  </g>
+  <g font-family="Arial, sans-serif">
+    <text x="56" y="61" fill="#18c9e5" font-size="17" font-weight="700" letter-spacing="4">CASE 05 / ENTERPRISE OPERATIONS</text>
+    <text x="1144" y="61" fill="#9cdce8" font-size="15" font-weight="700" letter-spacing="2" text-anchor="end">ASPECTI / GRUPO PROFARMA</text>
+
+    <text x="50" y="332" fill="#f1f7f8" font-size="186" font-weight="800" letter-spacing="-12">10,000+</text>
+    <text x="70" y="382" fill="#18c9e5" font-size="24" font-weight="700" letter-spacing="5">PLATFORM USERS</text>
+    <text x="70" y="418" fill="#c4d8e3" font-size="19">integrated enterprise operation</text>
+
+    <rect x="744" y="136" width="400" height="308" fill="#e8f2f5"/>
+    <text x="786" y="198" fill="#0d399d" font-size="14" font-weight="700" letter-spacing="3">RETAIL MAINTENANCE</text>
+    <text x="778" y="352" fill="#0d399d" font-size="170" font-weight="800" letter-spacing="-10">226</text>
+    <text x="786" y="381" fill="#071525" font-size="20" font-weight="700" letter-spacing="4">STORES</text>
+    <path d="M786 397h316" stroke="#18c9e5" stroke-width="5"/>
+    <text x="786" y="427" fill="#445b70" font-size="16">accounts / alerts / history / due dates</text>
+
+    <text x="56" y="514" fill="#9cdce8" font-size="14" font-weight="700" letter-spacing="3">OPERATIONAL CONTEXTS</text>
+    <g fill="#f1f7f8" font-size="22" font-weight="700">
+      <text x="56" y="562">HEALTH</text><text x="270" y="562">RETAIL</text>
+      <text x="480" y="562">ENGINEERING</text><text x="752" y="562">LOGISTICS</text>
+      <text x="978" y="562">FIELD TEAMS</text>
+    </g>
+    <g fill="#18c9e5">
+      <rect x="56" y="584" width="140" height="5"/><rect x="270" y="584" width="138" height="5"/>
+      <rect x="480" y="584" width="208" height="5"/><rect x="752" y="584" width="166" height="5"/>
+      <rect x="978" y="584" width="166" height="5"/>
+    </g>
+
+    <rect y="646" width="1200" height="114" fill="#071525"/>
+    <g fill="#f1f7f8" font-size="15" font-weight="700" letter-spacing="2">
+      <text x="56" y="708">ASP.NET MVC</text><text x="232" y="708">WEB API</text>
+      <text x="370" y="708">C#</text><text x="450" y="708">SQL SERVER</text>
+      <text x="620" y="708">ENTITY FRAMEWORK</text><text x="864" y="708">IONIC</text>
+      <text x="1144" y="708" text-anchor="end">2014 — 2017</text>
+    </g>
+  </g>
+</svg>
