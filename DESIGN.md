@@ -89,9 +89,9 @@ The system is static-first and progressively enhanced. Motion reveals relationsh
 **Key Characteristics:**
 - Asymmetric maps and flows explain relationships instead of decorating empty space.
 - The home hero uses one cinematic portrait treatment, scan motion, and spatial readouts as the memorable signature.
-- Internal page openings use full-viewport coordinate grids, oversized headlines, route codes, and cyan calibration marks.
+- Internal page openings keep the coordinate-grid language but change composition by intent: visual evidence for work, delivery principles for services, factual ledgers for profile routes, and image-led case openings.
 - Work and service indexes behave as visual ledgers: authored imagery, large sequence numbers, and full-row interaction replace generic card grids.
-- Case studies, service routes, About, and Contact share the same optical treatment while keeping distinct information structures.
+- Case studies, service routes, About, CV, Contact, and agent-facing pages share the same optical treatment while opening with distinct information structures.
 - CV and agent-facing routes use denser operational ledgers: sticky identity context, asymmetric evidence blocks, and machine-readable file controls prioritize trust over spectacle.
 - Cyan marks live signals and actions; electric blue carries brand depth and major fields.
 - Alternating evidence rows replace interchangeable card grids.
@@ -164,7 +164,7 @@ Components are tactile and confident, with meaningful states and a complete non-
 - **Internal Padding:** fluid spacing from 1.5rem to 5rem according to density and viewport.
 
 ### Navigation
-- Desktop navigation is a compact horizontal route below a cyan operational status rail, with an outlined contact destination and cyan locale switch.
+- Desktop navigation keeps only Work, Services, About, Contact, and locale switching. CV and agent resources remain discoverable in the footer, while the operational status rail uses a quiet raised navy field.
 - At 72rem and below it becomes a native button-controlled two-row map; at 48rem it becomes two columns with 44px minimum targets.
 - The active route is visible through a cyan underline and `aria-current`, never color alone.
 

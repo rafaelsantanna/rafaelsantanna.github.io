@@ -138,14 +138,6 @@
 .detail-outcomes li::before { color: var(--cobalt); content: counter(outcome, decimal-leading-zero); font-family: var(--font-display); font-size: 0.75rem; font-weight: 700; }
 .detail-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 0.75rem; padding-block-end: var(--space-7); }
 
-.service-blueprint { position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-6); padding-block: var(--space-7); }
-.service-blueprint section { padding: var(--space-5); background: var(--paper-strong); }
-.service-blueprint h2 { margin-block: 0.65rem 1.5rem; font-size: var(--step-3); }
-.service-blueprint ul { margin: 0; padding: 0; list-style: none; }
-.service-blueprint li { padding-block: 0.75rem; border-block-end: 1px solid var(--line); font-size: var(--step-1); }
-.service-blueprint__route { position: absolute; inset: 50% 15% auto; height: 2px; background: var(--cobalt); }
-.service-blueprint__route span { position: absolute; inset-block-start: 50%; width: 0.8rem; aspect-ratio: 1; border: 2px solid var(--paper); border-radius: 50%; background: var(--signal); transform: translate(-50%, -50%); }
-.service-blueprint__route span:nth-child(2) { left: 33%; }.service-blueprint__route span:nth-child(3) { left: 66%; }.service-blueprint__route span:nth-child(4) { left: 100%; }
 .evidence-list { padding-block: var(--space-6); }
 .evidence-row { display: grid; grid-template-columns: 0.6fr 1.4fr auto; gap: var(--space-4); align-items: center; min-height: 7rem; border-block-start: 1px solid var(--line); text-decoration: none; }
 .evidence-row:last-child { border-block-end: 1px solid var(--line); }
@@ -218,9 +210,6 @@
 .agent-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; padding-block-end: var(--space-7); background: var(--line); }
 .agent-grid > section { padding: var(--space-5); background: var(--paper); }
 .agent-grid h2 { margin-block: 1rem; font-size: var(--step-3); }
-.fact-list div { display: grid; grid-template-columns: 0.7fr 1.3fr; gap: 1rem; padding-block: 0.65rem; border-block-end: 1px solid var(--line); }
-.fact-list dt { color: var(--muted); }
-.fact-list dd { font-weight: 650; }
 .agent-links { margin: 1rem 0 0; padding: 0; list-style: none; }
 .agent-links a { display: flex; align-items: center; min-height: 3rem; border-block-end: 1px solid var(--line); font-weight: 650; text-underline-offset: 0.3em; }
 .agent-contact { display: grid; gap: 0.5rem; margin-block-start: 1rem; }

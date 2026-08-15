@@ -94,8 +94,6 @@
   .detail-visual figcaption { position: static; max-width: none; }
   .detail-body { display: block; }
   .detail-body section, .detail-body section:nth-child(even) { display: grid; grid-template-columns: 2.5rem 1fr; margin-block: var(--space-5); }
-  .service-blueprint { grid-template-columns: 1fr; }
-  .service-blueprint__route { display: none; }
   .evidence-row { grid-template-columns: 1fr auto; padding-block: var(--space-4); }
   .evidence-row small { grid-column: 1; }
   .evidence-row b { grid-column: 2; grid-row: 1; }

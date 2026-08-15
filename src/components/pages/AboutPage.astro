@@ -6,10 +6,14 @@ const { locale } = Astro.props;
 const t = copy[locale];
 ---
 
-<section class="page-hero page-hero--about shell" data-code="PROFILE / 03">
+<section class="page-hero page-hero--about shell" data-code={locale === 'pt' ? 'PERFIL / 03' : 'PROFILE / 03'}>
   <p class="section-index">03 / {t.nav.about.toUpperCase()}</p>
   <h1>{t.aboutTitle}</h1>
   <p>{t.aboutIntro}</p>
+  <dl class="about-hero__facts">
+    <div><dt>10+</dt><dd>{locale === 'pt' ? 'anos construindo software' : 'years building software'}</dd></div>
+    <div><dt>{identity.location}</dt><dd>{locale === 'pt' ? 'base atual' : 'current base'}</dd></div>
+  </dl>
 </section>
 
 <section class="about-map shell" data-reveal>

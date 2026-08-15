@@ -7,7 +7,7 @@ const emailSubject = encodeURIComponent(locale === 'pt' ? 'Novo projeto freelanc
 const whatsappText = encodeURIComponent(locale === 'pt' ? 'Olá Rafael, gostaria de conversar sobre um projeto.' : 'Hello Rafael, I would like to discuss a project.');
 ---
 
-<section class="contact-page shell" data-code="OPEN CHANNEL / 04">
+<section class="contact-page shell" data-code={locale === 'pt' ? 'CANAL ABERTO / 04' : 'OPEN CHANNEL / 04'}>
   <div class="contact-page__heading">
     <p class="availability"><span aria-hidden="true"></span>{t.availability}</p>
     <h1>{t.contactTitle}</h1>
@@ -38,4 +38,37 @@ const whatsappText = encodeURIComponent(locale === 'pt' ? 'Olá Rafael, gostaria
       <li>{locale === 'pt' ? 'Prazo, estágio atual e principais restrições.' : 'Timeline, current stage, and primary constraints.'}</li>
     </ul>
   </aside>
+  <div class="contact-copy-tools" data-reveal>
+    <p>{locale === 'pt' ? 'Prefere copiar o contato?' : 'Prefer to copy the contact?'}</p>
+    <div>
+      <button type="button" data-copy-value={identity.email} data-copy-label={locale === 'pt' ? 'Email copiado.' : 'Email copied.'}>{locale === 'pt' ? 'Copiar email' : 'Copy email'}</button>
+      <button type="button" data-copy-value={identity.phoneDisplay} data-copy-label={locale === 'pt' ? 'Telefone copiado.' : 'Phone copied.'}>{locale === 'pt' ? 'Copiar telefone' : 'Copy phone'}</button>
+    </div>
+    <p class="contact-copy-tools__status" aria-live="polite"></p>
+  </div>
 </section>
+
+<script>
+  const status = document.querySelector('.contact-copy-tools__status');
+  const copyFallback = (value: string) => {
+    const field = document.createElement('textarea');
+    field.value = value;
+    field.style.position = 'fixed';
+    field.style.opacity = '0';
+    document.body.append(field);
+    field.select();
+    document.execCommand('copy');
+    field.remove();
+  };
+  document.querySelectorAll<HTMLButtonElement>('[data-copy-value]').forEach((button) => {
+    button.addEventListener('click', async () => {
+      const value = button.dataset.copyValue ?? '';
+      try {
+        await navigator.clipboard.writeText(value);
+      } catch {
+        copyFallback(value);
+      }
+      if (status) status.textContent = button.dataset.copyLabel ?? '';
+    });
+  });
+</script>

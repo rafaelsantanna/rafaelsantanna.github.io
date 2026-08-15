@@ -18,6 +18,7 @@ const t = copy[locale];
       <a href={`mailto:${identity.email}`}>{identity.email}</a>
       <a href={identity.linkedin} rel="me noreferrer">LinkedIn</a>
       <a href={identity.github} rel="me noreferrer">GitHub</a>
+      <a href={withLocale(locale, 'cv')}>{t.nav.cv}</a>
       <a href={withLocale(locale, 'for-agents')}>{t.nav.agents}</a>
     </nav>
   </div>

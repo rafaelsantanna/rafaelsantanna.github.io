@@ -5,10 +5,24 @@ const { locale, type } = Astro.props;
 const t = copy[locale];
 ---
 
-<section class:list={['page-hero', `page-hero--${type}`, 'shell']} data-code={type === 'work' ? 'INDEX / 01' : 'INDEX / 02'}>
-  <p class="section-index">{type === 'work' ? '01 / WORK' : '02 / SERVICES'}</p>
-  <h1>{type === 'work' ? t.workTitle : t.servicesPageTitle}</h1>
-  <p>{type === 'work' ? t.workIntro : t.servicesPageIntro}</p>
+<section class:list={['page-hero', `page-hero--${type}`, 'shell']} data-code={type === 'work' ? (locale === 'pt' ? 'ÍNDICE / 01' : 'INDEX / 01') : (locale === 'pt' ? 'ÍNDICE / 02' : 'INDEX / 02')}>
+  <div class="listing-hero__copy">
+    <p class="section-index">{type === 'work' ? `01 / ${locale === 'pt' ? 'PROJETOS' : 'WORK'}` : `02 / ${locale === 'pt' ? 'SERVIÇOS' : 'SERVICES'}`}</p>
+    <h1>{type === 'work' ? t.workTitle : t.servicesPageTitle}</h1>
+    <p>{type === 'work' ? t.workIntro : t.servicesPageIntro}</p>
+  </div>
+  {type === 'work' ? (
+    <figure class="listing-hero__preview">
+      <img src={cases[0].image} alt={localize(cases[0].imageAlt, locale)} width={cases[0].imageWidth} height={cases[0].imageHeight} />
+      <figcaption>{locale === 'pt' ? 'PROVA EM DESTAQUE / EDGEDATA' : 'FEATURED EVIDENCE / EDGEDATA'}</figcaption>
+    </figure>
+  ) : (
+    <ul class="listing-hero__principles" aria-label={locale === 'pt' ? 'Princípios de entrega' : 'Delivery principles'}>
+      <li><span>01</span>{locale === 'pt' ? 'Problema real' : 'Real problem'}</li>
+      <li><span>02</span>{locale === 'pt' ? 'Entrega focada' : 'Focused delivery'}</li>
+      <li><span>03</span>{locale === 'pt' ? 'Evidência relacionada' : 'Related evidence'}</li>
+    </ul>
+  )}
 </section>
 
 {type === 'work' ? (

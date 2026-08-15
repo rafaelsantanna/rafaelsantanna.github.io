@@ -3,6 +3,9 @@ import { cases, clients, copy, identity, localize, services, withLocale, type Lo
 interface Props { locale: Locale }
 const { locale } = Astro.props;
 const t = copy[locale];
+const featuredCases = cases.slice(0, 3);
+const featuredServices = services.slice(0, 3);
+const featuredClients = clients.slice(0, 6);
 ---
 
 <section class="hero-stage" aria-labelledby="hero-title">
@@ -10,7 +13,7 @@ const t = copy[locale];
     <span class="hero-stage__axis hero-stage__axis--x"></span>
     <span class="hero-stage__axis hero-stage__axis--y"></span>
     <span class="hero-stage__coordinate">40.6566° N / 7.9125° W</span>
-    <span class="hero-stage__watermark">RAFAEL / SYSTEMS ENGINEER</span>
+    <span class="hero-stage__watermark">{locale === 'pt' ? 'RAFAEL / ENGENHARIA DE SISTEMAS' : 'RAFAEL / SYSTEMS ENGINEER'}</span>
   </div>
   <div class="hero shell">
     <div class="hero__copy">
@@ -41,9 +44,9 @@ const t = copy[locale];
         <div class="hero-portrait__scan" aria-hidden="true"></div>
         <div class="hero-portrait__reticle" aria-hidden="true"><span></span></div>
         <p class="hero-portrait__readout" aria-hidden="true">
-          <span>SUBJECT / RS-01</span>
-          <span>STATUS / ACTIVE</span>
-          <span>FOCUS / SYSTEMS</span>
+          <span>{locale === 'pt' ? 'PESSOA / RS-01' : 'SUBJECT / RS-01'}</span>
+          <span>{locale === 'pt' ? 'STATUS / ATIVO' : 'STATUS / ACTIVE'}</span>
+          <span>{locale === 'pt' ? 'FOCO / SISTEMAS' : 'FOCUS / SYSTEMS'}</span>
         </p>
       </div>
       <figcaption><span>RS / 01</span>{identity.location}</figcaption>
@@ -57,7 +60,7 @@ const t = copy[locale];
   </div>
   <div class="hero-stage__footer shell" aria-hidden="true">
     <span>{locale === 'pt' ? 'PROJETOS REAIS / RESULTADOS VERIFICÁVEIS' : 'REAL PROJECTS / VERIFIABLE OUTCOMES'}</span>
-    <span>SCROLL / 01</span>
+    <span>{locale === 'pt' ? 'ROLAR / 01' : 'SCROLL / 01'}</span>
   </div>
 </section>
 
@@ -67,11 +70,11 @@ const t = copy[locale];
     <div><h2>{t.proofTitle}</h2><p>{t.proofIntro}</p></div>
   </div>
   <div class="work-ledger">
-    {cases.map((item, index) => (
+    {featuredCases.map((item, index) => (
       <article class:list={['work-row', index % 2 ? 'work-row--reverse' : '']} data-reveal>
         <a class="work-row__visual" href={withLocale(locale, `work/${item.slug}`)} aria-label={`${t.viewCase}: ${item.title}`}>
           <img src={item.image} alt={localize(item.imageAlt, locale)} width={item.imageWidth} height={item.imageHeight} loading={index > 1 ? 'lazy' : 'eager'} />
-          <span class="work-row__coordinate">{String(index + 1).padStart(2, '0')} / 05</span>
+          <span class="work-row__coordinate">{String(index + 1).padStart(2, '0')} / 03</span>
         </a>
         <div class="work-row__copy">
           <p class="eyebrow">{localize(item.eyebrow, locale)}</p>
@@ -94,7 +97,7 @@ const t = copy[locale];
     <div><h2>{t.servicesTitle}</h2><p>{t.servicesIntro}</p></div>
   </div>
   <div class="shell service-lines">
-    {services.map((service) => (
+    {featuredServices.map((service) => (
       <a class="service-line" href={withLocale(locale, `services/${service.slug}`)} data-reveal>
         <span class="service-line__index">{service.index}</span>
         <span class="service-line__main"><strong>{localize(service.title, locale)}</strong><small>{localize(service.summary, locale)}</small></span>
@@ -102,6 +105,7 @@ const t = copy[locale];
       </a>
     ))}
   </div>
+  <div class="shell section-end"><a class="button button--outline button--outline-dark" href={withLocale(locale, 'services')}>{t.nav.services}<span aria-hidden="true">→</span></a></div>
 </section>
 
 <section class="section trust-strip" data-reveal>
@@ -110,7 +114,7 @@ const t = copy[locale];
     <h2>{locale === 'pt' ? 'Experiência em projetos para organizações que operam em escala.' : 'Experience in projects for organizations operating at scale.'}</h2>
   </div>
   <div class="trust-strip__names" aria-label={locale === 'pt' ? 'Organizações citadas no currículo' : 'Organizations cited in the CV'}>
-    {clients.map((client) => <span>{client}</span>)}
+    {featuredClients.map((client) => <span>{client}</span>)}
   </div>
   <p class="shell trust-strip__note">{locale === 'pt' ? 'Nomes apresentados como contexto de projetos, sem uso de logos ou alegação de endosso.' : 'Names are presented as project context, without logos or implied endorsement.'}</p>
 </section>
