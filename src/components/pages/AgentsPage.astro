@@ -5,7 +5,7 @@ const { locale } = Astro.props;
 const t = copy[locale];
 ---
 
-<section class="page-hero agent-hero shell">
+<section class="page-hero agent-hero shell" data-code="AGENT INTERFACE / 05">
   <p class="section-index">05 / AGENT READINESS</p>
   <h1>{t.agentTitle}</h1>
   <p>{t.agentIntro}</p>
@@ -33,7 +33,7 @@ const t = copy[locale];
   <section data-reveal>
     <p class="section-index">04 / {locale === 'pt' ? 'CONTATO' : 'CONTACT'}</p>
     <p>{locale === 'pt' ? 'Um agente pode avaliar estas informações e preparar um briefing. O envio de qualquer mensagem deve permanecer sob confirmação humana.' : 'An agent may evaluate this information and prepare a brief. Sending any message should remain under human confirmation.'}</p>
-    <div class="agent-contact"><a href={`mailto:${identity.email}`}>{identity.email}</a><a href={`https://wa.me/${identity.phoneE164}`}>{identity.phoneDisplay}</a></div>
+    <div class="agent-contact"><a href={`mailto:${identity.email}`}>{identity.email}</a><a href={`https://wa.me/${identity.phoneE164}`} rel="noreferrer">{identity.phoneDisplay}</a></div>
   </section>
 </div>
 

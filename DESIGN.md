@@ -92,6 +92,7 @@ The system is static-first and progressively enhanced. Motion reveals relationsh
 - Internal page openings use full-viewport coordinate grids, oversized headlines, route codes, and cyan calibration marks.
 - Work and service indexes behave as visual ledgers: authored imagery, large sequence numbers, and full-row interaction replace generic card grids.
 - Case studies, service routes, About, and Contact share the same optical treatment while keeping distinct information structures.
+- CV and agent-facing routes use denser operational ledgers: sticky identity context, asymmetric evidence blocks, and machine-readable file controls prioritize trust over spectacle.
 - Cyan marks live signals and actions; electric blue carries brand depth and major fields.
 - Alternating evidence rows replace interchangeable card grids.
 - Semantic structure serves people, search engines, and agents from the same source.
