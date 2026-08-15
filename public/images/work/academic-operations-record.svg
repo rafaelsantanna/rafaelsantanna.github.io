@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760" role="img" aria-labelledby="title description">
+  <title id="title">Academic operations delivery record</title>
+  <desc id="description">A technical case artifact highlighting more than 200 improvements delivered across a six-month academic platform project.</desc>
+  <rect width="1200" height="760" fill="#071525"/>
+  <g stroke="#9cdce8" stroke-opacity=".1">
+    <path d="M0 152h1200M0 304h1200M0 456h1200M0 608h1200"/>
+    <path d="M150 0v760M300 0v760M450 0v760M600 0v760M750 0v760M900 0v760M1050 0v760"/>
+  </g>
+  <g font-family="Arial, sans-serif">
+    <text x="64" y="68" fill="#18c9e5" font-size="17" font-weight="700" letter-spacing="4">CASE 02 / ACADEMIC OPERATIONS</text>
+    <text x="1136" y="68" fill="#9cdce8" font-size="15" font-weight="700" letter-spacing="2" text-anchor="end">AUG 2025 — APR 2026</text>
+    <text x="56" y="335" fill="#f1f7f8" font-size="246" font-weight="800" letter-spacing="-16">200+</text>
+    <text x="72" y="386" fill="#18c9e5" font-size="24" font-weight="700" letter-spacing="5">IMPROVEMENTS + FEATURES</text>
+    <text x="72" y="424" fill="#9db0c2" font-size="20">delivered across frontend and backend</text>
+    <rect x="760" y="138" width="376" height="286" fill="#0d399d"/>
+    <text x="800" y="196" fill="#9cdce8" font-size="15" font-weight="700" letter-spacing="3">DELIVERY WINDOW</text>
+    <text x="796" y="344" fill="#f1f7f8" font-size="154" font-weight="800" letter-spacing="-10">~6</text>
+    <text x="1010" y="340" fill="#18c9e5" font-size="24" font-weight="700" letter-spacing="3">MONTHS</text>
+    <path d="M800 376h296" stroke="#18c9e5" stroke-width="5"/>
+    <text x="800" y="405" fill="#d4e1e8" font-size="16">project estimated at more than one year</text>
+    <text x="64" y="536" fill="#9cdce8" font-size="14" font-weight="700" letter-spacing="3">CRITICAL SURFACES</text>
+    <g fill="#f1f7f8" font-size="22" font-weight="700">
+      <text x="64" y="584">DOCUMENTS</text><text x="310" y="584">VALIDATION</text>
+      <text x="554" y="584">ASSESSMENT</text><text x="820" y="584">ADMINISTRATION</text>
+    </g>
+    <g fill="#18c9e5">
+      <rect x="64" y="608" width="182" height="6"/><rect x="310" y="608" width="178" height="6"/>
+      <rect x="554" y="608" width="202" height="6"/><rect x="820" y="608" width="316" height="6"/>
+    </g>
+    <text x="64" y="695" fill="#f1f7f8" font-size="16" font-weight="700" letter-spacing="2">REACT 19</text>
+    <text x="212" y="695" fill="#f1f7f8" font-size="16" font-weight="700" letter-spacing="2">TYPESCRIPT</text>
+    <text x="390" y="695" fill="#f1f7f8" font-size="16" font-weight="700" letter-spacing="2">ZUSTAND</text>
+    <text x="540" y="695" fill="#f1f7f8" font-size="16" font-weight="700" letter-spacing="2">LARAVEL 11</text>
+    <text x="1136" y="695" fill="#18c9e5" font-size="16" font-weight="700" letter-spacing="2" text-anchor="end">RBAC / REST APIs</text>
+  </g>
+</svg>

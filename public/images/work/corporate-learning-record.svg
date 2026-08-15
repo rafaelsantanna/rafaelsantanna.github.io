@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760" role="img" aria-labelledby="title description">
+  <title id="title">Corporate learning delivery record</title>
+  <desc id="description">A case artifact showing more than 15 corporate and educational LMS deliveries between 2019 and 2025.</desc>
+  <rect width="1200" height="760" fill="#e8f2f5"/>
+  <rect width="1200" height="96" fill="#071525"/>
+  <rect y="634" width="1200" height="126" fill="#0d399d"/>
+  <g font-family="Arial, sans-serif">
+    <text x="56" y="61" fill="#18c9e5" font-size="17" font-weight="700" letter-spacing="4">CASE 03 / CORPORATE LEARNING</text>
+    <text x="1144" y="61" fill="#9cdce8" font-size="15" font-weight="700" letter-spacing="2" text-anchor="end">REVVO / 2019 — 2025</text>
+    <text x="50" y="388" fill="#0d399d" font-size="310" font-weight="800" letter-spacing="-24">15+</text>
+    <text x="78" y="448" fill="#071525" font-size="29" font-weight="700" letter-spacing="6">LMS / LXP DELIVERIES</text>
+    <text x="78" y="489" fill="#445b70" font-size="20">corporate and educational platforms</text>
+    <g transform="translate(680 150)">
+      <text fill="#0d399d" font-size="14" font-weight="700" letter-spacing="3">ECOSYSTEM RANGE</text>
+      <g fill="#071525" font-size="28" font-weight="700">
+        <text y="68">LEARNING JOURNEYS</text><text y="138">DASHBOARDS</text>
+        <text y="208">ENTERPRISE INTEGRATIONS</text><text y="278">APPLIED AI</text>
+      </g>
+      <g fill="#18c9e5">
+        <rect y="88" width="410" height="3"/><rect y="158" width="316" height="3"/>
+        <rect y="228" width="464" height="3"/><rect y="298" width="238" height="3"/>
+      </g>
+    </g>
+    <text x="56" y="590" fill="#445b70" font-size="14" font-weight="700" letter-spacing="3">SIX YEARS OF CONTINUOUS DELIVERY</text>
+    <path d="M56 610h1088" stroke="#71889a" stroke-width="2"/>
+    <g fill="#0d399d">
+      <circle cx="56" cy="610" r="7"/><circle cx="237" cy="610" r="7"/><circle cx="418" cy="610" r="7"/>
+      <circle cx="600" cy="610" r="7"/><circle cx="781" cy="610" r="7"/><circle cx="962" cy="610" r="7"/><circle cx="1144" cy="610" r="7"/>
+    </g>
+    <g fill="#71889a" font-size="13" font-weight="700">
+      <text x="56" y="629">2019</text><text x="1144" y="629" text-anchor="end">2025</text>
+    </g>
+    <g fill="#f1f7f8" font-size="16" font-weight="700" letter-spacing="2">
+      <text x="56" y="704">REACT</text><text x="184" y="704">VUE.JS</text><text x="318" y="704">LARAVEL</text>
+      <text x="474" y="704">NODE.JS</text><text x="626" y="704">MOODLE</text><text x="778" y="704">SCORM</text>
+      <text x="1138" y="704" text-anchor="end">BI / ERP / CRM / HR</text>
+    </g>
+  </g>
+</svg>

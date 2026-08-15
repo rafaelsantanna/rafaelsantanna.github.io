@@ -168,9 +168,9 @@ Components are tactile and confident, with meaningful states and a complete non-
 - At 72rem and below it becomes a native button-controlled two-row map; at 48rem it becomes two columns with 44px minimum targets.
 - The active route is visible through a cyan underline and `aria-current`, never color alone.
 
-### System Maps
-- Connected SVG nodes use a deep navy field, ice surfaces, cyan waypoints, and explicit captions.
-- Diagram motion draws existing routes only; reduced motion shows the complete map immediately.
+### Case Artifacts
+- Authored SVGs turn verified delivery facts into typographic records instead of simulated product screenshots or generic flow diagrams.
+- Each artifact has its own composition while preserving the navy, ice, cyan, and electric-blue visual language.
 
 ## Do's and Don'ts
 
