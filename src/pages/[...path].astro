@@ -47,7 +47,7 @@ if (kind === 'case' && !caseItem) throw new Error(`Unknown case study: ${slug}`)
 if (kind === 'service' && !serviceItem) throw new Error(`Unknown service: ${slug}`);
 
 const metadata = (() => {
-  if (caseItem) return { title: caseItem.title, description: localize(caseItem.summary, locale) };
+  if (caseItem) return { title: caseItem.title, description: localize(caseItem.summary, locale), image: caseItem.image, imageAlt: localize(caseItem.imageAlt, locale) };
   if (serviceItem) return { title: localize(serviceItem.title, locale), description: localize(serviceItem.summary, locale) };
   const map = {
     home: { title: identity.role[locale], description: t.heroIntro },
@@ -87,40 +87,22 @@ const pageSchema = (() => {
     };
   }
   if (kind === 'home') {
-    return [
-      {
-        '@context': 'https://schema.org',
-        '@type': 'ProfessionalService',
-        name: identity.name,
-        description: t.heroIntro,
-        email: identity.email,
-        telephone: identity.phoneDisplay,
-        areaServed: 'Worldwide',
-        address: { '@type': 'PostalAddress', addressLocality: 'Viseu', addressCountry: 'PT' },
-      },
-      {
-        '@context': 'https://schema.org',
-        '@type': 'FAQPage',
-        mainEntity: [
-          {
-            '@type': 'Question',
-            name: locale === 'pt' ? 'Em quais projetos Rafael trabalha?' : 'What projects does Rafael work on?',
-            acceptedAnswer: { '@type': 'Answer', text: locale === 'pt' ? 'SaaS B2B, sistemas internos, LMS/LXP, aplicações mobile, modernização de plataformas e automação com IA.' : 'B2B SaaS, internal systems, LMS/LXP, mobile applications, platform modernization, and AI automation.' },
-          },
-          {
-            '@type': 'Question',
-            name: locale === 'pt' ? 'Rafael está disponível para projetos freelance?' : 'Is Rafael available for freelance projects?',
-            acceptedAnswer: { '@type': 'Answer', text: identity.availability[locale] },
-          },
-        ],
-      },
-    ];
+    return {
+      '@context': 'https://schema.org',
+      '@type': 'ProfessionalService',
+      name: identity.name,
+      description: identity.summary[locale],
+      email: identity.email,
+      telephone: identity.phoneDisplay,
+      areaServed: 'Worldwide',
+      address: { '@type': 'PostalAddress', addressLocality: 'Viseu', addressCountry: 'PT' },
+    };
   }
   return undefined;
 })();
 ---
 
-<BaseLayout locale={locale} title={metadata.title} description={metadata.description} routePath={routePath} image={'image' in metadata ? metadata.image : undefined} pageSchema={pageSchema}>
+<BaseLayout locale={locale} title={metadata.title} description={metadata.description} routePath={routePath} image={'image' in metadata ? metadata.image : undefined} imageAlt={'imageAlt' in metadata ? metadata.imageAlt : undefined} pageSchema={pageSchema}>
   {kind === 'home' && <HomePage locale={locale} />}
   {kind === 'work' && <ListingPage locale={locale} type="work" />}
   {kind === 'services' && <ListingPage locale={locale} type="services" />}

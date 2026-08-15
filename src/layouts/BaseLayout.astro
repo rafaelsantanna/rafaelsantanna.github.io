@@ -10,10 +10,11 @@ interface Props {
   description: string;
   routePath: string;
   image?: string;
+  imageAlt?: string;
   pageSchema?: Record<string, unknown> | Array<Record<string, unknown>>;
 }
 
-const { locale, title, description, routePath, image = '/images/social-card.png', pageSchema } = Astro.props;
+const { locale, title, description, routePath, image = '/images/social-card.png', imageAlt, pageSchema } = Astro.props;
 const t = copy[locale];
 const path = routePath.replace(/^\/+|\/+$/g, '');
 const canonicalPath = locale === 'pt' ? `/pt/${path}${path ? '/' : ''}` : `/${path}${path ? '/' : ''}`;
@@ -21,6 +22,8 @@ const canonical = new URL(canonicalPath, Astro.site);
 const alternative = new URL(alternatePath(locale, path), Astro.site);
 const fullTitle = path ? `${title} | ${identity.name}` : `${identity.name} | ${identity.role[locale]}`;
 const imageUrl = new URL(image, Astro.site);
+const socialImageAlt = imageAlt ?? (locale === 'pt' ? `Prévia do portfólio de ${identity.name}` : `${identity.name} portfolio preview`);
+const structuredDescription = ['', 'services', 'about', 'cv', 'contact'].includes(path) ? identity.summary[locale] : description;
 const markdownPath = `/markdown/${locale}/${path || 'index'}.md`;
 const breadcrumbSchema = path ? {
   '@context': 'https://schema.org',
@@ -51,7 +54,7 @@ const schemas = [
     '@context': 'https://schema.org',
     '@type': 'WebPage',
     name: fullTitle,
-    description,
+    description: structuredDescription,
     url: canonical.toString(),
     inLanguage: locale === 'pt' ? 'pt-BR' : 'en',
     isPartOf: {
@@ -65,7 +68,7 @@ const schemas = [
     '@type': 'Person',
     name: identity.name,
     jobTitle: identity.role[locale],
-    description,
+    description: identity.summary[locale],
     url: new URL(locale === 'pt' ? '/pt/' : '/', Astro.site).toString(),
     email: `mailto:${identity.email}`,
     telephone: identity.phoneDisplay,
@@ -75,7 +78,7 @@ const schemas = [
       addressCountry: 'PT',
     },
     sameAs: [identity.github, identity.linkedin, identity.edgeData],
-    knowsAbout: ['B2B SaaS', 'Internal systems', 'React', 'Laravel', 'Node.js', '.NET', 'LMS', 'RAG', 'AI automation'],
+    knowsAbout: ['B2B SaaS', 'Internal systems', 'Platform modernization', 'React', 'Laravel', 'Node.js', '.NET', 'System integrations', 'AI automation', 'Corporate learning platforms'],
   },
   {
     '@context': 'https://schema.org',
@@ -113,11 +116,13 @@ const schemas = [
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={imageUrl} />
+    <meta property="og:image:alt" content={socialImageAlt} />
     <meta property="og:locale" content={locale === 'pt' ? 'pt_BR' : 'en_US'} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={fullTitle} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={imageUrl} />
+    <meta name="twitter:image:alt" content={socialImageAlt} />
     {schemas.map((schema) => <script type="application/ld+json" set:html={JSON.stringify(schema)} />)}
   </head>
   <body>

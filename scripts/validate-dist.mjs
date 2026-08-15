@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
 import { join, resolve } from 'node:path';
+import { cases } from '../src/data/content.ts';
 
 const dist = resolve('dist');
 assert.ok(existsSync(dist), 'dist directory does not exist');
@@ -14,7 +15,7 @@ function walk(directory) {
 
 const files = walk(dist);
 const htmlFiles = files.filter((file) => file.endsWith('.html'));
-assert.equal(htmlFiles.length, 34, `Expected 34 HTML pages, found ${htmlFiles.length}`);
+assert.equal(htmlFiles.length, 32, `Expected 32 HTML pages, found ${htmlFiles.length}`);
 
 function targetFor(pathname) {
   const clean = pathname.split(/[?#]/, 1)[0].replace(/^\//, '');
@@ -32,7 +33,9 @@ for (const file of htmlFiles) {
   assert.match(html, /application\/ld\+json/, `Missing JSON-LD in ${file}`);
   assert.match(html, /"@type":"WebPage"/, `Missing WebPage schema in ${file}`);
   assert.match(html, /hreflang="x-default"/, `Missing x-default hreflang in ${file}`);
-  assert.match(html, /property="og:image" content="https:\/\/rafaelsantanna\.github\.io\/images\/social-card\.png"/, `Missing raster Open Graph image in ${file}`);
+  assert.match(html, /property="og:image" content="https:\/\/rafaelsantanna\.github\.io\/images\/[^"\s]+"/, `Missing Open Graph image in ${file}`);
+  assert.match(html, /property="og:image:alt" content="[^"\s][^"]*"/, `Missing Open Graph image alt in ${file}`);
+  assert.match(html, /name="twitter:image:alt" content="[^"\s][^"]*"/, `Missing Twitter image alt in ${file}`);
   assert.doesNotMatch(html, /href=""/, `Empty href in ${file}`);
   assert.doesNotMatch(html, /<img(?![^>]*\salt=)[^>]*>/, `Image missing alt in ${file}`);
   assert.doesNotMatch(html, /\[TODO\]|Unknown Developer|if I'm not mistaken/i, `Legacy or placeholder copy in ${file}`);
@@ -62,7 +65,7 @@ assert.match(readFileSync(join(dist, 'cv', 'index.html'), 'utf8'), /rafael-sant-
 assert.match(readFileSync(join(dist, 'pt', 'cv', 'index.html'), 'utf8'), /rafael-sant-anna-cv\.pdf/, 'Portuguese CV page must link to the Portuguese PDF');
 
 const markdownFiles = files.filter((file) => file.includes(`${join('markdown', '')}`) && file.endsWith('.md'));
-assert.equal(markdownFiles.length, 34, `Expected 34 Markdown alternatives, found ${markdownFiles.length}`);
+assert.equal(markdownFiles.length, 32, `Expected 32 Markdown alternatives, found ${markdownFiles.length}`);
 
 const robots = readFileSync(join(dist, 'robots.txt'), 'utf8');
 assert.match(robots, /OAI-SearchBot/);
@@ -70,11 +73,27 @@ assert.match(robots, /User-agent: GPTBot\nDisallow: \//);
 assert.match(robots, /^Content-Signal: ai-train=no, search=yes, ai-input=yes$/m);
 
 const sitemap = readFileSync(join(dist, 'sitemap.xml'), 'utf8');
-assert.equal((sitemap.match(/<url>/g) || []).length, 34, 'Expected 34 direct sitemap URLs');
+assert.equal((sitemap.match(/<url>/g) || []).length, 32, 'Expected 32 direct sitemap URLs');
 
 const aiIndex = JSON.parse(readFileSync(join(dist, 'ai-index.json'), 'utf8'));
 assert.equal(aiIndex.protocols.mcp, false);
-assert.equal(aiIndex.services.length, 5);
+assert.equal(aiIndex.services.length, 4);
 assert.equal(aiIndex.work.length, 5);
+
+for (const locale of ['en', 'pt']) {
+  const prefix = locale === 'pt' ? join('pt') : '';
+  for (const item of cases) {
+    const html = readFileSync(join(dist, prefix, 'work', item.slug, 'index.html'), 'utf8');
+    assert.ok(html.includes(`property="og:image" content="https://rafaelsantanna.github.io${item.image}"`), `Case ${locale}/${item.slug} must use its own Open Graph image`);
+    assert.ok(html.includes(`property="og:image:alt" content="${item.imageAlt[locale]}"`), `Case ${locale}/${item.slug} must use localized Open Graph alt text`);
+  }
+}
+
+const home = readFileSync(join(dist, 'index.html'), 'utf8');
+const homePt = readFileSync(join(dist, 'pt', 'index.html'), 'utf8');
+assert.doesNotMatch(home, /"@type":"FAQPage"/, 'Home must not publish invisible FAQ schema');
+assert.doesNotMatch(homePt, /"@type":"FAQPage"/, 'Portuguese home must not publish invisible FAQ schema');
+assert.ok(!existsSync(join(dist, 'services', 'lms-lxp-learning', 'index.html')), 'Removed LMS service route must not be generated');
+assert.ok(!existsSync(join(dist, 'pt', 'services', 'lms-lxp-learning', 'index.html')), 'Removed Portuguese LMS service route must not be generated');
 
 console.log(`Distribution validation passed: ${htmlFiles.length} HTML pages, ${markdownFiles.length} Markdown alternatives, machine files present.`);

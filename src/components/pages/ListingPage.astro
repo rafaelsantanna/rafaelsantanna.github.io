@@ -31,12 +31,12 @@ const t = copy[locale];
       {cases.map((item, index) => (
         <article class="case-index__item" data-reveal>
           <div class="case-index__number">{String(index + 1).padStart(2, '0')}</div>
-          <div class="case-index__image"><img src={item.image} alt={localize(item.imageAlt, locale)} width="1200" height="760" loading={index ? 'lazy' : 'eager'} /></div>
+          <div class="case-index__image"><img src={item.image} alt={localize(item.imageAlt, locale)} width={item.imageWidth} height={item.imageHeight} loading="lazy" decoding="async" /></div>
           <div class="case-index__copy">
             <p class="eyebrow">{localize(item.eyebrow, locale)}</p>
             <h2><a href={withLocale(locale, `work/${item.slug}`)}>{item.title}</a></h2>
             <p>{localize(item.summary, locale)}</p>
-            <a class="text-link" href={withLocale(locale, `work/${item.slug}`)}>{t.viewCase}<span aria-hidden="true">→</span></a>
+            <span class="text-link" aria-hidden="true">{t.viewCase}<span>→</span></span>
           </div>
         </article>
       ))}
@@ -67,7 +67,7 @@ const t = copy[locale];
           <p>{localize(service.summary, locale)}</p>
           <ul class="tag-list">{service.technologies.map((technology) => <li>{technology}</li>)}</ul>
         </div>
-        <a class="service-index__link" href={withLocale(locale, `services/${service.slug}`)} aria-label={`${t.viewService}: ${localize(service.title, locale)}`}>↗</a>
+        <span class="service-index__link" aria-hidden="true">↗</span>
       </article>
     ))}
   </section>

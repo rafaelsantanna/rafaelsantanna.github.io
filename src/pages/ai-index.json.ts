@@ -4,6 +4,7 @@ export function GET() {
     schemaVersion: 1,
     name: identity.name,
     role: identity.role.en,
+    summary: identity.summary.en,
     location: identity.location,
     availability: identity.availability.en,
     languages: ['en', 'pt-BR'],

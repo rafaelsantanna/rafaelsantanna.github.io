@@ -9,7 +9,7 @@ const whatsappText = encodeURIComponent(locale === 'pt' ? 'Olá Rafael, gostaria
 
 <section class="contact-page shell" data-code={locale === 'pt' ? 'CANAL ABERTO / 04' : 'OPEN CHANNEL / 04'}>
   <div class="contact-page__heading">
-    <p class="availability"><span aria-hidden="true"></span>{t.availability}</p>
+    <p class="availability"><span aria-hidden="true"></span>{identity.availability[locale]}</p>
     <h1>{t.contactTitle}</h1>
     <p>{t.contactIntro}</p>
   </div>

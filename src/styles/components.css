@@ -41,9 +41,11 @@
 .site-nav a {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
+  min-width: 2.75rem;
   min-height: 2.75rem;
   font-family: var(--font-display);
-  font-size: 0.83rem;
+  font-size: var(--step--1);
   font-weight: 560;
   text-decoration: none;
 }
@@ -88,8 +90,8 @@
   transition: color var(--duration-fast), background var(--duration-fast), border-color var(--duration-fast), transform var(--duration-fast) var(--ease-out);
 }
 .button:hover { transform: translateY(-3px); }
-.button--primary { background: var(--cobalt); color: var(--on-color); }
-.button--primary:hover { background: var(--cobalt-deep); }
+.button--primary { background: var(--signal); color: var(--ink); }
+.button--primary:hover { background: var(--signal-light); }
 .button--quiet { border-color: var(--line); background: transparent; }
 .button--quiet:hover, .button--outline:hover { border-color: var(--cobalt); color: var(--cobalt); }
 .button--outline { border-color: var(--ink); background: transparent; }
@@ -135,7 +137,7 @@
   border-radius: 999px;
   color: var(--ink-soft);
   font-family: var(--font-display);
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   font-weight: 560;
   line-height: 1.2;
 }

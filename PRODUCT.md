@@ -10,7 +10,7 @@ Product leaders, founders, operations leaders, engineering managers, and agencie
 
 ## Product Purpose
 
-Position Rafael Sant' Anna as a senior software engineer who turns complex operations into dependable B2B platforms, SaaS products, internal systems, mobile applications, and AI automations. Success means visitors can identify a relevant service, verify experience through real case studies, and start a project conversation by email or WhatsApp. The site must also expose clear, factual, machine-readable content for search engines and agents.
+Position Rafael Sant' Anna as a senior software engineer who builds and modernizes dependable B2B products, internal systems, and operational platforms. Mobile integrations and applied AI remain supporting capabilities, while LMS/LXP appears as proven experience rather than a current service. Success means visitors can identify a relevant service, verify experience through real case studies, and start a project conversation by email or WhatsApp. The site must also expose clear, factual, machine-readable content for search engines and agents.
 
 ## Brand Personality
 
@@ -28,7 +28,7 @@ Technical, cinematic, and decisive. The voice is specific, commercially useful, 
 
 ## Design Principles
 
-1. **Proof before breadth.** Lead with five strong, verifiable cases and connect each service to relevant evidence.
+1. **Proof before breadth.** Lead with five strong, verifiable cases and connect each of the four current services to relevant evidence.
 2. **Complexity made legible.** Use maps, flows, and precise language to show how Rafael thinks about operations and systems.
 3. **Commercial clarity.** Make availability, services, project fit, and contact routes obvious without aggressive sales tactics.
 4. **Human and machine readable.** Semantic HTML, concise facts, structured data, Markdown alternatives, and complete bilingual content are one system.

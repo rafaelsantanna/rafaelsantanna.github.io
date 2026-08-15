@@ -12,7 +12,7 @@ const t = copy[locale];
   <div class="site-footer__main">
     <div>
       <p class="site-footer__title">{t.footerLine}</p>
-      <p>{identity.location} · {identity.availability[locale]}</p>
+      <p>{identity.location}</p>
     </div>
     <nav aria-label={locale === 'pt' ? 'Navegação do rodapé' : 'Footer navigation'}>
       <a href={`mailto:${identity.email}`}>{identity.email}</a>

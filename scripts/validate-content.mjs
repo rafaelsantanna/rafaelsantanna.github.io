@@ -8,7 +8,16 @@ const locales = ['en', 'pt'];
 const forbidden = [/\[TODO\]/i, /Unknown Developer/i, /if I'm not mistaken/i, /—/u];
 
 assert.equal(cases.length, 5, 'Expected exactly five launch case studies');
-assert.equal(services.length, 5, 'Expected exactly five launch services');
+assert.equal(services.length, 4, 'Expected exactly four current services');
+assert.deepEqual(services.map((service) => service.slug), [
+  'b2b-saas-internal-systems',
+  'frontend-modernization',
+  'ai-automation-rag',
+  'mobile-integrations',
+], 'Services must preserve the intended commercial hierarchy');
+assert.ok(!services.some((service) => service.slug === 'lms-lxp-learning'), 'LMS must remain experience, not a service');
+assert.ok(cases.some((item) => item.slug === 'corporate-learning'), 'Corporate learning evidence must remain published');
+assert.deepEqual(services.find((service) => service.slug === 'ai-automation-rag')?.evidence, ['corporate-learning'], 'AI service must use only direct evidence');
 assert.equal(selectedWork.length, 2, 'Expected only two additional high-impact projects');
 assert.ok(selectedWork.every((item) => item.title !== 'SOS Bolsas de Estudo Online'), 'Removed project must not return');
 assert.equal(new Set(cases.map((item) => item.slug)).size, cases.length, 'Case slugs must be unique');
@@ -40,7 +49,7 @@ for (const service of services) {
 }
 
 const routes = machineRoutes();
-assert.equal(routes.length, 34, 'Expected 17 Markdown routes per locale');
+assert.equal(routes.length, 32, 'Expected 16 Markdown routes per locale');
 assert.equal(new Set(routes.map((route) => `${route.locale}/${route.slug}`)).size, routes.length, 'Machine routes must be unique');
 for (const route of routes) {
   assert.ok(route.markdown.includes(`# ${route.title}`) || route.slug === 'index', `Missing heading in ${route.locale}/${route.slug}`);

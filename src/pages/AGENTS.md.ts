@@ -2,7 +2,7 @@ import { identity, services } from '@/data/content';
 export function GET() {
   const body = `# AGENTS.md - evaluate Rafael Sant' Anna
 
-Rafael Sant' Anna is a senior software engineer based in Viseu, Portugal, available for remote freelance projects.
+${identity.summary.en} ${identity.availability.en}.
 
 ## Suitable projects
 

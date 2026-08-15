@@ -1,11 +1,10 @@
 ---
-import { cases, clients, copy, identity, localize, services, withLocale, type Locale } from '@/data/content';
+import { cases, copy, identity, localize, services, withLocale, type Locale } from '@/data/content';
 interface Props { locale: Locale }
 const { locale } = Astro.props;
 const t = copy[locale];
 const featuredCases = cases.slice(0, 3);
-const featuredServices = services.slice(0, 3);
-const featuredClients = clients.slice(0, 6);
+const featuredServices = services.slice(0, 2);
 ---
 
 <section class="hero-stage" aria-labelledby="hero-title">
@@ -13,11 +12,10 @@ const featuredClients = clients.slice(0, 6);
     <span class="hero-stage__axis hero-stage__axis--x"></span>
     <span class="hero-stage__axis hero-stage__axis--y"></span>
     <span class="hero-stage__coordinate">40.6566° N / 7.9125° W</span>
-    <span class="hero-stage__watermark">{locale === 'pt' ? 'RAFAEL / ENGENHARIA DE SISTEMAS' : 'RAFAEL / SYSTEMS ENGINEER'}</span>
   </div>
   <div class="hero shell">
     <div class="hero__copy">
-      <p class="availability"><span aria-hidden="true"></span>{t.availability}</p>
+      <p class="availability"><span aria-hidden="true"></span>{identity.availability[locale]}</p>
       <h1 id="hero-title">
         {locale === 'pt' ? <>Eu construo o software por trás de <span>operações complexas.</span></> : <>I build the software behind <span>complex operations.</span></>}
       </h1>
@@ -28,39 +26,20 @@ const featuredClients = clients.slice(0, 6);
       </div>
       <dl class="hero__facts" aria-label={locale === 'pt' ? 'Resumo profissional' : 'Professional summary'}>
         <div><dt>10+</dt><dd>{locale === 'pt' ? 'anos em software' : 'years in software'}</dd></div>
-        <div><dt>15+</dt><dd>{locale === 'pt' ? 'projetos LMS/LXP' : 'LMS/LXP projects'}</dd></div>
+        <div><dt>6</dt><dd>{locale === 'pt' ? 'anos na Revvo' : 'years at Revvo'}</dd></div>
         <div><dt>200+</dt><dd>{locale === 'pt' ? 'melhorias em 6 meses' : 'improvements in 6 months'}</dd></div>
       </dl>
     </div>
     <figure class="hero-portrait" data-reveal>
       <div class="hero-portrait__frame">
         <div class="hero-portrait__image-stack">
-          <img class="hero-portrait__image hero-portrait__image--base" src="/images/rafael-santanna.jpg" alt={locale === 'pt' ? 'Rafael Sant’ Anna, engenheiro de software sênior' : 'Rafael Sant’ Anna, senior software engineer'} width="1200" height="1200" />
-          <img class="hero-portrait__image hero-portrait__image--echo hero-portrait__image--echo-a" src="/images/rafael-santanna.jpg" alt="" width="1200" height="1200" aria-hidden="true" />
-          <img class="hero-portrait__image hero-portrait__image--echo hero-portrait__image--echo-b" src="/images/rafael-santanna.jpg" alt="" width="1200" height="1200" aria-hidden="true" />
+          <img class="hero-portrait__image hero-portrait__image--base" src="/images/rafael-santanna.jpg" alt={locale === 'pt' ? 'Rafael Sant’ Anna, engenheiro de software sênior' : 'Rafael Sant’ Anna, senior software engineer'} width="400" height="400" loading="eager" fetchpriority="high" decoding="async" />
         </div>
         <div class="hero-portrait__grid" aria-hidden="true"></div>
-        <div class="hero-portrait__noise" aria-hidden="true"></div>
         <div class="hero-portrait__scan" aria-hidden="true"></div>
-        <div class="hero-portrait__reticle" aria-hidden="true"><span></span></div>
-        <p class="hero-portrait__readout" aria-hidden="true">
-          <span>{locale === 'pt' ? 'PESSOA / RS-01' : 'SUBJECT / RS-01'}</span>
-          <span>{locale === 'pt' ? 'STATUS / ATIVO' : 'STATUS / ACTIVE'}</span>
-          <span>{locale === 'pt' ? 'FOCO / SISTEMAS' : 'FOCUS / SYSTEMS'}</span>
-        </p>
       </div>
       <figcaption><span>RS / 01</span>{identity.location}</figcaption>
-      <p class="hero-portrait__status"><span aria-hidden="true"></span>{locale === 'pt' ? 'DISPONÍVEL PARA PROJETOS REMOTOS' : 'AVAILABLE FOR REMOTE PROJECTS'}</p>
-      <ul class="hero-portrait__signals" aria-label={locale === 'pt' ? 'Áreas de atuação' : 'Areas of expertise'}>
-        <li>B2B SaaS</li>
-        <li>{locale === 'pt' ? 'Automação com IA' : 'AI automation'}</li>
-        <li>{locale === 'pt' ? 'Sistemas internos' : 'Internal systems'}</li>
-      </ul>
     </figure>
-  </div>
-  <div class="hero-stage__footer shell" aria-hidden="true">
-    <span>{locale === 'pt' ? 'PROJETOS REAIS / RESULTADOS VERIFICÁVEIS' : 'REAL PROJECTS / VERIFIABLE OUTCOMES'}</span>
-    <span>{locale === 'pt' ? 'ROLAR / 01' : 'SCROLL / 01'}</span>
   </div>
 </section>
 
@@ -72,18 +51,18 @@ const featuredClients = clients.slice(0, 6);
   <div class="work-ledger">
     {featuredCases.map((item, index) => (
       <article class:list={['work-row', index % 2 ? 'work-row--reverse' : '']} data-reveal>
-        <a class="work-row__visual" href={withLocale(locale, `work/${item.slug}`)} aria-label={`${t.viewCase}: ${item.title}`}>
-          <img src={item.image} alt={localize(item.imageAlt, locale)} width={item.imageWidth} height={item.imageHeight} loading={index > 1 ? 'lazy' : 'eager'} />
+        <div class="work-row__visual">
+          <img src={item.image} alt={localize(item.imageAlt, locale)} width={item.imageWidth} height={item.imageHeight} loading="lazy" decoding="async" />
           <span class="work-row__coordinate">{String(index + 1).padStart(2, '0')} / 03</span>
-        </a>
+        </div>
         <div class="work-row__copy">
           <p class="eyebrow">{localize(item.eyebrow, locale)}</p>
           <h3><a href={withLocale(locale, `work/${item.slug}`)}>{item.title}</a></h3>
           <p>{localize(item.summary, locale)}</p>
           <ul class="tag-list" aria-label={t.technologies}>
-            {item.technologies.slice(0, 5).map((technology) => <li>{technology}</li>)}
+            {item.technologies.slice(0, 3).map((technology) => <li>{technology}</li>)}
           </ul>
-          <a class="text-link" href={withLocale(locale, `work/${item.slug}`)}>{t.viewCase}<span aria-hidden="true">→</span></a>
+          <span class="text-link" aria-hidden="true">{t.viewCase}<span>→</span></span>
         </div>
       </article>
     ))}
@@ -108,22 +87,11 @@ const featuredClients = clients.slice(0, 6);
   <div class="shell section-end"><a class="button button--outline button--outline-dark" href={withLocale(locale, 'services')}>{t.nav.services}<span aria-hidden="true">→</span></a></div>
 </section>
 
-<section class="section trust-strip" data-reveal>
-  <div class="shell trust-strip__intro">
-    <p class="section-index">03 / {locale === 'pt' ? 'CONTEXTO' : 'CONTEXT'}</p>
-    <h2>{locale === 'pt' ? 'Experiência em projetos para organizações que operam em escala.' : 'Experience in projects for organizations operating at scale.'}</h2>
-  </div>
-  <div class="trust-strip__names" aria-label={locale === 'pt' ? 'Organizações citadas no currículo' : 'Organizations cited in the CV'}>
-    {featuredClients.map((client) => <span>{client}</span>)}
-  </div>
-  <p class="shell trust-strip__note">{locale === 'pt' ? 'Nomes apresentados como contexto de projetos, sem uso de logos ou alegação de endosso.' : 'Names are presented as project context, without logos or implied endorsement.'}</p>
-</section>
-
 <section class="cta-field shell" data-reveal>
-  <p class="section-index">04 / {locale === 'pt' ? 'CONTATO' : 'CONTACT'}</p>
+  <p class="section-index">03 / {locale === 'pt' ? 'CONTATO' : 'CONTACT'}</p>
   <div>
     <h2>{locale === 'pt' ? 'Qual operação precisa ficar mais clara?' : 'Which operation needs to become clearer?'}</h2>
-    <p>{identity.availability[locale]}. {identity.location}.</p>
+    <p>{locale === 'pt' ? 'Descreva o sistema, a restrição ou o fluxo que você precisa melhorar.' : 'Describe the system, constraint, or workflow you need to improve.'}</p>
   </div>
   <a class="button button--signal" href={withLocale(locale, 'contact')}>{t.discuss}<span aria-hidden="true">↗</span></a>
 </section>

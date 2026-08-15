@@ -20,9 +20,9 @@ const items = [
     <div class="status-rail__track">
       <span>{locale === 'pt' ? 'ENGENHEIRO DE SOFTWARE SÊNIOR' : 'SENIOR SOFTWARE ENGINEER'}</span>
       <span>B2B SAAS</span>
-      <span>{locale === 'pt' ? 'AUTOMAÇÃO COM IA' : 'AI AUTOMATION'}</span>
-      <span>{locale === 'pt' ? 'VISEU, PORTUGAL' : 'BASED IN PORTUGAL'}</span>
-      <span>{locale === 'pt' ? 'FREELANCE REMOTO' : 'REMOTE FREELANCE'}</span>
+      <span>{locale === 'pt' ? 'SISTEMAS INTERNOS' : 'INTERNAL SYSTEMS'}</span>
+      <span>{locale === 'pt' ? 'MODERNIZAÇÃO DE PLATAFORMAS' : 'PLATFORM MODERNIZATION'}</span>
+      <span>{locale === 'pt' ? 'BASEADO EM PORTUGAL' : 'BASED IN PORTUGAL'}</span>
     </div>
   </div>
   <div class="site-header__main">
@@ -61,7 +61,10 @@ const items = [
     });
     nav.querySelectorAll('a').forEach((link) => link.addEventListener('click', close));
     window.addEventListener('keydown', (event) => {
-      if (event.key === 'Escape') close();
+      if (event.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') {
+        close();
+        toggle.focus();
+      }
     });
   }
 </script>

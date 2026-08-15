@@ -56,8 +56,8 @@ spacing:
   section-lg: "clamp(4.5rem, 9vw, 9rem)"
 components:
   button-primary:
-    backgroundColor: "{colors.electric-blue}"
-    textColor: "{colors.ice}"
+    backgroundColor: "{colors.edge-cyan}"
+    textColor: "{colors.signal-room-deep}"
     typography: "{typography.label}"
     rounded: "{rounded.sm}"
     padding: "0.78rem 1.1rem"
@@ -82,13 +82,13 @@ components:
 
 **Creative North Star: "Operational Noir"**
 
-The interface feels like a cinematic control surface during an important deployment: deep navy, cyan signals, electric-blue fields, live coordinates, optical interference, and project evidence create a focused working atmosphere. Rafael's real portrait anchors the human presence through layered image treatment and restrained system readouts. The visual energy targets the finish of premium technical portfolios while avoiding green terminal cosplay and preserving a distinct EdgeData-informed palette.
+The interface feels like a cinematic control surface during an important deployment: deep navy, cyan signals, electric-blue fields, live coordinates, and project evidence create a focused working atmosphere. Rafael's real portrait anchors the human presence through one cyan treatment, a quiet grid, and one restrained scan. The visual energy targets the finish of premium technical portfolios while avoiding surveillance motifs, green terminal cosplay, and generic minimalism.
 
 The system is static-first and progressively enhanced. Motion reveals relationships without controlling comprehension; the same hierarchy remains intact with JavaScript disabled, reduced motion enabled, long Portuguese copy, or a 320px viewport. It explicitly rejects terminal cosplay, generic AI marketing, editorial-magazine styling, and template-like card grids.
 
 **Key Characteristics:**
 - Asymmetric maps and flows explain relationships instead of decorating empty space.
-- The home hero uses one cinematic portrait treatment, scan motion, and spatial readouts as the memorable signature.
+- The home hero uses one portrait, one scan, and desktop-only coordinates as the memorable signature; duplicated status, glitch, reticle, and floating tags are excluded.
 - Internal page openings keep the coordinate-grid language but change composition by intent: visual evidence for work, delivery principles for services, factual ledgers for profile routes, and image-led case openings.
 - Work and service indexes behave as visual ledgers: authored imagery, large sequence numbers, and full-row interaction replace generic card grids.
 - Case studies, service routes, About, CV, Contact, and agent-facing pages share the same optical treatment while opening with distinct information structures.
@@ -147,7 +147,7 @@ Components are tactile and confident, with meaningful states and a complete non-
 
 ### Buttons
 - **Shape:** gently technical corners (0.45rem), never generic pill buttons except the navigation contact control.
-- **Primary:** electric blue with ice text and at least 3.35rem height.
+- **Primary:** cyan with deep navy text and at least 3.35rem height.
 - **Signal:** cyan with deep navy text, reserved for the closing project CTA.
 - **Hover / Focus:** translate upward by 3px on hover; retain a 3px cyan focus-visible outline with 4px offset.
 - **Quiet:** transparent navy surface with a one-pixel structural border.
@@ -165,7 +165,7 @@ Components are tactile and confident, with meaningful states and a complete non-
 
 ### Navigation
 - Desktop navigation keeps only Work, Services, About, Contact, and locale switching. CV and agent resources remain discoverable in the footer, while the operational status rail uses a quiet raised navy field.
-- At 72rem and below it becomes a native button-controlled two-row map; at 48rem it becomes two columns with 44px minimum targets.
+- At 72rem and below navigation becomes a native button-controlled two-row map; at 48rem it becomes two columns with 44px minimum targets and the status rail is hidden.
 - The active route is visible through a cyan underline and `aria-current`, never color alone.
 
 ### Case Artifacts
