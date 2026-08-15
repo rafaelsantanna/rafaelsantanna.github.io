@@ -5,11 +5,17 @@ const { locale } = Astro.props;
 const t = copy[locale];
 ---
 
-<section class="hero-stage">
+<section class="hero-stage" aria-labelledby="hero-title">
+  <div class="hero-stage__atmosphere" aria-hidden="true">
+    <span class="hero-stage__axis hero-stage__axis--x"></span>
+    <span class="hero-stage__axis hero-stage__axis--y"></span>
+    <span class="hero-stage__coordinate">40.6566° N / 7.9125° W</span>
+    <span class="hero-stage__watermark">RAFAEL / SYSTEMS ENGINEER</span>
+  </div>
   <div class="hero shell">
     <div class="hero__copy">
       <p class="availability"><span aria-hidden="true"></span>{t.availability}</p>
-      <h1>
+      <h1 id="hero-title">
         {locale === 'pt' ? <>Eu construo o software por trás de <span>operações complexas.</span></> : <>I build the software behind <span>complex operations.</span></>}
       </h1>
       <p class="hero__intro">{t.heroIntro}</p>
@@ -25,9 +31,20 @@ const t = copy[locale];
     </div>
     <figure class="hero-portrait" data-reveal>
       <div class="hero-portrait__frame">
+        <div class="hero-portrait__image-stack">
+          <img class="hero-portrait__image hero-portrait__image--base" src="/images/rafael-santanna.jpg" alt={locale === 'pt' ? 'Rafael Sant’ Anna, engenheiro de software sênior' : 'Rafael Sant’ Anna, senior software engineer'} width="1200" height="1200" />
+          <img class="hero-portrait__image hero-portrait__image--echo hero-portrait__image--echo-a" src="/images/rafael-santanna.jpg" alt="" width="1200" height="1200" aria-hidden="true" />
+          <img class="hero-portrait__image hero-portrait__image--echo hero-portrait__image--echo-b" src="/images/rafael-santanna.jpg" alt="" width="1200" height="1200" aria-hidden="true" />
+        </div>
         <div class="hero-portrait__grid" aria-hidden="true"></div>
-        <img src="/images/rafael-santanna.jpg" alt={locale === 'pt' ? 'Rafael Sant’ Anna, engenheiro de software sênior' : 'Rafael Sant’ Anna, senior software engineer'} width="1200" height="1200" />
+        <div class="hero-portrait__noise" aria-hidden="true"></div>
         <div class="hero-portrait__scan" aria-hidden="true"></div>
+        <div class="hero-portrait__reticle" aria-hidden="true"><span></span></div>
+        <p class="hero-portrait__readout" aria-hidden="true">
+          <span>SUBJECT / RS-01</span>
+          <span>STATUS / ACTIVE</span>
+          <span>FOCUS / SYSTEMS</span>
+        </p>
       </div>
       <figcaption><span>RS / 01</span>{identity.location}</figcaption>
       <p class="hero-portrait__status"><span aria-hidden="true"></span>{locale === 'pt' ? 'DISPONÍVEL PARA PROJETOS REMOTOS' : 'AVAILABLE FOR REMOTE PROJECTS'}</p>
@@ -37,6 +54,10 @@ const t = copy[locale];
         <li>{locale === 'pt' ? 'Sistemas internos' : 'Internal systems'}</li>
       </ul>
     </figure>
+  </div>
+  <div class="hero-stage__footer shell" aria-hidden="true">
+    <span>{locale === 'pt' ? 'PROJETOS REAIS / RESULTADOS VERIFICÁVEIS' : 'REAL PROJECTS / VERIFIABLE OUTCOMES'}</span>
+    <span>SCROLL / 01</span>
   </div>
 </section>
 

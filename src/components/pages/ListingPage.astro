@@ -5,7 +5,7 @@ const { locale, type } = Astro.props;
 const t = copy[locale];
 ---
 
-<section class="page-hero shell">
+<section class:list={['page-hero', `page-hero--${type}`, 'shell']} data-code={type === 'work' ? 'INDEX / 01' : 'INDEX / 02'}>
   <p class="section-index">{type === 'work' ? '01 / WORK' : '02 / SERVICES'}</p>
   <h1>{type === 'work' ? t.workTitle : t.servicesPageTitle}</h1>
   <p>{type === 'work' ? t.workIntro : t.servicesPageIntro}</p>

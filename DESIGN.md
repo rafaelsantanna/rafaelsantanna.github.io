@@ -80,14 +80,18 @@ components:
 
 ## Overview
 
-**Creative North Star: "Signal Room"**
+**Creative North Star: "Operational Noir"**
 
-The interface feels like a high-trust operations room during an important deployment: deep navy surfaces, cyan signals, electric-blue fields, live system coordinates, and project evidence create a focused working atmosphere. Rafael's real portrait anchors the human presence. The visual energy takes cues from premium technical portfolios while avoiding green terminal cosplay and preserving a distinct EdgeData-informed palette.
+The interface feels like a cinematic control surface during an important deployment: deep navy, cyan signals, electric-blue fields, live coordinates, optical interference, and project evidence create a focused working atmosphere. Rafael's real portrait anchors the human presence through layered image treatment and restrained system readouts. The visual energy targets the finish of premium technical portfolios while avoiding green terminal cosplay and preserving a distinct EdgeData-informed palette.
 
 The system is static-first and progressively enhanced. Motion reveals relationships without controlling comprehension; the same hierarchy remains intact with JavaScript disabled, reduced motion enabled, long Portuguese copy, or a 320px viewport. It explicitly rejects terminal cosplay, generic AI marketing, editorial-magazine styling, and template-like card grids.
 
 **Key Characteristics:**
 - Asymmetric maps and flows explain relationships instead of decorating empty space.
+- The home hero uses one cinematic portrait treatment, scan motion, and spatial readouts as the memorable signature.
+- Internal page openings use full-viewport coordinate grids, oversized headlines, route codes, and cyan calibration marks.
+- Work and service indexes behave as visual ledgers: authored imagery, large sequence numbers, and full-row interaction replace generic card grids.
+- Case studies, service routes, About, and Contact share the same optical treatment while keeping distinct information structures.
 - Cyan marks live signals and actions; electric blue carries brand depth and major fields.
 - Alternating evidence rows replace interchangeable card grids.
 - Semantic structure serves people, search engines, and agents from the same source.
