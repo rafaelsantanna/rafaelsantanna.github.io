@@ -41,21 +41,20 @@ const t = copy[locale];
         </article>
       ))}
     </section>
-    <section id="concepts" class="concept-index shell" aria-labelledby="concepts-title">
+    <section id="landing-pages" class="concept-index shell" aria-labelledby="landing-pages-title">
       <div class="section-heading section-heading--compact" data-reveal>
-        <p class="section-index">+ / {locale === 'pt' ? 'CONCEITOS' : 'CONCEPTS'}</p>
-        <div><h2 id="concepts-title">{locale === 'pt' ? 'Projetos conceituais' : 'Concept projects'}</h2><p>{locale === 'pt' ? 'Demonstrações de abordagem visual e comercial. Marcas fictícias, sempre separadas dos trabalhos entregues.' : 'Demonstrations of visual and commercial approach. Fictional brands, always separated from delivered work.'}</p></div>
+        <p class="section-index">+ / LANDING PAGES</p>
+        <div><h2 id="landing-pages-title">{locale === 'pt' ? 'Landing pages por segmento' : 'Landing pages by industry'}</h2><p>{locale === 'pt' ? 'Páginas autorais que mostram como transformar serviços, diferenciais e contato em uma jornada comercial clara.' : 'Authorial pages showing how to turn services, differentiators, and contact into a clear commercial journey.'}</p></div>
       </div>
       <div class="concept-index__grid">
         {concepts.map((concept) => (
           <article class={`concept-card concept-card--${concept.theme}`} data-reveal>
             <div class="concept-card__image"><img src={concept.image} alt={localize(concept.imageAlt, locale)} width={concept.imageWidth} height={concept.imageHeight} loading="lazy" decoding="async" /></div>
             <div class="concept-card__copy">
-              <p class="concept-disclaimer">{localize(concept.disclaimer, locale)}</p>
               <p class="eyebrow">{localize(concept.category, locale)}</p>
-              <h3><a href={withLocale(locale, `work/concepts/${concept.slug}`)}>{localize(concept.title, locale)}</a></h3>
+              <h3><a href={withLocale(locale, `work/landing-pages/${concept.slug}`)}>{localize(concept.title, locale)}</a></h3>
               <p>{localize(concept.summary, locale)}</p>
-              <span class="text-link" aria-hidden="true">{locale === 'pt' ? 'Explorar conceito' : 'Explore concept'}<span>→</span></span>
+              <span class="text-link" aria-hidden="true">{locale === 'pt' ? 'Ver landing page' : 'View landing page'}<span>→</span></span>
             </div>
           </article>
         ))}

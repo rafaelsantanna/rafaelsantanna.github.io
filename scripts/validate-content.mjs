@@ -9,7 +9,7 @@ const forbidden = [/\[TODO\]/i, /Unknown Developer/i, /if I'm not mistaken/i, /�
 
 assert.equal(cases.length, 5, 'Expected exactly five launch case studies');
 assert.equal(services.length, 5, 'Expected exactly five current services');
-assert.equal(concepts.length, 2, 'Expected exactly two labeled concept projects');
+assert.equal(concepts.length, 2, 'Expected exactly two authorial landing-page demonstrations');
 assert.deepEqual(services.map((service) => service.slug), [
   'b2b-saas-internal-systems',
   'websites-landing-pages',
@@ -59,7 +59,7 @@ for (const concept of concepts) {
     assert.ok(concept.title[locale]?.trim(), `Missing title.${locale} for ${concept.slug}`);
     assert.ok(concept.summary[locale]?.trim(), `Missing summary.${locale} for ${concept.slug}`);
     assert.ok(concept.sections[locale].length === 3, `Expected three sections for ${concept.slug}.${locale}`);
-    assert.match(concept.disclaimer[locale], locale === 'pt' ? /projeto conceitual.*marca fictícia.*sem relação comercial/i : /concept project.*fictional brand.*no commercial relationship/i);
+    assert.match(concept.disclaimer[locale], locale === 'pt' ? /demonstração autoral.*Rafael Sant' Anna.*marca ilustrativa/i : /authorial demonstration.*Rafael Sant' Anna.*illustrative brand/i);
   }
 }
 
@@ -74,4 +74,4 @@ for (const route of routes) {
 const source = readFileSync(resolve('src/data/content.ts'), 'utf8');
 for (const pattern of forbidden) assert.doesNotMatch(source, pattern, `Forbidden content pattern: ${pattern}`);
 
-console.log(`Content validation passed: ${cases.length} cases, ${services.length} services, ${concepts.length} concepts, ${routes.length} Markdown routes.`);
+console.log(`Content validation passed: ${cases.length} cases, ${services.length} services, ${concepts.length} landing-page demonstrations, ${routes.length} Markdown routes.`);

@@ -98,12 +98,12 @@
 .concept-card h3 a { text-decoration: none; }
 .concept-card h3 a::after { position: absolute; inset: 0; content: ''; }
 .concept-card:focus-within { outline: 3px solid var(--signal); outline-offset: -3px; }
-.concept-disclaimer { padding: 0.7rem 0.85rem; border-inline-start: 3px solid var(--signal); background: oklch(76% 0.15 210 / 0.12); color: var(--ink); font-size: var(--step--1); font-weight: 650; }
+.concept-disclaimer { width: fit-content; padding: 0.4rem 0.65rem; border: 1px solid var(--line); color: var(--muted); font-size: 0.75rem; font-weight: 650; }
 
 .concept-opening { display: grid; gap: var(--space-4); padding-block: var(--space-6); }
 .concept-opening h1 { max-width: 13ch; }
 .concept-opening__summary { max-width: 58ch; color: var(--ink-soft); font-size: var(--step-1); }
-.concept-disclaimer--prominent { max-width: 70ch; margin-block: var(--space-3); }
+.concept-disclaimer--prominent { max-width: 70ch; margin-block: var(--space-2); }
 .concept-showcase { overflow: hidden; background: var(--room-deep, var(--cobalt-deep)); color: var(--on-color); }
 .concept-showcase__hero { position: relative; min-height: min(48rem, 78svh); }
 .concept-showcase__hero::after { position: absolute; inset: 0; background: linear-gradient(90deg, oklch(10.5% 0.03 245 / 0.92), oklch(10.5% 0.03 245 / 0.18) 68%); content: ''; }

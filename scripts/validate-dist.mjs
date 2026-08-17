@@ -79,7 +79,7 @@ const aiIndex = JSON.parse(readFileSync(join(dist, 'ai-index.json'), 'utf8'));
 assert.equal(aiIndex.protocols.mcp, false);
 assert.equal(aiIndex.services.length, 5);
 assert.equal(aiIndex.work.length, 5);
-assert.equal(aiIndex.concepts.length, 2);
+assert.equal(aiIndex.showcases.length, 2);
 
 for (const locale of ['en', 'pt']) {
   const prefix = locale === 'pt' ? join('pt') : '';
@@ -93,17 +93,23 @@ for (const locale of ['en', 'pt']) {
 for (const locale of ['en', 'pt']) {
   const prefix = locale === 'pt' ? join('pt') : '';
   for (const concept of concepts) {
-    const html = readFileSync(join(dist, prefix, 'work', 'concepts', concept.slug, 'index.html'), 'utf8');
-    assert.ok(html.includes(concept.disclaimer[locale]), `Concept ${locale}/${concept.slug} must show its disclaimer`);
-    assert.ok(html.includes(`property="og:image" content="https://rafaelsantanna.github.io${concept.image}"`), `Concept ${locale}/${concept.slug} must use its own Open Graph image`);
-    assert.doesNotMatch(html, /LocalBusiness|Review|AggregateRating/, `Concept ${locale}/${concept.slug} must not publish fictional business schema or reviews`);
+    const html = readFileSync(join(dist, prefix, 'work', 'landing-pages', concept.slug, 'index.html'), 'utf8');
+    assert.ok(html.includes(concept.disclaimer[locale]), `Landing demo ${locale}/${concept.slug} must show its disclosure`);
+    assert.ok(html.includes(`property="og:image" content="https://rafaelsantanna.github.io${concept.image}"`), `Landing demo ${locale}/${concept.slug} must use its own Open Graph image`);
+    assert.doesNotMatch(html, /LocalBusiness|Review|AggregateRating/, `Landing demo ${locale}/${concept.slug} must not publish fictional business schema or reviews`);
   }
 }
 
 const home = readFileSync(join(dist, 'index.html'), 'utf8');
 const homePt = readFileSync(join(dist, 'pt', 'index.html'), 'utf8');
+const work = readFileSync(join(dist, 'work', 'index.html'), 'utf8');
+const workPt = readFileSync(join(dist, 'pt', 'work', 'index.html'), 'utf8');
 assert.doesNotMatch(home, /"@type":"FAQPage"/, 'Home must not publish invisible FAQ schema');
 assert.doesNotMatch(homePt, /"@type":"FAQPage"/, 'Portuguese home must not publish invisible FAQ schema');
+assert.doesNotMatch(work, /Concept projects|Concept project|Explore concept/, 'Work page must use commercial landing-page language');
+assert.doesNotMatch(workPt, /Projetos conceituais|Projeto conceitual|Explorar conceito/, 'Portuguese work page must use commercial landing-page language');
+assert.ok(!existsSync(join(dist, 'work', 'concepts')), 'Legacy concept routes must not be generated');
+assert.ok(!existsSync(join(dist, 'pt', 'work', 'concepts')), 'Legacy Portuguese concept routes must not be generated');
 assert.ok(!existsSync(join(dist, 'services', 'lms-lxp-learning', 'index.html')), 'Removed LMS service route must not be generated');
 assert.ok(!existsSync(join(dist, 'pt', 'services', 'lms-lxp-learning', 'index.html')), 'Removed Portuguese LMS service route must not be generated');
 

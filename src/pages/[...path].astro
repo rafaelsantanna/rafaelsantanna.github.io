@@ -36,7 +36,7 @@ export function getStaticPaths() {
       pages.push({ path: `${prefix}services/${service.slug}`, props: { locale, kind: 'service', routePath: `services/${service.slug}`, slug: service.slug } });
     }
     for (const concept of concepts) {
-      pages.push({ path: `${prefix}work/concepts/${concept.slug}`, props: { locale, kind: 'concept', routePath: `work/concepts/${concept.slug}`, slug: concept.slug } });
+      pages.push({ path: `${prefix}work/landing-pages/${concept.slug}`, props: { locale, kind: 'concept', routePath: `work/landing-pages/${concept.slug}`, slug: concept.slug } });
     }
   }
   return pages.map(({ path, props }) => ({ params: { path }, props }));
@@ -101,8 +101,8 @@ const pageSchema = (() => {
       description: `${localize(conceptItem.summary, locale)} ${localize(conceptItem.disclaimer, locale)}`,
       creator: { '@type': 'Person', name: identity.name },
       image: new URL(conceptItem.image, Astro.site).toString(),
-      url: new URL(`/${locale === 'pt' ? 'pt/' : ''}work/concepts/${conceptItem.slug}/`, Astro.site).toString(),
-      educationalUse: 'Portfolio concept demonstration',
+      url: new URL(`/${locale === 'pt' ? 'pt/' : ''}work/landing-pages/${conceptItem.slug}/`, Astro.site).toString(),
+      educationalUse: 'Authorial portfolio demonstration',
     };
   }
   if (kind === 'home') {

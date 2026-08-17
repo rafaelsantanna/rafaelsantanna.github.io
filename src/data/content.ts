@@ -397,14 +397,14 @@ export const concepts: Concept[] = [
   {
     slug: 'pousada-boutique',
     title: { en: 'Boutique lodge landing page', pt: 'Landing page para pousada boutique' },
-    category: { en: 'Hospitality concept', pt: 'Conceito para hospitalidade' },
+    category: { en: 'Hospitality / Direct booking', pt: 'Hospedagem / Reserva direta' },
     summary: {
       en: 'A conversion-focused bilingual experience for a small lodge that needs to present its atmosphere, stays, and reservation path beyond social media.',
       pt: 'Uma experiência bilíngue focada em conversão para uma pequena pousada que precisa apresentar atmosfera, hospedagens e caminho de reserva além das redes sociais.',
     },
     disclaimer: {
-      en: 'Concept project. Fictional brand with no commercial relationship to any real property.',
-      pt: 'Projeto conceitual. Marca fictícia, sem relação comercial com qualquer pousada real.',
+      en: "Authorial demonstration created by Rafael Sant' Anna for this portfolio. Illustrative brand.",
+      pt: "Demonstração autoral criada por Rafael Sant' Anna para este portfólio. Marca ilustrativa.",
     },
     demoName: { en: 'Casa Neblina', pt: 'Casa Neblina' },
     demoTagline: { en: 'A quieter way to stay in the mountains.', pt: 'Um jeito mais tranquilo de viver a serra.' },
@@ -429,14 +429,14 @@ export const concepts: Concept[] = [
   {
     slug: 'climatizacao-local',
     title: { en: 'Local HVAC service landing page', pt: 'Landing page para climatização local' },
-    category: { en: 'Local service concept', pt: 'Conceito para serviço local' },
+    category: { en: 'Local service / Quote journey', pt: 'Serviço local / Jornada de orçamento' },
     summary: {
       en: 'A direct commercial page for an HVAC business that needs to explain services, coverage, and the quote journey beyond a WhatsApp-only presence.',
       pt: 'Uma página comercial direta para uma empresa de climatização que precisa explicar serviços, cobertura e jornada de orçamento além de uma presença apenas no WhatsApp.',
     },
     disclaimer: {
-      en: 'Concept project. Fictional brand with no commercial relationship to any real service provider.',
-      pt: 'Projeto conceitual. Marca fictícia, sem relação comercial com qualquer prestador de serviços real.',
+      en: "Authorial demonstration created by Rafael Sant' Anna for this portfolio. Illustrative brand.",
+      pt: "Demonstração autoral criada por Rafael Sant' Anna para este portfólio. Marca ilustrativa.",
     },
     demoName: { en: 'Clima Certa', pt: 'Clima Certa' },
     demoTagline: { en: 'Comfort planned, installed, and maintained.', pt: 'Conforto planejado, instalado e mantido.' },

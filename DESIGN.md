@@ -187,4 +187,4 @@ Components are tactile and confident, with meaningful states and a complete non-
 - **Don't** use editorial-magazine styling with display serifs, tiny mono labels, and ornamental rules.
 - **Don't** use repeated identical card grids and framework-logo walls without evidence or context.
 - **Don't** revive the legacy Simplefolio layout, generic developer slogans, or unclear calls to action.
-- **Don't** present fictional concepts as delivered work, or publish inflated metrics, implied client endorsements, or keyword stuffing.
+- **Don't** present authorial demonstrations as client work, or publish inflated metrics, implied client endorsements, or keyword stuffing.
