@@ -3,8 +3,8 @@ import { cases, copy, identity, localize, services, withLocale, type Locale } fr
 interface Props { locale: Locale }
 const { locale } = Astro.props;
 const t = copy[locale];
-const featuredCases = cases.slice(0, 3);
-const featuredServices = services;
+const featuredCases = ['edgedata', 'trinks', 'academic-operations'].map((slug) => cases.find((item) => item.slug === slug)!);
+const featuredServices = ['b2b-saas-internal-systems', 'websites-landing-pages', 'frontend-modernization'].map((slug) => services.find((service) => service.slug === slug)!);
 ---
 
 <section class="hero-stage" aria-labelledby="hero-title">
@@ -40,6 +40,27 @@ const featuredServices = services;
       </div>
       <figcaption><span>RS / 01</span>{identity.location}</figcaption>
     </figure>
+  </div>
+</section>
+
+<section class="engagement-paths shell" aria-labelledby="engagement-title" data-reveal>
+  <div class="engagement-paths__heading">
+    <p class="section-index">00 / {locale === 'pt' ? 'COMO POSSO AJUDAR' : 'HOW I CAN HELP'}</p>
+    <h2 id="engagement-title">{locale === 'pt' ? 'Duas formas de trabalhar comigo.' : 'Two ways to work with me.'}</h2>
+  </div>
+  <div class="engagement-paths__grid">
+    <article>
+      <p class="eyebrow">{locale === 'pt' ? 'Contrato PJ / reforço de equipe' : 'Remote contract / team reinforcement'}</p>
+      <h3>{locale === 'pt' ? 'Senioridade para entrar e entregar.' : 'Senior delivery that joins the work quickly.'}</h3>
+      <p>{locale === 'pt' ? 'Disponibilidade imediata, ME ativa e cobertura integral do horário comercial brasileiro.' : 'Available immediately through an active Brazilian company, with full overlap with Brazilian business hours.'}</p>
+      <div class="button-row"><a class="text-link" href={withLocale(locale, 'cv')}>{locale === 'pt' ? 'Ver currículo' : 'View CV'}<span>→</span></a><a class="text-link" href={withLocale(locale, 'contact')}>{locale === 'pt' ? 'Entrar em contato' : 'Get in touch'}<span>→</span></a></div>
+    </article>
+    <article>
+      <p class="eyebrow">{locale === 'pt' ? 'Projeto fechado / site / sistema' : 'Fixed project / website / system'}</p>
+      <h3>{locale === 'pt' ? 'Escopo claro, execução focada.' : 'Clear scope, focused execution.'}</h3>
+      <p>{locale === 'pt' ? 'Sites, landing pages, sistemas internos e modernização de produtos existentes.' : 'Websites, landing pages, internal systems, and modernization of existing products.'}</p>
+      <div class="button-row"><a class="text-link" href={withLocale(locale, 'services')}>{locale === 'pt' ? 'Ver serviços' : 'View services'}<span>→</span></a><a class="text-link" href={`${withLocale(locale, 'work')}#concepts`}>{locale === 'pt' ? 'Ver conceitos' : 'View concepts'}<span>→</span></a></div>
+    </article>
   </div>
 </section>
 

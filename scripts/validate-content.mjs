@@ -1,16 +1,18 @@
 import assert from 'node:assert/strict';
 import { existsSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
-import { cases, selectedWork, services } from '../src/data/content.ts';
+import { cases, concepts, selectedWork, services } from '../src/data/content.ts';
 import { machineRoutes } from '../src/data/machine.ts';
 
 const locales = ['en', 'pt'];
 const forbidden = [/\[TODO\]/i, /Unknown Developer/i, /if I'm not mistaken/i, /—/u];
 
 assert.equal(cases.length, 5, 'Expected exactly five launch case studies');
-assert.equal(services.length, 4, 'Expected exactly four current services');
+assert.equal(services.length, 5, 'Expected exactly five current services');
+assert.equal(concepts.length, 2, 'Expected exactly two labeled concept projects');
 assert.deepEqual(services.map((service) => service.slug), [
   'b2b-saas-internal-systems',
+  'websites-landing-pages',
   'frontend-modernization',
   'ai-automation-rag',
   'mobile-integrations',
@@ -22,6 +24,7 @@ assert.equal(selectedWork.length, 2, 'Expected only two additional high-impact p
 assert.ok(selectedWork.every((item) => item.title !== 'SOS Bolsas de Estudo Online'), 'Removed project must not return');
 assert.equal(new Set(cases.map((item) => item.slug)).size, cases.length, 'Case slugs must be unique');
 assert.equal(new Set(services.map((item) => item.slug)).size, services.length, 'Service slugs must be unique');
+assert.equal(new Set(concepts.map((item) => item.slug)).size, concepts.length, 'Concept slugs must be unique');
 
 for (const item of cases) {
   assert.match(item.slug, /^[a-z0-9]+(?:-[a-z0-9]+)*$/, `Invalid case slug: ${item.slug}`);
@@ -48,8 +51,20 @@ for (const service of services) {
   }
 }
 
+for (const concept of concepts) {
+  assert.match(concept.slug, /^[a-z0-9]+(?:-[a-z0-9]+)*$/, `Invalid concept slug: ${concept.slug}`);
+  assert.ok(existsSync(resolve(`public${concept.image}`)), `Missing concept image: ${concept.image}`);
+  assert.ok(concept.imageWidth > 0 && concept.imageHeight > 0, `Invalid image dimensions for ${concept.slug}`);
+  for (const locale of locales) {
+    assert.ok(concept.title[locale]?.trim(), `Missing title.${locale} for ${concept.slug}`);
+    assert.ok(concept.summary[locale]?.trim(), `Missing summary.${locale} for ${concept.slug}`);
+    assert.ok(concept.sections[locale].length === 3, `Expected three sections for ${concept.slug}.${locale}`);
+    assert.match(concept.disclaimer[locale], locale === 'pt' ? /projeto conceitual.*marca fictícia.*sem relação comercial/i : /concept project.*fictional brand.*no commercial relationship/i);
+  }
+}
+
 const routes = machineRoutes();
-assert.equal(routes.length, 32, 'Expected 16 Markdown routes per locale');
+assert.equal(routes.length, 38, 'Expected 19 Markdown routes per locale');
 assert.equal(new Set(routes.map((route) => `${route.locale}/${route.slug}`)).size, routes.length, 'Machine routes must be unique');
 for (const route of routes) {
   assert.ok(route.markdown.includes(`# ${route.title}`) || route.slug === 'index', `Missing heading in ${route.locale}/${route.slug}`);
@@ -59,4 +74,4 @@ for (const route of routes) {
 const source = readFileSync(resolve('src/data/content.ts'), 'utf8');
 for (const pattern of forbidden) assert.doesNotMatch(source, pattern, `Forbidden content pattern: ${pattern}`);
 
-console.log(`Content validation passed: ${cases.length} cases, ${services.length} services, ${routes.length} Markdown routes.`);
+console.log(`Content validation passed: ${cases.length} cases, ${services.length} services, ${concepts.length} concepts, ${routes.length} Markdown routes.`);

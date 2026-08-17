@@ -1,4 +1,4 @@
-import { cases, copy, identity, localize, selectedWork, services, type Locale } from './content.ts';
+import { cases, concepts, copy, identity, localize, selectedWork, services, type Locale } from './content.ts';
 
 export interface MachineRoute {
   locale: Locale;
@@ -31,7 +31,7 @@ export function machineRoutes(): MachineRoute[] {
       locale,
       slug: 'work',
       title: t.workTitle,
-      markdown: `${frontmatter(t.workTitle, t.workIntro, locale, `${root}/work/`)}\n# ${t.workTitle}\n\n${t.workIntro}\n\n${cases.map((item) => `## ${item.title}\n\n${localize(item.summary, locale)}\n\n- ${localize(item.role, locale)}\n- ${localize(item.period, locale)}\n- [${t.viewCase}](${root}/work/${item.slug}/)`).join('\n\n')}\n`,
+      markdown: `${frontmatter(t.workTitle, t.workIntro, locale, `${root}/work/`)}\n# ${t.workTitle}\n\n${t.workIntro}\n\n${cases.map((item) => `## ${item.title}\n\n${localize(item.summary, locale)}\n\n- ${localize(item.role, locale)}\n- ${localize(item.period, locale)}\n- [${t.viewCase}](${root}/work/${item.slug}/)`).join('\n\n')}\n\n## ${locale === 'pt' ? 'Projetos conceituais' : 'Concept projects'}\n\n${locale === 'pt' ? 'Demonstrações com marcas fictícias, separadas dos trabalhos entregues.' : 'Demonstrations with fictional brands, separated from delivered work.'}\n\n${concepts.map((item) => `- [${localize(item.title, locale)}](${root}/work/concepts/${item.slug}/): ${localize(item.disclaimer, locale)}`).join('\n')}\n`,
     });
     routes.push({
       locale,
@@ -63,12 +63,22 @@ export function machineRoutes(): MachineRoute[] {
         markdown: `${frontmatter(title, description, locale, `${root}/services/${service.slug}/`)}\n# ${title}\n\n${description}\n\n## ${t.fit}\n\n${list(service.idealFor[locale])}\n\n## ${t.deliverables}\n\n${list(service.deliverables[locale])}\n\n## ${t.technologies}\n\n${list(service.technologies)}\n`,
       });
     }
+    for (const concept of concepts) {
+      const title = localize(concept.title, locale);
+      const description = `${localize(concept.summary, locale)} ${localize(concept.disclaimer, locale)}`;
+      routes.push({
+        locale,
+        slug: `work/concepts/${concept.slug}`,
+        title,
+        markdown: `${frontmatter(title, description, locale, `${root}/work/concepts/${concept.slug}/`)}\n# ${title}\n\n**${localize(concept.disclaimer, locale)}**\n\n${localize(concept.summary, locale)}\n\n## ${localize(concept.demoName, locale)}\n\n${localize(concept.demoTagline, locale)}\n\n${concept.sections[locale].map((section) => `### ${section.title}\n\n${section.text}`).join('\n\n')}\n`,
+      });
+    }
   }
   return routes;
 }
 
 export function llmsIndex() {
-  return `# ${identity.name}: Senior Software Engineer\n\n> ${identity.summary.en}\n> ${identity.availability.en}.\n\n## Main sections\n\n- [Home](https://rafaelsantanna.github.io/): Positioning, proof, services, and contact.\n- [Work](https://rafaelsantanna.github.io/work/): Five detailed, verifiable case studies.\n- [Services](https://rafaelsantanna.github.io/services/): B2B systems, platform modernization, applied AI automation, and mobile integrations.\n- [About](https://rafaelsantanna.github.io/about/): Professional background and project context.\n- [CV](https://rafaelsantanna.github.io/cv/): Human-readable curriculum and PDF download.\n- [For agents](https://rafaelsantanna.github.io/for-agents/): Evaluation facts and machine-readable resources.\n- [Português](https://rafaelsantanna.github.io/pt/): Complete pt-BR version.\n\n## Selected work\n\n${list(cases.map((item) => `[${item.title}](https://rafaelsantanna.github.io/work/${item.slug}/): ${item.summary.en}`))}\n\n## Services\n\n${list(services.map((service) => `[${service.title.en}](https://rafaelsantanna.github.io/services/${service.slug}/): ${service.summary.en}`))}\n\n## Contact\n\n- Email: ${identity.email}\n- WhatsApp: ${identity.phoneDisplay}\n- LinkedIn: ${identity.linkedin}\n- GitHub: ${identity.github}\n`;
+  return `# ${identity.name}: Senior Software Engineer\n\n> ${identity.summary.en}\n> ${identity.availability.en}.\n\n## Main sections\n\n- [Home](https://rafaelsantanna.github.io/): Positioning, proof, services, and contact.\n- [Work](https://rafaelsantanna.github.io/work/): Five detailed case studies and two clearly labeled fictional concepts.\n- [Services](https://rafaelsantanna.github.io/services/): B2B systems, websites and landing pages, modernization, AI automation, and mobile integrations.\n- [About](https://rafaelsantanna.github.io/about/): Professional background and project context.\n- [CV](https://rafaelsantanna.github.io/cv/): Human-readable curriculum and PDF download.\n- [For agents](https://rafaelsantanna.github.io/for-agents/): Evaluation facts and machine-readable resources.\n- [Português](https://rafaelsantanna.github.io/pt/): Complete pt-BR version.\n\n## Selected work\n\n${list(cases.map((item) => `[${item.title}](https://rafaelsantanna.github.io/work/${item.slug}/): ${item.summary.en}`))}\n\n## Concept projects\n\nThese are fictional demonstrations, not delivered client work.\n\n${list(concepts.map((item) => `[${item.title.en}](https://rafaelsantanna.github.io/work/concepts/${item.slug}/): ${item.disclaimer.en}`))}\n\n## Services\n\n${list(services.map((service) => `[${service.title.en}](https://rafaelsantanna.github.io/services/${service.slug}/): ${service.summary.en}`))}\n\n## Contact\n\n- Email: ${identity.email}\n- WhatsApp: ${identity.phoneDisplay}\n- LinkedIn: ${identity.linkedin}\n- GitHub: ${identity.github}\n`;
 }
 
 export function llmsFull() {

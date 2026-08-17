@@ -4,13 +4,14 @@ import HomePage from '@/components/pages/HomePage.astro';
 import ListingPage from '@/components/pages/ListingPage.astro';
 import CasePage from '@/components/pages/CasePage.astro';
 import ServicePage from '@/components/pages/ServicePage.astro';
+import ConceptPage from '@/components/pages/ConceptPage.astro';
 import AboutPage from '@/components/pages/AboutPage.astro';
 import CvPage from '@/components/pages/CvPage.astro';
 import ContactPage from '@/components/pages/ContactPage.astro';
 import AgentsPage from '@/components/pages/AgentsPage.astro';
-import { cases, copy, identity, localize, services, type Locale } from '@/data/content';
+import { cases, concepts, copy, identity, localize, services, type Locale } from '@/data/content';
 
-type PageKind = 'home' | 'work' | 'services' | 'case' | 'service' | 'about' | 'cv' | 'contact' | 'agents';
+type PageKind = 'home' | 'work' | 'services' | 'case' | 'service' | 'concept' | 'about' | 'cv' | 'contact' | 'agents';
 interface PageProps { locale: Locale; kind: PageKind; routePath: string; slug?: string }
 
 export function getStaticPaths() {
@@ -34,6 +35,9 @@ export function getStaticPaths() {
     for (const service of services) {
       pages.push({ path: `${prefix}services/${service.slug}`, props: { locale, kind: 'service', routePath: `services/${service.slug}`, slug: service.slug } });
     }
+    for (const concept of concepts) {
+      pages.push({ path: `${prefix}work/concepts/${concept.slug}`, props: { locale, kind: 'concept', routePath: `work/concepts/${concept.slug}`, slug: concept.slug } });
+    }
   }
   return pages.map(({ path, props }) => ({ params: { path }, props }));
 }
@@ -42,13 +46,16 @@ const { locale, kind, routePath, slug } = Astro.props as PageProps;
 const t = copy[locale];
 const caseItem = kind === 'case' ? cases.find((item) => item.slug === slug) : undefined;
 const serviceItem = kind === 'service' ? services.find((item) => item.slug === slug) : undefined;
+const conceptItem = kind === 'concept' ? concepts.find((item) => item.slug === slug) : undefined;
 
 if (kind === 'case' && !caseItem) throw new Error(`Unknown case study: ${slug}`);
 if (kind === 'service' && !serviceItem) throw new Error(`Unknown service: ${slug}`);
+if (kind === 'concept' && !conceptItem) throw new Error(`Unknown concept: ${slug}`);
 
 const metadata = (() => {
   if (caseItem) return { title: caseItem.title, description: localize(caseItem.summary, locale), image: caseItem.image, imageAlt: localize(caseItem.imageAlt, locale) };
   if (serviceItem) return { title: localize(serviceItem.title, locale), description: localize(serviceItem.summary, locale) };
+  if (conceptItem) return { title: localize(conceptItem.title, locale), description: `${localize(conceptItem.summary, locale)} ${localize(conceptItem.disclaimer, locale)}`, image: conceptItem.image, imageAlt: localize(conceptItem.imageAlt, locale) };
   const map = {
     home: { title: identity.role[locale], description: t.heroIntro },
     work: { title: t.workTitle, description: t.workIntro },
@@ -86,6 +93,18 @@ const pageSchema = (() => {
       serviceType: localize(serviceItem.title, locale),
     };
   }
+  if (conceptItem) {
+    return {
+      '@context': 'https://schema.org',
+      '@type': 'CreativeWork',
+      name: localize(conceptItem.title, locale),
+      description: `${localize(conceptItem.summary, locale)} ${localize(conceptItem.disclaimer, locale)}`,
+      creator: { '@type': 'Person', name: identity.name },
+      image: new URL(conceptItem.image, Astro.site).toString(),
+      url: new URL(`/${locale === 'pt' ? 'pt/' : ''}work/concepts/${conceptItem.slug}/`, Astro.site).toString(),
+      educationalUse: 'Portfolio concept demonstration',
+    };
+  }
   if (kind === 'home') {
     return {
       '@context': 'https://schema.org',
@@ -108,6 +127,7 @@ const pageSchema = (() => {
   {kind === 'services' && <ListingPage locale={locale} type="services" />}
   {kind === 'case' && caseItem && <CasePage locale={locale} item={caseItem} />}
   {kind === 'service' && serviceItem && <ServicePage locale={locale} service={serviceItem} />}
+  {kind === 'concept' && conceptItem && <ConceptPage locale={locale} concept={conceptItem} />}
   {kind === 'about' && <AboutPage locale={locale} />}
   {kind === 'cv' && <CvPage locale={locale} />}
   {kind === 'contact' && <ContactPage locale={locale} />}

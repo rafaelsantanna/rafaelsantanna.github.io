@@ -3,8 +3,8 @@ import { copy, identity, type Locale } from '@/data/content';
 interface Props { locale: Locale }
 const { locale } = Astro.props;
 const t = copy[locale];
-const emailSubject = encodeURIComponent(locale === 'pt' ? 'Novo projeto freelance' : 'Freelance project inquiry');
-const whatsappText = encodeURIComponent(locale === 'pt' ? 'Olá Rafael, gostaria de conversar sobre um projeto.' : 'Hello Rafael, I would like to discuss a project.');
+const emailSubject = encodeURIComponent(locale === 'pt' ? 'Projeto ou oportunidade PJ' : 'Project or remote contract opportunity');
+const whatsappText = encodeURIComponent(locale === 'pt' ? 'Olá Rafael, gostaria de conversar sobre um projeto ou oportunidade PJ.' : 'Hello Rafael, I would like to discuss a project or remote contract opportunity.');
 ---
 
 <section class="contact-page shell" data-code={locale === 'pt' ? 'CANAL ABERTO / 04' : 'OPEN CHANNEL / 04'}>

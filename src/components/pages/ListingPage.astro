@@ -1,5 +1,5 @@
 ---
-import { cases, copy, localize, selectedWork, services, withLocale, type Locale } from '@/data/content';
+import { cases, concepts, copy, localize, selectedWork, services, withLocale, type Locale } from '@/data/content';
 interface Props { locale: Locale; type: 'work' | 'services' }
 const { locale, type } = Astro.props;
 const t = copy[locale];
@@ -40,6 +40,26 @@ const t = copy[locale];
           </div>
         </article>
       ))}
+    </section>
+    <section id="concepts" class="concept-index shell" aria-labelledby="concepts-title">
+      <div class="section-heading section-heading--compact" data-reveal>
+        <p class="section-index">+ / {locale === 'pt' ? 'CONCEITOS' : 'CONCEPTS'}</p>
+        <div><h2 id="concepts-title">{locale === 'pt' ? 'Projetos conceituais' : 'Concept projects'}</h2><p>{locale === 'pt' ? 'Demonstrações de abordagem visual e comercial. Marcas fictícias, sempre separadas dos trabalhos entregues.' : 'Demonstrations of visual and commercial approach. Fictional brands, always separated from delivered work.'}</p></div>
+      </div>
+      <div class="concept-index__grid">
+        {concepts.map((concept) => (
+          <article class={`concept-card concept-card--${concept.theme}`} data-reveal>
+            <div class="concept-card__image"><img src={concept.image} alt={localize(concept.imageAlt, locale)} width={concept.imageWidth} height={concept.imageHeight} loading="lazy" decoding="async" /></div>
+            <div class="concept-card__copy">
+              <p class="concept-disclaimer">{localize(concept.disclaimer, locale)}</p>
+              <p class="eyebrow">{localize(concept.category, locale)}</p>
+              <h3><a href={withLocale(locale, `work/concepts/${concept.slug}`)}>{localize(concept.title, locale)}</a></h3>
+              <p>{localize(concept.summary, locale)}</p>
+              <span class="text-link" aria-hidden="true">{locale === 'pt' ? 'Explorar conceito' : 'Explore concept'}<span>→</span></span>
+            </div>
+          </article>
+        ))}
+      </div>
     </section>
     <section class="selected-notes shell">
       <div class="section-heading section-heading--compact" data-reveal>

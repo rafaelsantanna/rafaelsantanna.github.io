@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
 import { join, resolve } from 'node:path';
-import { cases } from '../src/data/content.ts';
+import { cases, concepts } from '../src/data/content.ts';
 
 const dist = resolve('dist');
 assert.ok(existsSync(dist), 'dist directory does not exist');
@@ -15,7 +15,7 @@ function walk(directory) {
 
 const files = walk(dist);
 const htmlFiles = files.filter((file) => file.endsWith('.html'));
-assert.equal(htmlFiles.length, 32, `Expected 32 HTML pages, found ${htmlFiles.length}`);
+assert.equal(htmlFiles.length, 38, `Expected 38 HTML pages, found ${htmlFiles.length}`);
 
 function targetFor(pathname) {
   const clean = pathname.split(/[?#]/, 1)[0].replace(/^\//, '');
@@ -65,7 +65,7 @@ assert.match(readFileSync(join(dist, 'cv', 'index.html'), 'utf8'), /rafael-sant-
 assert.match(readFileSync(join(dist, 'pt', 'cv', 'index.html'), 'utf8'), /rafael-sant-anna-cv\.pdf/, 'Portuguese CV page must link to the Portuguese PDF');
 
 const markdownFiles = files.filter((file) => file.includes(`${join('markdown', '')}`) && file.endsWith('.md'));
-assert.equal(markdownFiles.length, 32, `Expected 32 Markdown alternatives, found ${markdownFiles.length}`);
+assert.equal(markdownFiles.length, 38, `Expected 38 Markdown alternatives, found ${markdownFiles.length}`);
 
 const robots = readFileSync(join(dist, 'robots.txt'), 'utf8');
 assert.match(robots, /OAI-SearchBot/);
@@ -73,12 +73,13 @@ assert.match(robots, /User-agent: GPTBot\nDisallow: \//);
 assert.match(robots, /^Content-Signal: ai-train=no, search=yes, ai-input=yes$/m);
 
 const sitemap = readFileSync(join(dist, 'sitemap.xml'), 'utf8');
-assert.equal((sitemap.match(/<url>/g) || []).length, 32, 'Expected 32 direct sitemap URLs');
+assert.equal((sitemap.match(/<url>/g) || []).length, 38, 'Expected 38 direct sitemap URLs');
 
 const aiIndex = JSON.parse(readFileSync(join(dist, 'ai-index.json'), 'utf8'));
 assert.equal(aiIndex.protocols.mcp, false);
-assert.equal(aiIndex.services.length, 4);
+assert.equal(aiIndex.services.length, 5);
 assert.equal(aiIndex.work.length, 5);
+assert.equal(aiIndex.concepts.length, 2);
 
 for (const locale of ['en', 'pt']) {
   const prefix = locale === 'pt' ? join('pt') : '';
@@ -86,6 +87,16 @@ for (const locale of ['en', 'pt']) {
     const html = readFileSync(join(dist, prefix, 'work', item.slug, 'index.html'), 'utf8');
     assert.ok(html.includes(`property="og:image" content="https://rafaelsantanna.github.io${item.image}"`), `Case ${locale}/${item.slug} must use its own Open Graph image`);
     assert.ok(html.includes(`property="og:image:alt" content="${item.imageAlt[locale]}"`), `Case ${locale}/${item.slug} must use localized Open Graph alt text`);
+  }
+}
+
+for (const locale of ['en', 'pt']) {
+  const prefix = locale === 'pt' ? join('pt') : '';
+  for (const concept of concepts) {
+    const html = readFileSync(join(dist, prefix, 'work', 'concepts', concept.slug, 'index.html'), 'utf8');
+    assert.ok(html.includes(concept.disclaimer[locale]), `Concept ${locale}/${concept.slug} must show its disclaimer`);
+    assert.ok(html.includes(`property="og:image" content="https://rafaelsantanna.github.io${concept.image}"`), `Concept ${locale}/${concept.slug} must use its own Open Graph image`);
+    assert.doesNotMatch(html, /LocalBusiness|Review|AggregateRating/, `Concept ${locale}/${concept.slug} must not publish fictional business schema or reviews`);
   }
 }
 

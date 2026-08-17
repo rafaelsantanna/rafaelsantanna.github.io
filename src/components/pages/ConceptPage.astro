@@ -1,0 +1,41 @@
+---
+import { localize, withLocale, type Concept, type Locale } from '@/data/content';
+interface Props { locale: Locale; concept: Concept }
+const { locale, concept } = Astro.props;
+---
+
+<article class={`concept-page concept-page--${concept.theme}`}>
+  <header class="concept-opening shell">
+    <a class="back-link" href={`${withLocale(locale, 'work')}#concepts`}><span aria-hidden="true">←</span>{locale === 'pt' ? 'Voltar aos conceitos' : 'Back to concepts'}</a>
+    <p class="concept-disclaimer concept-disclaimer--prominent">{localize(concept.disclaimer, locale)}</p>
+    <p class="eyebrow">{localize(concept.category, locale)}</p>
+    <h1>{localize(concept.title, locale)}</h1>
+    <p class="concept-opening__summary">{localize(concept.summary, locale)}</p>
+  </header>
+
+  <section class="concept-showcase" aria-label={locale === 'pt' ? 'Demonstração visual conceitual' : 'Concept visual demonstration'}>
+    <div class="concept-showcase__hero">
+      <img src={concept.image} alt={localize(concept.imageAlt, locale)} width={concept.imageWidth} height={concept.imageHeight} />
+      <div class="concept-showcase__overlay">
+        <p>{locale === 'pt' ? 'DEMONSTRAÇÃO FICTÍCIA' : 'FICTIONAL DEMONSTRATION'}</p>
+        <h2>{localize(concept.demoName, locale)}</h2>
+        <strong>{localize(concept.demoTagline, locale)}</strong>
+        <a class="button button--signal" href={withLocale(locale, 'contact')}>{locale === 'pt' ? 'Conversar sobre um projeto semelhante' : 'Discuss a similar project'}<span aria-hidden="true">→</span></a>
+      </div>
+    </div>
+    <div class="concept-showcase__sections shell">
+      {concept.sections[locale].map((section, index) => (
+        <article>
+          <span>{String(index + 1).padStart(2, '0')}</span>
+          <h3>{section.title}</h3>
+          <p>{section.text}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <footer class="concept-footer shell">
+    <p>{localize(concept.disclaimer, locale)}</p>
+    <a class="button button--outline" href={withLocale(locale, 'contact')}>{locale === 'pt' ? 'Solicitar algo nessa linha' : 'Request something similar'}<span aria-hidden="true">→</span></a>
+  </footer>
+</article>

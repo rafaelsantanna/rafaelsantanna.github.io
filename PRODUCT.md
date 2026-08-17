@@ -28,7 +28,7 @@ Technical, cinematic, and decisive. The voice is specific, commercially useful, 
 
 ## Design Principles
 
-1. **Proof before breadth.** Lead with five strong, verifiable cases and connect each of the four current services to relevant evidence.
+1. **Proof before breadth.** Lead with five strong, verifiable cases and connect each of the five current services to relevant evidence. Keep fictional concepts clearly labeled and separate from delivered work.
 2. **Complexity made legible.** Use maps, flows, and precise language to show how Rafael thinks about operations and systems.
 3. **Commercial clarity.** Make availability, services, project fit, and contact routes obvious without aggressive sales tactics.
 4. **Human and machine readable.** Semantic HTML, concise facts, structured data, Markdown alternatives, and complete bilingual content are one system.

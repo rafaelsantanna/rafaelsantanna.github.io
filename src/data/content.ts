@@ -34,6 +34,22 @@ export interface Service {
   technologies: string[];
 }
 
+export interface Concept {
+  slug: string;
+  title: LocalizedText;
+  category: LocalizedText;
+  summary: LocalizedText;
+  disclaimer: LocalizedText;
+  demoName: LocalizedText;
+  demoTagline: LocalizedText;
+  sections: Record<Locale, Array<{ title: string; text: string }>>;
+  image: string;
+  imageWidth: number;
+  imageHeight: number;
+  imageAlt: LocalizedText;
+  theme: 'hospitality' | 'service';
+}
+
 export const identity = {
   name: "Rafael Sant' Anna",
   role: {
@@ -48,8 +64,8 @@ export const identity = {
   linkedin: 'https://www.linkedin.com/in/devrafaelsantanna/',
   edgeData: 'https://edgedata.com.br/',
   availability: {
-    en: 'Available for remote freelance projects',
-    pt: 'Disponível para projetos freelance remotos',
+    en: 'Available immediately for remote PJ contracts and freelance projects, with full overlap with Brazilian business hours',
+    pt: 'Disponível imediatamente para contratos PJ remotos e projetos freelance, com cobertura integral do horário comercial brasileiro',
   },
   summary: {
     en: "Rafael Sant' Anna is a senior software engineer based in Viseu, Portugal, with more than 10 years of experience building and modernizing B2B products, internal systems, and operational platforms.",
@@ -300,8 +316,27 @@ export const services: Service[] = [
     technologies: ['React', 'Vue.js', 'Laravel', 'Node.js', '.NET/C#', 'PostgreSQL'],
   },
   {
-    slug: 'frontend-modernization',
+    slug: 'websites-landing-pages',
     index: '02',
+    title: { en: 'Websites and landing pages', pt: 'Sites e landing pages' },
+    summary: {
+      en: 'Create clear, fast commercial pages that turn services, booking journeys, and business value into focused calls to action.',
+      pt: 'Crie páginas comerciais claras e rápidas que transformam serviços, jornadas de agendamento e valor de negócio em chamadas para ação objetivas.',
+    },
+    idealFor: {
+      en: ['Local service businesses', 'Hospitality and booking journeys', 'New offers and campaigns', 'Businesses relying only on social media'],
+      pt: ['Negócios de serviços locais', 'Hospedagem e jornadas de reserva', 'Novas ofertas e campanhas', 'Empresas dependentes apenas de redes sociais'],
+    },
+    deliverables: {
+      en: ['Content and conversion structure', 'Responsive implementation', 'Contact and booking integrations', 'Performance and accessibility review'],
+      pt: ['Estrutura de conteúdo e conversão', 'Implementação responsiva', 'Integrações de contato e agendamento', 'Revisão de performance e acessibilidade'],
+    },
+    evidence: ['trinks'],
+    technologies: ['Astro', 'React', 'TypeScript', 'Responsive UI', 'SEO'],
+  },
+  {
+    slug: 'frontend-modernization',
+    index: '03',
     title: { en: 'Frontend and back-office modernization', pt: 'Modernização de frontend e backoffice' },
     summary: {
       en: 'Modernize dense interfaces and legacy platforms incrementally, without losing the business rules that keep operations running.',
@@ -320,7 +355,7 @@ export const services: Service[] = [
   },
   {
     slug: 'ai-automation-rag',
-    index: '03',
+    index: '04',
     title: { en: 'AI automation, RAG, and bots', pt: 'Automação com IA, RAG e bots' },
     summary: {
       en: 'Apply generative AI where it reduces repetitive work, improves access to knowledge, or accelerates operational decisions.',
@@ -339,7 +374,7 @@ export const services: Service[] = [
   },
   {
     slug: 'mobile-integrations',
-    index: '04',
+    index: '05',
     title: { en: 'Mobile applications and integrations', pt: 'Aplicações mobile e integrações' },
     summary: {
       en: 'Connect field operations, logistics, customers, and back-office systems through focused mobile experiences.',
@@ -355,6 +390,73 @@ export const services: Service[] = [
     },
     evidence: ['enterprise-operations'],
     technologies: ['React Native', 'Ionic', 'Node.js', 'REST APIs', 'SQL'],
+  },
+];
+
+export const concepts: Concept[] = [
+  {
+    slug: 'pousada-boutique',
+    title: { en: 'Boutique lodge landing page', pt: 'Landing page para pousada boutique' },
+    category: { en: 'Hospitality concept', pt: 'Conceito para hospitalidade' },
+    summary: {
+      en: 'A conversion-focused bilingual experience for a small lodge that needs to present its atmosphere, stays, and reservation path beyond social media.',
+      pt: 'Uma experiência bilíngue focada em conversão para uma pequena pousada que precisa apresentar atmosfera, hospedagens e caminho de reserva além das redes sociais.',
+    },
+    disclaimer: {
+      en: 'Concept project. Fictional brand with no commercial relationship to any real property.',
+      pt: 'Projeto conceitual. Marca fictícia, sem relação comercial com qualquer pousada real.',
+    },
+    demoName: { en: 'Casa Neblina', pt: 'Casa Neblina' },
+    demoTagline: { en: 'A quieter way to stay in the mountains.', pt: 'Um jeito mais tranquilo de viver a serra.' },
+    sections: {
+      en: [
+        { title: 'Stay with context', text: 'Present rooms, shared spaces, and the character of the place before asking for a reservation.' },
+        { title: 'Discover the region', text: 'Connect the stay to trails, local food, and useful planning information.' },
+        { title: 'A clear reservation path', text: 'Keep availability and direct contact visible without turning every section into a sales pitch.' },
+      ],
+      pt: [
+        { title: 'Hospedagem com contexto', text: 'Apresente quartos, espaços comuns e a personalidade do lugar antes de pedir uma reserva.' },
+        { title: 'Descubra a região', text: 'Conecte a estadia a trilhas, gastronomia local e informações úteis de planejamento.' },
+        { title: 'Caminho claro para reservar', text: 'Mantenha disponibilidade e contato direto visíveis sem transformar toda seção em discurso de venda.' },
+      ],
+    },
+    image: '/images/concepts/pousada-boutique-hero.png',
+    imageWidth: 1536,
+    imageHeight: 1024,
+    imageAlt: { en: 'Fictional mountain lodge surrounded by mist and native vegetation', pt: 'Pousada fictícia na serra, cercada por névoa e vegetação nativa' },
+    theme: 'hospitality',
+  },
+  {
+    slug: 'climatizacao-local',
+    title: { en: 'Local HVAC service landing page', pt: 'Landing page para climatização local' },
+    category: { en: 'Local service concept', pt: 'Conceito para serviço local' },
+    summary: {
+      en: 'A direct commercial page for an HVAC business that needs to explain services, coverage, and the quote journey beyond a WhatsApp-only presence.',
+      pt: 'Uma página comercial direta para uma empresa de climatização que precisa explicar serviços, cobertura e jornada de orçamento além de uma presença apenas no WhatsApp.',
+    },
+    disclaimer: {
+      en: 'Concept project. Fictional brand with no commercial relationship to any real service provider.',
+      pt: 'Projeto conceitual. Marca fictícia, sem relação comercial com qualquer prestador de serviços real.',
+    },
+    demoName: { en: 'Clima Certa', pt: 'Clima Certa' },
+    demoTagline: { en: 'Comfort planned, installed, and maintained.', pt: 'Conforto planejado, instalado e mantido.' },
+    sections: {
+      en: [
+        { title: 'Installation', text: 'Clarify equipment selection, sizing, and installation for residential and small commercial environments.' },
+        { title: 'Maintenance', text: 'Explain preventive care and repair without technical ambiguity.' },
+        { title: 'A useful quote request', text: 'Ask for the few details needed to prepare the conversation before moving it to the public service channel.' },
+      ],
+      pt: [
+        { title: 'Instalação', text: 'Esclareça seleção, dimensionamento e instalação de equipamentos para ambientes residenciais e pequenos comércios.' },
+        { title: 'Manutenção', text: 'Explique cuidados preventivos e reparos sem ambiguidade técnica.' },
+        { title: 'Pedido de orçamento útil', text: 'Solicite apenas os dados necessários para preparar a conversa antes de levá-la ao canal público de atendimento.' },
+      ],
+    },
+    image: '/images/concepts/climatizacao-local-hero.png',
+    imageWidth: 1799,
+    imageHeight: 874,
+    imageAlt: { en: 'Technician inspecting a modern air-conditioning unit in a bright interior', pt: 'Técnico inspecionando um aparelho de ar-condicionado moderno em ambiente iluminado' },
+    theme: 'service',
   },
 ];
 
@@ -410,7 +512,7 @@ export const copy = {
     aboutIntro: 'I’m a senior software engineer based in Viseu, Portugal, with more than 10 years of experience turning complex operations into maintainable B2B products and internal systems.',
     cvTitle: 'Curriculum vitae',
     contactTitle: 'Bring the difficult part.',
-    contactIntro: 'Share the operation, constraint, or product you need to improve. I’m available for remote freelance projects with clear ownership and senior execution.',
+    contactIntro: 'Share the team gap, operation, constraint, or product you need to improve. I’m available immediately for remote PJ contracts and freelance projects.',
     agentTitle: 'A clear brief for humans and agents',
     agentIntro: 'This page contains the factual information needed to evaluate Rafael for a project. It does not expose a booking API or pretend to be an autonomous service.',
     outcomes: 'Outcomes',
@@ -451,7 +553,7 @@ export const copy = {
     aboutIntro: 'Sou engenheiro de software sênior, baseado em Viseu, Portugal, com mais de 10 anos de experiência transformando operações complexas em produtos B2B e sistemas internos sustentáveis.',
     cvTitle: 'Currículo profissional',
     contactTitle: 'Traga a parte difícil.',
-    contactIntro: 'Compartilhe a operação, a restrição ou o produto que você precisa melhorar. Estou disponível para projetos freelance remotos, com responsabilidade clara e execução sênior.',
+    contactIntro: 'Compartilhe a necessidade da equipe, a operação, a restrição ou o produto que você precisa melhorar. Estou disponível imediatamente para contratos PJ remotos e projetos freelance.',
     agentTitle: 'Um briefing claro para pessoas e agentes',
     agentIntro: 'Esta página contém as informações factuais necessárias para avaliar Rafael em um projeto. Ela não expõe uma API de agendamento nem finge ser um serviço autônomo.',
     outcomes: 'Resultados',
