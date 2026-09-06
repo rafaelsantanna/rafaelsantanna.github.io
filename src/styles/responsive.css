@@ -15,17 +15,46 @@
   .menu-toggle[hidden] { display: none; }
   .menu-toggle__lines { position: relative; width: 1.25rem; height: 0.8rem; border-block: 2px solid currentColor; }
   .menu-toggle__lines::after { position: absolute; inset: 50% 0 auto; height: 2px; background: currentColor; content: ''; transform: translateY(-50%); }
+  .site-header__main { position: relative; }
   .site-nav {
     grid-column: 1 / -1;
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 0;
-    padding-block: 0.75rem;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.25rem;
+    padding: 0.75rem;
     border-block-start: 1px solid var(--line);
   }
-  .site-nav[data-enhanced='true']:not([data-open]) { display: none; }
-  .site-nav a { justify-content: center; padding-inline: 0.5rem; }
-  .site-nav__contact { margin: 0.2rem; }
+  .site-nav[data-enhanced='true'] {
+    position: absolute;
+    inset-inline: 0;
+    top: calc(100% + 1px);
+    z-index: 30;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    background: var(--paper);
+    box-shadow: 0 1.5rem 3rem -2rem oklch(22% 0.02 260 / 0.35);
+    opacity: 1;
+    transform: translateY(0);
+    visibility: visible;
+    transition:
+      opacity var(--duration-medium) var(--ease-out),
+      transform var(--duration-medium) var(--ease-out),
+      visibility 0s linear 0s;
+  }
+  .site-nav[data-enhanced='true']:not([data-open]) {
+    opacity: 0;
+    transform: translateY(-0.5rem);
+    visibility: hidden;
+    transition:
+      opacity var(--duration-fast) var(--ease-out),
+      transform var(--duration-fast) var(--ease-out),
+      visibility 0s linear var(--duration-fast);
+  }
+  .site-nav a { justify-content: flex-start; min-height: 3rem; padding-inline: 0.75rem; }
+  .site-nav__contact { justify-content: center; margin: 0.25rem 0; }
+  @media (prefers-reduced-motion: reduce) {
+    .site-nav[data-enhanced='true'] { transition: none; }
+  }
   .hero { grid-template-columns: 1fr 0.9fr; gap: var(--space-4); }
   .hero h1 { font-size: clamp(3.3rem, 7.4vw, 6.2rem); }
   .work-row { grid-template-columns: minmax(0, 1fr) minmax(16rem, 1fr); }
