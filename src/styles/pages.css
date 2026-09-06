@@ -10,7 +10,7 @@
   grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
   gap: clamp(2rem, 5vw, 5rem);
   align-items: center;
-  padding-block: var(--space-7);
+  padding-block: var(--space-6) var(--space-7);
 }
 .hero__copy { display: grid; gap: var(--space-4); align-content: center; }
 .hero h1 { max-width: 10ch; }
@@ -112,7 +112,7 @@
 .concept-disclaimer { width: fit-content; padding: 0.4rem 0.65rem; border: 1px solid var(--line); color: var(--muted); font-size: 0.75rem; font-weight: 650; }
 
 
-.page-hero { display: grid; grid-template-columns: 0.45fr 1.55fr; gap: var(--space-5); padding-block: var(--space-7); }
+.page-hero { display: grid; grid-template-columns: 0.45fr 1.55fr; gap: var(--space-5); padding-block: var(--space-6) var(--space-7); }
 .page-hero--work, .page-hero--services, .page-hero--about { background: var(--paper); }
 .page-hero h1 { max-width: 14ch; }
 .page-hero > p:last-child { grid-column: 2; max-width: 55ch; color: var(--ink-soft); font-size: var(--step-1); }
@@ -246,7 +246,7 @@
 .skill-ledger dt { font-family: var(--font-display); font-weight: 650; }
 .skill-ledger dd { color: var(--ink-soft); }
 
-.contact-page { display: grid; grid-template-columns: 0.8fr 1.2fr; gap: var(--space-6); padding-block: var(--space-7); }
+.contact-page { display: grid; grid-template-columns: 0.8fr 1.2fr; gap: var(--space-6); padding-block: var(--space-6) var(--space-7); }
 .contact-page__heading { display: grid; align-content: start; gap: var(--space-4); }
 .contact-page__heading h1 { max-width: 9ch; }
 .contact-page__heading > p:last-child { color: var(--ink-soft); font-size: var(--step-1); }
