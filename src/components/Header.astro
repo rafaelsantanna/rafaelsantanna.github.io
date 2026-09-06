@@ -16,18 +16,8 @@ const items = [
 ---
 
 <header class="site-header">
-  <div class="status-rail" aria-label={locale === 'pt' ? 'Resumo de atuação' : 'Professional focus'}>
-    <div class="status-rail__track">
-      <span>{locale === 'pt' ? 'ENGENHEIRO DE SOFTWARE SÊNIOR' : 'SENIOR SOFTWARE ENGINEER'}</span>
-      <span>B2B SAAS</span>
-      <span>{locale === 'pt' ? 'SISTEMAS INTERNOS' : 'INTERNAL SYSTEMS'}</span>
-      <span>{locale === 'pt' ? 'MODERNIZAÇÃO DE PLATAFORMAS' : 'PLATFORM MODERNIZATION'}</span>
-      <span>{locale === 'pt' ? 'BASEADO EM PORTUGAL' : 'BASED IN PORTUGAL'}</span>
-    </div>
-  </div>
   <div class="site-header__main">
     <a class="brand-mark" href={withLocale(locale)} aria-label={`${identity.name}, ${locale === 'pt' ? 'página inicial' : 'home'}`}>
-      <span class="brand-mark__node" aria-hidden="true"></span>
       <span>rafael<span class="brand-mark__light">santanna</span><b>.dev</b></span>
     </a>
     <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav" hidden>

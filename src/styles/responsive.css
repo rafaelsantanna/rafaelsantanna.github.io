@@ -1,5 +1,5 @@
 @media (max-width: 72rem) {
-  .site-header { grid-template-columns: auto auto; justify-content: space-between; }
+  .site-header__main { grid-template-columns: auto auto; justify-content: space-between; }
   .menu-toggle {
     display: inline-flex;
     align-items: center;
@@ -28,54 +28,48 @@
   .site-nav__contact { margin: 0.2rem; }
   .hero { grid-template-columns: 1fr 0.9fr; gap: var(--space-4); }
   .hero h1 { font-size: clamp(3.3rem, 7.4vw, 6.2rem); }
-  .work-row, .work-row--reverse { grid-template-columns: minmax(0, 1.05fr) minmax(18rem, 0.95fr); min-height: 36rem; }
+  .work-row { grid-template-columns: minmax(0, 1fr) minmax(16rem, 1fr); }
   .service-line__main { grid-template-columns: 0.8fr 1.2fr; }
 }
 
 @media (max-width: 60rem) {
   body { background: var(--paper); }
-  .hero { grid-template-columns: 1fr; min-height: auto; padding-block: var(--space-7); }
-  .hero__copy { min-height: 36rem; }
+  .hero { grid-template-columns: 1fr; padding-block: var(--space-7); }
   .hero h1 { max-width: 11ch; font-size: var(--step-5); }
-  .hero__map { width: min(100%, 44rem); justify-self: end; }
-  .work-row, .work-row--reverse { grid-template-columns: 1fr; min-height: auto; }
-  .work-row--reverse .work-row__visual { order: 0; }
-  .work-row__visual { height: clamp(20rem, 52vw, 28rem); min-height: 0; }
-  .work-row__copy { min-height: 0; }
+  .hero-portrait { width: min(100%, 40rem); }
+  .work-row { grid-template-columns: 1fr; }
+  .work-row__visual, .work-row__visual img { aspect-ratio: 16 / 10; }
   .service-line__main { grid-template-columns: 1fr; gap: 0.6rem; }
   .cta-field, .page-hero { grid-template-columns: 1fr; }
   .engagement-paths__heading { grid-template-columns: 1fr; }
   .page-hero > p:last-child, .page-hero .button { grid-column: 1; }
+  .agent-hero__facts { grid-column: 1; }
   .cta-field { align-items: start; }
   .cta-field .button { justify-self: start; }
   .case-index__item { grid-template-columns: 3rem minmax(16rem, 0.9fr) minmax(16rem, 1.1fr); }
   .detail-hero__summary { margin-inline-start: 20%; }
   .detail-body section, .detail-body section:nth-child(even) { grid-column: 2 / 12; }
   .about-map { grid-template-columns: 1fr; }
-  .about-map > .system-map { width: min(100%, 46rem); justify-self: end; }
   .contact-page { grid-template-columns: 1fr; }
   .contact-brief { grid-column: 1; }
-  .concept-showcase__sections { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 48rem) {
   :root { --shell: min(90vw, 42rem); }
   h1 { font-size: clamp(3rem, 15vw, 5.2rem); }
   h2 { font-size: clamp(2.25rem, 10vw, 3.8rem); }
-  .site-header { min-height: 4.8rem; }
+  .site-header__main { min-height: 4.8rem; }
   .site-nav { grid-template-columns: 1fr 1fr; }
   .site-nav a { justify-content: flex-start; min-height: 3.2rem; }
   .site-nav__contact { justify-content: center; }
   .hero { padding-block: var(--space-6); }
-  .hero__copy { min-height: auto; }
   .hero__facts { grid-template-columns: 1fr; gap: 0.3rem; }
   .hero__facts div { display: grid; grid-template-columns: 5rem 1fr; align-items: center; gap: 0.75rem; }
+  .agent-hero__facts { grid-template-columns: 1fr; gap: 0.3rem; }
   .map-caption { align-items: flex-start; flex-direction: column; }
   .section-heading { grid-template-columns: 1fr; }
-  .work-row__visual { height: auto; min-height: 0; }
-  .work-row__visual img { height: auto; object-fit: contain; }
-  .work-row__copy { min-height: 0; padding: 1.75rem; }
-  .service-line { grid-template-columns: 2.5rem minmax(0, 1fr) auto; gap: 0.75rem; min-height: 0; padding-block: 1.35rem; }
+  .work-row__visual, .work-row__visual img { aspect-ratio: 16 / 10; }
+  .service-line { grid-template-columns: 2.5rem minmax(0, 1fr) auto; gap: 0.75rem; padding-block: 1.35rem; }
   .service-line__main strong { font-size: var(--step-1); }
   .service-line__main small { font-size: 0.9rem; }
   .site-footer__main { grid-template-columns: 1fr; }
@@ -85,15 +79,12 @@
   .case-index__image { grid-column: 2; }
   .case-index__copy { grid-column: 2; padding-inline: 0; }
   .selected-notes__list { grid-template-columns: 1fr; }
-  .engagement-paths__grid, .concept-index__grid { grid-template-columns: 1fr; }
-  .selected-notes article + article { border-inline-start: 0; }
   .service-index__item { grid-template-columns: 2.5rem minmax(0, 1fr); }
-  .service-index__link { grid-column: 2; width: 3rem; }
+  .service-index__link { grid-column: 2; width: 3rem; min-height: 3rem; }
   .detail-hero__heading { grid-template-columns: 1fr; }
   .detail-hero__heading dl { margin-block-start: var(--space-4); }
   .detail-hero__summary { margin-inline-start: 0; }
   .detail-visual { width: 100%; }
-  .detail-visual figcaption { position: static; max-width: none; }
   .detail-body { display: block; }
   .detail-body section, .detail-body section:nth-child(even) { display: grid; grid-template-columns: 2.5rem 1fr; margin-block: var(--space-5); }
   .evidence-row { grid-template-columns: 1fr auto; padding-block: var(--space-4); }
@@ -102,15 +93,10 @@
   .timeline li { grid-template-columns: 1fr; }
   .timeline li div { display: grid; gap: 0.2rem; }
   .portrait-note { grid-template-columns: 1fr; }
-  .portrait-note__frame { min-height: 18rem; }
   .cv-layout { grid-template-columns: 1fr; }
   .cv-timeline li, .skill-ledger div { grid-template-columns: 1fr; gap: 0.25rem; }
   .cv-timeline li div { display: grid; gap: 0.2rem; }
   .contact-routes a { grid-template-columns: 2.5rem minmax(0, 1fr) auto; }
-  .concept-showcase__hero, .concept-showcase__overlay { min-height: 38rem; }
-  .concept-showcase__hero::after, .concept-page--service .concept-showcase__hero::after { background: linear-gradient(0deg, oklch(10.5% 0.03 245 / 0.94), oklch(10.5% 0.03 245 / 0.08)); }
-  .concept-page--service .concept-showcase__overlay { justify-items: start; text-align: left; }
-  .concept-page--service .concept-showcase__overlay .button { justify-self: start; }
   .concept-footer { align-items: flex-start; flex-direction: column; }
   .agent-grid { grid-template-columns: 1fr; }
 }
@@ -121,7 +107,6 @@
   .menu-toggle__label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
   .hero h1 { font-size: 2.75rem; }
   .button { width: 100%; }
-  .work-row__visual { min-height: 0; }
   .service-line { grid-template-columns: 2rem 1fr; }
   .service-line__arrow { grid-column: 2; }
   .detail-hero__heading dl div { grid-template-columns: 1fr; gap: 0.25rem; }

@@ -5,7 +5,7 @@ const { locale, type } = Astro.props;
 const t = copy[locale];
 ---
 
-<section class:list={['page-hero', `page-hero--${type}`, 'shell']} data-code={type === 'work' ? (locale === 'pt' ? 'ÍNDICE / 01' : 'INDEX / 01') : (locale === 'pt' ? 'ÍNDICE / 02' : 'INDEX / 02')}>
+<section class:list={['page-hero', `page-hero--${type}`, 'shell']}>
   <div class="listing-hero__copy">
     <p class="section-index">{type === 'work' ? `01 / ${locale === 'pt' ? 'PROJETOS' : 'WORK'}` : `02 / ${locale === 'pt' ? 'SERVIÇOS' : 'SERVICES'}`}</p>
     <h1>{type === 'work' ? t.workTitle : t.servicesPageTitle}</h1>
@@ -46,14 +46,16 @@ const t = copy[locale];
         <p class="section-index">+ / LANDING PAGES</p>
         <div><h2 id="landing-pages-title">{locale === 'pt' ? 'Landing pages por segmento' : 'Landing pages by industry'}</h2><p>{locale === 'pt' ? 'Páginas autorais que mostram como transformar serviços, diferenciais e contato em uma jornada comercial clara.' : 'Authorial pages showing how to turn services, differentiators, and contact into a clear commercial journey.'}</p></div>
       </div>
-      <div class="concept-index__grid">
-        {concepts.map((concept) => (
-          <article class={`concept-card concept-card--${concept.theme}`} data-reveal>
-            <div class="concept-card__image"><img src={concept.image} alt={localize(concept.imageAlt, locale)} width={concept.imageWidth} height={concept.imageHeight} loading="lazy" decoding="async" /></div>
-            <div class="concept-card__copy">
+      <div class="case-index">
+        {concepts.map((concept, index) => (
+          <article class="case-index__item" data-reveal>
+            <div class="case-index__number">{String(index + 1).padStart(2, '0')}</div>
+            <div class="case-index__image"><img src={concept.image} alt={localize(concept.imageAlt, locale)} width={concept.imageWidth} height={concept.imageHeight} loading="lazy" decoding="async" /></div>
+            <div class="case-index__copy">
               <p class="eyebrow">{localize(concept.category, locale)}</p>
               <h3><a href={withLocale(locale, `work/landing-pages/${concept.slug}`)}>{localize(concept.title, locale)}</a></h3>
               <p>{localize(concept.summary, locale)}</p>
+              <p class="small-meta">{localize(concept.disclaimer, locale)}</p>
               <span class="text-link" aria-hidden="true">{locale === 'pt' ? 'Ver landing page' : 'View landing page'}<span>→</span></span>
             </div>
           </article>
@@ -91,3 +93,11 @@ const t = copy[locale];
     ))}
   </section>
 )}
+
+<section class="cta-field shell" data-reveal>
+  <div>
+    <h2>{locale === 'pt' ? 'Qual operação precisa ficar mais clara?' : 'Which operation needs to become clearer?'}</h2>
+    <p>{locale === 'pt' ? 'Descreva o sistema, a restrição ou o fluxo que você precisa melhorar.' : 'Describe the system, constraint, or workflow you need to improve.'}</p>
+  </div>
+  <a class="button button--signal" href={withLocale(locale, 'contact')}>{t.discuss}<span aria-hidden="true">↗</span></a>
+</section>

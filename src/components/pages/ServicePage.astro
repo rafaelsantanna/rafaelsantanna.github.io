@@ -7,7 +7,7 @@ const evidence = service.evidence.map((slug) => cases.find((item) => item.slug =
 ---
 
 <article class="detail-page service-detail">
-  <header class="detail-hero detail-hero--service shell" data-code={locale === 'pt' ? 'SERVIÇO / ENTREGA' : 'SERVICE / DELIVERY'}>
+  <header class="detail-hero detail-hero--service shell">
     <a class="back-link" href={withLocale(locale, 'services')}><span aria-hidden="true">←</span>{t.backServices}</a>
     <div class="detail-hero__heading">
       <div><p class="eyebrow">{service.index} / {t.nav.services}</p><h1>{localize(service.title, locale)}</h1></div>
@@ -15,18 +15,18 @@ const evidence = service.evidence.map((slug) => cases.find((item) => item.slug =
     <p class="detail-hero__summary">{localize(service.summary, locale)}</p>
     <div class="service-hero__routes">
       <section>
-        <p class="section-index">01</p><h2>{t.fit}</h2>
+        <h2>{t.fit}</h2>
         <ul>{service.idealFor[locale].map((item) => <li>{item}</li>)}</ul>
       </section>
       <section>
-        <p class="section-index">02</p><h2>{t.deliverables}</h2>
+        <h2>{t.deliverables}</h2>
         <ul>{service.deliverables[locale].map((item) => <li>{item}</li>)}</ul>
       </section>
     </div>
   </header>
 
   <section class="evidence-list shell">
-    <div class="section-heading section-heading--compact" data-reveal><p class="section-index">03</p><h2>{t.evidence}</h2></div>
+    <div class="section-heading section-heading--compact" data-reveal><h2>{t.evidence}</h2></div>
     {evidence.map((item) => item && (
       <a class="evidence-row" href={withLocale(locale, `work/${item.slug}`)} data-reveal>
         <span>{item.title}</span><small>{localize(item.summary, locale)}</small><b aria-hidden="true">↗</b>
@@ -35,7 +35,7 @@ const evidence = service.evidence.map((slug) => cases.find((item) => item.slug =
   </section>
 
   <section class="detail-tech shell" data-reveal>
-    <p class="section-index">04</p><h2>{t.technologies}</h2>
+    <h2>{t.technologies}</h2>
     <ul class="tag-list">{service.technologies.map((technology) => <li>{technology}</li>)}</ul>
   </section>
 

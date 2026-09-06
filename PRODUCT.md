@@ -14,7 +14,7 @@ Position Rafael Sant' Anna as a senior software engineer who builds and moderniz
 
 ## Brand Personality
 
-Technical, cinematic, and decisive. The voice is specific, commercially useful, and technically credible without posturing. The interface should feel like a live signal room operated by an experienced engineer, not a developer template.
+Clear, calm, and precise. The voice is specific, commercially useful, and technically credible without posturing. The interface should read like a clean light Swiss document that presents evidence in order, not a signal room or a developer template.
 
 ## Anti-references
 
@@ -32,7 +32,7 @@ Technical, cinematic, and decisive. The voice is specific, commercially useful, 
 2. **Complexity made legible.** Use maps, flows, and precise language to show how Rafael thinks about operations and systems.
 3. **Commercial clarity.** Make availability, services, project fit, and contact routes obvious without aggressive sales tactics.
 4. **Human and machine readable.** Semantic HTML, concise facts, structured data, Markdown alternatives, and complete bilingual content are one system.
-5. **Signal, not spectacle.** Navy, cyan, photography, motion, and visual systems must strengthen hierarchy and understanding while protecting performance.
+5. **Clarity over spectacle.** Paper, ink, cobalt, type, and spacing must strengthen hierarchy and understanding while protecting performance.
 
 ## Accessibility & Inclusion
 

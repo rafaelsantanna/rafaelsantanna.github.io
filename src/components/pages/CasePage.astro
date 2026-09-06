@@ -7,7 +7,7 @@ const t = copy[locale];
 
 <article class="detail-page">
   <div class="case-opening shell">
-    <header class="detail-hero detail-hero--case" data-code={locale === 'pt' ? 'CASE / TRABALHO VERIFICADO' : 'CASE STUDY / VERIFIED WORK'}>
+    <header class="detail-hero detail-hero--case">
       <a class="back-link" href={withLocale(locale, 'work')}><span aria-hidden="true">←</span>{t.backWork}</a>
       <div class="detail-hero__heading">
         <div>
@@ -28,15 +28,15 @@ const t = copy[locale];
   </div>
 
   <div class="detail-body shell">
-    <section data-reveal><p class="section-index">01</p><h2>{t.context}</h2><p>{localize(item.context, locale)}</p></section>
-    <section data-reveal><p class="section-index">02</p><h2>{t.challenge}</h2><p>{localize(item.challenge, locale)}</p></section>
-    <section data-reveal><p class="section-index">03</p><h2>{t.solution}</h2><p>{localize(item.solution, locale)}</p></section>
+    <section data-reveal><h2>{t.context}</h2><p>{localize(item.context, locale)}</p></section>
+    <section data-reveal><h2>{t.challenge}</h2><p>{localize(item.challenge, locale)}</p></section>
+    <section data-reveal><h2>{t.solution}</h2><p>{localize(item.solution, locale)}</p></section>
     <section class="detail-outcomes" data-reveal>
-      <p class="section-index">04</p><h2>{t.outcomes}</h2>
+      <h2>{t.outcomes}</h2>
       <ol>{item.outcomes[locale].map((outcome) => <li>{outcome}</li>)}</ol>
     </section>
     <section class="detail-tech" data-reveal>
-      <p class="section-index">05</p><h2>{t.technologies}</h2>
+    <h2>{t.technologies}</h2>
       <ul class="tag-list">{item.technologies.map((technology) => <li>{technology}</li>)}</ul>
     </section>
   </div>

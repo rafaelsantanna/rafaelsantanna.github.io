@@ -5,7 +5,7 @@ const { locale } = Astro.props;
 const t = copy[locale];
 ---
 
-<section class="page-hero agent-hero shell" data-code={locale === 'pt' ? 'INTERFACE PARA AGENTES / 05' : 'AGENT INTERFACE / 05'}>
+<section class="page-hero agent-hero shell">
   <p class="section-index">05 / {locale === 'pt' ? 'PRONTO PARA AGENTES' : 'AGENT READY'}</p>
   <h1>{t.agentTitle}</h1>
   <p>{t.agentIntro}</p>

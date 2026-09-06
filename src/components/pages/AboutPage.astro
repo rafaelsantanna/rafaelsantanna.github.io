@@ -1,12 +1,14 @@
 ---
-import SystemMap from '@/components/SystemMap.astro';
 import { clients, copy, identity, timeline, type Locale } from '@/data/content';
 interface Props { locale: Locale }
 const { locale } = Astro.props;
 const t = copy[locale];
+const systemStages = locale === 'pt'
+  ? ['OPERAÇÃO', 'INTERFACE', 'REGRAS', 'DADOS', 'AUTOMAÇÃO', 'RESULTADO']
+  : ['OPERATION', 'INTERFACE', 'RULES', 'DATA', 'AUTOMATION', 'OUTCOME'];
 ---
 
-<section class="page-hero page-hero--about shell" data-code={locale === 'pt' ? 'PERFIL / 03' : 'PROFILE / 03'}>
+<section class="page-hero page-hero--about shell">
   <p class="section-index">03 / {t.nav.about.toUpperCase()}</p>
   <h1>{t.aboutTitle}</h1>
   <p>{t.aboutIntro}</p>
@@ -24,7 +26,9 @@ const t = copy[locale];
       ? 'Trabalho entre produto, frontend, backend, dados e integração. Minha especialidade não é uma tecnologia isolada, mas a capacidade de tornar regras operacionais complexas claras, testáveis e sustentáveis.'
       : 'I work across product, frontend, backend, data, and integration. My specialty is not one isolated technology, but the ability to make complex operational rules clear, testable, and maintainable.'}</p>
   </div>
-  <SystemMap locale={locale} />
+  <ul class="tag-list" aria-label={locale === 'pt' ? 'Etapas do sistema' : 'System stages'}>
+    {systemStages.map((stage) => <li>{stage}</li>)}
+  </ul>
 </section>
 
 <section class="timeline shell">

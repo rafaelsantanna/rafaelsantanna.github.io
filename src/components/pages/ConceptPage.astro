@@ -4,38 +4,41 @@ interface Props { locale: Locale; concept: Concept }
 const { locale, concept } = Astro.props;
 ---
 
-<article class={`concept-page concept-page--${concept.theme}`}>
-  <header class="concept-opening shell">
+<article class="detail-page">
+  <header class="detail-hero shell">
     <a class="back-link" href={`${withLocale(locale, 'work')}#landing-pages`}><span aria-hidden="true">←</span>{locale === 'pt' ? 'Voltar às landing pages' : 'Back to landing pages'}</a>
-    <p class="concept-disclaimer concept-disclaimer--prominent">{localize(concept.disclaimer, locale)}</p>
-    <p class="eyebrow">{localize(concept.category, locale)}</p>
-    <h1>{localize(concept.title, locale)}</h1>
-    <p class="concept-opening__summary">{localize(concept.summary, locale)}</p>
-  </header>
-
-  <section class="concept-showcase" aria-label={locale === 'pt' ? 'Demonstração autoral de landing page' : 'Authorial landing page demonstration'}>
-    <div class="concept-showcase__hero">
-      <img src={concept.image} alt={localize(concept.imageAlt, locale)} width={concept.imageWidth} height={concept.imageHeight} />
-      <div class="concept-showcase__overlay">
-        <p>{locale === 'pt' ? 'DEMONSTRAÇÃO AUTORAL' : 'AUTHORIAL DEMONSTRATION'}</p>
-        <h2>{localize(concept.demoName, locale)}</h2>
-        <strong>{localize(concept.demoTagline, locale)}</strong>
-        <a class="button button--signal" href={withLocale(locale, 'contact')}>{locale === 'pt' ? 'Conversar sobre um projeto semelhante' : 'Discuss a similar project'}<span aria-hidden="true">→</span></a>
+    <p class="concept-disclaimer">{localize(concept.disclaimer, locale)}</p>
+    <div class="detail-hero__heading">
+      <div>
+        <p class="eyebrow">{localize(concept.category, locale)}</p>
+        <h1>{localize(concept.title, locale)}</h1>
       </div>
     </div>
-    <div class="concept-showcase__sections shell">
-      {concept.sections[locale].map((section, index) => (
-        <article>
-          <span>{String(index + 1).padStart(2, '0')}</span>
-          <h3>{section.title}</h3>
-          <p>{section.text}</p>
-        </article>
-      ))}
-    </div>
-  </section>
+    <p class="detail-hero__summary">{localize(concept.summary, locale)}</p>
+  </header>
 
-  <footer class="concept-footer shell">
+  <figure class="detail-visual" data-reveal>
+    <img src={concept.image} alt={localize(concept.imageAlt, locale)} width={concept.imageWidth} height={concept.imageHeight} />
+    <figcaption>{localize(concept.imageAlt, locale)}</figcaption>
+  </figure>
+
+  <div class="detail-body shell">
+    <section data-reveal>
+      <p class="section-index">01</p>
+      <h2>{localize(concept.demoName, locale)}</h2>
+      <p>{localize(concept.demoTagline, locale)}</p>
+    </section>
+    {concept.sections[locale].map((section, index) => (
+      <section data-reveal>
+        <p class="section-index">{String(index + 2).padStart(2, '0')}</p>
+        <h2>{section.title}</h2>
+        <p>{section.text}</p>
+      </section>
+    ))}
+  </div>
+
+  <div class="detail-actions shell">
     <p>{locale === 'pt' ? 'Uma solução visual e comercial pronta para ser adaptada ao contexto de um negócio real.' : 'A visual and commercial solution ready to be adapted to a real business context.'}</p>
     <a class="button button--outline" href={withLocale(locale, 'contact')}>{locale === 'pt' ? 'Solicitar algo nessa linha' : 'Request something similar'}<span aria-hidden="true">→</span></a>
-  </footer>
+  </div>
 </article>

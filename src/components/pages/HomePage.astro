@@ -8,11 +8,6 @@ const featuredServices = ['b2b-saas-internal-systems', 'websites-landing-pages',
 ---
 
 <section class="hero-stage" aria-labelledby="hero-title">
-  <div class="hero-stage__atmosphere" aria-hidden="true">
-    <span class="hero-stage__axis hero-stage__axis--x"></span>
-    <span class="hero-stage__axis hero-stage__axis--y"></span>
-    <span class="hero-stage__coordinate">40.6566° N / 7.9125° W</span>
-  </div>
   <div class="hero shell">
     <div class="hero__copy">
       <p class="availability"><span aria-hidden="true"></span>{identity.availability[locale]}</p>
@@ -35,10 +30,8 @@ const featuredServices = ['b2b-saas-internal-systems', 'websites-landing-pages',
         <div class="hero-portrait__image-stack">
           <img class="hero-portrait__image hero-portrait__image--base" src="/images/rafael-santanna.jpg" alt={locale === 'pt' ? 'Rafael Sant’ Anna, engenheiro de software sênior' : 'Rafael Sant’ Anna, senior software engineer'} width="400" height="400" loading="eager" fetchpriority="high" decoding="async" />
         </div>
-        <div class="hero-portrait__grid" aria-hidden="true"></div>
-        <div class="hero-portrait__scan" aria-hidden="true"></div>
       </div>
-      <figcaption><span>RS / 01</span>{identity.location}</figcaption>
+      <figcaption>{identity.location}</figcaption>
     </figure>
   </div>
 </section>
@@ -69,12 +62,11 @@ const featuredServices = ['b2b-saas-internal-systems', 'websites-landing-pages',
     <p class="section-index">01 / {locale === 'pt' ? 'PROJETOS' : 'WORK'}</p>
     <div><h2>{t.proofTitle}</h2><p>{t.proofIntro}</p></div>
   </div>
-  <div class="work-ledger">
+  <div class="work-ledger shell">
     {featuredCases.map((item, index) => (
-      <article class:list={['work-row', index % 2 ? 'work-row--reverse' : '']} data-reveal>
+      <article class="work-row" data-reveal>
         <div class="work-row__visual">
           <img src={item.image} alt={localize(item.imageAlt, locale)} width={item.imageWidth} height={item.imageHeight} loading="lazy" decoding="async" />
-          <span class="work-row__coordinate">{String(index + 1).padStart(2, '0')} / 03</span>
         </div>
         <div class="work-row__copy">
           <p class="eyebrow">{localize(item.eyebrow, locale)}</p>

@@ -7,9 +7,9 @@ const emailSubject = encodeURIComponent(locale === 'pt' ? 'Projeto ou oportunida
 const whatsappText = encodeURIComponent(locale === 'pt' ? 'Olá Rafael, gostaria de conversar sobre um projeto ou oportunidade PJ.' : 'Hello Rafael, I would like to discuss a project or remote contract opportunity.');
 ---
 
-<section class="contact-page shell" data-code={locale === 'pt' ? 'CANAL ABERTO / 04' : 'OPEN CHANNEL / 04'}>
+<section class="contact-page shell">
   <div class="contact-page__heading">
-    <p class="availability"><span aria-hidden="true"></span>{identity.availability[locale]}</p>
+    <p class="availability">{identity.availability[locale]}</p>
     <h1>{t.contactTitle}</h1>
     <p>{t.contactIntro}</p>
   </div>
