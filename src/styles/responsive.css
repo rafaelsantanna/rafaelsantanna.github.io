@@ -52,14 +52,8 @@
 }
 
 @media (max-width: 60rem) {
-  .home-hero__inner { grid-template-columns: minmax(0, 1fr); min-height: 0; }
-  .home-hero__visual { grid-row: 2; min-height: clamp(21rem, 62vw, 35rem); mask-image: linear-gradient(180deg, #000 80%, transparent 100%); }
-  .home-hero__visual img { top: -25%; left: 50%; height: 130%; transform: translateX(-24%); }
-  .home-hero__copy { grid-row: 1; width: var(--shell); margin-inline: auto; padding: clamp(3rem, 7vw, 5rem) 0 1rem; }
-  .home-hero h1 { max-width: 14ch; font-size: clamp(3.5rem, 8vw, 5.2rem); }
-  .home-hero__case-links { margin-block-start: 3.5rem; }
   .home-decision__panel { grid-template-columns: minmax(0, 1fr) minmax(15rem, 0.85fr); gap: 1.5rem; }
-  .home-work { padding-block: 5rem; }
+  .home-work { padding-block: 3.5rem 5rem; }
   .home-section-heading { grid-template-columns: 1fr; gap: 0.9rem; }
   .home-case-grid { gap: 2.5rem 1.25rem; }
   .home-case--featured .home-case__image { aspect-ratio: 1504 / 760; }
@@ -90,21 +84,18 @@
   .site-nav { grid-template-columns: 1fr 1fr; }
   .site-nav a { justify-content: flex-start; min-height: 3.2rem; }
   .site-nav__contact { justify-content: center; }
-  .home-hero__copy { padding-block: 2.75rem 0.5rem; }
-  .home-hero h1 { font-size: clamp(2.85rem, 11vw, 4rem); line-height: 1.02; }
+  .home-hero__inner { grid-template-columns: minmax(0, 1fr); gap: 1.5rem; min-height: 0; padding-block: 3rem 2.5rem; }
+  .home-hero h1 { font-size: clamp(2rem, 9.4vw, 4rem); line-height: 1.05; }
   .home-hero__statement { margin-block-start: 1rem; font-size: 1.08rem; }
-  .home-hero__case-links { margin-block-start: 3rem; }
-  .home-hero__case-links > div { gap: 0.65rem; }
-  .home-hero__case-links strong { font-size: 0.78rem; }
-  .home-hero__visual { min-height: clamp(20rem, 83vw, 28rem); }
-  .home-hero__visual img { height: 132%; }
+  .home-hero__photo { width: min(18rem, 80vw); margin-inline: auto; }
   .home-decision { padding-block: 4rem; }
   .home-decision__option summary { grid-template-columns: 2.25rem minmax(0, 1fr) 2.5rem; gap: 0.7rem; min-height: 4rem; }
   .home-decision__panel { grid-template-columns: 1fr; gap: 1.25rem; padding-inline-start: 0; }
   .home-decision__copy h3 { font-size: 1.7rem; }
   .home-decision__evidence, .home-decision__evidence img { min-height: 0; height: auto; }
   .home-decision__evidence img { aspect-ratio: 1.7 / 1; }
-  .home-work { padding-block: 4.5rem; }
+  .home-work { padding-block: 3rem 4.5rem; }
+  .home-work__heading { align-items: start; flex-direction: column; gap: 0.75rem; }
   .home-section-heading h2 { font-size: clamp(2.3rem, 8vw, 3.5rem); }
   .home-case-grid { grid-template-columns: minmax(0, 1fr); gap: 2.5rem; }
   .home-case--featured { grid-column: auto; }

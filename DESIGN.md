@@ -21,7 +21,7 @@ The audience is product leaders, founders, technical managers, and hiring teams.
 ## Home composition
 
 1. Compact navigation with the existing brand, routes, language switch, and contact path.
-2. The approved split hero places Rafael's monochrome halftone portrait and restrained lavender particles on the left, with a concise work statement, project CTA, contact link, and three real cases on the right. The portrait remains recognizable and the text stays live and accessible.
+2. The compact split hero puts the work statement and actions on the left, with a prominent original portrait on the right. Its columns sit close together without a large empty middle. The selected projects begin immediately below. Rafael's face and hair must not be regenerated.
 3. Real projects appear promptly: EdgeData carries the lead, with Trinks and the academic platform supporting it. Images must be readable and links explicit.
 4. A useful decision interface relates constructing, evolving, or connecting software to the relevant real service and evidence. All information remains available without JavaScript.
 5. A personal experience section and two clear engagement paths. Use existing verified facts only.
@@ -39,7 +39,7 @@ Focus states need high contrast on the dark canvas; hover cannot be the only way
 
 ## Assets and delivery
 
-- `/images/profile.jpg` is Rafael's original supplied photo. `/images/profile-cutout.png` remains an existing transparent derivative. `/images/hero-concept-02.png` is the user-approved halftone composition used for the home hero; CSS crops it to the portrait and particles while HTML supplies all readable text and links.
+- `/images/profile.jpg` is Rafael's original supplied photo and the home hero uses that file directly, with only CSS framing. `/images/profile-cutout.png` and `/images/hero-concept-02.png` are retained existing derivatives but are not used in the hero.
 - Preserve current case images, their claims, alt text, and provenance. Do not invent clients, metrics, products, testimonials, or outcomes.
 - Preserve English canonical pages and the Portuguese `/pt/` mirror, routes, hreflang, JSON-LD, Markdown alternatives, CV downloads, and machine-readable endpoints.
 - Use the existing Astro stack and local fonts. No dependency installation is implicit in the design request.

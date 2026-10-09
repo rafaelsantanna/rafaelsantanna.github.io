@@ -53,37 +53,27 @@ const decisionPaths = [
 ---
 
 <section class="home-hero" aria-labelledby="home-title">
-  <div class="home-hero__inner">
-    <div class="home-hero__visual">
-      <img src="/images/hero-concept-02.png" alt={locale === 'pt' ? 'Retrato em preto e branco de Rafael Sant’ Anna, com fones e uma composição de pontos lilás' : 'Black-and-white portrait of Rafael Sant’ Anna with headphones and a lavender dot composition'} width="1672" height="941" loading="eager" fetchpriority="high" decoding="async" />
-    </div>
+  <div class="home-hero__inner shell">
     <div class="home-hero__copy">
       <p class="home-hero__role">{identity.name}</p>
-      <h1 id="home-title">{locale === 'pt' ? 'Software para operações reais.' : 'Software for real operations.'}</h1>
+      <h1 id="home-title">{locale === 'pt' ? <>Software para<br />operações <span>reais.</span></> : <>Software for<br />real <span>operations.</span></>}</h1>
       <p class="home-hero__statement">{locale === 'pt' ? 'Engenharia de produto, frontend e sistemas internos.' : 'Product engineering, frontend, and internal systems.'}</p>
       <div class="home-hero__actions">
         <a class="button button--signal" href="#selected-work">{locale === 'pt' ? 'Explorar projetos' : 'Explore projects'}<span aria-hidden="true">→</span></a>
         <a class="home-hero__contact-link" href={withLocale(locale, 'contact')}>{t.nav.contact}</a>
       </div>
-      <nav class="home-hero__case-links" aria-label={locale === 'pt' ? 'Projetos em destaque' : 'Featured projects'}>
-        <p>{locale === 'pt' ? 'Projetos em destaque' : 'Featured projects'}</p>
-        <div>
-        {featuredCases.map((item, index) => (
-          <a href={withLocale(locale, `work/${item.slug}`)}>
-            <span class="home-hero__case-index">0{index + 1}</span>
-            <strong>{item.title}</strong>
-          </a>
-        ))}
-        </div>
-      </nav>
     </div>
+    <figure class="home-hero__photo">
+      <div class="home-hero__photo-frame"><img src="/images/profile.jpg" alt={locale === 'pt' ? 'Rafael Sant’ Anna com óculos e fones de ouvido' : 'Rafael Sant’ Anna wearing glasses and headphones'} width="960" height="950" loading="eager" fetchpriority="high" decoding="async" /></div>
+      <figcaption>{identity.name} <span aria-hidden="true">·</span> {identity.location}</figcaption>
+    </figure>
   </div>
 </section>
 
 <section id="selected-work" class="home-work shell" aria-labelledby="home-work-title">
-  <header class="home-section-heading" data-reveal>
-    <p class="eyebrow">{locale === 'pt' ? 'Trabalho selecionado' : 'Selected work'}</p>
-    <div><h2 id="home-work-title">{locale === 'pt' ? 'Sistemas reais, feitos para o trabalho real.' : 'Real systems, built for real work.'}</h2><p>{locale === 'pt' ? 'Produtos e plataformas em que regras, integrações e confiabilidade fazem diferença todos os dias.' : 'Products and platforms where rules, integrations, and reliability matter every day.'}</p></div>
+  <header class="home-work__heading" data-reveal>
+    <div><p class="eyebrow">{locale === 'pt' ? 'Trabalho real' : 'Real work'}</p><h2 id="home-work-title">{locale === 'pt' ? 'Projetos selecionados' : 'Selected projects'}</h2></div>
+    <p>{locale === 'pt' ? 'Produtos e plataformas em que regras, integrações e confiabilidade fazem diferença.' : 'Products and platforms where rules, integrations, and reliability matter.'}</p>
   </header>
   <div class="home-case-grid">
     {featuredCases.map((item, index) => (
