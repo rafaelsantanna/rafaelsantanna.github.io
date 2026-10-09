@@ -14,11 +14,11 @@ Position Rafael Sant' Anna as a senior software engineer who builds and moderniz
 
 ## Brand Personality
 
-Clear, calm, and precise. The voice is specific, commercially useful, and technically credible without posturing. The interface should read like a clean light Swiss document that presents evidence in order, not a signal room or a developer template.
+Inventive, personal, and precise. The voice is specific, commercially useful, and technically credible without posturing. The portfolio combines a restrained dark technical canvas, Rafael's own portrait treated as an interface asset, and real project evidence. A single electric lavender accent and purposeful motion make it distinctive without masking the work.
 
 ## Anti-references
 
-- A cheap copy of Ruben Marcus's black, green, terminal-inspired portfolio or portrait treatment.
+- A cheap copy of either Ruben Marcus or Christopher Gonçalves, including their green or cyan palette and exact portrait treatment.
 - Warm cream and orange palettes, which do not match Rafael's preferred visual identity.
 - Generic AI tool marketing with neon gradients, glass panels, vague claims, and empty futuristic decoration.
 - Editorial-magazine styling with display serifs, tiny mono labels, and ornamental rules.
@@ -32,7 +32,7 @@ Clear, calm, and precise. The voice is specific, commercially useful, and techni
 2. **Complexity made legible.** Use maps, flows, and precise language to show how Rafael thinks about operations and systems.
 3. **Commercial clarity.** Make availability, services, project fit, and contact routes obvious without aggressive sales tactics.
 4. **Human and machine readable.** Semantic HTML, concise facts, structured data, Markdown alternatives, and complete bilingual content are one system.
-5. **Clarity over spectacle.** Paper, ink, cobalt, type, and spacing must strengthen hierarchy and understanding while protecting performance.
+5. **Expression with purpose.** A dark technical stage, restrained motion, a personal cutout, and interactive evidence make the portfolio memorable while keeping projects and contact paths clear. Never trade accessibility or factual evidence for decoration.
 
 ## Accessibility & Inclusion
 

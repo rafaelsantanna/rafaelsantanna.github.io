@@ -9,7 +9,7 @@ const systemStages = locale === 'pt'
 ---
 
 <section class="page-hero page-hero--about shell">
-  <p class="section-index">03 / {t.nav.about.toUpperCase()}</p>
+  <p class="section-index">{t.nav.about}</p>
   <h1>{t.aboutTitle}</h1>
   <p>{t.aboutIntro}</p>
   <dl class="about-hero__facts">
@@ -33,7 +33,7 @@ const systemStages = locale === 'pt'
 
 <section class="timeline shell">
   <div class="section-heading section-heading--compact" data-reveal>
-    <p class="section-index">01 / {locale === 'pt' ? 'TRAJETÓRIA' : 'TIMELINE'}</p>
+    <p class="section-index">{locale === 'pt' ? 'Trajetória' : 'Experience'}</p>
     <h2>{locale === 'pt' ? 'Mais de uma década entregando sistemas.' : 'More than a decade shipping systems.'}</h2>
   </div>
   <ol>
@@ -45,7 +45,7 @@ const systemStages = locale === 'pt'
 
 <section class="experience-context">
   <div class="shell">
-    <p class="section-index">02 / {locale === 'pt' ? 'EXPERIÊNCIA' : 'EXPERIENCE'}</p>
+    <p class="section-index">{locale === 'pt' ? 'Experiência' : 'Selected organizations'}</p>
     <h2>{locale === 'pt' ? 'Projetos em educação, varejo, infraestrutura, logística, saúde e operações empresariais.' : 'Projects across education, retail, infrastructure, logistics, healthcare, and enterprise operations.'}</h2>
     <div class="experience-context__names">{clients.map((client) => <span>{client}</span>)}</div>
     <p class="small-meta">{locale === 'pt' ? 'Organizações citadas como contexto de projetos no currículo profissional.' : 'Organizations cited as project context in the professional CV.'}</p>
@@ -54,11 +54,11 @@ const systemStages = locale === 'pt'
 
 <section class="portrait-note shell" data-reveal>
   <figure class="portrait-note__frame">
-    <img src="/images/rafael-santanna.jpg" alt={locale === 'pt' ? 'Retrato profissional de Rafael Sant’ Anna' : 'Professional portrait of Rafael Sant’ Anna'} width="400" height="400" />
+    <img src="/images/profile.jpg" alt={locale === 'pt' ? 'Rafael Sant’ Anna usando óculos e fones de ouvido' : 'Rafael Sant’ Anna wearing glasses and headphones'} width="960" height="950" />
     <figcaption>RAFAEL / VISEU · PT</figcaption>
   </figure>
   <div>
-    <p class="section-index">03 / {locale === 'pt' ? 'PESSOA' : 'PERSON'}</p>
+    <p class="section-index">{locale === 'pt' ? 'Sobre mim' : 'About me'}</p>
     <h2>{locale === 'pt' ? 'Engenharia com contexto, responsabilidade e comunicação direta.' : 'Engineering with context, ownership, and direct communication.'}</h2>
     <p>{locale === 'pt' ? 'Trabalho próximo de produto, operações e engenharia para transformar necessidades ambíguas em decisões claras, entregas incrementais e sistemas sustentáveis.' : 'I work closely with product, operations, and engineering to turn ambiguous needs into clear decisions, incremental delivery, and maintainable systems.'}</p>
   </div>

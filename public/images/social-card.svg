@@ -1,34 +1,35 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">Rafael Sant' Anna, senior software engineer</title>
+  <desc id="desc">Dark portfolio cover with Rafael's portrait and selected software engineering focus.</desc>
   <defs>
-    <pattern id="grid" width="54" height="54" patternUnits="userSpaceOnUse">
-      <path d="M54 0H0V54" fill="none" stroke="#49d8ef" stroke-opacity=".1"/>
+    <pattern id="dots" width="19" height="19" patternUnits="userSpaceOnUse">
+      <circle cx="1" cy="1" r="1" fill="#c4a6ff" fill-opacity=".16"/>
     </pattern>
-    <clipPath id="portrait-cut"><path d="M760 86h344l56 56v410H816l-56-56z"/></clipPath>
+    <radialGradient id="halo" cx="50%" cy="48%" r="54%">
+      <stop offset="0" stop-color="#7a559c" stop-opacity=".5"/>
+      <stop offset=".62" stop-color="#3b284b" stop-opacity=".24"/>
+      <stop offset="1" stop-color="#111116" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="fade" x1="0" y1="0" x2="0" y2="1">
+      <stop offset=".7" stop-color="#111116" stop-opacity="0"/>
+      <stop offset="1" stop-color="#111116" stop-opacity=".8"/>
+    </linearGradient>
+    <clipPath id="portrait-clip"><rect x="650" y="0" width="550" height="630"/></clipPath>
   </defs>
-  <rect width="1200" height="630" fill="#07131e"/>
-  <rect width="1200" height="630" fill="url(#grid)"/>
-  <rect width="1200" height="38" fill="#18c9e5"/>
-  <text x="52" y="26" fill="#07131e" font-family="Arial, sans-serif" font-size="14" font-weight="700" letter-spacing="3">SENIOR SOFTWARE ENGINEER</text>
-  <text x="400" y="26" fill="#07131e" font-family="Arial, sans-serif" font-size="14" font-weight="700" letter-spacing="3">B2B SAAS</text>
-  <text x="642" y="26" fill="#07131e" font-family="Arial, sans-serif" font-size="14" font-weight="700" letter-spacing="3">AI AUTOMATION</text>
-  <text x="982" y="26" fill="#07131e" font-family="Arial, sans-serif" font-size="14" font-weight="700" letter-spacing="3">PORTUGAL</text>
-  <circle cx="60" cy="91" r="7" fill="#18c9e5"/>
-  <text x="82" y="100" fill="#eaf6fa" font-family="Arial, sans-serif" font-size="25" font-weight="700">rafaelsantanna<tspan fill="#18c9e5">.dev</tspan></text>
-  <text x="52" y="210" fill="#eaf6fa" font-family="Arial, sans-serif" font-size="67" font-weight="700">I build the software</text>
-  <text x="52" y="288" fill="#eaf6fa" font-family="Arial, sans-serif" font-size="67" font-weight="700">behind</text>
-  <text x="52" y="366" fill="#18c9e5" font-family="Arial, sans-serif" font-size="67" font-weight="700">complex operations.</text>
-  <text x="52" y="444" fill="#a7c4ce" font-family="Arial, sans-serif" font-size="24">B2B platforms · internal systems · AI automation</text>
-  <rect x="52" y="494" width="318" height="58" fill="#285cf3"/>
-  <text x="78" y="531" fill="#edf6fa" font-family="Arial, sans-serif" font-size="21" font-weight="700">rafaelsantanna.github.io</text>
-  <g clip-path="url(#portrait-cut)">
-    <rect x="760" y="86" width="400" height="466" fill="#285cf3"/>
-    <image href="rafael-santanna.jpg" x="735" y="66" width="455" height="520" preserveAspectRatio="xMidYMid slice" opacity=".78"/>
-    <rect x="760" y="86" width="400" height="466" fill="#285cf3" opacity=".27"/>
-    <rect x="760" y="86" width="400" height="466" fill="url(#grid)"/>
+  <rect width="1200" height="630" fill="#111116"/>
+  <rect x="640" y="0" width="560" height="630" fill="url(#halo)"/>
+  <rect x="650" y="0" width="550" height="630" fill="url(#dots)"/>
+  <line x1="48" y1="75" x2="1152" y2="75" stroke="#3b3945"/>
+  <text x="50" y="49" fill="#f2f0f6" font-family="Arial, sans-serif" font-size="26" font-weight="700" letter-spacing="-1">rafaelsantanna<tspan fill="#c4a6ff">.dev</tspan></text>
+  <text x="50" y="145" fill="#c4a6ff" font-family="Arial, sans-serif" font-size="17" font-weight="700" letter-spacing="2.2">SENIOR SOFTWARE ENGINEER</text>
+  <text x="45" y="260" fill="#f2f0f6" font-family="Arial, sans-serif" font-size="89" font-weight="700" letter-spacing="-5">Rafael</text>
+  <text x="45" y="353" fill="#f2f0f6" font-family="Arial, sans-serif" font-size="89" font-weight="700" letter-spacing="-5">Sant' Anna<tspan fill="#c4a6ff">.</tspan></text>
+  <text x="50" y="421" fill="#c4a6ff" font-family="Arial, sans-serif" font-size="26" font-weight="700">Complex systems. Clear software.</text>
+  <text x="50" y="478" fill="#cbc7d3" font-family="Arial, sans-serif" font-size="22">B2B products · Internal systems</text>
+  <line x1="48" y1="551" x2="610" y2="551" stroke="#3b3945"/>
+  <text x="50" y="584" fill="#aaa5b4" font-family="Arial, sans-serif" font-size="18">Viseu, Portugal  /  Remote</text>
+  <g clip-path="url(#portrait-clip)">
+    <image href="profile-cutout.png" x="682" y="44" width="525" height="519" preserveAspectRatio="xMidYMid meet"/>
+    <rect x="650" y="0" width="550" height="630" fill="url(#fade)"/>
   </g>
-  <path d="M760 86h344l56 56v410H816l-56-56z" fill="none" stroke="#18c9e5" stroke-opacity=".55"/>
-  <rect x="724" y="178" width="126" height="42" fill="#07131e" stroke="#18c9e5"/>
-  <text x="744" y="205" fill="#8deeff" font-family="Arial, sans-serif" font-size="15" font-weight="700" letter-spacing="2">B2B SAAS</text>
-  <rect x="1002" y="428" width="158" height="42" fill="#18c9e5"/>
-  <text x="1018" y="455" fill="#07131e" font-family="Arial, sans-serif" font-size="13" font-weight="700" letter-spacing="1">REMOTE · OPEN</text>
 </svg>

@@ -19,18 +19,15 @@ const { locale, concept } = Astro.props;
 
   <figure class="detail-visual" data-reveal>
     <img src={concept.image} alt={localize(concept.imageAlt, locale)} width={concept.imageWidth} height={concept.imageHeight} />
-    <figcaption>{localize(concept.imageAlt, locale)}</figcaption>
   </figure>
 
   <div class="detail-body shell">
     <section data-reveal>
-      <p class="section-index">01</p>
       <h2>{localize(concept.demoName, locale)}</h2>
       <p>{localize(concept.demoTagline, locale)}</p>
     </section>
-    {concept.sections[locale].map((section, index) => (
+    {concept.sections[locale].map((section) => (
       <section data-reveal>
-        <p class="section-index">{String(index + 2).padStart(2, '0')}</p>
         <h2>{section.title}</h2>
         <p>{section.text}</p>
       </section>

@@ -1,110 +1,178 @@
 ---
 import { cases, copy, identity, localize, services, withLocale, type Locale } from '@/data/content';
+
 interface Props { locale: Locale }
+
 const { locale } = Astro.props;
 const t = copy[locale];
 const featuredCases = ['edgedata', 'trinks', 'academic-operations'].map((slug) => cases.find((item) => item.slug === slug)!);
 const featuredServices = ['b2b-saas-internal-systems', 'websites-landing-pages', 'frontend-modernization'].map((slug) => services.find((service) => service.slug === slug)!);
+const decisionPaths = [
+  {
+    verb: { pt: 'CONSTRUIR', en: 'BUILD' },
+    title: { pt: 'Um produto novo para uma operação complexa.', en: 'A new product for a complex operation.' },
+    description: { pt: 'Transformar regras, permissões e dados operacionais em um sistema que a equipe possa usar todos os dias.', en: 'Turn rules, permissions, and operational data into a system a team can use every day.' },
+    serviceSlug: 'b2b-saas-internal-systems',
+    evidenceSlug: 'edgedata',
+  },
+  {
+    verb: { pt: 'EVOLUIR', en: 'EVOLVE' },
+    title: { pt: 'Uma plataforma que precisa acompanhar o negócio.', en: 'A platform that needs to keep up with the business.' },
+    description: { pt: 'Modernizar interfaces e fluxos aos poucos, preservando as regras que mantêm a operação funcionando.', en: 'Modernize interfaces and workflows incrementally while preserving the rules that keep operations running.' },
+    serviceSlug: 'frontend-modernization',
+    evidenceSlug: 'academic-operations',
+  },
+  {
+    verb: { pt: 'CONECTAR', en: 'CONNECT' },
+    title: { pt: 'Sistemas e equipes trabalhando juntos.', en: 'Systems and teams working together.' },
+    description: { pt: 'Conectar plataformas, dados e processos empresariais com integrações que cabem no fluxo de trabalho.', en: 'Connect platforms, data, and business processes through integrations that fit the way people work.' },
+    serviceSlug: 'b2b-saas-internal-systems',
+    evidenceSlug: 'corporate-learning',
+  },
+].map((path) => ({
+  ...path,
+  service: services.find((service) => service.slug === path.serviceSlug)!,
+  evidence: cases.find((item) => item.slug === path.evidenceSlug)!,
+}));
 ---
 
-<section class="hero-stage" aria-labelledby="hero-title">
-  <div class="hero shell">
-    <div class="hero__copy">
-      <p class="availability"><span aria-hidden="true"></span>{identity.availability[locale]}</p>
-      <h1 id="hero-title">
-        {locale === 'pt' ? <>Eu construo o software por trás de <span>operações complexas.</span></> : <>I build the software behind <span>complex operations.</span></>}
-      </h1>
-      <p class="hero__intro">{t.heroIntro}</p>
-      <div class="button-row">
-        <a class="button button--primary" href={withLocale(locale, 'contact')}>{t.discuss}<span aria-hidden="true">↗</span></a>
-        <a class="button button--quiet" href="#selected-work">{t.seeWork}<span aria-hidden="true">↓</span></a>
+<section class="home-hero" aria-labelledby="home-title">
+  <div class="home-hero__inner shell">
+    <div class="home-hero__copy">
+      <p class="home-hero__role">{identity.role[locale]} <span aria-hidden="true">·</span> {identity.location}</p>
+      <h1 id="home-title">Rafael<br />Sant’ Anna<span aria-hidden="true">.</span></h1>
+      <p class="home-hero__statement">{locale === 'pt' ? 'Sistemas complexos. Software claro.' : 'Complex systems. Clear software.'}</p>
+      <div class="home-hero__bottom">
+        <p>{locale === 'pt' ? 'Desenho e construo produtos B2B e sistemas internos para tornar o trabalho difícil mais simples de operar.' : 'I design and build B2B products and internal systems that make difficult work simpler to run.'}</p>
+        <div class="home-hero__actions">
+          <a class="button button--signal" href={withLocale(locale, 'contact')}>{t.discuss}<span aria-hidden="true">↗</span></a>
+          <a class="home-hero__work-link" href="#selected-work">{t.seeWork}<span aria-hidden="true">↓</span></a>
+        </div>
       </div>
-      <dl class="hero__facts" aria-label={locale === 'pt' ? 'Resumo profissional' : 'Professional summary'}>
-        <div><dt>10+</dt><dd>{locale === 'pt' ? 'anos em software' : 'years in software'}</dd></div>
-        <div><dt>6</dt><dd>{locale === 'pt' ? 'anos na Revvo' : 'years at Revvo'}</dd></div>
-        <div><dt>200+</dt><dd>{locale === 'pt' ? 'melhorias em 6 meses' : 'improvements in 6 months'}</dd></div>
-      </dl>
     </div>
-    <figure class="hero-portrait" data-reveal>
-      <div class="hero-portrait__frame">
-        <div class="hero-portrait__image-stack">
-          <img class="hero-portrait__image hero-portrait__image--base" src="/images/rafael-santanna.jpg" alt={locale === 'pt' ? 'Rafael Sant’ Anna, engenheiro de software sênior' : 'Rafael Sant’ Anna, senior software engineer'} width="400" height="400" loading="eager" fetchpriority="high" decoding="async" />
-        </div>
-      </div>
-      <figcaption>{identity.location}</figcaption>
+    <figure class="home-portrait">
+      <img src="/images/profile-cutout.png" alt={locale === 'pt' ? 'Rafael Sant’ Anna, engenheiro de software sênior' : 'Rafael Sant’ Anna, senior software engineer'} width="1261" height="1247" loading="eager" fetchpriority="high" decoding="async" />
+      <figcaption><span>{identity.name}</span><span>{identity.location}</span></figcaption>
     </figure>
+    <p class="home-hero__availability"><span aria-hidden="true"></span>{locale === 'pt' ? 'Disponível para projetos remotos' : 'Available for remote projects'}</p>
   </div>
 </section>
 
-<section class="engagement-paths shell" aria-labelledby="engagement-title" data-reveal>
-  <div class="engagement-paths__heading">
-    <p class="section-index">00 / {locale === 'pt' ? 'COMO POSSO AJUDAR' : 'HOW I CAN HELP'}</p>
-    <h2 id="engagement-title">{locale === 'pt' ? 'Duas formas de trabalhar comigo.' : 'Two ways to work with me.'}</h2>
-  </div>
-  <div class="engagement-paths__grid">
-    <article>
-      <p class="eyebrow">{locale === 'pt' ? 'Contrato PJ / reforço de equipe' : 'Remote contract / team reinforcement'}</p>
-      <h3>{locale === 'pt' ? 'Senioridade para entrar e entregar.' : 'Senior delivery that joins the work quickly.'}</h3>
-      <p>{locale === 'pt' ? 'Disponibilidade imediata, ME ativa e cobertura integral do horário comercial brasileiro.' : 'Available immediately through an active Brazilian company, with full overlap with Brazilian business hours.'}</p>
-      <div class="button-row"><a class="text-link" href={withLocale(locale, 'cv')}>{locale === 'pt' ? 'Ver currículo' : 'View CV'}<span>→</span></a><a class="text-link" href={withLocale(locale, 'contact')}>{locale === 'pt' ? 'Entrar em contato' : 'Get in touch'}<span>→</span></a></div>
-    </article>
-    <article>
-      <p class="eyebrow">{locale === 'pt' ? 'Projeto fechado / site / sistema' : 'Fixed project / website / system'}</p>
-      <h3>{locale === 'pt' ? 'Escopo claro, execução focada.' : 'Clear scope, focused execution.'}</h3>
-      <p>{locale === 'pt' ? 'Sites, landing pages, sistemas internos e modernização de produtos existentes.' : 'Websites, landing pages, internal systems, and modernization of existing products.'}</p>
-      <div class="button-row"><a class="text-link" href={withLocale(locale, 'services')}>{locale === 'pt' ? 'Ver serviços' : 'View services'}<span>→</span></a><a class="text-link" href={`${withLocale(locale, 'work')}#landing-pages`}>{locale === 'pt' ? 'Ver landing pages' : 'View landing pages'}<span>→</span></a></div>
-    </article>
-  </div>
-</section>
-
-<section id="selected-work" class="section section--work">
-  <div class="shell section-heading" data-reveal>
-    <p class="section-index">01 / {locale === 'pt' ? 'PROJETOS' : 'WORK'}</p>
-    <div><h2>{t.proofTitle}</h2><p>{t.proofIntro}</p></div>
-  </div>
-  <div class="work-ledger shell">
+<section id="selected-work" class="home-work shell" aria-labelledby="home-work-title">
+  <header class="home-section-heading" data-reveal>
+    <p class="eyebrow">{locale === 'pt' ? 'Trabalho selecionado' : 'Selected work'}</p>
+    <div><h2 id="home-work-title">{locale === 'pt' ? 'Sistemas reais, feitos para o trabalho real.' : 'Real systems, built for real work.'}</h2><p>{locale === 'pt' ? 'Produtos e plataformas em que regras, integrações e confiabilidade fazem diferença todos os dias.' : 'Products and platforms where rules, integrations, and reliability matter every day.'}</p></div>
+  </header>
+  <div class="home-case-grid">
     {featuredCases.map((item, index) => (
-      <article class="work-row" data-reveal>
-        <div class="work-row__visual">
-          <img src={item.image} alt={localize(item.imageAlt, locale)} width={item.imageWidth} height={item.imageHeight} loading="lazy" decoding="async" />
-        </div>
-        <div class="work-row__copy">
-          <p class="eyebrow">{localize(item.eyebrow, locale)}</p>
-          <h3><a href={withLocale(locale, `work/${item.slug}`)}>{item.title}</a></h3>
-          <p>{localize(item.summary, locale)}</p>
-          <ul class="tag-list" aria-label={t.technologies}>
-            {item.technologies.slice(0, 3).map((technology) => <li>{technology}</li>)}
-          </ul>
-          <span class="text-link" aria-hidden="true">{t.viewCase}<span>→</span></span>
-        </div>
+      <article class:list={['home-case', index === 0 && 'home-case--featured']} data-reveal>
+        <a class="home-case__link" href={withLocale(locale, `work/${item.slug}`)} aria-label={`${item.title}: ${t.viewCase}`}>
+          <div class="home-case__image">
+            <img src={item.image} alt={localize(item.imageAlt, locale)} width={item.imageWidth} height={item.imageHeight} loading="lazy" decoding="async" />
+            <span class="home-case__arrow" aria-hidden="true">↗</span>
+          </div>
+          <div class="home-case__caption">
+            <div><p class="eyebrow">{localize(item.eyebrow, locale)}</p><h3>{item.title}</h3></div>
+            <p>{localize(item.summary, locale)}</p>
+          </div>
+        </a>
       </article>
     ))}
   </div>
-  <div class="shell section-end"><a class="button button--outline" href={withLocale(locale, 'work')}>{t.nav.work}<span aria-hidden="true">→</span></a></div>
+  <div class="home-work__more"><a class="text-link" href={withLocale(locale, 'work')}>{locale === 'pt' ? 'Ver todos os projetos' : 'See all projects'}<span aria-hidden="true">↗</span></a></div>
 </section>
 
-<section class="section services-field">
-  <div class="shell section-heading section-heading--dark" data-reveal>
-    <p class="section-index">02 / {locale === 'pt' ? 'SERVIÇOS' : 'SERVICES'}</p>
-    <div><h2>{t.servicesTitle}</h2><p>{t.servicesIntro}</p></div>
-  </div>
-  <div class="shell service-lines">
-    {featuredServices.map((service) => (
-      <a class="service-line" href={withLocale(locale, `services/${service.slug}`)} data-reveal>
-        <span class="service-line__index">{service.index}</span>
-        <span class="service-line__main"><strong>{localize(service.title, locale)}</strong><small>{localize(service.summary, locale)}</small></span>
-        <span class="service-line__arrow" aria-hidden="true">↗</span>
-      </a>
+<section class="home-decision shell" aria-labelledby="home-decision-title">
+  <header class="home-section-heading" data-reveal>
+    <p class="eyebrow">{locale === 'pt' ? 'Por onde começar' : 'Find a starting point'}</p>
+    <div><h2 id="home-decision-title">{locale === 'pt' ? 'O que precisa mudar?' : 'What needs to change?'}</h2><p>{locale === 'pt' ? 'Escolha o desafio mais próximo do seu. Cada caminho leva a um serviço e a um exemplo real.' : 'Choose the challenge closest to yours. Each path leads to a service and a real example.'}</p></div>
+  </header>
+  <div class="home-decision__choices">
+    {decisionPaths.map((path, index) => (
+      <details class="home-decision__option" name="home-decision-path" open={index === 0} data-reveal>
+        <summary>
+          <span class="home-decision__index">{String(index + 1).padStart(2, '0')} <span aria-hidden="true">/</span></span>
+          <span class="home-decision__verb">{localize(path.verb, locale)}</span>
+          <span class="home-decision__toggle" aria-hidden="true"></span>
+        </summary>
+        <div class="home-decision__panel">
+          <div class="home-decision__copy">
+            <p class="eyebrow">{localize(path.service.title, locale)}</p>
+            <h3>{localize(path.title, locale)}</h3>
+            <p>{localize(path.description, locale)}</p>
+            <a class="text-link" href={withLocale(locale, `services/${path.service.slug}`)}>{locale === 'pt' ? 'Ver serviço' : 'Explore the service'}<span aria-hidden="true">↗</span></a>
+          </div>
+          <a class="home-decision__evidence" href={withLocale(locale, `work/${path.evidence.slug}`)} aria-label={`${path.evidence.title}: ${t.viewCase}`}>
+            <img src={path.evidence.image} alt={localize(path.evidence.imageAlt, locale)} width={path.evidence.imageWidth} height={path.evidence.imageHeight} loading="lazy" decoding="async" />
+            <span>{locale === 'pt' ? 'Caso relacionado' : 'Related case'}<strong>{path.evidence.title}</strong><b aria-hidden="true">↗</b></span>
+          </a>
+        </div>
+      </details>
     ))}
   </div>
-  <div class="shell section-end"><a class="button button--outline button--outline-dark" href={withLocale(locale, 'services')}>{t.nav.services}<span aria-hidden="true">→</span></a></div>
 </section>
 
-<section class="cta-field shell" data-reveal>
-  <p class="section-index">03 / {locale === 'pt' ? 'CONTATO' : 'CONTACT'}</p>
-  <div>
-    <h2>{locale === 'pt' ? 'Qual operação precisa ficar mais clara?' : 'Which operation needs to become clearer?'}</h2>
-    <p>{locale === 'pt' ? 'Descreva o sistema, a restrição ou o fluxo que você precisa melhorar.' : 'Describe the system, constraint, or workflow you need to improve.'}</p>
+<section class="home-note" aria-labelledby="home-note-title" data-reveal>
+  <div class="home-note__inner shell">
+    <p class="home-note__mark" aria-hidden="true">RS</p>
+    <div class="home-note__copy">
+      <p class="eyebrow">{locale === 'pt' ? 'Como penso' : 'How I think'}</p>
+      <h2 id="home-note-title">{locale === 'pt' ? 'A melhor solução começa entendendo o trabalho.' : 'The best solution starts with understanding the work.'}</h2>
+      <p>{locale === 'pt' ? 'Há mais de uma década construo software. Foram seis anos na Revvo, trabalhando perto de produto, operação e equipes que dependem de sistemas confiáveis.' : 'I’ve spent more than a decade building software, including six years at Revvo, working close to product, operations, and teams that depend on reliable systems.'}</p>
+      <a class="text-link" href={withLocale(locale, 'about')}>{locale === 'pt' ? 'Conheça minha trajetória' : 'More about my approach'}<span aria-hidden="true">↗</span></a>
+    </div>
+    <p class="home-note__years"><strong>10+</strong><span>{locale === 'pt' ? 'anos construindo software' : 'years building software'}</span><strong>6</strong><span>{locale === 'pt' ? 'anos na Revvo' : 'years at Revvo'}</span></p>
   </div>
-  <a class="button button--signal" href={withLocale(locale, 'contact')}>{t.discuss}<span aria-hidden="true">↗</span></a>
+</section>
+
+<section class="home-services shell" aria-labelledby="home-services-title">
+  <header class="home-section-heading" data-reveal>
+    <p class="eyebrow">{locale === 'pt' ? 'Onde posso ajudar' : 'Where I can help'}</p>
+    <div><h2 id="home-services-title">{locale === 'pt' ? 'Do primeiro desenho à próxima versão.' : 'From the first sketch to the next release.'}</h2><p>{locale === 'pt' ? 'Um caminho claro para construir, melhorar ou conectar seus sistemas.' : 'A clear path to build, improve, or connect your systems.'}</p></div>
+  </header>
+  <div class="home-service-list">
+    {featuredServices.map((service) => (
+      <details class="home-service" data-reveal>
+        <summary>
+          <span class="home-service__index">{service.index}</span>
+          <span class="home-service__title">{localize(service.title, locale)}</span>
+          <span class="home-service__toggle" aria-hidden="true"></span>
+        </summary>
+        <div class="home-service__detail">
+          <p>{localize(service.summary, locale)}</p>
+          <a class="text-link" href={withLocale(locale, `services/${service.slug}`)}>{locale === 'pt' ? 'Explorar este serviço' : 'Explore this service'}<span aria-hidden="true">↗</span></a>
+        </div>
+      </details>
+    ))}
+  </div>
+  <a class="home-services__all" href={withLocale(locale, 'services')}>{locale === 'pt' ? 'Todos os serviços' : 'All services'}<span aria-hidden="true">↗</span></a>
+</section>
+
+<section class="home-engagement shell" aria-labelledby="home-engagement-title" data-reveal>
+  <header><p class="eyebrow">{locale === 'pt' ? 'Duas formas de trabalhar' : 'Two ways to work together'}</p><h2 id="home-engagement-title">{locale === 'pt' ? 'O formato que combina com o desafio.' : 'A format that fits the challenge.'}</h2></header>
+  <div class="home-engagement__options">
+    <article>
+      <p class="home-engagement__kicker">{locale === 'pt' ? 'Equipe' : 'Team'}</p>
+      <h3>{locale === 'pt' ? 'Senioridade para somar ao time.' : 'Senior experience for your team.'}</h3>
+      <p>{locale === 'pt' ? 'Disponibilidade imediata para contratos PJ remotos, com cobertura integral do horário comercial brasileiro.' : 'Available immediately for remote PJ contracts, with full overlap with Brazilian business hours.'}</p>
+      <a class="text-link" href={withLocale(locale, 'cv')}>{locale === 'pt' ? 'Ver currículo' : 'View CV'}<span aria-hidden="true">↗</span></a>
+    </article>
+    <article>
+      <p class="home-engagement__kicker">{locale === 'pt' ? 'Projeto' : 'Project'}</p>
+      <h3>{locale === 'pt' ? 'Escopo claro, execução focada.' : 'Clear scope, focused delivery.'}</h3>
+      <p>{locale === 'pt' ? 'Sites, sistemas internos e modernização de produtos existentes, do diagnóstico à entrega.' : 'Websites, internal systems, and product modernization, from discovery through delivery.'}</p>
+      <a class="text-link" href={withLocale(locale, 'services')}>{locale === 'pt' ? 'Explorar serviços' : 'Explore services'}<span aria-hidden="true">↗</span></a>
+    </article>
+  </div>
+</section>
+
+<section class="home-contact" aria-labelledby="home-contact-title" data-reveal>
+  <div class="home-contact__inner shell">
+    <p class="eyebrow">{locale === 'pt' ? 'Vamos conversar' : 'Start a conversation'}</p>
+    <h2 id="home-contact-title">{locale === 'pt' ? 'Qual parte do seu trabalho merece ficar mais simples?' : 'What part of your work deserves to feel simpler?'}</h2>
+    <div class="home-contact__bottom">
+      <p>{locale === 'pt' ? 'Conte o que está difícil, lento ou pronto para evoluir.' : 'Tell me what feels difficult, slow, or ready to move forward.'}</p>
+      <a class="button button--signal" href={withLocale(locale, 'contact')}>{t.discuss}<span aria-hidden="true">↗</span></a>
+    </div>
+  </div>
 </section>

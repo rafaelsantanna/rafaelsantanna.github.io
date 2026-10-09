@@ -7,20 +7,20 @@ const t = copy[locale];
 
 <section class:list={['page-hero', `page-hero--${type}`, 'shell']}>
   <div class="listing-hero__copy">
-    <p class="section-index">{type === 'work' ? `01 / ${locale === 'pt' ? 'PROJETOS' : 'WORK'}` : `02 / ${locale === 'pt' ? 'SERVIÇOS' : 'SERVICES'}`}</p>
-    <h1>{type === 'work' ? t.workTitle : t.servicesPageTitle}</h1>
+    <p class="section-index">{type === 'work' ? (locale === 'pt' ? 'Projetos' : 'Selected work') : (locale === 'pt' ? 'Serviços' : 'Services')}</p>
+    <h1>{type === 'work' ? t.workTitle : (locale === 'pt' ? 'Da ideia ao software.' : 'From idea to software.')}</h1>
     <p>{type === 'work' ? t.workIntro : t.servicesPageIntro}</p>
   </div>
   {type === 'work' ? (
     <figure class="listing-hero__preview">
       <img src={cases[0].image} alt={localize(cases[0].imageAlt, locale)} width={cases[0].imageWidth} height={cases[0].imageHeight} />
-      <figcaption>{locale === 'pt' ? 'PROVA EM DESTAQUE / EDGEDATA' : 'FEATURED EVIDENCE / EDGEDATA'}</figcaption>
+      <figcaption>{locale === 'pt' ? 'Projeto em destaque: EdgeData' : 'Featured project: EdgeData'}</figcaption>
     </figure>
   ) : (
     <ul class="listing-hero__principles" aria-label={locale === 'pt' ? 'Princípios de entrega' : 'Delivery principles'}>
-      <li><span>01</span>{locale === 'pt' ? 'Problema real' : 'Real problem'}</li>
-      <li><span>02</span>{locale === 'pt' ? 'Entrega focada' : 'Focused delivery'}</li>
-      <li><span>03</span>{locale === 'pt' ? 'Evidência relacionada' : 'Related evidence'}</li>
+      <li>{locale === 'pt' ? 'Problema real' : 'Real problem'}</li>
+      <li>{locale === 'pt' ? 'Entrega focada' : 'Focused delivery'}</li>
+      <li>{locale === 'pt' ? 'Evidência relacionada' : 'Related evidence'}</li>
     </ul>
   )}
 </section>
@@ -28,9 +28,8 @@ const t = copy[locale];
 {type === 'work' ? (
   <>
     <section class="case-index shell" aria-label={t.workTitle}>
-      {cases.map((item, index) => (
+      {cases.map((item) => (
         <article class="case-index__item" data-reveal>
-          <div class="case-index__number">{String(index + 1).padStart(2, '0')}</div>
           <div class="case-index__image"><img src={item.image} alt={localize(item.imageAlt, locale)} width={item.imageWidth} height={item.imageHeight} loading="lazy" decoding="async" /></div>
           <div class="case-index__copy">
             <p class="eyebrow">{localize(item.eyebrow, locale)}</p>
@@ -43,13 +42,12 @@ const t = copy[locale];
     </section>
     <section id="landing-pages" class="concept-index shell" aria-labelledby="landing-pages-title">
       <div class="section-heading section-heading--compact" data-reveal>
-        <p class="section-index">+ / LANDING PAGES</p>
+        <p class="section-index">Landing pages</p>
         <div><h2 id="landing-pages-title">{locale === 'pt' ? 'Landing pages por segmento' : 'Landing pages by industry'}</h2><p>{locale === 'pt' ? 'Páginas autorais que mostram como transformar serviços, diferenciais e contato em uma jornada comercial clara.' : 'Authorial pages showing how to turn services, differentiators, and contact into a clear commercial journey.'}</p></div>
       </div>
       <div class="case-index">
-        {concepts.map((concept, index) => (
+        {concepts.map((concept) => (
           <article class="case-index__item" data-reveal>
-            <div class="case-index__number">{String(index + 1).padStart(2, '0')}</div>
             <div class="case-index__image"><img src={concept.image} alt={localize(concept.imageAlt, locale)} width={concept.imageWidth} height={concept.imageHeight} loading="lazy" decoding="async" /></div>
             <div class="case-index__copy">
               <p class="eyebrow">{localize(concept.category, locale)}</p>
@@ -64,7 +62,7 @@ const t = copy[locale];
     </section>
     <section class="selected-notes shell">
       <div class="section-heading section-heading--compact" data-reveal>
-        <p class="section-index">+ / {locale === 'pt' ? 'OUTROS' : 'MORE'}</p>
+        <p class="section-index">{locale === 'pt' ? 'Outros projetos' : 'More projects'}</p>
         <h2>{locale === 'pt' ? 'Outros projetos selecionados' : 'Additional selected projects'}</h2>
       </div>
       <div class="selected-notes__list">
@@ -82,7 +80,6 @@ const t = copy[locale];
   <section class="service-index shell" aria-label={t.nav.services}>
     {services.map((service) => (
       <article class="service-index__item" data-reveal>
-        <span class="service-index__number">{service.index}</span>
         <div>
           <h2><a href={withLocale(locale, `services/${service.slug}`)}>{localize(service.title, locale)}</a></h2>
           <p>{localize(service.summary, locale)}</p>

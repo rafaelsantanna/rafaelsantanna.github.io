@@ -23,8 +23,8 @@
    Do instead: use each case image and localized alt on case routes; use the 1200×630 raster card on pages without specific visual evidence.
 
 ## User Directives
-1. **[2026-08-16] Simplify Operational Noir without erasing it**
-   Do instead: lead with B2B systems and platform modernization; keep navy, cyan, typography, grid, and one portrait scan while removing duplicated status, surveillance motifs, and decorative effects that compete with proof.
+1. **[2026-10-09] Keep the portfolio personal and visually expressive**
+   Do instead: use the dark technical direction described in `DESIGN.md`, the user's original portrait and real project imagery, with purposeful native motion. Chris and Ruben are quality references, not templates to copy; the cobalt slab from the first redesign was rejected.
 2. **[2026-08-10] Impeccable is mandatory from design through final QA**
    Do instead: maintain PRODUCT.md and DESIGN.md, then run responsive, accessibility, critique, audit, and polish passes.
 3. **[2026-08-10] English is canonical and Portuguese uses pt-BR**

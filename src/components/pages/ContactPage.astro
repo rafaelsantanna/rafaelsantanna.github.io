@@ -15,23 +15,20 @@ const whatsappText = encodeURIComponent(locale === 'pt' ? 'Olá Rafael, gostaria
   </div>
   <div class="contact-routes">
     <a href={`mailto:${identity.email}?subject=${emailSubject}`}>
-      <span class="contact-routes__index">01</span>
       <span><strong>{t.email}</strong><small>{identity.email}</small></span>
       <b aria-hidden="true">↗</b>
     </a>
     <a href={`https://wa.me/${identity.phoneE164}?text=${whatsappText}`} rel="noreferrer">
-      <span class="contact-routes__index">02</span>
       <span><strong>{t.whatsapp}</strong><small>{identity.phoneDisplay}</small></span>
       <b aria-hidden="true">↗</b>
     </a>
     <a href={identity.linkedin} rel="me noreferrer">
-      <span class="contact-routes__index">03</span>
       <span><strong>LinkedIn</strong><small>/in/devrafaelsantanna</small></span>
       <b aria-hidden="true">↗</b>
     </a>
   </div>
   <aside class="contact-brief" data-reveal>
-    <p class="section-index">{locale === 'pt' ? 'UM BOM PRIMEIRO CONTATO' : 'A USEFUL FIRST MESSAGE'}</p>
+    <p class="section-index">{locale === 'pt' ? 'O que incluir na mensagem' : 'What to include in your message'}</p>
     <ul>
       <li>{locale === 'pt' ? 'O problema operacional ou objetivo do produto.' : 'The operational problem or product goal.'}</li>
       <li>{locale === 'pt' ? 'Quem utilizará o sistema e em qual contexto.' : 'Who will use the system and in what context.'}</li>
@@ -44,31 +41,42 @@ const whatsappText = encodeURIComponent(locale === 'pt' ? 'Olá Rafael, gostaria
       <button type="button" data-copy-value={identity.email} data-copy-label={locale === 'pt' ? 'Email copiado.' : 'Email copied.'}>{locale === 'pt' ? 'Copiar email' : 'Copy email'}</button>
       <button type="button" data-copy-value={identity.phoneDisplay} data-copy-label={locale === 'pt' ? 'Telefone copiado.' : 'Phone copied.'}>{locale === 'pt' ? 'Copiar telefone' : 'Copy phone'}</button>
     </div>
-    <p class="contact-copy-tools__status" aria-live="polite"></p>
+    <p class="contact-copy-tools__status" aria-live="polite" role="status" data-copy-error={locale === 'pt' ? 'Não foi possível copiar. Selecione e copie o contato manualmente.' : 'Could not copy. Select and copy the contact manually.'}></p>
   </div>
 </section>
 
 <script>
-  const status = document.querySelector('.contact-copy-tools__status');
+  const status = document.querySelector<HTMLElement>('.contact-copy-tools__status');
   const copyFallback = (value: string) => {
     const field = document.createElement('textarea');
     field.value = value;
     field.style.position = 'fixed';
     field.style.opacity = '0';
     document.body.append(field);
-    field.select();
-    document.execCommand('copy');
-    field.remove();
+    try {
+      field.select();
+      return document.execCommand('copy');
+    } finally {
+      field.remove();
+    }
   };
   document.querySelectorAll<HTMLButtonElement>('[data-copy-value]').forEach((button) => {
     button.addEventListener('click', async () => {
       const value = button.dataset.copyValue ?? '';
+      let copied = false;
       try {
         await navigator.clipboard.writeText(value);
+        copied = true;
       } catch {
-        copyFallback(value);
+        try {
+          copied = copyFallback(value);
+        } catch {
+          copied = false;
+        }
       }
-      if (status) status.textContent = button.dataset.copyLabel ?? '';
+      if (status) {
+        status.textContent = copied ? button.dataset.copyLabel ?? '' : status.dataset.copyError ?? '';
+      }
     });
   });
 </script>

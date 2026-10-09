@@ -1,17 +1,18 @@
 :root {
-  --paper: oklch(98.5% 0.004 250);
-  --paper-soft: oklch(96% 0.006 250);
-  --paper-strong: oklch(92% 0.01 250);
-  --ink: oklch(22% 0.02 260);
-  --ink-soft: oklch(40% 0.025 260);
-  --muted: oklch(52% 0.03 260);
-  --cobalt: oklch(50% 0.18 260);
-  --cobalt-deep: oklch(36% 0.15 260);
-  --cobalt-light: oklch(78% 0.08 260);
-  --signal: oklch(50% 0.18 260);
-  --signal-light: oklch(78% 0.08 260);
-  --line: oklch(88% 0.01 250);
-  --on-color: oklch(98.5% 0.004 250);
+  color-scheme: dark;
+  --paper: #111116;
+  --paper-soft: #191920;
+  --paper-strong: #24242d;
+  --ink: #f2f0f6;
+  --ink-soft: #cbc7d3;
+  --muted: #aaa5b4;
+  --cobalt: #c4a6ff;
+  --cobalt-deep: #d2bcff;
+  --cobalt-light: #e0d0ff;
+  --signal: #c4a6ff;
+  --signal-light: #e0d0ff;
+  --line: #3b3945;
+  --on-color: #17131e;
   --font-display: 'Geologica', 'Arial Narrow', sans-serif;
   --font-body: 'Atkinson Hyperlegible Next', Verdana, sans-serif;
   --step--1: 0.875rem;
@@ -28,13 +29,13 @@
   --space-5: 2rem;
   --space-6: clamp(2.5rem, 5vw, 5rem);
   --space-7: clamp(4.5rem, 9vw, 9rem);
-  --radius-sm: 0.45rem;
-  --radius-md: 0.85rem;
-  --radius-lg: 1.6rem;
+  --radius-sm: 0.2rem;
+  --radius-md: 0.35rem;
+  --radius-lg: 0.65rem;
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --duration-fast: 160ms;
   --duration-medium: 320ms;
-  --shell: min(92vw, 92rem);
+  --shell: min(90vw, 92rem);
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -43,7 +44,7 @@ html {
   scroll-behavior: smooth;
   background: var(--paper);
   color: var(--ink);
-  color-scheme: light;
+  color-scheme: dark;
   font-family: var(--font-body);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -52,7 +53,7 @@ html {
 body {
   margin: 0;
   min-width: 0;
-  overflow-x: hidden;
+  overflow-x: clip;
   background: var(--paper);
   font-size: var(--step-0);
   line-height: 1.62;
@@ -66,7 +67,7 @@ h1, h2, h3 {
   font-family: var(--font-display);
   font-weight: 650;
   line-height: 1.02;
-  letter-spacing: -0.045em;
+  letter-spacing: -0.055em;
   text-wrap: balance;
 }
 
@@ -84,10 +85,10 @@ button, a { -webkit-tap-highlight-color: transparent; }
   outline-offset: 4px;
 }
 
-::selection { background: var(--cobalt); color: var(--paper); }
+::selection { background: var(--cobalt); color: var(--on-color); }
 
 .shell { width: var(--shell); margin-inline: auto; }
-.section { padding-block: var(--space-7); }
+.section { padding-block: clamp(6rem, 11vw, 10rem); }
 .section-index,
 .eyebrow,
 .small-meta,
@@ -96,14 +97,14 @@ button, a { -webkit-tap-highlight-color: transparent; }
   font-family: var(--font-display);
   font-size: var(--step--1);
   font-weight: 620;
-  letter-spacing: 0.09em;
+  letter-spacing: 0.065em;
   line-height: 1.25;
   text-transform: uppercase;
 }
 
-.section-index { color: var(--cobalt); }
+.section-index { color: var(--cobalt); letter-spacing: 0.01em; text-transform: none; }
 .eyebrow { color: var(--cobalt); }
-.small-meta { color: var(--muted); letter-spacing: 0.04em; text-transform: none; }
+.small-meta { color: var(--muted); letter-spacing: 0.025em; text-transform: none; }
 
 .skip-link {
   position: fixed;
@@ -112,7 +113,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
   z-index: 100;
   padding: 0.75rem 1rem;
   background: var(--ink);
-  color: var(--paper);
+  color: var(--on-color);
   font-weight: 700;
   transform: translateY(-150%);
   transition: transform var(--duration-fast) var(--ease-out);
@@ -121,14 +122,16 @@ button, a { -webkit-tap-highlight-color: transparent; }
 
 .js [data-reveal] {
   opacity: 0;
-  transition: opacity 400ms var(--ease-out);
+  transform: translateY(1rem);
+  transition: opacity 650ms var(--ease-out), transform 650ms var(--ease-out);
 }
-.js [data-reveal][data-visible='true'] { opacity: 1; }
+.js [data-reveal][data-visible='true'], .js [data-reveal]:focus-within { opacity: 1; transform: none; }
+.js [data-reveal]:focus-within { transition: none; }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
-  .js [data-reveal] { opacity: 1; }
+  .js [data-reveal] { opacity: 1; transform: none; }
 }
 
 @media (forced-colors: active) {

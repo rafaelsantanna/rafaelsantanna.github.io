@@ -10,7 +10,7 @@ const evidence = service.evidence.map((slug) => cases.find((item) => item.slug =
   <header class="detail-hero detail-hero--service shell">
     <a class="back-link" href={withLocale(locale, 'services')}><span aria-hidden="true">←</span>{t.backServices}</a>
     <div class="detail-hero__heading">
-      <div><p class="eyebrow">{service.index} / {t.nav.services}</p><h1>{localize(service.title, locale)}</h1></div>
+      <div><p class="eyebrow">{t.nav.services}</p><h1>{localize(service.title, locale)}</h1></div>
     </div>
     <p class="detail-hero__summary">{localize(service.summary, locale)}</p>
     <div class="service-hero__routes">

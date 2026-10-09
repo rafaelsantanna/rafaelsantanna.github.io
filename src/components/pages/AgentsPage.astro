@@ -6,7 +6,7 @@ const t = copy[locale];
 ---
 
 <section class="page-hero agent-hero shell">
-  <p class="section-index">05 / {locale === 'pt' ? 'PRONTO PARA AGENTES' : 'AGENT READY'}</p>
+  <p class="section-index">{locale === 'pt' ? 'Informações para agentes' : 'Information for agents'}</p>
   <h1>{t.agentTitle}</h1>
   <p>{t.agentIntro}</p>
   <dl class="agent-hero__facts">
@@ -19,22 +19,22 @@ const t = copy[locale];
 
 <div class="agent-grid shell">
   <section data-reveal>
-    <p class="section-index">01 / {locale === 'pt' ? 'CAPACIDADES' : 'CAPABILITIES'}</p>
+    <p class="section-index">{locale === 'pt' ? 'Serviços' : 'Services'}</p>
     <ul class="agent-links">{services.map((service) => <li><a href={`/${locale === 'pt' ? 'pt/' : ''}services/${service.slug}/`}>{localize(service.title, locale)}</a></li>)}</ul>
   </section>
   <section data-reveal>
-    <p class="section-index">02 / {locale === 'pt' ? 'EVIDÊNCIAS' : 'EVIDENCE'}</p>
+    <p class="section-index">{locale === 'pt' ? 'Projetos' : 'Projects'}</p>
     <ul class="agent-links">{cases.map((item) => <li><a href={`/${locale === 'pt' ? 'pt/' : ''}work/${item.slug}/`}>{item.title}</a></li>)}</ul>
   </section>
   <section data-reveal>
-    <p class="section-index">03 / {locale === 'pt' ? 'CONTATO' : 'CONTACT'}</p>
+    <p class="section-index">{locale === 'pt' ? 'Contato' : 'Contact'}</p>
     <p>{locale === 'pt' ? 'Um agente pode avaliar estas informações e preparar um briefing. O envio de qualquer mensagem deve permanecer sob confirmação humana.' : 'An agent may evaluate this information and prepare a brief. Sending any message should remain under human confirmation.'}</p>
     <div class="agent-contact"><a href={`mailto:${identity.email}`}>{identity.email}</a><a href={`https://wa.me/${identity.phoneE164}`} rel="noreferrer">{identity.phoneDisplay}</a></div>
   </section>
 </div>
 
 <section class="machine-files shell" data-reveal>
-  <p class="section-index">04 / {locale === 'pt' ? 'ARQUIVOS PARA MÁQUINAS' : 'MACHINE-READABLE'}</p>
+  <p class="section-index">{locale === 'pt' ? 'Arquivos legíveis por máquina' : 'Machine-readable files'}</p>
   <h2>{locale === 'pt' ? 'Arquivos para descoberta e citação' : 'Files for discovery and citation'}</h2>
   <div>
     <a href="/llms.txt">llms.txt</a>
