@@ -121,7 +121,7 @@ const pageSchema = (() => {
 })();
 ---
 
-<BaseLayout locale={locale} title={metadata.title} description={metadata.description} routePath={routePath} image={'image' in metadata ? metadata.image : undefined} imageAlt={'imageAlt' in metadata ? metadata.imageAlt : undefined} pageSchema={pageSchema}>
+<BaseLayout locale={locale} title={metadata.title} description={metadata.description} routePath={routePath} image={'image' in metadata ? metadata.image : undefined} imageAlt={'imageAlt' in metadata ? metadata.imageAlt : undefined} pageSchema={pageSchema} showSiteChrome={kind !== 'concept'}>
   {kind === 'home' && <HomePage locale={locale} />}
   {kind === 'work' && <ListingPage locale={locale} type="work" />}
   {kind === 'services' && <ListingPage locale={locale} type="services" />}

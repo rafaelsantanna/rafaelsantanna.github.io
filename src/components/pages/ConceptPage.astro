@@ -1,41 +1,10 @@
 ---
-import { localize, withLocale, type Concept, type Locale } from '@/data/content';
+import { type Concept, type Locale } from '@/data/content';
+import CasaNeblinaDemo from '@/components/demos/CasaNeblinaDemo.astro';
+import ClimaCertaDemo from '@/components/demos/ClimaCertaDemo.astro';
+import '@/styles/demos.css';
 interface Props { locale: Locale; concept: Concept }
 const { locale, concept } = Astro.props;
 ---
 
-<article class="detail-page">
-  <header class="detail-hero shell">
-    <a class="back-link" href={`${withLocale(locale, 'work')}#landing-pages`}><span aria-hidden="true">←</span>{locale === 'pt' ? 'Voltar às landing pages' : 'Back to landing pages'}</a>
-    <p class="concept-disclaimer">{localize(concept.disclaimer, locale)}</p>
-    <div class="detail-hero__heading">
-      <div>
-        <p class="eyebrow">{localize(concept.category, locale)}</p>
-        <h1>{localize(concept.title, locale)}</h1>
-      </div>
-    </div>
-    <p class="detail-hero__summary">{localize(concept.summary, locale)}</p>
-  </header>
-
-  <figure class="detail-visual" data-reveal>
-    <img src={concept.image} alt={localize(concept.imageAlt, locale)} width={concept.imageWidth} height={concept.imageHeight} />
-  </figure>
-
-  <div class="detail-body shell">
-    <section data-reveal>
-      <h2>{localize(concept.demoName, locale)}</h2>
-      <p>{localize(concept.demoTagline, locale)}</p>
-    </section>
-    {concept.sections[locale].map((section) => (
-      <section data-reveal>
-        <h2>{section.title}</h2>
-        <p>{section.text}</p>
-      </section>
-    ))}
-  </div>
-
-  <div class="detail-actions shell">
-    <p>{locale === 'pt' ? 'Uma solução visual e comercial pronta para ser adaptada ao contexto de um negócio real.' : 'A visual and commercial solution ready to be adapted to a real business context.'}</p>
-    <a class="button button--outline" href={withLocale(locale, 'contact')}>{locale === 'pt' ? 'Solicitar algo nessa linha' : 'Request something similar'}<span aria-hidden="true">→</span></a>
-  </div>
-</article>
+{concept.theme === 'hospitality' ? <CasaNeblinaDemo locale={locale} concept={concept} /> : <ClimaCertaDemo locale={locale} concept={concept} />}

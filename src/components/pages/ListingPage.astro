@@ -42,19 +42,19 @@ const t = copy[locale];
     </section>
     <section id="landing-pages" class="concept-index shell" aria-labelledby="landing-pages-title">
       <div class="section-heading section-heading--compact" data-reveal>
-        <p class="section-index">Landing pages</p>
-        <div><h2 id="landing-pages-title">{locale === 'pt' ? 'Landing pages por segmento' : 'Landing pages by industry'}</h2><p>{locale === 'pt' ? 'Páginas autorais que mostram como transformar serviços, diferenciais e contato em uma jornada comercial clara.' : 'Authorial pages showing how to turn services, differentiators, and contact into a clear commercial journey.'}</p></div>
+        <p class="section-index">{locale === 'pt' ? 'Demonstrações' : 'Demonstrations'}</p>
+        <div><h2 id="landing-pages-title">{locale === 'pt' ? 'Demonstrações navegáveis' : 'Navigable landing-page demos'}</h2><p>{locale === 'pt' ? 'Duas experiências completas para explorar jornadas comerciais de hospedagem e serviço local. As imagens são referências visuais, não capturas das interfaces.' : 'Two complete experiences showing commercial journeys for hospitality and local services. Images are visual references, not screenshots of the interfaces.'}</p></div>
       </div>
       <div class="case-index">
         {concepts.map((concept) => (
           <article class="case-index__item" data-reveal>
-            <div class="case-index__image"><img src={concept.image} alt={localize(concept.imageAlt, locale)} width={concept.imageWidth} height={concept.imageHeight} loading="lazy" decoding="async" /></div>
+            <div class="case-index__image"><img src={concept.image.replace(/\.png$/, '.webp')} alt={localize(concept.imageAlt, locale)} width={concept.imageWidth} height={concept.imageHeight} loading="lazy" decoding="async" /></div>
             <div class="case-index__copy">
               <p class="eyebrow">{localize(concept.category, locale)}</p>
-              <h3><a href={withLocale(locale, `work/landing-pages/${concept.slug}`)}>{localize(concept.title, locale)}</a></h3>
-              <p>{localize(concept.summary, locale)}</p>
+              <h3><a href={withLocale(locale, `work/landing-pages/${concept.slug}`)}>{localize(concept.demoName, locale)}</a></h3>
+              <p>{localize(concept.demoTagline, locale)} {locale === 'pt' ? 'Uma página completa com navegação e uma jornada de planejamento local.' : 'A complete page with navigation and a local planning journey.'}</p>
               <p class="small-meta">{localize(concept.disclaimer, locale)}</p>
-              <span class="text-link" aria-hidden="true">{locale === 'pt' ? 'Ver landing page' : 'View landing page'}<span>→</span></span>
+              <span class="text-link">{locale === 'pt' ? 'Explorar demonstração' : 'Explore the demo'}<span aria-hidden="true">→</span></span>
             </div>
           </article>
         ))}
@@ -62,9 +62,10 @@ const t = copy[locale];
     </section>
     <section class="selected-notes shell">
       <div class="section-heading section-heading--compact" data-reveal>
-        <p class="section-index">{locale === 'pt' ? 'Outros projetos' : 'More projects'}</p>
-        <h2>{locale === 'pt' ? 'Outros projetos selecionados' : 'Additional selected projects'}</h2>
+        <p class="section-index">{locale === 'pt' ? 'Experiência adicional' : 'Additional experience'}</p>
+        <h2>{locale === 'pt' ? 'Experiência profissional' : 'Professional experience'}</h2>
       </div>
+      <p>{locale === 'pt' ? 'Estas experiências aparecem aqui de forma resumida. Veja a trajetória e as competências no currículo.' : 'These experiences are summarized here. Explore my career and skills in the CV.'} <a href={withLocale(locale, 'cv')}>{locale === 'pt' ? 'Consultar currículo' : 'View CV'} ↗</a></p>
       <div class="selected-notes__list">
         {selectedWork.map((item) => (
           <article data-reveal>

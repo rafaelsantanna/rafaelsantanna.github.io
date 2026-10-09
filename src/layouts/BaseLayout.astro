@@ -12,9 +12,10 @@ interface Props {
   image?: string;
   imageAlt?: string;
   pageSchema?: Record<string, unknown> | Array<Record<string, unknown>>;
+  showSiteChrome?: boolean;
 }
 
-const { locale, title, description, routePath, image = '/images/social-card.png', imageAlt, pageSchema } = Astro.props;
+const { locale, title, description, routePath, image = '/images/social-card.png', imageAlt, pageSchema, showSiteChrome = true } = Astro.props;
 const t = copy[locale];
 const path = routePath.replace(/^\/+|\/+$/g, '');
 const canonicalPath = locale === 'pt' ? `/pt/${path}${path ? '/' : ''}` : `/${path}${path ? '/' : ''}`;
@@ -108,7 +109,9 @@ const schemas = [
     <link rel="alternate" hreflang={locale === 'en' ? 'pt-BR' : 'en'} href={alternative} />
     <link rel="alternate" hreflang="x-default" href={new URL(`/${path}${path ? '/' : ''}`, Astro.site)} />
     <link rel="alternate" type="text/markdown" href={markdownPath} title={`${title} in Markdown`} />
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon-32.png?v=2" type="image/png" sizes="32x32" />
+    <link rel="icon" href="/favicon.svg?v=2" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
     <link rel="preload" href="/fonts/geologica-latin.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/fonts/atkinson-latin.woff2" as="font" type="font/woff2" crossorigin />
     <meta property="og:type" content="website" />
@@ -127,11 +130,11 @@ const schemas = [
   </head>
   <body>
     <a class="skip-link" href="#main-content">{t.skip}</a>
-    <Header locale={locale} routePath={path} />
+    {showSiteChrome && <Header locale={locale} routePath={path} />}
     <main id="main-content">
       <slot />
     </main>
-    <Footer locale={locale} />
+    {showSiteChrome && <Footer locale={locale} />}
     <script>
       const reveal = () => {
         const items = document.querySelectorAll('[data-reveal]');

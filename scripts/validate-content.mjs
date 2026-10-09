@@ -25,6 +25,8 @@ assert.ok(selectedWork.every((item) => item.title !== 'SOS Bolsas de Estudo Onli
 assert.equal(new Set(cases.map((item) => item.slug)).size, cases.length, 'Case slugs must be unique');
 assert.equal(new Set(services.map((item) => item.slug)).size, services.length, 'Service slugs must be unique');
 assert.equal(new Set(concepts.map((item) => item.slug)).size, concepts.length, 'Concept slugs must be unique');
+assert.deepEqual(concepts.map((item) => item.theme), ['hospitality', 'service'], 'Landing demos must keep distinct art directions');
+assert.deepEqual(concepts.map((item) => item.image), ['/images/concepts/pousada-boutique-hero.png', '/images/concepts/climatizacao-local-hero.png'], 'Landing demos must keep their assigned visual references');
 
 for (const item of cases) {
   assert.match(item.slug, /^[a-z0-9]+(?:-[a-z0-9]+)*$/, `Invalid case slug: ${item.slug}`);
@@ -54,11 +56,15 @@ for (const service of services) {
 for (const concept of concepts) {
   assert.match(concept.slug, /^[a-z0-9]+(?:-[a-z0-9]+)*$/, `Invalid concept slug: ${concept.slug}`);
   assert.ok(existsSync(resolve(`public${concept.image}`)), `Missing concept image: ${concept.image}`);
+  assert.ok(existsSync(resolve(`public${concept.image.replace(/\.png$/, '.webp')}`)), `Missing optimized concept image: ${concept.image}`);
   assert.ok(concept.imageWidth > 0 && concept.imageHeight > 0, `Invalid image dimensions for ${concept.slug}`);
   for (const locale of locales) {
     assert.ok(concept.title[locale]?.trim(), `Missing title.${locale} for ${concept.slug}`);
+    assert.ok(concept.demoName[locale]?.trim(), `Missing demoName.${locale} for ${concept.slug}`);
+    assert.ok(concept.demoTagline[locale]?.trim(), `Missing demoTagline.${locale} for ${concept.slug}`);
     assert.ok(concept.summary[locale]?.trim(), `Missing summary.${locale} for ${concept.slug}`);
     assert.ok(concept.sections[locale].length === 3, `Expected three sections for ${concept.slug}.${locale}`);
+    assert.ok(concept.sections[locale].every((section) => section.title.trim() && section.text.trim()), `Incomplete demo content for ${concept.slug}.${locale}`);
     assert.match(concept.disclaimer[locale], locale === 'pt' ? /demonstração autoral.*Rafael Sant' Anna.*marca ilustrativa/i : /authorial demonstration.*Rafael Sant' Anna.*illustrative brand/i);
   }
 }

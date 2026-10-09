@@ -96,6 +96,26 @@ for (const locale of ['en', 'pt']) {
     const html = readFileSync(join(dist, prefix, 'work', 'landing-pages', concept.slug, 'index.html'), 'utf8');
     assert.ok(html.includes(concept.disclaimer[locale]), `Landing demo ${locale}/${concept.slug} must show its disclosure`);
     assert.ok(html.includes(`property="og:image" content="https://rafaelsantanna.github.io${concept.image}"`), `Landing demo ${locale}/${concept.slug} must use its own Open Graph image`);
+    assert.ok(html.includes(concept.demoName[locale]), `Landing demo ${locale}/${concept.slug} must show its audience-facing brand`);
+    for (const section of concept.sections[locale]) {
+      assert.ok(html.includes(section.title) && html.includes(section.text), `Landing demo ${locale}/${concept.slug} must render its machine-readable content`);
+    }
+    assert.doesNotMatch(html, /class="site-header"|class="site-footer"/, `Landing demo ${locale}/${concept.slug} must use its own page navigation`);
+    assert.ok(html.includes('data-demo-planner'), `Landing demo ${locale}/${concept.slug} must include its local interaction`);
+    assert.doesNotMatch(html, /<form(?:\s|>)/, `Landing demo ${locale}/${concept.slug} must not offer a native submission path`);
+    assert.ok(html.includes('type="button" data-demo-update'), `Landing demo ${locale}/${concept.slug} must not submit its local planner`);
+    assert.ok(html.includes('aria-live="polite"'), `Landing demo ${locale}/${concept.slug} must announce local interaction results`);
+    assert.ok(html.includes('Back to work') || html.includes('Voltar ao trabalho'), `Landing demo ${locale}/${concept.slug} must link back to the portfolio`);
+    assert.ok(html.includes(locale === 'pt' ? 'Fale com Rafael' : 'Contact Rafael'), `Landing demo ${locale}/${concept.slug} must offer a path to Rafael`);
+    assert.ok(html.includes(`href="${locale === 'pt' ? '/work/landing-pages/' : '/pt/work/landing-pages/'}${concept.slug}/"`), `Landing demo ${locale}/${concept.slug} must offer a localized language switch`);
+    const boundary = concept.theme === 'hospitality'
+      ? (locale === 'pt' ? 'Não consulta disponibilidade nem envia informações' : 'does not check availability or send information')
+      : (locale === 'pt' ? 'não calcula capacidade, não verifica agenda e não envia seus dados' : 'does not size equipment, check a schedule, or send your details');
+    assert.ok(html.includes(boundary), `Landing demo ${locale}/${concept.slug} must explain the demo boundary`);
+    const sectionIds = concept.theme === 'hospitality'
+      ? ['casa-inicio', 'casa-estadia', 'casa-arredores', 'casa-planejar']
+      : ['clima-inicio', 'clima-servicos', 'clima-processo', 'clima-pedido'];
+    for (const id of sectionIds) assert.ok(html.includes(`id="${id}"`), `Landing demo ${locale}/${concept.slug} must include its ${id} section`);
     assert.doesNotMatch(html, /LocalBusiness|Review|AggregateRating/, `Landing demo ${locale}/${concept.slug} must not publish fictional business schema or reviews`);
   }
 }

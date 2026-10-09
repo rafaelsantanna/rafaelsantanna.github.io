@@ -21,7 +21,7 @@ The audience is product leaders, founders, technical managers, and hiring teams.
 ## Home composition
 
 1. Compact navigation with the existing brand, routes, language switch, and contact path.
-2. A genuine split hero: human name, short truthful work statement, concise explanation, contact/work links on the left; Rafael's cutout portrait in its own space on the right. No headline over the face, no large solid accent rectangle. The cutout may use subtle CSS dot or scan texture, but must remain recognizably Rafael.
+2. The approved split hero places Rafael's monochrome halftone portrait and restrained lavender particles on the left, with a concise work statement, project CTA, contact link, and three real cases on the right. The portrait remains recognizable and the text stays live and accessible.
 3. Real projects appear promptly: EdgeData carries the lead, with Trinks and the academic platform supporting it. Images must be readable and links explicit.
 4. A useful decision interface relates constructing, evolving, or connecting software to the relevant real service and evidence. All information remains available without JavaScript.
 5. A personal experience section and two clear engagement paths. Use existing verified facts only.
@@ -29,7 +29,7 @@ The audience is product leaders, founders, technical managers, and hiring teams.
 
 ## Inner pages
 
-Carry the same dark identity into work, service, case, about, CV, contact, and agent resources while preserving comfortable long-form reading. Keep all five cases and all five current services, the authorial landing-page disclosure, evidence links, complete CV, contact data, and machine-facing routes. Screenshots are real assets and must not be excessively cropped, recolored, or simulated. The About page retains the original user-supplied photograph.
+Carry the same dark identity into work, service, case, about, CV, contact, and agent resources while preserving comfortable long-form reading. Keep all five cases and all five current services, evidence links, complete CV, contact data, and machine-facing routes. Casa Neblina and Clima Certa are complete, separately art-directed landing-page demonstrations with visible authorial disclosures and local-only planning interactions; do not present their illustrative brands as clients. Screenshots are real assets and must not be excessively cropped, recolored, or simulated. The About page retains the original user-supplied photograph.
 
 ## Motion and accessibility
 
@@ -39,7 +39,7 @@ Focus states need high contrast on the dark canvas; hover cannot be the only way
 
 ## Assets and delivery
 
-- `/images/profile.jpg` is Rafael's original supplied photo. `/images/profile-cutout.png` is a transparent derived hero asset; preserve the original and use the derivative only if identity, edge quality, and performance pass inspection.
+- `/images/profile.jpg` is Rafael's original supplied photo. `/images/profile-cutout.png` remains an existing transparent derivative. `/images/hero-concept-02.png` is the user-approved halftone composition used for the home hero; CSS crops it to the portrait and particles while HTML supplies all readable text and links.
 - Preserve current case images, their claims, alt text, and provenance. Do not invent clients, metrics, products, testimonials, or outcomes.
 - Preserve English canonical pages and the Portuguese `/pt/` mirror, routes, hreflang, JSON-LD, Markdown alternatives, CV downloads, and machine-readable endpoints.
 - Use the existing Astro stack and local fonts. No dependency installation is implicit in the design request.

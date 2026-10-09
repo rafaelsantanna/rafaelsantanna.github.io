@@ -1,5 +1,6 @@
 ---
-import { cases, copy, localize, withLocale, type Locale, type Service } from '@/data/content';
+import { cases, concepts, copy, localize, withLocale, type Locale, type Service } from '@/data/content';
+import '@/styles/demos.css';
 interface Props { locale: Locale; service: Service }
 const { locale, service } = Astro.props;
 const t = copy[locale];
@@ -26,13 +27,21 @@ const evidence = service.evidence.map((slug) => cases.find((item) => item.slug =
   </header>
 
   <section class="evidence-list shell">
-    <div class="section-heading section-heading--compact" data-reveal><h2>{t.evidence}</h2></div>
+    <div class="section-heading section-heading--compact" data-reveal><h2>{service.slug === 'websites-landing-pages' ? (locale === 'pt' ? 'Trabalho entregue' : 'Delivered work') : t.evidence}</h2></div>
     {evidence.map((item) => item && (
       <a class="evidence-row" href={withLocale(locale, `work/${item.slug}`)} data-reveal>
         <span>{item.title}</span><small>{localize(item.summary, locale)}</small><b aria-hidden="true">↗</b>
       </a>
     ))}
   </section>
+
+  {service.slug === 'websites-landing-pages' && <section class="service-demos shell" aria-labelledby="service-demos-title">
+    <div class="section-heading section-heading--compact" data-reveal>
+      <p class="section-index">{locale === 'pt' ? 'Demonstrações autorais' : 'Authorial demonstrations'}</p>
+      <div><h2 id="service-demos-title">{locale === 'pt' ? 'Explore duas jornadas de página' : 'Explore two page journeys'}</h2><p>{locale === 'pt' ? 'Estas demos mostram possibilidades de estrutura e interação para segmentos diferentes. São projetos ilustrativos, separados do trabalho entregue acima.' : 'These demos show possible structures and interactions for two industries. They are illustrative projects, separate from the delivered work above.'}</p></div>
+    </div>
+    <div class="service-demos__links">{concepts.map((concept) => <a href={withLocale(locale, `work/landing-pages/${concept.slug}`)}><span><small>{localize(concept.disclaimer, locale)}</small><strong>{localize(concept.demoName, locale)}</strong><em>{localize(concept.demoTagline, locale)}</em></span><b aria-hidden="true">↗</b></a>)}</div>
+  </section>}
 
   <section class="detail-tech shell" data-reveal>
     <h2>{t.technologies}</h2>

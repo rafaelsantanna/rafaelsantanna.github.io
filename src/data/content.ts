@@ -396,7 +396,7 @@ export const services: Service[] = [
 export const concepts: Concept[] = [
   {
     slug: 'pousada-boutique',
-    title: { en: 'Boutique lodge landing page', pt: 'Landing page para pousada boutique' },
+    title: { en: 'Casa Neblina', pt: 'Casa Neblina' },
     category: { en: 'Hospitality / Direct booking', pt: 'Hospedagem / Reserva direta' },
     summary: {
       en: 'A conversion-focused bilingual experience for a small lodge that needs to present its atmosphere, stays, and reservation path beyond social media.',
@@ -407,17 +407,17 @@ export const concepts: Concept[] = [
       pt: "Demonstração autoral criada por Rafael Sant' Anna para este portfólio. Marca ilustrativa.",
     },
     demoName: { en: 'Casa Neblina', pt: 'Casa Neblina' },
-    demoTagline: { en: 'A quieter way to stay in the mountains.', pt: 'Um jeito mais tranquilo de viver a serra.' },
+    demoTagline: { en: 'Let time find another rhythm.', pt: 'O tempo encontra outro ritmo.' },
     sections: {
       en: [
-        { title: 'Stay with context', text: 'Present rooms, shared spaces, and the character of the place before asking for a reservation.' },
-        { title: 'Discover the region', text: 'Connect the stay to trails, local food, and useful planning information.' },
-        { title: 'A clear reservation path', text: 'Keep availability and direct contact visible without turning every section into a sales pitch.' },
+        { title: 'The mountains need no itinerary.', text: 'Begin with a long breakfast, choose a path through the trees, or stay close. Casa Neblina imagines a welcoming retreat shaped around the pace of its landscape.' },
+        { title: 'Spaces to simply be.', text: 'A collection of imagined spaces for resting, reading, and watching the light change.' },
+        { title: 'Paths that begin slowly.', text: 'Forest, fresh air, and small discoveries. Here, the surrounding area is an invitation, with no invented distances or required itinerary.' },
       ],
       pt: [
-        { title: 'Hospedagem com contexto', text: 'Apresente quartos, espaços comuns e a personalidade do lugar antes de pedir uma reserva.' },
-        { title: 'Descubra a região', text: 'Conecte a estadia a trilhas, gastronomia local e informações úteis de planejamento.' },
-        { title: 'Caminho claro para reservar', text: 'Mantenha disponibilidade e contato direto visíveis sem transformar toda seção em discurso de venda.' },
+        { title: 'A serra não precisa de roteiro.', text: 'Comece pelo café demorado, escolha um caminho entre as árvores ou fique por perto. A Casa Neblina é uma ideia de hospedagem acolhedora, conectada ao ritmo da paisagem.' },
+        { title: 'Espaços para estar.', text: 'Uma seleção de ambientes imaginados para descansar, ler e aproveitar a mudança da luz.' },
+        { title: 'Caminhos que começam devagar.', text: 'Floresta, ar fresco e pequenas descobertas. Nesta proposta, a região aparece como convite: sem distâncias inventadas nem roteiro obrigatório.' },
       ],
     },
     image: '/images/concepts/pousada-boutique-hero.png',
@@ -428,7 +428,7 @@ export const concepts: Concept[] = [
   },
   {
     slug: 'climatizacao-local',
-    title: { en: 'Local HVAC service landing page', pt: 'Landing page para climatização local' },
+    title: { en: 'Clima Certa', pt: 'Clima Certa' },
     category: { en: 'Local service / Quote journey', pt: 'Serviço local / Jornada de orçamento' },
     summary: {
       en: 'A direct commercial page for an HVAC business that needs to explain services, coverage, and the quote journey beyond a WhatsApp-only presence.',
@@ -439,17 +439,17 @@ export const concepts: Concept[] = [
       pt: "Demonstração autoral criada por Rafael Sant' Anna para este portfólio. Marca ilustrativa.",
     },
     demoName: { en: 'Clima Certa', pt: 'Clima Certa' },
-    demoTagline: { en: 'Comfort planned, installed, and maintained.', pt: 'Conforto planejado, instalado e mantido.' },
+    demoTagline: { en: 'Comfort starts with the right questions.', pt: 'Climatização começa com boas perguntas.' },
     sections: {
       en: [
-        { title: 'Installation', text: 'Clarify equipment selection, sizing, and installation for residential and small commercial environments.' },
-        { title: 'Maintenance', text: 'Explain preventive care and repair without technical ambiguity.' },
-        { title: 'A useful quote request', text: 'Ask for the few details needed to prepare the conversation before moving it to the public service channel.' },
+        { title: 'Installation', text: 'Consider how a space is used, its dimensions, and daily routine before discussing equipment and installation.' },
+        { title: 'Maintenance', text: 'Note what you have observed and when it happens to make an initial assessment easier.' },
+        { title: 'Service and repair', text: 'Share a model, approximate age, and behavior to start the conversation with context.' },
       ],
       pt: [
-        { title: 'Instalação', text: 'Esclareça seleção, dimensionamento e instalação de equipamentos para ambientes residenciais e pequenos comércios.' },
-        { title: 'Manutenção', text: 'Explique cuidados preventivos e reparos sem ambiguidade técnica.' },
-        { title: 'Pedido de orçamento útil', text: 'Solicite apenas os dados necessários para preparar a conversa antes de levá-la ao canal público de atendimento.' },
+        { title: 'Instalação', text: 'Considere o uso do espaço, suas dimensões e a rotina antes de conversar sobre equipamento e instalação.' },
+        { title: 'Manutenção', text: 'Organize o que observou no aparelho e quando isso acontece para facilitar uma avaliação inicial.' },
+        { title: 'Revisão e reparo', text: 'Compartilhe modelo, idade aproximada e comportamento para começar a conversa com contexto.' },
       ],
     },
     image: '/images/concepts/climatizacao-local-hero.png',

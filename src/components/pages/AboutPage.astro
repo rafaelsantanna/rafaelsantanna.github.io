@@ -1,11 +1,26 @@
 ---
-import { clients, copy, identity, timeline, type Locale } from '@/data/content';
+import { cases, clients, copy, identity, timeline, withLocale, type Locale } from '@/data/content';
 interface Props { locale: Locale }
 const { locale } = Astro.props;
 const t = copy[locale];
-const systemStages = locale === 'pt'
-  ? ['OPERAÇÃO', 'INTERFACE', 'REGRAS', 'DADOS', 'AUTOMAÇÃO', 'RESULTADO']
-  : ['OPERATION', 'INTERFACE', 'RULES', 'DATA', 'AUTOMATION', 'OUTCOME'];
+const localizeText = (text: { pt: string; en: string }, currentLocale: Locale) => text[currentLocale];
+const projectExamples = [
+  {
+    slug: 'edgedata',
+    challenge: { pt: 'Inventário, credenciais e histórico operacional espalhados por ferramentas diferentes.', en: 'Inventory, credentials, and operational history spread across separate tools.' },
+    decision: { pt: 'Reunir essas tarefas em um workspace on-premise com acesso por papéis e histórico rastreável.', en: 'Bring those tasks into an on-premise workspace with role-based access and traceable history.' },
+  },
+  {
+    slug: 'academic-operations',
+    challenge: { pt: 'Jornadas acadêmicas longas com documentos, validações condicionais e diferentes permissões.', en: 'Long academic journeys involving documents, conditional validation, and different permissions.' },
+    decision: { pt: 'Compor interfaces reutilizáveis e APIs autenticadas para manter módulos críticos consistentes.', en: 'Combine reusable interfaces and authenticated APIs to keep critical modules consistent.' },
+  },
+  {
+    slug: 'corporate-learning',
+    challenge: { pt: 'Plataformas de aprendizagem que precisam se adaptar aos dados e processos de cada organização.', en: 'Learning platforms that need to fit each organization’s data and processes.' },
+    decision: { pt: 'Conectar jornadas e relatórios a sistemas empresariais, incluindo ERP, CRM, BI e ferramentas de RH.', en: 'Connect learning journeys and reporting to enterprise systems, including ERP, CRM, BI, and HR tools.' },
+  },
+].map((example) => ({ ...example, case: cases.find((item) => item.slug === example.slug)! }));
 ---
 
 <section class="page-hero page-hero--about shell">
@@ -18,17 +33,24 @@ const systemStages = locale === 'pt'
   </dl>
 </section>
 
-<section class="about-map shell" data-reveal>
-  <div>
-    <p class="eyebrow">{identity.location}</p>
-    <h2>{locale === 'pt' ? 'Do requisito ao sistema em produção.' : 'From requirement to production system.'}</h2>
-    <p>{locale === 'pt'
-      ? 'Trabalho entre produto, frontend, backend, dados e integração. Minha especialidade não é uma tecnologia isolada, mas a capacidade de tornar regras operacionais complexas claras, testáveis e sustentáveis.'
-      : 'I work across product, frontend, backend, data, and integration. My specialty is not one isolated technology, but the ability to make complex operational rules clear, testable, and maintainable.'}</p>
-  </div>
-  <ul class="tag-list" aria-label={locale === 'pt' ? 'Etapas do sistema' : 'System stages'}>
-    {systemStages.map((stage) => <li>{stage}</li>)}
-  </ul>
+<section class="about-evidence shell" aria-labelledby="about-evidence-title">
+  <header class="about-evidence__heading" data-reveal>
+    <p class="section-index">{locale === 'pt' ? 'Trabalho em contexto' : 'Work in context'}</p>
+    <h2 id="about-evidence-title">{locale === 'pt' ? 'O desafio orienta a decisão técnica.' : 'The challenge shapes the technical decision.'}</h2>
+    <p>{locale === 'pt' ? 'Alguns exemplos de como necessidades operacionais se traduzem em sistemas e fluxos.' : 'A few examples of how operational needs translate into systems and workflows.'}</p>
+  </header>
+  <ol class="about-evidence__list">
+    {projectExamples.map((example, index) => (
+      <li class="about-evidence__item" data-reveal>
+        <span class="about-evidence__index">0{index + 1} <span aria-hidden="true">/</span> {example.case.title}</span>
+        <div class="about-evidence__columns">
+          <div><h3>{locale === 'pt' ? 'Desafio' : 'Challenge'}</h3><p>{localizeText(example.challenge, locale)}</p></div>
+          <div><h3>{locale === 'pt' ? 'Decisão' : 'Decision'}</h3><p>{localizeText(example.decision, locale)}</p></div>
+        </div>
+        <a class="text-link" href={withLocale(locale, `work/${example.case.slug}`)}>{locale === 'pt' ? 'Ler o caso' : 'Read the case'}<span aria-hidden="true">↗</span></a>
+      </li>
+    ))}
+  </ol>
 </section>
 
 <section class="timeline shell">
@@ -48,9 +70,29 @@ const systemStages = locale === 'pt'
     <p class="section-index">{locale === 'pt' ? 'Experiência' : 'Selected organizations'}</p>
     <h2>{locale === 'pt' ? 'Projetos em educação, varejo, infraestrutura, logística, saúde e operações empresariais.' : 'Projects across education, retail, infrastructure, logistics, healthcare, and enterprise operations.'}</h2>
     <div class="experience-context__names">{clients.map((client) => <span>{client}</span>)}</div>
-    <p class="small-meta">{locale === 'pt' ? 'Organizações citadas como contexto de projetos no currículo profissional.' : 'Organizations cited as project context in the professional CV.'}</p>
+    <div class="experience-context__source"><p class="small-meta">{locale === 'pt' ? 'Organizações citadas como contexto de projetos no currículo profissional.' : 'Organizations cited as project context in the professional CV.'}</p><a class="text-link" href={withLocale(locale, 'cv')}>{locale === 'pt' ? 'Ver currículo' : 'View CV'}<span aria-hidden="true">↗</span></a></div>
   </div>
 </section>
+
+<style>
+  .about-evidence { padding-block: 0 var(--space-7); }
+  .about-evidence__heading { display: grid; grid-template-columns: minmax(9rem, 0.42fr) minmax(0, 1.58fr); gap: 0.8rem var(--space-5); margin-block-end: clamp(2rem, 4vw, 3rem); }
+  .about-evidence__heading .section-index { grid-row: span 2; }
+  .about-evidence__heading h2 { max-width: 17ch; font-size: clamp(2rem, 4vw, 3.5rem); }
+  .about-evidence__heading > p:last-child { max-width: 55ch; color: var(--ink-soft); }
+  .about-evidence__list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(1rem, 2.5vw, 2rem); margin: 0; padding: 0; list-style: none; }
+  .about-evidence__item { display: grid; grid-template-rows: auto 1fr auto; gap: 1.25rem; min-width: 0; padding: 1.2rem; border: 1px solid var(--line); background: var(--paper-soft); }
+  .about-evidence__index { color: var(--cobalt); font-family: var(--font-display); font-size: 0.8rem; font-weight: 680; }
+  .about-evidence__index span { padding-inline: 0.25rem; color: var(--muted); }
+  .about-evidence__columns { display: grid; align-content: start; gap: 1rem; }
+  .about-evidence__columns h3 { margin-block-end: 0.35rem; color: var(--muted); font-family: var(--font-display); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+  .about-evidence__columns p { color: var(--ink-soft); font-size: 0.91rem; }
+  .about-evidence__item .text-link { justify-self: start; }
+  .experience-context__source { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem 1.25rem; margin-block-start: var(--space-4); }
+  .experience-context__source .small-meta { margin: 0; }
+  @media (max-width: 54rem) { .about-evidence__list { grid-template-columns: 1fr; } }
+  @media (max-width: 42rem) { .about-evidence__heading { grid-template-columns: 1fr; } .about-evidence__heading .section-index { grid-row: auto; } }
+</style>
 
 <section class="portrait-note shell" data-reveal>
   <figure class="portrait-note__frame">
