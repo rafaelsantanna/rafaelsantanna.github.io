@@ -13,7 +13,7 @@ const pt = {
   stage: {
     eyebrow: 'Protótipo de app · Equipe de campo',
     mastLine: 'Protótipo · Novelo Fibra',
-    lede: 'Turno é o app dos técnicos da Novelo Fibra, um provedor de internet fictício. Ordens de serviço, checklist e assinatura funcionam mesmo sem sinal: cada alteração fica salva no aparelho e sincroniza quando a conexão volta.',
+    lede: 'Turno é o app dos técnicos da Novelo Fibra, um provedor de internet por fibra. Ordens de serviço, checklist e assinatura funcionam mesmo sem sinal: cada alteração fica salva no aparelho e sincroniza quando a conexão volta.',
     deviceLabel: 'Protótipo do app Turno',
     controlsTitle: 'Controles da demo',
     openControls: 'Controles da demo',
@@ -216,7 +216,6 @@ const pt = {
   settings: {
     title: 'Ajustes',
     profileTitle: 'Perfil',
-    providerNote: 'A Novelo Fibra é um provedor fictício, criado para esta demonstração.',
     deviceTitle: 'Este aparelho',
     version: 'Versão do app',
     versionValue: '2.4.1 (protótipo)',
@@ -281,7 +280,7 @@ const en: Strings = {
   stage: {
     eyebrow: 'App prototype · Field team',
     mastLine: 'Prototype · Novelo Fibra',
-    lede: 'Turno is the app technicians use at Novelo Fibra, a fictional internet provider. Work orders, checklists, and signatures keep working without signal: every change is saved on the device and syncs when the connection comes back.',
+    lede: 'Turno is the app technicians use at Novelo Fibra, a fiber internet provider. Work orders, checklists, and signatures keep working without signal: every change is saved on the device and syncs when the connection comes back.',
     deviceLabel: 'Turno app prototype',
     controlsTitle: 'Demo controls',
     openControls: 'Demo controls',
@@ -484,7 +483,6 @@ const en: Strings = {
   settings: {
     title: 'Settings',
     profileTitle: 'Profile',
-    providerNote: 'Novelo Fibra is a fictional provider created for this demonstration.',
     deviceTitle: 'This device',
     version: 'App version',
     versionValue: '2.4.1 (prototype)',

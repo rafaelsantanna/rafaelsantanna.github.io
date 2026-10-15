@@ -7,7 +7,6 @@ export interface Plural {
 
 const pt = {
   brandSub: 'Base de conhecimento da Vela Norte',
-  fictional: 'Empresa e documentos fictícios',
   indexBadge: '{passages} trechos indexados',
   indexBuilt: 'Índice montado em {ms} no seu navegador',
   indexParams: 'BM25 · k1 1,2 · b 0,75',
@@ -156,7 +155,6 @@ export type UiStrings = typeof pt;
 
 const en: UiStrings = {
   brandSub: 'Vela Norte knowledge base',
-  fictional: 'Fictional company and documents',
   indexBadge: '{passages} passages indexed',
   indexBuilt: 'Index built in {ms} in your browser',
   indexParams: 'BM25 · k1 1.2 · b 0.75',

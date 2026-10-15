@@ -45,7 +45,6 @@ const t = pt
       status: 'Escolha uma opção e escreva uma observação. Nenhum dado será enviado.',
       noscript: 'O rascunho interativo precisa de JavaScript. O conteúdo da página continua disponível.',
       labels: { kind: 'Serviço', note: 'Observação', empty: 'Escolha uma opção e escreva uma observação.', ready: 'Rascunho local:' },
-      footerNote: 'Marca e dados fictícios: esta empresa não existe.',
       contact: 'Fale com Rafael',
       back: 'Voltar ao portfólio',
     }
@@ -85,7 +84,6 @@ const t = pt
       status: 'Choose an option and add a note. Nothing will be sent.',
       noscript: 'The interactive draft needs JavaScript. The rest of the page remains available.',
       labels: { kind: 'Service', note: 'Note', empty: 'Choose an option and add a note.', ready: 'Your local draft:' },
-      footerNote: 'Fictional brand and data: this company does not exist.',
       contact: 'Contact Rafael',
       back: 'Back to portfolio',
     };
@@ -199,7 +197,6 @@ const t = pt
       <span class="clima-brand__mark" aria-hidden="true">CC</span>
       <span>clima certa<small>{t.tagline}</small></span>
     </a>
-    <p>{t.footerNote}</p>
     <a href={withLocale(locale, 'contact')}>{t.contact}</a>
     <a class="demo-back" href={withLocale(locale, 'work')}>{t.back}</a>
   </footer>

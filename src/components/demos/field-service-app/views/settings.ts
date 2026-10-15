@@ -31,7 +31,6 @@ export function renderSettings(ctx: ViewContext, storedBytes: number | null): st
           <p>${esc(tech.team)}</p>
         </div>
       </div>
-      <p class="t-fine">${icon('info')}<span>${esc(ctx.s.settings.providerNote)}</span></p>
       <h3 class="t-subhead">${esc(ctx.s.settings.deviceTitle)}</h3>
       <dl class="t-rows" data-settings-rows>${settingsRows(ctx, storedBytes)}</dl>
       <div class="t-danger">

@@ -489,7 +489,6 @@
   gap: 1.5rem 3rem;
 }
 
-.cp .site-footer__note { max-width: 40rem; color: var(--ink-muted); font-size: 0.92rem; }
 .cp .site-footer__reset { display: grid; justify-items: end; gap: 0.1rem; }
 .cp .site-footer__reset p { color: var(--ink-muted); font-size: 0.82rem; }
 html:not(.js) .cp .site-footer__reset { display: none; }

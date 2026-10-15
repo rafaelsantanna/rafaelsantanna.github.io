@@ -44,7 +44,6 @@ const t = pt
       status: 'Preencha as opções para ver seu rascunho. Nenhum dado será enviado.',
       noscript: 'O rascunho interativo precisa de JavaScript. As informações da página continuam disponíveis.',
       labels: { arrival: 'Chegada', nights: 'Noites', guests: 'Pessoas', empty: 'Preencha as opções para ver seu rascunho.', invalidDate: 'Escolha uma data de hoje em diante.', ready: 'Rascunho local:' },
-      footerNote: 'Marca, hospedagem e conteúdo desta página são fictícios.',
       contact: 'Fale com Rafael',
       back: 'Voltar ao portfólio',
     }
@@ -83,7 +82,6 @@ const t = pt
       status: 'Choose a few options to see your draft. Nothing will be sent.',
       noscript: 'The interactive draft needs JavaScript. The rest of the page remains available.',
       labels: { arrival: 'Arrival', nights: 'Nights', guests: 'Guests', empty: 'Choose a few options to see your draft.', invalidDate: 'Choose today or a future date.', ready: 'Your local draft:' },
-      footerNote: 'The brand, lodging, and content on this page are fictional.',
       contact: 'Contact Rafael',
       back: 'Back to portfolio',
     };
@@ -206,7 +204,6 @@ const t = pt
       <span class="demo-brand__mark" aria-hidden="true">CN</span>
       <span>casa neblina<small>{t.tagline}</small></span>
     </a>
-    <p>{t.footerNote}</p>
     <a href={withLocale(locale, 'contact')}>{t.contact}</a>
     <a class="demo-back" href={withLocale(locale, 'work')}>{t.back}</a>
   </footer>

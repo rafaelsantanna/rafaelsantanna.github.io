@@ -8,7 +8,7 @@ const pt = {
   roles: { seller: 'Vendedor', manager: 'Gerente' },
   page: {
     module: 'Pedidos',
-    brandLine: 'Distribuidora fictícia de alimentos e bebidas',
+    brandLine: 'Distribuidora de alimentos e bebidas',
     eyebrow: 'Modernização de sistema interno',
     title: 'Mesmas regras, duas interfaces.',
     lead: 'A tela de pedidos da Ventura existe em duas versões: a de 2009, que a equipe comercial usa há anos, e a nova. As duas chamam o mesmo módulo de regras. Compare, troque o perfil e faça um pedido em cada uma.',
@@ -34,7 +34,7 @@ const pt = {
     liveMode: 'Mostrando: {mode}.',
     liveReset: 'Demonstração reiniciada com o pedido de exemplo.',
     noscript: 'Sem JavaScript, as duas versões aparecem uma abaixo da outra, com o pedido de exemplo, e não calculam. Ative o JavaScript para comparar e usar.',
-    footer: 'Ventura é uma marca fictícia. Clientes, produtos, preços e regras existem só nesta página, e nenhum pedido sai do seu navegador.',
+    footer: 'Nenhum pedido sai do seu navegador: clientes, produtos, preços e regras existem só nesta página.',
   },
   legacy: {
     appTitle: 'Ventura ERP 3.2 - Filial 001',
@@ -291,7 +291,7 @@ const en: Strings = {
   roles: { seller: 'Sales rep', manager: 'Manager' },
   page: {
     module: 'Orders',
-    brandLine: 'Fictional food and beverage distributor',
+    brandLine: 'Food and beverage distributor',
     eyebrow: 'Internal system modernization',
     title: 'Same rules, two interfaces.',
     lead: 'Ventura’s order screen exists in two versions: the 2009 one the sales team has used for years, and the new one. Both call the same rules module. Compare them, switch roles, and place an order in each.',
@@ -317,7 +317,7 @@ const en: Strings = {
     liveMode: 'Showing: {mode}.',
     liveReset: 'Demo reset to the example order.',
     noscript: 'Without JavaScript, both versions appear one below the other with the example order, and nothing is calculated. Turn on JavaScript to compare and use them.',
-    footer: 'Ventura is a fictional brand. Customers, products, prices, and rules exist only on this page, and no order ever leaves your browser.',
+    footer: 'No order ever leaves your browser: customers, products, prices, and rules exist only on this page.',
   },
   legacy: {
     appTitle: 'Ventura ERP 3.2 - Branch 001',

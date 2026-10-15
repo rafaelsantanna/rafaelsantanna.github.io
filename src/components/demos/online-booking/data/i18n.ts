@@ -113,7 +113,7 @@ const ptClient = {
   },
   ics: {
     title: '{services} na Corte & Prosa',
-    description: 'Com {barber}. Demonstração: agendamento fictício, nenhum horário foi reservado.',
+    description: 'Com {barber}. Demonstração: nenhum horário foi reservado.',
     file: 'corte-e-prosa-{day}.ics',
   },
   banner: '{when}, com {barber}',
@@ -249,7 +249,7 @@ const enClient: ClientStrings = {
   },
   ics: {
     title: '{services} at Corte & Prosa',
-    description: 'With {barber}. Demo: fictional booking, no time was reserved.',
+    description: 'With {barber}. Demo: no time was reserved.',
     file: 'corte-e-prosa-{day}.ics',
   },
   banner: '{when}, with {barber}',
@@ -299,7 +299,7 @@ const pt = {
   services: {
     eyebrow: 'Serviços',
     title: 'O cardápio da casa',
-    lede: 'Preços ilustrativos. A duração de cada serviço é o que a agenda usa para calcular os horários livres.',
+    lede: 'A duração de cada serviço é o que a agenda usa para calcular os horários livres.',
     book: 'Agendar',
     bookLabel: 'Agendar {service}',
     duration: 'Duração',
@@ -353,7 +353,6 @@ const pt = {
     scrollHint: 'Arraste para os lados para ver todos os barbeiros.',
   },
   footer: {
-    note: 'Corte & Prosa é uma barbearia fictícia, criada para demonstração. Serviços, preços, equipe e agenda são ilustrativos.',
     reset: 'Reiniciar demonstração',
     resetHint: 'Apaga o agendamento salvo neste navegador.',
   },
@@ -425,7 +424,7 @@ const en: Strings = {
   services: {
     eyebrow: 'Services',
     title: 'The house menu',
-    lede: 'Illustrative prices. The length of each service is what the schedule uses to calculate free times.',
+    lede: 'The length of each service is what the schedule uses to calculate free times.',
     book: 'Book',
     bookLabel: 'Book {service}',
     duration: 'Duration',
@@ -479,7 +478,6 @@ const en: Strings = {
     scrollHint: 'Swipe sideways to see every barber.',
   },
   footer: {
-    note: 'Corte & Prosa is a fictional barbershop created for this demonstration. Services, prices, team, and schedule are illustrative.',
     reset: 'Reset demo',
     resetHint: 'Clears the booking saved in this browser.',
   },
