@@ -21,26 +21,26 @@ export const project: DemoProject = {
   },
   highlights: {
     en: [
-      { title: 'Its own art direction', text: 'Serif typography, natural tones, and generous photography that set it apart from the portfolio itself.' },
-      { title: 'A narrative in sections', text: 'Atmosphere, spaces, surroundings, and planning, in the order a guest makes decisions.' },
+      { title: 'Its own art direction', text: 'Serif typography, forest and mist tones, and full-bleed photography, with the mist lifting as the page opens.' },
+      { title: 'What a guest needs to decide', text: 'A day at the lodge, suites with size and starting rate, surroundings, and practical rules, in the order a guest makes decisions.' },
       { title: 'A local stay planner', text: 'Arrival, nights, and guests organized into a draft, with clear validation and announced results.' },
       { title: 'Bilingual from the start', text: 'Portuguese and English versions with a language switch on every page.' },
     ],
     pt: [
-      { title: 'Direção de arte própria', text: 'Tipografia serifada, tons naturais e fotografia generosa, bem diferentes do próprio portfólio.' },
-      { title: 'Narrativa em seções', text: 'Atmosfera, espaços, arredores e planejamento, na ordem em que o hóspede toma decisões.' },
+      { title: 'Direção de arte própria', text: 'Tipografia serifada, tons de mata e névoa e fotografia em tela cheia, com a névoa se abrindo quando a página carrega.' },
+      { title: 'O que o hóspede precisa para decidir', text: 'Um dia na pousada, suítes com tamanho e valor de partida, arredores e regras práticas, na ordem em que o hóspede decide.' },
       { title: 'Planejador de estadia local', text: 'Chegada, noites e hóspedes organizados em um rascunho, com validação clara e resultado anunciado.' },
       { title: 'Bilíngue desde o início', text: 'Versões em português e inglês, com troca de idioma em todas as páginas.' },
     ],
   },
   decisions: {
     en: [
-      { title: 'Optimized imagery', text: 'The hero photograph is served as WebP with explicit dimensions to avoid layout shifts.' },
+      { title: 'Optimized imagery', text: 'Every photograph is served as WebP with explicit dimensions to avoid layout shifts.' },
       { title: 'No fake submission', text: 'The planner never pretends to book. It explains what it does and announces its result to screen readers.' },
       { title: 'Content that works without JavaScript', text: 'Everything except the planner is static HTML, readable by people, search engines, and agents.' },
     ],
     pt: [
-      { title: 'Imagem otimizada', text: 'A fotografia principal é servida em WebP com dimensões explícitas para evitar saltos de layout.' },
+      { title: 'Imagens otimizadas', text: 'Todas as fotografias são servidas em WebP com dimensões explícitas para evitar saltos de layout.' },
       { title: 'Sem envio de mentira', text: 'O planejador nunca finge reservar. Ele explica o que faz e anuncia o resultado para leitores de tela.' },
       { title: 'Conteúdo que funciona sem JavaScript', text: 'Tudo, exceto o planejador, é HTML estático, legível por pessoas, buscadores e agentes.' },
     ],
@@ -52,7 +52,7 @@ export const project: DemoProject = {
     pt: 'O planejador só organiza os dados no seu dispositivo durante a visita. Não consulta disponibilidade nem envia informações.',
   },
   disclaimer: concept.disclaimer,
-  palette: { base: '#F4F1E9', ink: '#2D332B', accent: '#7E8C78' },
+  palette: { base: '#141D18', ink: '#DFE5E1', accent: '#E8B76F' },
   device: 'desktop',
   preview: previewFor(concept.slug, {
     en: 'Casa Neblina landing page with a misty mountain lodge photograph and the headline about slowing down',

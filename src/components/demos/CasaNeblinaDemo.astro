@@ -11,77 +11,149 @@ const [intro, spaces, surroundings] = concept.sections[locale];
 const t = pt
   ? {
       nav: 'Navegação Casa Neblina',
-      tagline: 'refúgio de montanha',
+      tagline: 'pousada na serra',
       house: 'A casa',
+      suites: 'Suítes',
       around: 'Arredores',
-      plan: 'Planeje',
-      planStay: 'Planejar estadia',
-      heroKicker: 'Serra · floresta · silêncio',
-      heroLede: 'Uma casa entre a névoa e a mata, para dias sem pressa e noites de janela aberta.',
-      heroCta: 'Planejar minha estadia',
-      heroCaption: 'Fim de tarde na varanda da mata',
-      introKicker: 'Uma pausa com espaço para respirar',
-      staysKicker: 'Do seu jeito',
-      stays: [
-        { tag: '01 / Descanso', title: 'Quartos serenos', text: 'Texturas naturais, luz suave e tempo para desligar.' },
-        { tag: '02 / Encontro', title: 'Casa compartilhada', text: 'Um lugar para café, conversa e planos que podem esperar.' },
-        { tag: '03 / Ar livre', title: 'Varanda na mata', text: 'A paisagem por perto, em qualquer estação.' },
+      arrive: 'Como chegar',
+      planStay: 'Ver datas',
+      heroLead: 'Pousada com seis suítes na serra, a 1.400 metros',
+      heroLede: 'Uma casa de madeira e pedra no meio da mata, com café da manhã demorado, lareira à noite e a névoa subindo do vale toda manhã.',
+      heroCta: 'Ver datas e valores',
+      heroSecondary: 'Conhecer as suítes',
+      heroCaption: 'Varanda da casa principal, num fim de tarde de maio',
+      facts: [
+        { term: 'Suítes', value: 'Seis, para até 4 pessoas' },
+        { term: 'Café da manhã', value: 'Incluso, das 8h às 10h30' },
+        { term: 'Distância', value: '2h30 de São Paulo' },
       ],
-      aroundKicker: 'Ao redor da casa',
-      aroundCta: 'Escolher o meu ritmo',
-      aroundAlt: 'Mata envolta pela névoa ao redor da Casa Neblina',
-      aroundCaption: 'A mata logo depois da porteira',
-      plannerKicker: 'Um começo simples',
+      dayTitle: 'Um dia por aqui',
+      day: [
+        { time: '7h', text: 'A névoa ainda cobre o vale. Tem café coado na varanda para quem acorda cedo.' },
+        { time: '8h', text: 'Café da manhã na sala, com pão de queijo da casa, frutas do pomar e queijos da região.' },
+        { time: '11h', text: 'Trilha até a cachoeira, 40 minutos a pé pela mata.' },
+        { time: '16h', text: 'Chá e bolo na varanda enquanto a luz baixa atrás da serra.' },
+        { time: '19h30', text: 'Jantar de quinta a sábado, com reserva até o meio-dia.' },
+        { time: '21h', text: 'Lareira acesa na sala e céu estrelado quando a névoa deixa.' },
+      ],
+      roomAlt: 'Quarto com cama de linho, manta verde e janela inteira para o vale coberto de névoa',
+      roomCaption: 'Suíte Mata, logo depois do amanhecer',
+      breakfastAlt: 'Mesa de café da manhã com bule, pão de queijo e frutas ao lado do fogão a lenha',
+      breakfastCaption: 'Café da manhã servido na sala, perto do fogão a lenha',
+      specLabels: { area: 'Área', bed: 'Cama', guests: 'Pessoas' },
+      from: 'a partir de',
+      perNight: 'por noite',
+      rooms: [
+        { name: 'Suíte Mata', area: '28 m²', bed: 'Queen', guests: 'Até 2', text: 'Janela inteira para o vale e varanda privativa.', price: 'R$ 690' },
+        { name: 'Suíte Lareira', area: '34 m²', bed: 'Queen', guests: 'Até 2', text: 'Lareira a lenha, banheira e vista para a mata.', price: 'R$ 890' },
+        { name: 'Chalé da Pedra', area: '52 m²', bed: 'Queen e duas de solteiro', guests: 'Até 4', text: 'Dois ambientes, cozinha compacta e deck próprio.', price: 'R$ 1.150' },
+      ],
+      priceNote: 'Valores para duas pessoas com café da manhã. Mínimo de duas noites em fins de semana e feriados.',
+      trailAlt: 'Trilha de terra entre araucárias e samambaias, envolta pela névoa da manhã',
+      nearbyTitle: 'Perto da porteira',
+      nearby: [
+        { place: 'Cachoeira do Poço Fundo', distance: '40 min a pé' },
+        { place: 'Mirante da Pedra Alta', distance: '15 min de carro' },
+        { place: 'Feira de produtores, aos sábados', distance: '10 min de carro' },
+        { place: 'Vila com restaurantes e empório', distance: '20 min de carro' },
+      ],
+      beforeTitle: 'Antes de vir',
+      before: [
+        { term: 'Como chegar', text: 'São 2h30 de São Paulo. Os últimos 4 km são de estrada de terra, tranquila para carro comum. O endereço exato vai junto com a confirmação.' },
+        { term: 'Entrada e saída', text: 'Check-in a partir das 15h e check-out até as 12h. Se for chegar depois das 20h, avise antes.' },
+        { term: 'Pets', text: 'Cães de pequeno porte são bem-vindos na Suíte Mata e no Chalé da Pedra.' },
+        { term: 'Crianças', text: 'Crianças até 6 anos não pagam no Chalé da Pedra.' },
+        { term: 'Internet', text: 'Wi-Fi na casa e nas suítes. O sinal de celular fica fraco em alguns pontos da mata.' },
+      ],
+      nightAlt: 'A pousada à noite, com as janelas acesas no meio da mata e da névoa',
       plannerTitle: 'Rascunhe sua estadia.',
-      plannerLede: 'Escolha quando quer chegar, quantas noites e quantas pessoas. O resumo fica pronto para você mandar quando quiser.',
+      plannerLede: 'Escolha quando quer chegar, quantas noites, quantas pessoas e a suíte. O resumo fica pronto para você mandar quando quiser.',
       plannerNote: 'Este formulário de demonstração só organiza os dados no seu dispositivo durante esta visita. Não consulta disponibilidade nem envia informações.',
       plannerGroup: 'Rascunho de estadia',
-      arrivalLabel: 'Chegada desejada',
-      nightsLabel: 'Quantas noites?',
-      guestsLabel: 'Quantas pessoas?',
+      arrivalLabel: 'Chegada',
+      nightsLabel: 'Noites',
+      guestsLabel: 'Pessoas',
+      suiteLabel: 'Suíte',
       choose: 'Escolha',
+      undecided: 'Ainda não sei',
       submit: 'Ver meu rascunho',
       status: 'Preencha as opções para ver seu rascunho. Nenhum dado será enviado.',
       noscript: 'O rascunho interativo precisa de JavaScript. As informações da página continuam disponíveis.',
-      labels: { arrival: 'Chegada', nights: 'Noites', guests: 'Pessoas', empty: 'Preencha as opções para ver seu rascunho.', invalidDate: 'Escolha uma data de hoje em diante.', ready: 'Rascunho local:' },
+      labels: { arrival: 'Chegada', nights: 'Noites', guests: 'Pessoas', suite: 'Suíte', empty: 'Preencha chegada, noites e pessoas para ver seu rascunho.', invalidDate: 'Escolha uma data de hoje em diante.', ready: 'Rascunho local:' },
       contact: 'Fale com Rafael',
       back: 'Voltar ao portfólio',
     }
   : {
       nav: 'Casa Neblina navigation',
-      tagline: 'mountain hideaway',
+      tagline: 'mountain lodge',
       house: 'The house',
+      suites: 'Suites',
       around: 'Around here',
-      plan: 'Plan',
-      planStay: 'Plan your stay',
-      heroKicker: 'Mountains · forest · stillness',
-      heroLede: 'A house between the mist and the woods, for unhurried days and open-window nights.',
-      heroCta: 'Plan my stay',
-      heroCaption: 'Late afternoon on the woodland porch',
-      introKicker: 'A pause with room to breathe',
-      staysKicker: 'Make it your own',
-      stays: [
-        { tag: '01 / Rest', title: 'Quiet rooms', text: 'Natural textures, soft light, and time to switch off.' },
-        { tag: '02 / Gather', title: 'A shared home', text: 'A place for coffee, conversation, and plans that can wait.' },
-        { tag: '03 / Outdoors', title: 'A woodland porch', text: 'The landscape close by, in any season.' },
+      arrive: 'Getting here',
+      planStay: 'Check dates',
+      heroLead: 'A lodge with six suites in the mountains, 1,400 metres up',
+      heroLede: 'A wood and stone house in the middle of the forest, with long breakfasts, a fire at night, and mist rising from the valley every morning.',
+      heroCta: 'See dates and rates',
+      heroSecondary: 'See the suites',
+      heroCaption: 'The main house porch on a late afternoon in May',
+      facts: [
+        { term: 'Suites', value: 'Six, for up to 4 guests' },
+        { term: 'Breakfast', value: 'Included, 8 to 10:30 am' },
+        { term: 'Distance', value: '2.5 hours from São Paulo' },
       ],
-      aroundKicker: 'Beyond the doorstep',
-      aroundCta: 'Choose my own pace',
-      aroundAlt: 'Mist wrapped around the forest near Casa Neblina',
-      aroundCaption: 'The woods just past the gate',
-      plannerKicker: 'A simple starting point',
+      dayTitle: 'A day here',
+      day: [
+        { time: '7 am', text: 'Mist still covers the valley. Fresh coffee on the porch for early risers.' },
+        { time: '8 am', text: 'Breakfast in the living room, with homemade cheese bread, orchard fruit, and local cheeses.' },
+        { time: '11 am', text: 'A trail to the waterfall, 40 minutes on foot through the forest.' },
+        { time: '4 pm', text: 'Tea and cake on the porch as the light drops behind the ridge.' },
+        { time: '7:30 pm', text: 'Dinner Thursday to Saturday, booked by noon.' },
+        { time: '9 pm', text: 'The fire is lit in the living room, and the stars come out when the mist allows.' },
+      ],
+      roomAlt: 'Bedroom with linen bedding, a green throw, and a full-height window onto the misty valley',
+      roomCaption: 'Suíte Mata, just after sunrise',
+      breakfastAlt: 'Breakfast table with a coffee pot, cheese bread, and fruit next to the wood stove',
+      breakfastCaption: 'Breakfast served in the living room, next to the wood stove',
+      specLabels: { area: 'Size', bed: 'Bed', guests: 'Guests' },
+      from: 'from',
+      perNight: 'per night',
+      rooms: [
+        { name: 'Suíte Mata', area: '28 m²', bed: 'Queen', guests: 'Up to 2', text: 'A full-height window onto the valley and a private balcony.', price: 'R$ 690' },
+        { name: 'Suíte Lareira', area: '34 m²', bed: 'Queen', guests: 'Up to 2', text: 'A wood fireplace, a bathtub, and a view of the forest.', price: 'R$ 890' },
+        { name: 'Chalé da Pedra', area: '52 m²', bed: 'Queen and two singles', guests: 'Up to 4', text: 'Two rooms, a compact kitchen, and its own deck.', price: 'R$ 1,150' },
+      ],
+      priceNote: 'Rates for two guests with breakfast. Two-night minimum on weekends and public holidays.',
+      trailAlt: 'Dirt trail between araucaria trees and tree ferns, wrapped in morning mist',
+      nearbyTitle: 'Just past the gate',
+      nearby: [
+        { place: 'Poço Fundo waterfall', distance: '40 min on foot' },
+        { place: 'Pedra Alta lookout', distance: '15 min by car' },
+        { place: 'Farmers market, on Saturdays', distance: '10 min by car' },
+        { place: 'Village with restaurants and a deli', distance: '20 min by car' },
+      ],
+      beforeTitle: 'Before you come',
+      before: [
+        { term: 'Getting here', text: 'It is 2.5 hours from São Paulo. The last 4 km are a dirt road, easy for a regular car. The exact address comes with your confirmation.' },
+        { term: 'Check-in and out', text: 'Check-in from 3 pm and check-out by noon. If you will arrive after 8 pm, let us know.' },
+        { term: 'Pets', text: 'Small dogs are welcome in Suíte Mata and Chalé da Pedra.' },
+        { term: 'Children', text: 'Children up to 6 stay free in Chalé da Pedra.' },
+        { term: 'Internet', text: 'Wi-Fi in the house and the suites. Mobile signal is weak in parts of the forest.' },
+      ],
+      nightAlt: 'The lodge at night, its windows glowing in the forest and the mist',
       plannerTitle: 'Sketch out your stay.',
-      plannerLede: 'Pick when you would like to arrive, how many nights, and how many guests. The summary is ready whenever you want to send it.',
+      plannerLede: 'Pick when you would like to arrive, how many nights, how many guests, and a suite. The summary is ready whenever you want to send it.',
       plannerNote: 'This demo form only organizes details on your device during this visit. It does not check availability or send information.',
       plannerGroup: 'Stay draft',
-      arrivalLabel: 'A date to arrive',
-      nightsLabel: 'How many nights?',
-      guestsLabel: 'How many guests?',
+      arrivalLabel: 'Arrival',
+      nightsLabel: 'Nights',
+      guestsLabel: 'Guests',
+      suiteLabel: 'Suite',
       choose: 'Choose',
+      undecided: 'Not sure yet',
       submit: 'Preview my draft',
       status: 'Choose a few options to see your draft. Nothing will be sent.',
       noscript: 'The interactive draft needs JavaScript. The rest of the page remains available.',
-      labels: { arrival: 'Arrival', nights: 'Nights', guests: 'Guests', empty: 'Choose a few options to see your draft.', invalidDate: 'Choose today or a future date.', ready: 'Your local draft:' },
+      labels: { arrival: 'Arrival', nights: 'Nights', guests: 'Guests', suite: 'Suite', empty: 'Choose an arrival date, nights, and guests to see your draft.', invalidDate: 'Choose today or a future date.', ready: 'Your local draft:' },
       contact: 'Contact Rafael',
       back: 'Back to portfolio',
     };
@@ -89,90 +161,147 @@ const t = pt
 
 <DemoBar locale={locale} project={project} />
 <article class="demo demo--neblina">
-  <nav class="demo-nav" aria-label={t.nav}>
-    <a class="demo-brand" href="#casa-inicio">
-      <span class="demo-brand__mark" aria-hidden="true">CN</span>
-      <span>casa neblina<small>{t.tagline}</small></span>
-    </a>
-    <div class="demo-nav__links">
-      <a href="#casa-estadia">{t.house}</a>
-      <a href="#casa-arredores">{t.around}</a>
-      <a href="#casa-planejar">{t.plan}</a>
-      <a class="demo-nav__cta" href="#casa-planejar">{t.planStay}</a>
-    </div>
-  </nav>
+  <header id="casa-inicio" class="nb-hero">
+    <img class="nb-hero__image" src={demoImage} alt={localize(concept.imageAlt, locale)} width={concept.imageWidth} height={concept.imageHeight} fetchpriority="high" />
+    <div class="nb-hero__veil" aria-hidden="true"></div>
+    <div class="nb-mist" aria-hidden="true"><span></span><span></span><span></span></div>
 
-  <header id="casa-inicio" class="neblina-hero">
-    <img class="neblina-hero__image" src={demoImage} alt={localize(concept.imageAlt, locale)} width={concept.imageWidth} height={concept.imageHeight} fetchpriority="high" />
-    <div class="neblina-hero__shade"></div>
-    <div class="neblina-hero__content">
-      <p class="demo-kicker">{t.heroKicker}</p>
+    <nav class="nb-nav" aria-label={t.nav}>
+      <a class="nb-brand" href="#casa-inicio">
+        <svg class="nb-brand__mark" viewBox="0 0 40 40" aria-hidden="true"><path d="M4 30 L15 15 L22 23 L27 17 L36 30" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" /><path d="M6 34 H34" stroke="currentColor" stroke-width="1.6" opacity="0.55" /></svg>
+        <span>Casa Neblina<small>{t.tagline}</small></span>
+      </a>
+      <div class="nb-nav__links">
+        <a href="#casa-estadia">{t.house}</a>
+        <a href="#casa-suites">{t.suites}</a>
+        <a href="#casa-arredores">{t.around}</a>
+        <a href="#casa-chegar">{t.arrive}</a>
+        <a class="nb-nav__cta" href="#casa-planejar">{t.planStay}</a>
+      </div>
+    </nav>
+
+    <div class="nb-hero__content">
+      <p class="nb-hero__lead">{t.heroLead}</p>
       <h1>{localize(concept.demoTagline, locale)}</h1>
-      <p>{t.heroLede}</p>
-      <a class="neblina-button" href="#casa-planejar">{t.heroCta} <span aria-hidden="true">↓</span></a>
+      <p class="nb-hero__lede">{t.heroLede}</p>
+      <div class="nb-hero__actions">
+        <a class="nb-button" href="#casa-planejar">{t.heroCta}</a>
+        <a class="nb-link" href="#casa-suites">{t.heroSecondary}</a>
+      </div>
     </div>
-    <p class="neblina-hero__caption">{t.heroCaption}</p>
+
+    <dl class="nb-facts">
+      {t.facts.map((fact) => (
+        <div><dt>{fact.term}</dt><dd>{fact.value}</dd></div>
+      ))}
+    </dl>
+    <p class="nb-hero__caption">{t.heroCaption}</p>
   </header>
 
-  <section id="casa-estadia" class="neblina-intro demo-shell">
-    <p class="demo-kicker">{t.introKicker}</p>
-    <h2>{intro.title}</h2>
-    <p>{intro.text}</p>
+  <section id="casa-estadia" class="nb-day">
+    <div class="nb-shell nb-day__inner">
+      <div class="nb-day__intro">
+        <h2>{intro.title}</h2>
+        <p>{intro.text}</p>
+      </div>
+      <div>
+        <h3 class="nb-day__title">{t.dayTitle}</h3>
+        <ol class="nb-day__list">
+          {t.day.map((moment) => (
+            <li><time>{moment.time}</time><p>{moment.text}</p></li>
+          ))}
+        </ol>
+      </div>
+    </div>
   </section>
 
-  <section class="neblina-stays" aria-labelledby="neblina-stays-title">
-    <div class="demo-shell neblina-stays__inner">
-      <div>
-        <p class="demo-kicker">{t.staysKicker}</p>
-        <h2 id="neblina-stays-title">{spaces.title}</h2>
-        <p>{spaces.text}</p>
+  <section id="casa-suites" class="nb-suites" aria-labelledby="nb-suites-title">
+    <div class="nb-shell nb-suites__inner">
+      <figure class="nb-suites__room">
+        <img src="/images/concepts/neblina-quarto.webp" alt={t.roomAlt} width="1024" height="1536" loading="lazy" />
+        <figcaption>{t.roomCaption}</figcaption>
+      </figure>
+      <div class="nb-suites__copy">
+        <h2 id="nb-suites-title">{spaces.title}</h2>
+        <p class="nb-suites__lede">{spaces.text}</p>
+        <ul class="nb-rooms">
+          {t.rooms.map((room) => (
+            <li>
+              <div class="nb-rooms__head">
+                <h3>{room.name}</h3>
+                <p class="nb-rooms__price"><span>{t.from}</span> {room.price} <span>{t.perNight}</span></p>
+              </div>
+              <p>{room.text}</p>
+              <dl>
+                <div><dt>{t.specLabels.area}</dt><dd>{room.area}</dd></div>
+                <div><dt>{t.specLabels.bed}</dt><dd>{room.bed}</dd></div>
+                <div><dt>{t.specLabels.guests}</dt><dd>{room.guests}</dd></div>
+              </dl>
+            </li>
+          ))}
+        </ul>
+        <p class="nb-suites__note">{t.priceNote}</p>
       </div>
-      <div class="neblina-stays__cards">
-        {t.stays.map((stay) => (
-          <article>
-            <span>{stay.tag}</span>
-            <h3>{stay.title}</h3>
-            <p>{stay.text}</p>
-          </article>
+      <figure class="nb-suites__breakfast">
+        <img src="/images/concepts/neblina-cafe.webp" alt={t.breakfastAlt} width="1536" height="1024" loading="lazy" />
+        <figcaption>{t.breakfastCaption}</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section id="casa-arredores" class="nb-around">
+    <img class="nb-around__image" src="/images/concepts/neblina-trilha.webp" alt={t.trailAlt} width="1916" height="821" loading="lazy" />
+    <div class="nb-around__shade" aria-hidden="true"></div>
+    <div class="nb-shell nb-around__inner">
+      <div class="nb-around__copy">
+        <h2>{surroundings.title}</h2>
+        <p>{surroundings.text}</p>
+      </div>
+      <div class="nb-around__nearby">
+        <h3>{t.nearbyTitle}</h3>
+        <dl>
+          {t.nearby.map((item) => (
+            <div><dt>{item.place}</dt><dd>{item.distance}</dd></div>
+          ))}
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <section id="casa-chegar" class="nb-before" aria-labelledby="nb-before-title">
+    <div class="nb-shell nb-before__inner">
+      <h2 id="nb-before-title">{t.beforeTitle}</h2>
+      <dl>
+        {t.before.map((item) => (
+          <div><dt>{item.term}</dt><dd>{item.text}</dd></div>
         ))}
-      </div>
+      </dl>
     </div>
   </section>
 
-  <section id="casa-arredores" class="neblina-around demo-shell">
-    <div>
-      <p class="demo-kicker">{t.aroundKicker}</p>
-      <h2>{surroundings.title}</h2>
-      <p>{surroundings.text}</p>
-      <a href="#casa-planejar">{t.aroundCta} <span aria-hidden="true">→</span></a>
-    </div>
-    <figure>
-      <img src={demoImage} alt={t.aroundAlt} width={concept.imageWidth} height={concept.imageHeight} loading="lazy" />
-      <figcaption>{t.aroundCaption}</figcaption>
-    </figure>
-  </section>
-
-  <section id="casa-planejar" class="neblina-planner">
-    <div class="demo-shell neblina-planner__inner">
-      <div>
-        <p class="demo-kicker">{t.plannerKicker}</p>
+  <section id="casa-planejar" class="nb-planner">
+    <img class="nb-planner__image" src="/images/concepts/neblina-noite.webp" alt={t.nightAlt} width="1536" height="1024" loading="lazy" />
+    <div class="nb-planner__shade" aria-hidden="true"></div>
+    <div class="nb-shell nb-planner__inner">
+      <div class="nb-planner__copy">
         <h2>{t.plannerTitle}</h2>
         <p>{t.plannerLede}</p>
-        <p class="demo-local-note">{t.plannerNote}</p>
+        <p class="nb-planner__note">{t.plannerNote}</p>
       </div>
       <div
         role="group"
         aria-label={t.plannerGroup}
-        class="demo-planner"
+        class="nb-form"
         data-demo-planner
         data-label-arrival={t.labels.arrival}
         data-label-nights={t.labels.nights}
         data-label-guests={t.labels.guests}
+        data-label-suite={t.labels.suite}
         data-label-empty={t.labels.empty}
         data-label-invalid-date={t.labels.invalidDate}
         data-label-ready={t.labels.ready}
       >
-        <label>{t.arrivalLabel}<input name="arrival" type="date" /></label>
+        <label class="nb-form__wide">{t.arrivalLabel}<input name="arrival" type="date" /></label>
         <label>
           {t.nightsLabel}
           <select name="nights">
@@ -189,23 +318,31 @@ const t = pt
             <option value="">{t.choose}</option>
             <option value="1">1</option>
             <option value="2">2</option>
-            <option value="3">3+</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
           </select>
         </label>
-        <button type="button" data-demo-update>{t.submit}</button>
-        <p class="demo-planner__status" role="status" aria-live="polite">{t.status}</p>
+        <label class="nb-form__wide">
+          {t.suiteLabel}
+          <select name="suite">
+            <option value="">{t.undecided}</option>
+            {t.rooms.map((room) => <option>{room.name}</option>)}
+          </select>
+        </label>
+        <button class="nb-form__wide" type="button" data-demo-update>{t.submit}</button>
+        <p class="nb-form__status nb-form__wide" role="status" aria-live="polite">{t.status}</p>
         <noscript><p class="demo-noscript">{t.noscript}</p></noscript>
       </div>
     </div>
   </section>
 
-  <footer class="demo-footer">
-    <a class="demo-brand" href="#casa-inicio">
-      <span class="demo-brand__mark" aria-hidden="true">CN</span>
-      <span>casa neblina<small>{t.tagline}</small></span>
+  <footer class="nb-footer">
+    <a class="nb-brand" href="#casa-inicio">
+      <svg class="nb-brand__mark" viewBox="0 0 40 40" aria-hidden="true"><path d="M4 30 L15 15 L22 23 L27 17 L36 30" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" /><path d="M6 34 H34" stroke="currentColor" stroke-width="1.6" opacity="0.55" /></svg>
+      <span>Casa Neblina<small>{t.tagline}</small></span>
     </a>
     <a href={withLocale(locale, 'contact')}>{t.contact}</a>
-    <a class="demo-back" href={withLocale(locale, 'work')}>{t.back}</a>
+    <a class="nb-footer__back" href={withLocale(locale, 'work')}>{t.back}</a>
   </footer>
 </article>
 
@@ -217,6 +354,7 @@ const t = pt
       const arrival = planner.querySelector<HTMLInputElement>('[name="arrival"]')?.value || '';
       const nightsSelect = planner.querySelector<HTMLSelectElement>('[name="nights"]');
       const guestsSelect = planner.querySelector<HTMLSelectElement>('[name="guests"]');
+      const suite = planner.querySelector<HTMLSelectElement>('[name="suite"]')?.value || '';
       if (!arrival || !nightsSelect?.value || !guestsSelect?.value) {
         status.textContent = planner.dataset.labelEmpty || '';
         return;
@@ -231,7 +369,8 @@ const t = pt
         return;
       }
       const arrivalLabel = new Intl.DateTimeFormat(document.documentElement.lang, { dateStyle: 'long' }).format(selectedDate);
-      status.textContent = `${planner.dataset.labelReady || ''} ${planner.dataset.labelArrival}: ${arrivalLabel} · ${planner.dataset.labelNights}: ${nights} · ${planner.dataset.labelGuests}: ${guests}.`;
+      const suitePart = suite ? `, ${planner.dataset.labelSuite}: ${suite}` : '';
+      status.textContent = `${planner.dataset.labelReady || ''} ${planner.dataset.labelArrival}: ${arrivalLabel}, ${planner.dataset.labelNights}: ${nights}, ${planner.dataset.labelGuests}: ${guests}${suitePart}.`;
     });
   });
 </script>

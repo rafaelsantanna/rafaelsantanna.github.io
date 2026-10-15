@@ -21,13 +21,13 @@ export const project: DemoProject = {
   },
   highlights: {
     en: [
-      { title: 'Services in plain language', text: 'Installation, maintenance, and repair explained by what the customer is experiencing.' },
+      { title: 'Services in plain language', text: 'Installation, maintenance, and repair with starting prices, plus a symptom guide that says what to try before calling.' },
       { title: 'A visible process', text: 'Clear steps from first contact to service, so expectations are set before the call.' },
       { title: 'A local request draft', text: 'The customer chooses a service and writes a note, with validation and an announced result.' },
       { title: 'Bilingual from the start', text: 'Portuguese and English versions with a language switch on every page.' },
     ],
     pt: [
-      { title: 'Serviços em linguagem simples', text: 'Instalação, manutenção e reparo explicados a partir do que o cliente está vivendo.' },
+      { title: 'Serviços em linguagem simples', text: 'Instalação, manutenção e conserto com preço de partida, e um guia de sintomas que diz o que tentar antes de chamar.' },
       { title: 'Processo visível', text: 'Etapas claras do primeiro contato ao atendimento, para alinhar expectativas antes da conversa.' },
       { title: 'Rascunho de pedido local', text: 'O cliente escolhe um serviço e escreve uma observação, com validação e resultado anunciado.' },
       { title: 'Bilíngue desde o início', text: 'Versões em português e inglês, com troca de idioma em todas as páginas.' },
@@ -52,10 +52,10 @@ export const project: DemoProject = {
     pt: 'O rascunho só organiza os dados no seu dispositivo. Ele não calcula capacidade, não verifica agenda e não envia seus dados.',
   },
   disclaimer: concept.disclaimer,
-  palette: { base: '#F5F7F8', ink: '#142B3C', accent: '#007C91' },
+  palette: { base: '#F2F6F8', ink: '#0A2131', accent: '#0A5FC4' },
   device: 'desktop',
   preview: previewFor(concept.slug, {
-    en: 'Clima Certa landing page with a technician servicing an air-conditioning unit and the headline about asking the right questions',
-    pt: 'Landing page da Clima Certa com um técnico revisando um ar-condicionado e o título sobre boas perguntas',
+    en: 'Clima Certa landing page with a technician installing a split air conditioner and the headline about getting the unit cold again',
+    pt: 'Landing page da Clima Certa com um técnico instalando um ar-condicionado split e o título sobre o aparelho voltar a gelar',
   }),
 };

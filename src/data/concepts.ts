@@ -41,7 +41,7 @@ export const concepts: Concept[] = [
     },
     disclaimer: demoDisclaimer,
     demoName: { en: 'Clima Certa', pt: 'Clima Certa' },
-    demoTagline: { en: 'Comfort starts with the right questions.', pt: 'Climatização começa com boas perguntas.' },
+    demoTagline: { en: 'Your air conditioner, cold again.', pt: 'Seu ar-condicionado gelando de novo.' },
     sections: {
       en: [
         { title: 'Installation', text: 'Before recommending a unit, the technician looks at the room size, the afternoon sun, and how the space is used.' },

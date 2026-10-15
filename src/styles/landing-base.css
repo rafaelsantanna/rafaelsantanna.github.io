@@ -1,37 +1,32 @@
 /* Typographic foundation for the two original landing-page demonstrations (Casa Neblina and Clima Certa).
-   demo-base.css provides the reset; demos.css provides each landing's art direction. */
-:root {
-  --font-display: 'Geologica', 'Arial Narrow', sans-serif;
-  --font-body: 'Atkinson Hyperlegible Next', Verdana, sans-serif;
-  --step-2: clamp(1.45rem, 1.25rem + 0.75vw, 1.9rem);
-  --step-4: clamp(2.85rem, 2rem + 3vw, 5.6rem);
-  --step-5: clamp(3.5rem, 2.2rem + 5.3vw, 8.2rem);
+   demo-base.css provides the reset; each landing stylesheet provides its own art direction. */
+@font-face {
+  font-family: 'Newsreader';
+  font-style: normal;
+  font-weight: 200 800;
+  font-display: swap;
+  src: url('/fonts/newsreader-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
-html {
-  color-scheme: light;
-  font-family: var(--font-body);
+@font-face {
+  font-family: 'Archivo';
+  font-style: normal;
+  font-weight: 100 900;
+  font-stretch: 62% 125%;
+  font-display: swap;
+  src: url('/fonts/archivo-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
-html:has(.demo--neblina) { background: #f4f1e9; }
-html:has(.demo--clima) { background: #f5f7f8; }
+html:has(.demo--neblina) { color-scheme: dark; background: #141d18; }
+html:has(.demo--clima) { color-scheme: light; background: #f2f6f8; }
 
 body {
   font-size: 1rem;
   line-height: 1.62;
 }
 
-h1, h2, h3 {
-  font-family: var(--font-display);
-  font-weight: 650;
-  line-height: 1.02;
-  letter-spacing: -0.055em;
-  text-wrap: balance;
-}
-
-h1 { font-size: var(--step-5); }
-h2 { font-size: var(--step-4); }
-h3 { font-size: var(--step-2); }
-
+h1, h2, h3 { text-wrap: balance; }
 p, li, dd { max-width: 70ch; }
 a { color: inherit; }
