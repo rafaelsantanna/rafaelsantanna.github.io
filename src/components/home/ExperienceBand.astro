@@ -14,15 +14,22 @@ const figureFrom = (slug: string, outcome: number) => {
   if (!entry || !amount) throw new Error(`No figure in the outcome ${outcome} of ${slug}.`);
   return { value: `${amount}+`, source: entry.company };
 };
+/** Delivery speed reads better than a count of changes; the band only restates the CV outcome that supports it. */
+const deliveryTime = () => {
+  const entry = experience.find((item) => item.slug === 'academic-operations');
+  const outcome = entry?.outcomes[locale][0] ?? '';
+  if (!entry || !/(seis meses|six months)/.test(outcome)) throw new Error('The academic-operations outcome no longer states the six-month delivery.');
+  return { value: pt ? '6 meses' : '6 months', source: entry.company };
+};
 const figures = pt
   ? [
-      { ...figureFrom('corporate-learning', 0), label: 'projetos LMS corporativos e educacionais entregues' },
-      { ...figureFrom('academic-operations', 1), label: 'melhorias e funcionalidades entre frontend e backend, num projeto estimado para mais de um ano e entregue em cerca de seis meses' },
+      { ...figureFrom('corporate-learning', 0), label: 'projetos de aprendizagem corporativa entregues para empresas como Santander, Coca-Cola e Renault' },
+      { ...deliveryTime(), label: 'para entregar uma plataforma acadêmica estimada em mais de um ano' },
       { ...figureFrom('enterprise-operations', 0), label: 'usuários atendidos por uma plataforma integrada do Grupo Profarma' },
     ]
   : [
-      { ...figureFrom('corporate-learning', 0), label: 'corporate and educational LMS projects delivered' },
-      { ...figureFrom('academic-operations', 1), label: 'improvements and features across frontend and backend, on a project estimated at over a year and delivered in about six months' },
+      { ...figureFrom('corporate-learning', 0), label: 'corporate learning projects delivered for companies such as Santander, Coca-Cola, and Renault' },
+      { ...deliveryTime(), label: 'to deliver an academic platform estimated at more than a year' },
       { ...figureFrom('enterprise-operations', 0), label: 'users served by an integrated Grupo Profarma platform' },
     ];
 const ui = pt
