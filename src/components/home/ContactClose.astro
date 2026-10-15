@@ -9,12 +9,12 @@ const pt = locale === 'pt';
 const whatsappText = encodeURIComponent(pt
   ? 'Olá, Rafael! Vi seu portfólio e gostaria de conversar sobre um projeto.'
   : 'Hi Rafael, I saw your portfolio and would like to talk about a project.');
-const emailSubject = encodeURIComponent(pt ? 'Projeto ou vaga' : 'Project or role');
+const emailSubject = encodeURIComponent(pt ? 'Projeto freelance' : 'Freelance project');
 const ui = pt
   ? {
       index: 'Contato',
-      title: 'Tem um projeto ou uma vaga em mente?',
-      lede: 'Conte o contexto, o prazo e o que precisa sair do papel. Estou disponível para contratos PJ remotos e projetos freelance, no horário comercial do Brasil.',
+      title: 'Tem um projeto em mente?',
+      lede: 'Conte o contexto, o prazo e o que precisa sair do papel. Estou aberto a projetos freelance e trabalho no horário comercial do Brasil.',
       emailLabel: 'Email',
       copy: 'Copiar',
       copied: 'Copiado',
@@ -25,8 +25,8 @@ const ui = pt
     }
   : {
       index: 'Contact',
-      title: 'Have a project or a role in mind?',
-      lede: 'Tell me the context, the timeline, and what needs to ship. I’m available for remote contract (PJ) roles and freelance projects, with full overlap with Brazilian business hours.',
+      title: 'Have a project in mind?',
+      lede: 'Tell me the context, the timeline, and what needs to ship. I’m open to freelance projects, with full overlap with Brazilian business hours.',
       emailLabel: 'Email',
       copy: 'Copy',
       copied: 'Copied',

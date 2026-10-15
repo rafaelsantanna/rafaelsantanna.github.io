@@ -14,13 +14,15 @@ export interface Experience {
   slug: string;
   company: string;
   title: LocalizedText;
+  /** The role Rafael holds now; it may not have documented outcomes or a case story yet. */
+  current?: boolean;
   eyebrow: LocalizedText;
   summary: LocalizedText;
   role: LocalizedText;
   period: LocalizedText;
-  context: LocalizedText;
-  challenge: LocalizedText;
-  solution: LocalizedText;
+  context?: LocalizedText;
+  challenge?: LocalizedText;
+  solution?: LocalizedText;
   outcomes: LocalizedList;
   technologies: string[];
   externalUrl?: string;

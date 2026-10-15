@@ -26,12 +26,12 @@ export const identity = {
   linkedinHandle: '/in/devrafaelsantanna',
   edgeData: 'https://edgedata.com.br/',
   availability: {
-    en: 'Available immediately for remote contractor (PJ) roles with Brazilian companies and for freelance projects, with full overlap with Brazilian business hours',
-    pt: 'Disponível imediatamente para contratos PJ remotos e projetos freelance, com cobertura integral do horário comercial brasileiro',
+    en: 'Open to freelance projects, working remotely with full overlap with Brazilian business hours',
+    pt: 'Aberto a projetos freelance, trabalhando remotamente no horário comercial brasileiro',
   },
   availabilityShort: {
-    en: 'Available for remote contract (PJ) roles and freelance',
-    pt: 'Disponível para PJ remoto e freelance',
+    en: 'Open to freelance projects',
+    pt: 'Aberto a projetos freelance',
   },
   workingHours: {
     en: 'Brazilian business hours',
@@ -48,6 +48,21 @@ export const identity = {
 };
 
 export const experience: Experience[] = [
+  {
+    slug: 'fundacred',
+    company: 'Fundacred',
+    title: { en: 'Fundacred', pt: 'Fundacred' },
+    current: true,
+    eyebrow: { en: 'Current role · Brazil, remote', pt: 'Cargo atual · Brasil, remoto' },
+    summary: {
+      en: 'Development and enhancement of web applications, contributing to software architecture decisions and the implementation of AI solutions.',
+      pt: 'Desenvolvimento e evolução de aplicações web, com participação em decisões de arquitetura de software e na implementação de soluções com IA.',
+    },
+    role: { en: 'Senior Full Stack Developer', pt: 'Desenvolvedor Full Stack Sênior' },
+    period: { en: 'Oct 2026 - present', pt: 'Out 2026 - o momento' },
+    outcomes: { en: [], pt: [] },
+    technologies: [],
+  },
   {
     slug: 'edgedata',
     company: 'EdgeData',
@@ -375,6 +390,7 @@ export const selectedWork = [
 ];
 
 export const timeline = [
+  { period: '2026', company: 'Fundacred', role: { en: 'Senior Full Stack Developer', pt: 'Desenvolvedor Full Stack Sênior' } },
   { period: '2025-2026', company: 'Affinity / Axians', role: { en: 'Senior Full Stack Developer', pt: 'Desenvolvedor Full Stack Sênior' } },
   { period: '2019-2025', company: 'Revvo', role: { en: 'Senior Full Stack Developer', pt: 'Desenvolvedor Full Stack Sênior' } },
   { period: '2017-2019', company: 'Trinks', role: { en: 'Frontend Developer', pt: 'Desenvolvedor Frontend' } },
@@ -406,7 +422,7 @@ export const copy = {
     aboutIntro: 'I’m a senior software engineer based in Viseu, Portugal, with more than 10 years of experience turning complex operations into maintainable B2B products and internal systems.',
     cvTitle: 'Curriculum vitae',
     contactTitle: 'Bring the difficult part.',
-    contactIntro: 'Share the team gap, operation, constraint, or product you need to improve. I’m available immediately for remote PJ contracts and freelance projects.',
+    contactIntro: 'Share the team gap, operation, constraint, or product you need to improve. I’m open to freelance projects.',
     agentTitle: 'A clear brief for humans and agents',
     agentIntro: 'This page contains the factual information needed to evaluate Rafael for a project. It does not expose a booking API or pretend to be an autonomous service.',
     outcomes: 'Outcomes',
@@ -447,7 +463,7 @@ export const copy = {
     aboutIntro: 'Sou engenheiro de software sênior, baseado em Viseu, Portugal, com mais de 10 anos de experiência transformando operações complexas em produtos B2B e sistemas internos sustentáveis.',
     cvTitle: 'Currículo profissional',
     contactTitle: 'Traga a parte difícil.',
-    contactIntro: 'Compartilhe a necessidade da equipe, a operação, a restrição ou o produto que você precisa melhorar. Estou disponível imediatamente para contratos PJ remotos e projetos freelance.',
+    contactIntro: 'Compartilhe a necessidade da equipe, a operação, a restrição ou o produto que você precisa melhorar. Estou aberto a projetos freelance.',
     agentTitle: 'Um briefing claro para pessoas e agentes',
     agentIntro: 'Esta página contém as informações factuais necessárias para avaliar Rafael em um projeto. Ela não expõe uma API de agendamento nem finge ser um serviço autônomo.',
     outcomes: 'Resultados',

@@ -13,7 +13,7 @@ The portfolio itself behaves like a gallery: a near-black, monochrome frame with
 
 ## Audience and first ten seconds
 
-Brazilian product leaders, tech leads, and recruiters hiring remote PJ engineers, plus small and medium businesses looking for a freelance developer. Within ten seconds they must see who Rafael is, that he builds real interfaces end to end, that they can try the work right now, and how to contact him.
+Brazilian founders, product leaders, tech leads, and small and medium businesses looking for a senior freelance developer. Rafael currently holds a full-time role (Fundacred), so the site offers freelance work only. Within ten seconds they must see who Rafael is, that he builds real interfaces end to end, that they can try the work right now, and how to contact him.
 
 ## Foundations
 

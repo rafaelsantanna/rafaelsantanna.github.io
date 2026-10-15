@@ -21,7 +21,14 @@ function projectTitle(project: DemoProject, locale: Locale) {
 
 function experienceMarkdown(locale: Locale) {
   const t = copy[locale];
-  return experience.map((item) => `### ${localize(item.title, locale)}\n\n${localize(item.summary, locale)}\n\n- ${localize(item.role, locale)}\n- ${localize(item.period, locale)}\n\n**${t.context}.** ${localize(item.context, locale)}\n\n**${t.challenge}.** ${localize(item.challenge, locale)}\n\n**${t.solution}.** ${localize(item.solution, locale)}\n\n${list(item.outcomes[locale])}\n\n${t.technologies}: ${item.technologies.map((name) => technologyName(name, locale)).join(', ')}`).join('\n\n');
+  return experience.map((item) => {
+    const story = ([[t.context, item.context], [t.challenge, item.challenge], [t.solution, item.solution]] as const)
+      .flatMap(([label, text]) => (text ? [`**${label}.** ${localize(text, locale)}`] : []));
+    const outcomes = item.outcomes[locale].length ? [list(item.outcomes[locale])] : [];
+    const stack = item.technologies.length ? [`${t.technologies}: ${item.technologies.map((name) => technologyName(name, locale)).join(', ')}`] : [];
+    const header = `### ${localize(item.title, locale)}\n\n${localize(item.summary, locale)}\n\n- ${localize(item.role, locale)}\n- ${localize(item.period, locale)}`;
+    return [header, ...story, ...outcomes, ...stack].join('\n\n');
+  }).join('\n\n');
 }
 
 export function machineRoutes(): MachineRoute[] {

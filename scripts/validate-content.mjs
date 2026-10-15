@@ -18,7 +18,9 @@ assert.deepEqual(projects.map((item) => item.slug), [
   'pousada-boutique',
   'climatizacao-local',
 ], 'Projects must keep the intended presentation order');
-assert.equal(experience.length, 5, 'Expected five CV-backed experience entries');
+assert.equal(experience.length, 6, 'Expected six experience entries (five past roles and the current one)');
+assert.equal(experience.filter((item) => item.current).length, 1, 'Expected exactly one current role');
+assert.ok(experience[0].current, 'The current role must come first');
 assert.equal(concepts.length, 2, 'Expected the two original landing-page demonstrations');
 assert.equal(selectedWork.length, 2, 'Expected only two additional high-impact projects');
 assert.deepEqual(services.map((service) => service.slug), [
@@ -90,8 +92,13 @@ for (const item of experience) {
   assert.ok(item.company.trim(), `Missing company for ${item.slug}`);
   if (item.externalUrl) assert.doesNotThrow(() => new URL(item.externalUrl), `Invalid external URL for ${item.slug}`);
   for (const locale of locales) {
-    for (const key of ['title', 'eyebrow', 'summary', 'role', 'period', 'context', 'challenge', 'solution']) {
+    for (const key of ['title', 'eyebrow', 'summary', 'role', 'period']) {
       assert.ok(item[key][locale]?.trim(), `Missing ${key}.${locale} for ${item.slug}`);
+    }
+    // A current role only states what is public; past roles keep their full CV-backed story.
+    if (item.current) continue;
+    for (const key of ['context', 'challenge', 'solution']) {
+      assert.ok(item[key]?.[locale]?.trim(), `Missing ${key}.${locale} for ${item.slug}`);
     }
     assert.ok(item.outcomes[locale].length >= 2, `Expected at least two outcomes for ${item.slug}.${locale}`);
   }

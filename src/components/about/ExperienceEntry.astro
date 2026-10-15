@@ -12,11 +12,13 @@ const headingId = `xp-${item.slug}`;
 const companyHeading = item.company.replaceAll(' / ', '\u00A0/ ');
 const eyebrow = localize(item.eyebrow, locale);
 const period = localize(item.period, locale).replace(' - ', ' – ');
+// A current role may not have a written case story or documented outcomes yet; only what exists is shown.
 const story = [
-  { label: t.context, text: localize(item.context, locale) },
-  { label: t.challenge, text: localize(item.challenge, locale) },
-  { label: t.solution, text: localize(item.solution, locale) },
-];
+  { label: t.context, text: item.context },
+  { label: t.challenge, text: item.challenge },
+  { label: t.solution, text: item.solution },
+].flatMap((entry) => (entry.text ? [{ label: entry.label, text: localize(entry.text, locale) }] : []));
+const outcomes = item.outcomes[locale];
 const ui = pt
   ? { details: 'Contexto, desafio e solução' }
   : { details: 'Context, challenge, and solution' };
@@ -36,21 +38,25 @@ const ui = pt
   <div class="xp__body">
     <p class="xp__summary">{localize(item.summary, locale)}</p>
 
-    <div class="xp__block">
-      <h4 class="xp__label">{t.outcomes}</h4>
-      <ul class="xp__outcomes">
-        {item.outcomes[locale].map((outcome) => <li><Icon name="check" />{outcome}</li>)}
-      </ul>
-    </div>
+    {outcomes.length > 0 && (
+      <div class="xp__block">
+        <h4 class="xp__label">{t.outcomes}</h4>
+        <ul class="xp__outcomes">
+          {outcomes.map((outcome) => <li><Icon name="check" />{outcome}</li>)}
+        </ul>
+      </div>
+    )}
 
-    <div class="xp__block">
-      <h4 class="xp__label">{t.technologies}</h4>
-      <ul class="tag-list">
-        {item.technologies.map((technology) => <li>{technologyName(technology, locale)}</li>)}
-      </ul>
-    </div>
+    {item.technologies.length > 0 && (
+      <div class="xp__block">
+        <h4 class="xp__label">{t.technologies}</h4>
+        <ul class="tag-list">
+          {item.technologies.map((technology) => <li>{technologyName(technology, locale)}</li>)}
+        </ul>
+      </div>
+    )}
 
-    <details class="xp__details">
+    {story.length > 0 && <details class="xp__details">
       <summary>
         <span>{ui.details}<span class="visually-hidden">: {item.company}</span></span>
         <span class="xp__toggle" aria-hidden="true"></span>
@@ -63,7 +69,7 @@ const ui = pt
           </div>
         ))}
       </dl>
-    </details>
+    </details>}
 
     {item.externalUrl && item.externalLabel && (
       <a class="text-link xp__external" href={item.externalUrl} rel="noreferrer" data-icon="up-right">

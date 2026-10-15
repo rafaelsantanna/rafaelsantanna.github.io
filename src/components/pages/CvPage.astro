@@ -137,8 +137,8 @@ const githubLabel = identity.github.replace(/^https:\/\//, '');
                 <p class="cv-job__role">{job.role}</p>
               </div>
               {job.detail && <p class="cv-job__summary">{localize(job.detail.summary, locale)}</p>}
-              {job.detail && <ul class="cv-job__outcomes">{job.detail.outcomes[locale].map((outcome) => <li>{outcome}</li>)}</ul>}
-              {job.detail && <p class="cv-job__stack">{job.detail.technologies.map((name) => technologyName(name, locale)).join(' · ')}</p>}
+              {job.detail && job.detail.outcomes[locale].length > 0 && <ul class="cv-job__outcomes">{job.detail.outcomes[locale].map((outcome) => <li>{outcome}</li>)}</ul>}
+              {job.detail && job.detail.technologies.length > 0 && <p class="cv-job__stack">{job.detail.technologies.map((name) => technologyName(name, locale)).join(' · ')}</p>}
             </li>
           ))}
         </ol>
