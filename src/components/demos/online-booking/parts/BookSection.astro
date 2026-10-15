@@ -1,0 +1,33 @@
+---
+import type { Locale } from '@/data/types';
+import { strings } from '../data/i18n';
+import { icons } from '../lib/icons';
+
+interface Props { locale: Locale }
+
+const t = strings[Astro.props.locale];
+---
+
+<section class="book" id="agendar" aria-labelledby="cp-book-title">
+  <div class="wrap book__grid">
+    <div class="book__copy">
+      <p class="eyebrow">{t.book.eyebrow}</p>
+      <h2 id="cp-book-title">{t.book.title}</h2>
+      <p class="book__text">{t.book.text}</p>
+      <a class="btn btn--primary btn--large" href="#agendar" data-book>{t.cta} <Fragment set:html={icons.arrow} /></a>
+      <p class="demo-note"><Fragment set:html={icons.info} />{t.demoNote}</p>
+      <noscript><p class="demo-note demo-note--warn">{t.book.noscript}</p></noscript>
+    </div>
+    <div class="hours">
+      <h3 class="hours__title">{t.book.hoursTitle}</h3>
+      <dl class="hours__list">
+        {t.book.rows.map((row) => (
+          <div class:list={['hours__row', { 'is-closed': row.days.includes(0) }]} data-weekdays={row.days.join(',')}>
+            <dt>{row.label}<span class="hours__today" data-today-tag hidden>{t.book.today}</span></dt>
+            <dd>{row.value}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+  </div>
+</section>

@@ -1,46 +1,66 @@
 ---
 name: Rafael Sant' Anna Portfolio
-description: A personal dark technical portfolio with real project evidence and a processed portrait.
+description: A dark showroom for working software. The frame is quiet and personal; the color comes from the projects.
 ---
 
-# Design System: Rafael Sant' Anna Portfolio
+# Design System: Rafael Sant' Anna Portfolio (v3, "Showroom")
 
-## Direction
+## Why this version exists
 
-The portfolio should feel like an individual engineer's digital workbench, with a composed dark stage, original portrait, and tangible evidence of complex software. The first cobalt version failed because one flat color occupied the screen, its huge title crossed the face, and the room/chair distracted from Rafael. The user's visual references are `chrissgon.dev` and `rubenmarcus.dev`; borrow their care for motion, human presence, and real proof without copying their layout, portrait effect, green or cyan palette, or claims.
+The previous version was correct but forgettable: a dark page, a photo, and case studies illustrated with diagrams because the real client work cannot be shown. Version 3 changes the evidence model. The portfolio now presents working demonstrations that Rafael designed and built, each with a fictional brand, fictional data, and its own art direction. Visitors open them and use them. Real professional experience stays, as text, in About and CV.
 
-The audience is product leaders, founders, technical managers, and hiring teams. Within seconds they should see who Rafael is, what he builds, one relevant project, and a clear contact path.
+The portfolio itself behaves like a gallery: a near-black, monochrome frame with one violet signal, so each project's own palette carries the color. The site must feel personal, engineered, and alive, never like a template.
+
+## Audience and first ten seconds
+
+Brazilian product leaders, tech leads, and recruiters hiring remote PJ engineers, plus small and medium businesses looking for a freelance developer. Within ten seconds they must see who Rafael is, that he builds real interfaces end to end, that they can try the work right now, and how to contact him.
 
 ## Foundations
 
-- A near-black charcoal-violet canvas, slightly differentiated dark surfaces, ice-colored type, and one restrained electric-lavender accent. Tokens belong in `src/styles/base.css`. Strong contrast and readable body copy matter more than novelty.
-- Self-hosted Geologica is the display face. Self-hosted Atkinson Hyperlegible Next handles paragraphs and case studies. A modest amount of monospace may label genuine technical artifacts; the UI must not imitate a terminal.
-- Use precise alignment, visible spacing rhythm, and real photographic/project material. An atmospheric dot field or fine grid is acceptable if it supports depth and does not obscure content.
-- Keep controls at least 44px where touch matters and body copy at least 16px. Responsive designs must work at 320px, 390px, 768px, and desktop sizes, including text enlargement.
+- Canvas `#09090D`; raised surfaces `#111118` and `#191922`; hairlines `rgb(255 255 255 / 8%)` and `rgb(255 255 255 / 16%)`.
+- Text `#F5F4FA`, soft `#C3C0CF`, muted `#9592A3`. Body text always meets WCAG AA on its surface.
+- One signal color: violet `#A98BFF` (strong `#8C6CFF`, soft fill `rgb(169 139 255 / 14%)`, ink on violet `#0B0614`). Use it for primary actions, focus, live states, and a few typographic accents. Never as large flat slabs or neon gradients.
+- Project palettes (`project.palette`) tint project frames, cards, and the hero windows. They are the only other colors in the portfolio.
+- Type: Geologica for display (500 to 800, tight negative tracking, very large sizes allowed), Atkinson Hyperlegible Next for reading, and a system monospace stack (`ui-monospace, 'Cascadia Code', Consolas, monospace`) in small doses for technical labels. The UI must not imitate a terminal.
+- Radii: 14px for panels and cards, 10px for windows and inputs, 999px for pills. Hairline borders instead of heavy shadows; one soft, large shadow is reserved for floating windows.
+- Motion: `cubic-bezier(0.16, 1, 0.3, 1)`; 180ms for feedback, 320ms for transitions, up to 700ms for entrances. Scroll-driven effects only through `animation-timeline: view()` inside `@supports`, so unsupported browsers see the final state.
+- Texture: an optional fine dot grid and a very subtle grain. Never glassmorphism, never neon glows, never purple-to-pink gradients.
+
+## Signature: the desk
+
+The home hero pairs a large statement with a composition of overlapping application windows on a dot grid:
+
+1. A portrait window with Rafael's original photograph (`/images/profile.jpg`). CSS framing and a light grade only; the face is never regenerated or distorted.
+2. Four small live windows, built in HTML and CSS rather than screenshots, each in the palette of one demo: a delivery chart for Trajeto, time chips for Corte & Prosa, a cited answer for Bússola, and a phone with a sync queue for Turno. Each window links to its project.
+
+On pointer devices the windows can be dragged by their title bars and gently float; a visible control restores the layout. Without JavaScript, with reduced motion, or on touch screens, the composition is static and complete. On phones the portrait comes first and the windows become a horizontal, snap-scrolling row.
 
 ## Home composition
 
-1. Compact navigation with the existing brand, routes, language switch, and contact path.
-2. The compact split hero puts the work statement and actions on the left, with a prominent original portrait on the right. Its columns sit close together without a large empty middle. The selected projects begin immediately below. Rafael's face and hair must not be regenerated.
-3. Real projects appear promptly: EdgeData carries the lead, with Trinks and the academic platform supporting it. Images must be readable and links explicit.
-4. A useful decision interface relates constructing, evolving, or connecting software to the relevant real service and evidence. All information remains available without JavaScript.
-5. A personal experience section and two clear engagement paths. Use existing verified facts only.
-6. A direct contact close, not a second full-screen color slab.
+1. Header with brand, Work, Services, About, Contact, and language switch.
+2. The desk hero: availability pill, statement (`copy.heroTitle`), intro, primary action to the projects, secondary action to contact, and a short line with location and working model.
+3. A slow, pausable capability strip (stack and practices). Static under reduced motion.
+4. The showroom: the five product demos as large alternating exhibits (framed preview on a palette-tinted panel, index, category, name, tagline, what can be tested, "Open live demo" and "About the project"), followed by the two landing pages as a smaller pair. A visible note says the projects are authorial demonstrations with fictional brands and data.
+5. Services as large interactive rows, each linking to the demos that illustrate it.
+6. Experience in one compact band: four employers with years and roles, CV-backed figures, and the organizations served as plain text. No client logos.
+7. Contact close: a large question, email with copy-to-clipboard feedback in a live region, WhatsApp, LinkedIn, and CV.
 
 ## Inner pages
 
-Carry the same dark identity into work, service, case, about, CV, contact, and agent resources while preserving comfortable long-form reading. Keep all five cases and all five current services, evidence links, complete CV, contact data, and machine-facing routes. Casa Neblina and Clima Certa are complete, separately art-directed landing-page demonstrations with visible authorial disclosures and local-only planning interactions; do not present their illustrative brands as clients. Screenshots are real assets and must not be excessively cropped, recolored, or simulated. The About page retains the original user-supplied photograph.
+- Work: header, filter chips (All, Systems, AI, Websites, Mobile) that progressively enhance a list that is complete without JavaScript, and the seven project cards.
+- Project page: back link, category, name, tagline, "Open live demo", disclosure, large framed preview, problem and approach, what can be tested, decisions, stack, related services, demo boundaries, previous and next project.
+- Services, service detail, About (story, portrait, detailed experience), CV, Contact, and For agents share the same system and stay comfortable for long reading.
 
-## Motion and accessibility
+## Demo pages
 
-Use native CSS and small progressive enhancements: an initial entrance that establishes hierarchy, hover/focus feedback on work, and disclosure of evidence or service detail. Motion must be brief and purposeful. Reduced-motion users receive a complete static composition. No JavaScript leaves all essential content and links visible. Never hide the hero image behind a delayed reveal.
+Every demo under `/demos/<slug>/` is a complete product page with its own art direction and no portfolio chrome. A compact Rafael-branded bar (`DemoBar`) states the authorial disclosure and links back to the project page, the portfolio, contact, and the other language. Demos never submit data, never call the network, and say so where an action would normally send something. No testimonials, ratings, client logos, real addresses, or business schema.
 
-Focus states need high contrast on the dark canvas; hover cannot be the only way to reach information. The mobile menu retains keyboard, Escape, and expanded-state behavior. Contact copying reports success or failure through its live region. Avoid cursor replacement and scroll hijacking.
+## Accessibility and quality bar
+
+WCAG 2.2 AA. Every feature works with keyboard and screen readers, focus is always visible, touch targets are at least 44px, meaning never depends on color or hover alone, and all content remains available without JavaScript. Layouts work at 320, 390, 768, 1280, and 1440 pixels and at 200% zoom with no horizontal scrolling. Visual quality is verified in a real browser at desktop and mobile sizes; a passing build does not prove it.
 
 ## Assets and delivery
 
-- `/images/profile.jpg` is Rafael's original supplied photo and the home hero uses that file directly, with only CSS framing. `/images/profile-cutout.png` and `/images/hero-concept-02.png` are retained existing derivatives but are not used in the hero.
-- Preserve current case images, their claims, alt text, and provenance. Do not invent clients, metrics, products, testimonials, or outcomes.
-- Preserve English canonical pages and the Portuguese `/pt/` mirror, routes, hreflang, JSON-LD, Markdown alternatives, CV downloads, and machine-readable endpoints.
-- Use the existing Astro stack and local fonts. No dependency installation is implicit in the design request.
-- Complete the existing content/build/distribution checks and inspect the final pages in a browser at desktop and mobile sizes. Build success alone does not prove visual quality.
+- `/images/profile.jpg` is the original photograph and the only portrait in use.
+- Project previews live in `/images/projects/<slug>.png` and `.webp` (1600 by 1000) and are real screenshots of the demos.
+- Existing Astro stack, local fonts, no new dependencies. Brazilian Portuguese is the primary language at the root and `/en/` mirrors every page; former `/pt/` URLs redirect to the root.

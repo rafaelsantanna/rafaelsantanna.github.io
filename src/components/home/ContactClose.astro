@@ -1,0 +1,89 @@
+---
+import Icon from '@/components/ui/Icon.astro';
+import { identity, type Locale } from '@/data/content';
+
+interface Props { locale: Locale; id: string }
+
+const { locale, id } = Astro.props;
+const pt = locale === 'pt';
+const whatsappText = encodeURIComponent(pt
+  ? 'Olá, Rafael! Vi seu portfólio e gostaria de conversar sobre um projeto.'
+  : 'Hi Rafael, I saw your portfolio and would like to talk about a project.');
+const emailSubject = encodeURIComponent(pt ? 'Projeto ou vaga' : 'Project or role');
+const ui = pt
+  ? {
+      index: 'Contato',
+      title: 'Tem um projeto ou uma vaga em mente?',
+      lede: 'Conte o contexto, o prazo e o que precisa sair do papel. Estou disponível para contratos PJ remotos e projetos freelance, no horário comercial do Brasil.',
+      emailLabel: 'Email',
+      copy: 'Copiar',
+      copied: 'Copiado',
+      copiedStatus: 'Email copiado para a área de transferência.',
+      failedStatus: 'Não foi possível copiar. Selecione o endereço e copie manualmente.',
+      cv: 'Baixar CV',
+      cvMeta: 'PDF em português',
+    }
+  : {
+      index: 'Contact',
+      title: 'Have a project or a role in mind?',
+      lede: 'Tell me the context, the timeline, and what needs to ship. I’m available for remote contract (PJ) roles and freelance projects, with full overlap with Brazilian business hours.',
+      emailLabel: 'Email',
+      copy: 'Copy',
+      copied: 'Copied',
+      copiedStatus: 'Email copied to the clipboard.',
+      failedStatus: 'Could not copy. Select the address and copy it manually.',
+      cv: 'Download CV',
+      cvMeta: 'PDF in English',
+    };
+const routes = [
+  { href: `https://wa.me/${identity.phoneE164}?text=${whatsappText}`, label: 'WhatsApp', meta: identity.phoneDisplay, icon: 'message' as const, rel: 'noreferrer' },
+  { href: identity.linkedin, label: 'LinkedIn', meta: identity.linkedinHandle, icon: 'arrow-up-right' as const, rel: 'me noreferrer' },
+  { href: identity.cv[locale], label: ui.cv, meta: ui.cvMeta, icon: 'download' as const, download: true },
+];
+---
+
+<section class="contact-close" id={id} aria-labelledby="contact-close-title">
+  <div class="contact-close__inner shell">
+    <p class="section-index">{ui.index}</p>
+    <h2 id="contact-close-title" class="display-title">{ui.title}</h2>
+    <p class="lede">{ui.lede}</p>
+
+    <div class="contact-close__email" data-copy-root>
+      <span class="contact-close__label">{ui.emailLabel}</span>
+      <a class="contact-close__address" href={`mailto:${identity.email}?subject=${emailSubject}`}>{identity.email}</a>
+      <button
+        class="button button--secondary button--small contact-close__copy"
+        type="button"
+        hidden
+        data-copy-button
+        data-copy-value={identity.email}
+        data-label-idle={ui.copy}
+        data-label-done={ui.copied}
+        data-status-done={ui.copiedStatus}
+        data-status-failed={ui.failedStatus}
+      >
+        <span class="contact-close__copy-icon contact-close__copy-icon--idle"><Icon name="copy" /></span>
+        <span class="contact-close__copy-icon contact-close__copy-icon--done"><Icon name="check" /></span>
+        <span data-copy-label>{ui.copy}</span><span class="visually-hidden"> {identity.email}</span>
+      </button>
+      <p class="contact-close__status" role="status" data-copy-status></p>
+    </div>
+
+    <ul class="contact-close__routes">
+      {routes.map((route) => (
+        <li>
+          <a class="route" href={route.href} rel={route.rel} download={route.download ? '' : undefined}>
+            <Icon name={route.icon} />
+            <span class="route__text"><span class="route__label">{route.label}</span><span class="route__meta">{route.meta}</span></span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<script>
+  import { enhanceCopyButtons } from '@/components/ui/copy-buttons';
+
+  document.querySelectorAll<HTMLElement>('[data-copy-root]').forEach(enhanceCopyButtons);
+</script>

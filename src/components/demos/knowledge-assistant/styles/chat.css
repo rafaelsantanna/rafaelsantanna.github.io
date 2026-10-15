@@ -1,0 +1,236 @@
+/* Conversation: thread, empty state and questions. */
+.ka-pane--chat {
+  display: flex;
+  flex-direction: column;
+}
+
+.ka-thread {
+  flex: 1 1 auto;
+  padding: 2rem var(--ka-gutter) 2.5rem;
+}
+.ka-thread > * {
+  max-width: 44rem;
+  margin-inline: auto;
+}
+
+/* Empty state */
+.ka-empty { padding-block: 0.5rem 1rem; }
+.ka-empty[hidden] { display: none; }
+.ka-empty__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--ka-soft);
+  font: 500 0.8125rem/1.3 var(--ka-font-ui);
+}
+.ka-empty__eyebrow::before {
+  content: '';
+  width: 1.5rem;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--ka-yellow);
+}
+.ka-empty__title {
+  max-width: 18ch;
+  margin-top: 0.9rem;
+  font: 600 clamp(1.9rem, 1.35rem + 2vw, 2.5rem)/1.08 var(--ka-font-ui);
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+}
+.ka-empty__text {
+  max-width: 36rem;
+  margin-top: 0.85rem;
+  color: var(--ka-soft);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+}
+.ka-empty__label {
+  margin-top: 1.6rem;
+  color: var(--ka-muted);
+  font: 500 0.8125rem/1.3 var(--ka-font-ui);
+}
+
+.ka-suggestions {
+  display: grid;
+  gap: 0.6rem;
+  margin: 0.75rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+.ka-suggestion {
+  position: relative;
+  display: grid;
+  gap: 0.35rem;
+  width: 100%;
+  height: 100%;
+  align-content: start;
+  padding: 0.85rem 3rem 0.9rem 1rem;
+  border: 1px solid var(--ka-line);
+  border-radius: var(--ka-radius);
+  background: var(--ka-raised);
+  color: var(--ka-ink);
+  text-align: left;
+  transition: border-color 180ms var(--ka-ease), background-color 180ms var(--ka-ease), transform 180ms var(--ka-ease);
+}
+.ka-suggestion:hover {
+  border-color: var(--ka-yellow-line);
+  background: var(--ka-raised-2);
+  transform: translateY(-1px);
+}
+.ka-suggestion__tag {
+  color: var(--ka-muted);
+  font: 500 0.75rem/1.3 var(--ka-font-ui);
+}
+.ka-suggestion__text { font-size: 1rem; line-height: 1.4; }
+.ka-suggestion__icon {
+  position: absolute;
+  top: 0.9rem;
+  right: 0.9rem;
+  width: 1.1rem;
+  height: 1.1rem;
+  color: var(--ka-muted);
+  transform: rotate(45deg);
+  transition: color 180ms var(--ka-ease);
+}
+.ka-suggestion:hover .ka-suggestion__icon { color: var(--ka-yellow); }
+.ka-suggestion--handoff { border-style: dashed; border-color: var(--ka-line-strong); background: transparent; }
+.ka-suggestion--handoff .ka-suggestion__tag { color: var(--ka-yellow); }
+
+.ka-steps-intro {
+  display: grid;
+  gap: 0.75rem;
+  margin: 1.5rem 0 0;
+  padding: 1.1rem 0 0;
+  border-top: 1px solid var(--ka-line);
+  list-style: none;
+  counter-reset: ka-step;
+}
+.ka-steps-intro li {
+  display: flex;
+  align-items: baseline;
+  gap: 0.65rem;
+  color: var(--ka-soft);
+  font-size: 0.875rem;
+  line-height: 1.45;
+  counter-increment: ka-step;
+}
+.ka-steps-intro li::before {
+  content: counter(ka-step);
+  flex: none;
+  color: var(--ka-yellow);
+  font: 600 0.75rem/1 var(--ka-font-mono);
+}
+
+/* Without JavaScript nothing can be asked, so only the description of the assistant stays. */
+html:not(.js) .ka-empty__label,
+html:not(.js) .ka-suggestions { display: none; }
+
+/* Suggestions not asked yet, below the conversation. */
+.ka-next {
+  display: grid;
+  gap: 0.6rem;
+  margin-top: 2.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--ka-line);
+}
+.ka-next__label {
+  color: var(--ka-muted);
+  font: 500 0.8125rem/1.3 var(--ka-font-ui);
+}
+.ka-next__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.ka-next__chip {
+  display: grid;
+  gap: 0.15rem;
+  min-height: 2.75rem;
+  padding: 0.55rem 0.9rem;
+  border: 1px solid var(--ka-line-strong);
+  border-radius: var(--ka-radius-sm);
+  background: var(--ka-raised);
+  color: var(--ka-ink);
+  font: 500 0.875rem/1.35 var(--ka-font-text);
+  text-align: left;
+  transition: border-color 180ms var(--ka-ease), background-color 180ms var(--ka-ease);
+}
+.ka-next__chip:hover { border-color: var(--ka-yellow-line); background: var(--ka-raised-2); }
+.ka-next__chip--handoff { border-style: dashed; background: transparent; }
+.ka-next__tag { color: var(--ka-yellow); font: 500 0.75rem/1.3 var(--ka-font-ui); }
+
+/* On small phones the honesty line leaves the sticky composer and shows in the thread instead. */
+.ka-thread .ka-honesty--copy { display: none; }
+
+@media (max-width: 30rem) {
+  .js .ka-empty .ka-honesty--copy { display: flex; margin-top: 0.85rem; }
+  .js .ka-turns:not(:empty) ~ .ka-honesty--thread { display: flex; margin-top: 2rem; }
+}
+
+@media (min-width: 40rem) {
+  .ka-suggestions { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ka-steps-intro { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.25rem; }
+}
+
+/* Turns */
+.ka-turns {
+  display: grid;
+  gap: 2.5rem;
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+}
+.ka-turns:empty { display: none; }
+.ka-turn {
+  display: grid;
+  gap: 0.85rem;
+  scroll-margin-top: calc(var(--ka-tabs-h) + 1rem);
+  animation: ka-rise 320ms var(--ka-ease) both;
+}
+.ka-q { display: grid; gap: 0.3rem; }
+.ka-q__who {
+  color: var(--ka-muted);
+  font: 500 0.75rem/1.3 var(--ka-font-ui);
+}
+.ka-q__text {
+  font: 700 1.1875rem/1.4 var(--ka-font-text);
+  letter-spacing: -0.005em;
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+}
+
+/* Pending state, visible for as long as the pipeline actually runs. */
+.ka-pending {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: var(--ka-soft);
+}
+.ka-pending__dots { display: inline-flex; gap: 0.25rem; }
+.ka-pending__dots span {
+  width: 0.35rem;
+  height: 0.35rem;
+  border-radius: 50%;
+  background: var(--ka-yellow);
+  animation: ka-pulse 900ms ease-in-out infinite;
+}
+.ka-pending__dots span:nth-child(2) { animation-delay: 150ms; }
+.ka-pending__dots span:nth-child(3) { animation-delay: 300ms; }
+
+@keyframes ka-rise {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes ka-pulse {
+  0%, 100% { opacity: 0.35; }
+  50% { opacity: 1; }
+}
+
+@media (min-width: 64rem) and (min-height: 37.5rem) {
+  .ka-pane--chat { display: grid; grid-template-rows: minmax(0, 1fr) auto; }
+  .ka-thread { overflow-y: auto; overscroll-behavior: contain; }
+  .ka-turn { scroll-margin-top: 1.5rem; }
+}

@@ -1,0 +1,82 @@
+/* Ventura modern screen: order summary, a sticky sidebar on wide containers and a bottom bar on narrow ones. */
+.demo-legacy-modernization .vt-modern {
+  .vt-sum { display: flex; flex-direction: column; gap: 0.5rem; min-width: 0; }
+  .vt-sum__panel {
+    display: grid;
+    gap: 1rem;
+    padding: 1.25rem;
+    border: 1px solid var(--vt-line);
+    border-radius: 14px;
+    background: var(--vt-surface);
+  }
+  .vt-sum__title { font-family: var(--vt-display); font-size: 1.1rem; font-weight: 700; letter-spacing: -0.01em; }
+  .vt-sum__panel > div { display: grid; gap: 1rem; }
+  .vt-sum__customer-name { font-weight: 700; line-height: 1.3; }
+  .vt-sum__customer-name.is-empty { color: var(--vt-muted); font-weight: 400; }
+  .vt-sum__customer-meta { color: var(--vt-muted); font-size: 0.88rem; }
+  .vt-sum__lines { display: grid; gap: 0.55rem; margin: 0; font-variant-numeric: tabular-nums; }
+  .vt-sum__lines > div { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; }
+  .vt-sum__lines dt span { display: block; color: var(--vt-muted); font-size: 0.82rem; }
+  .vt-sum__lines dd { margin: 0; white-space: nowrap; }
+  .vt-sum__lines .is-blocked dt { color: var(--vt-warn); font-weight: 700; }
+  .vt-sum__total { margin-top: 0.2rem; padding-top: 0.75rem; border-top: 1px solid var(--vt-line); }
+  .vt-sum__total dt { font-weight: 700; }
+  .vt-sum__total dd { font-family: var(--vt-display); font-size: 1.65rem; font-weight: 700; letter-spacing: -0.02em; }
+  .vt-sum__payment {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.6rem 0.75rem;
+    border-radius: 10px;
+    background: var(--vt-surface-2);
+    font-size: 0.92rem;
+  }
+  .vt-sum__status { display: flex; align-items: center; gap: 0.45rem; font-weight: 700; }
+  .vt-sum__status.is-ready { color: var(--vt-accent-strong); }
+  .vt-sum__status.is-todo { color: var(--vt-warn); }
+  .vt-sum__issues ul { display: grid; gap: 0.1rem; margin: 0.35rem 0 0; padding-inline-start: 1.75rem; font-size: 0.92rem; }
+  .vt-sum__issues li::marker { color: var(--vt-warn); }
+  .vt-sum__note { color: var(--vt-muted); font-size: 0.82rem; text-align: center; }
+  .vt-sum__bar { display: none; }
+
+  @container vt-modern (min-width: 62rem) {
+    .vt-m-layout { grid-template-columns: minmax(0, 1fr) 21rem; align-items: start; }
+    .vt-sum { position: sticky; top: calc(var(--vt-sticky) + 1rem); }
+  }
+}
+
+/* Narrow screens: the summary becomes a bottom bar that expands. Only with the script running. */
+@container vt-modern (max-width: 61.99rem) {
+  .js .demo-legacy-modernization .vt-modern {
+    .vt-sum { position: sticky; bottom: 0.5rem; z-index: 15; }
+    .vt-sum__bar {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.55rem 0.6rem 0.55rem 1rem;
+      border-radius: 14px;
+      background: var(--vt-ink);
+      color: #FFFFFF;
+      box-shadow: 0 -6px 28px -10px rgb(15 31 23 / 55%);
+    }
+    .vt-sum__bar-info { display: grid; min-width: 0; margin-inline-end: auto; line-height: 1.25; }
+    .vt-sum__bar-info > span:first-child { color: #A7BFB2; font-size: 0.78rem; }
+    .vt-sum__bar-info strong { font-family: var(--vt-display); font-size: 1.1rem; font-variant-numeric: tabular-nums; white-space: nowrap; }
+    .vt-sum__bar-info > span:last-child { color: #FCD58A; font-size: 0.8rem; font-weight: 700; }
+    .vt-sum__bar .vt-btn { min-height: 44px; padding-inline: 0.8rem; white-space: nowrap; }
+    .vt-sum__bar .vt-btn--primary { background: var(--vt-accent-bright); color: var(--vt-ink); }
+    .vt-sum__bar .vt-btn--primary:hover { background: #6EE7B7; }
+    .vt-sum__bar .vt-btn:focus-visible { outline-color: var(--vt-accent-bright); }
+    .vt-sum__toggle { padding-inline: 0.6rem; border-color: rgb(255 255 255 / 35%); background: transparent; color: #FFFFFF; }
+    .vt-sum__toggle:hover { background: rgb(255 255 255 / 10%); }
+    .vt-sum__toggle .vt-icon { transition: rotate 180ms var(--vt-ease); }
+    .vt-sum.is-open .vt-sum__toggle .vt-icon { rotate: 180deg; }
+    .vt-sum:not(.is-open) .vt-sum__panel { display: none; }
+    .vt-sum__panel { max-height: min(62vh, 34rem); overflow-y: auto; box-shadow: 0 -10px 30px -16px rgb(15 31 23 / 45%); }
+    .vt-sum__cta { display: none; }
+  }
+}
+
+@container vt-modern (max-width: 26rem) {
+  .js .demo-legacy-modernization .vt-modern .vt-sum__toggle span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+}

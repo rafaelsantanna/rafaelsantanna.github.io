@@ -1,0 +1,65 @@
+---
+import Icon from '@/components/ui/Icon.astro';
+import Exhibit from '@/components/home/Exhibit.astro';
+import ProjectCard from '@/components/ui/ProjectCard.astro';
+import { projects, type Locale } from '@/data/content';
+
+interface Props { locale: Locale; id: string }
+
+const { locale, id } = Astro.props;
+const pt = locale === 'pt';
+const products = projects.slice(0, 5);
+const landingPages = projects.slice(5);
+const ui = pt
+  ? {
+      index: 'Projetos',
+      title: 'Abra, clique, teste.',
+      lede: 'Cinco produtos e duas landing pages, cada um com direção de arte própria e funcionando no navegador. Nada aqui é só imagem.',
+      note: 'Todos são demonstrações autorais, criadas por mim com marcas e dados fictícios.',
+      noteMore: 'A experiência com clientes reais está no currículo.',
+      landingTitle: 'Landing pages por segmento',
+      landingLede: 'Sites para negócios locais, cada um com identidade própria, que explicam o serviço e levam o cliente até a reserva ou o orçamento.',
+    }
+  : {
+      index: 'Projects',
+      title: 'Open it, click it, test it.',
+      lede: 'Five products and two landing pages, each with its own art direction and running in your browser. Nothing here is just a picture.',
+      note: 'Every project here is a demo I built myself, with a fictional brand and fictional data.',
+      noteMore: 'Real client experience is in the CV.',
+      landingTitle: 'Landing pages by segment',
+      landingLede: 'Sites for local businesses, each with its own identity, that explain the service and lead visitors to book or ask for a quote.',
+    };
+---
+
+<section class="showroom section" id={id} aria-labelledby="showroom-title">
+  <div class="shell">
+    <header class="section-head" data-reveal>
+      <div class="section-head__title">
+        <p class="section-index">{ui.index}</p>
+        <h2 id="showroom-title">{ui.title}</h2>
+      </div>
+      <div class="section-head__aside">
+        <p class="lede">{ui.lede}</p>
+        <p class="note"><Icon name="info" /><span><strong>{ui.note}</strong> {ui.noteMore}</span></p>
+      </div>
+    </header>
+
+    <ol class="exhibits">
+      {products.map((project, index) => (
+        <li><Exhibit project={project} locale={locale} index={index} showIndex /></li>
+      ))}
+    </ol>
+
+    <section class="landing-pair" aria-labelledby="landing-title">
+      <div class="landing-pair__head">
+        <h3 id="landing-title">{ui.landingTitle}</h3>
+        <p>{ui.landingLede}</p>
+      </div>
+      <ul class="landing-pair__grid">
+        {landingPages.map((project, index) => (
+          <li data-reveal><ProjectCard project={project} locale={locale} number={products.length + index + 1} headingLevel="h4" /></li>
+        ))}
+      </ul>
+    </section>
+  </div>
+</section>

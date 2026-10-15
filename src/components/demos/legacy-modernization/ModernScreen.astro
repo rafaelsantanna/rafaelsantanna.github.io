@@ -1,0 +1,162 @@
+---
+import type { Locale } from '@/data/types';
+import type { Draft } from './draft.ts';
+import { fill, percent } from './format.ts';
+import { emptyCrate, icons, logo } from './icons.ts';
+import {
+  customerCard, discountHint, discountMessage, discountPreview, errorHtml, itemRows, itemsFooter, limitPosition, stepStates, stepsHtml, summaryBody,
+  termsTiles, type Visibility,
+} from './render-modern.ts';
+import { DISCOUNT_LIMIT, type Evaluation } from './rules.ts';
+import type { Strings } from './strings.ts';
+import './modern.css';
+import './summary.css';
+
+interface Props { locale: Locale; t: Strings; draft: Draft; evaluation: Evaluation }
+
+const { locale, t, draft, evaluation } = Astro.props;
+const m = t.modern;
+const visibility: Visibility = { customer: false, items: false, typingKey: '', typingDiscount: false };
+const discountError = discountMessage(evaluation, locale, t);
+---
+
+<section class="vt-modern" aria-labelledby="vt-m-title" data-modern>
+  <div class="vt-m-appbar">
+    <p class="vt-m-brand"><Fragment set:html={logo} /><span>Ventura</span><span class="vt-m-brand__module">{t.page.module}</span></p>
+    <p class="vt-m-user"><Fragment set:html={icons.user} /><span data-m-role>{fill(m.roleChip, { role: t.roles[evaluation.role] })}</span></p>
+  </div>
+
+  <div class="vt-m-head">
+    <div>
+      <p class="vt-m-crumb">{m.crumb}<span aria-hidden="true">/</span>{m.title}</p>
+      <h3 class="vt-m-title" id="vt-m-title">{m.title}</h3>
+    </div>
+    <div class="vt-m-save" data-m-save>
+      <p class="vt-m-save__text" data-m-save-text><Fragment set:html={icons.cloud} /><span>{m.autosave.example}</span></p>
+      <button type="button" class="vt-btn vt-btn--quiet" data-m-discard><Fragment set:html={icons.trash} /><span>{m.discard}</span></button>
+    </div>
+  </div>
+
+  <nav class="vt-steps" aria-label={m.stepsLabel}>
+    <ol data-m-steps set:html={stepsHtml(stepStates(evaluation, visibility, 'edit'), t, true)} />
+  </nav>
+
+  <div class="vt-m-layout">
+    <div class="vt-m-main">
+      <div class="vt-m-alert" tabindex="-1" data-m-errors hidden></div>
+
+      <div class="vt-m-view" data-m-view="edit">
+        <section class="vt-m-card" id="vt-m-s-customer" aria-labelledby="vt-m-s-customer-title">
+          <header class="vt-m-card__head">
+            <span class="vt-m-card__index" aria-hidden="true">1</span>
+            <h4 id="vt-m-s-customer-title" tabindex="-1">{m.steps[0]}</h4>
+          </header>
+          <div class="vt-field">
+            <label class="vt-field__label" for="vt-m-customer">{m.customer.label}</label>
+            <p class="vt-field__hint" id="vt-m-customer-hint">{m.customer.hint}</p>
+            <div class="vt-combo" data-combo="customer">
+              <span class="vt-combo__icon"><Fragment set:html={icons.search} /></span>
+              <input class="vt-input vt-combo__input" id="vt-m-customer" type="text" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="vt-m-customer-list" aria-describedby="vt-m-customer-hint vt-m-customer-error" autocomplete="off" spellcheck="false" placeholder={m.customer.placeholder} value={evaluation.customer?.name ?? ''} data-combo-input />
+              <ul class="vt-combo__list" id="vt-m-customer-list" role="listbox" aria-label={m.customer.list} hidden data-combo-list></ul>
+              <p class="vt-combo__empty" hidden data-combo-empty></p>
+            </div>
+            <p class="vt-sr-only" aria-live="polite" data-combo-status="customer"></p>
+            <p class="vt-field-error" id="vt-m-customer-error" hidden data-m-error="customer"></p>
+          </div>
+          <div class="vt-m-customer" data-m-customer-card set:html={customerCard(evaluation, locale, t)} />
+        </section>
+
+        <section class="vt-m-card" id="vt-m-s-items" aria-labelledby="vt-m-s-items-title">
+          <header class="vt-m-card__head">
+            <span class="vt-m-card__index" aria-hidden="true">2</span>
+            <h4 id="vt-m-s-items-title" tabindex="-1">{m.steps[1]}</h4>
+          </header>
+          <div class="vt-field">
+            <label class="vt-field__label" for="vt-m-product">{m.items.label}</label>
+            <p class="vt-field__hint" id="vt-m-product-hint">{m.items.hint}</p>
+            <div class="vt-combo" data-combo="product">
+              <span class="vt-combo__icon"><Fragment set:html={icons.search} /></span>
+              <input class="vt-input vt-combo__input" id="vt-m-product" type="text" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="vt-m-product-list" aria-describedby="vt-m-product-hint vt-m-items-error" autocomplete="off" spellcheck="false" placeholder={m.items.placeholder} data-combo-input />
+              <ul class="vt-combo__list" id="vt-m-product-list" role="listbox" aria-label={m.items.list} hidden data-combo-list></ul>
+              <p class="vt-combo__empty" hidden data-combo-empty></p>
+            </div>
+            <p class="vt-sr-only" aria-live="polite" data-combo-status="product"></p>
+            <p class="vt-field-error" id="vt-m-items-error" hidden data-m-error="items"></p>
+          </div>
+
+          <div class="vt-m-items" data-m-items>
+            <table class="vt-items" role="table" data-m-table hidden={evaluation.lines.length === 0}>
+              <caption class="vt-sr-only">{m.items.caption}</caption>
+              <thead role="rowgroup">
+                <tr role="row">
+                  <th role="columnheader" scope="col">{m.items.columns.product}</th>
+                  <th role="columnheader" scope="col" class="vt-items__num">{m.items.columns.price}</th>
+                  <th role="columnheader" scope="col" class="vt-items__qty">{m.items.columns.qty}</th>
+                  <th role="columnheader" scope="col" class="vt-items__num">{m.items.columns.total}</th>
+                  <th role="columnheader" scope="col"><span class="vt-sr-only">{m.items.columns.actions}</span></th>
+                </tr>
+              </thead>
+              <tbody role="rowgroup" data-m-rows set:html={itemRows(evaluation, draft, visibility, locale, t)} />
+            </table>
+            <div class="vt-empty" data-m-empty hidden={evaluation.lines.length > 0}>
+              <Fragment set:html={emptyCrate} />
+              <p class="vt-empty__title">{m.items.emptyTitle}</p>
+              <p class="vt-empty__text">{m.items.emptyText}</p>
+            </div>
+            <p class="vt-m-items__foot" hidden={evaluation.lines.length === 0} data-m-items-foot set:html={itemsFooter(evaluation, locale, t)} />
+          </div>
+        </section>
+
+        <section class="vt-m-card" id="vt-m-s-terms" aria-labelledby="vt-m-s-terms-title">
+          <header class="vt-m-card__head">
+            <span class="vt-m-card__index" aria-hidden="true">3</span>
+            <h4 id="vt-m-s-terms-title" tabindex="-1">{m.steps[2]}</h4>
+          </header>
+          <div class="vt-m-terms">
+            <div class="vt-field vt-field--discount">
+              <label class="vt-field__label" for="vt-m-discount">{m.terms.discount}</label>
+              <div class="vt-discount">
+                <div class="vt-affix">
+                  <input class="vt-input" id="vt-m-discount" type="text" inputmode="decimal" autocomplete="off" maxlength="6" value={draft.discount} aria-describedby="vt-m-discount-hint vt-m-discount-error vt-m-discount-preview" aria-invalid={discountError ? 'true' : undefined} data-m-discount />
+                  <span class="vt-affix__suffix" aria-hidden="true">%</span>
+                </div>
+                <div class="vt-limit" aria-hidden="true" data-m-limit style={`--vt-value:${limitPosition(evaluation.requestedDiscount ?? 0)}`}>
+                  <div class="vt-limit__track">
+                    <span class="vt-limit__zone vt-limit__zone--seller" style={`inline-size:${limitPosition(DISCOUNT_LIMIT.seller)}`}></span>
+                    <span class="vt-limit__zone vt-limit__zone--manager" style={`inline-size:${limitPosition(DISCOUNT_LIMIT.manager)}`}></span>
+                    <span class="vt-limit__marker"></span>
+                  </div>
+                  <div class="vt-limit__ticks">
+                    <span style={`inset-inline-start:${limitPosition(DISCOUNT_LIMIT.seller)}`}>{m.terms.meter.seller} {percent(DISCOUNT_LIMIT.seller, locale)}</span>
+                    <span style={`inset-inline-start:${limitPosition(DISCOUNT_LIMIT.manager)}`}>{m.terms.meter.manager} {percent(DISCOUNT_LIMIT.manager, locale)}</span>
+                  </div>
+                </div>
+              </div>
+              <p class="vt-field__hint" id="vt-m-discount-hint" data-m-discount-hint>{discountHint(evaluation, locale, t)}</p>
+              <p class="vt-field-error" id="vt-m-discount-error" hidden={!discountError} data-m-error="discount" set:html={errorHtml(discountError)} />
+              <p class="vt-field__preview" id="vt-m-discount-preview" data-m-discount-preview>{discountPreview(evaluation, locale, t)}</p>
+            </div>
+            <div class="vt-tiles" data-m-tiles set:html={termsTiles(evaluation, locale, t)} />
+          </div>
+        </section>
+      </div>
+
+      <div class="vt-m-view" data-m-view="review" hidden></div>
+      <div class="vt-m-view" data-m-view="done" hidden></div>
+    </div>
+
+    <aside class="vt-sum" aria-labelledby="vt-sum-title" data-m-summary>
+      <div class="vt-sum__panel" id="vt-sum-panel" data-m-sum-panel>
+        <h4 class="vt-sum__title" id="vt-sum-title">{m.summary.title}</h4>
+        <div data-m-sum-body set:html={summaryBody(evaluation, 'edit', locale, t)} />
+        <button type="button" class="vt-btn vt-btn--primary vt-btn--block vt-sum__cta" data-m-cta>{m.summary.review}</button>
+        <p class="vt-sum__note">{m.summary.nothingSent}</p>
+      </div>
+      <div class="vt-sum__bar">
+        <p class="vt-sum__bar-info"><span>{m.summary.total}</span><strong data-m-bar-total></strong><span data-m-bar-issues></span></p>
+        <button type="button" class="vt-btn vt-btn--ghost vt-sum__toggle" aria-expanded="false" aria-controls="vt-sum-panel" data-m-sum-toggle><Fragment set:html={icons.chevronUp} /><span data-m-sum-toggle-label>{m.summary.expand}</span></button>
+        <button type="button" class="vt-btn vt-btn--primary" aria-label={m.summary.review} data-m-cta-bar>{m.summary.reviewShort}</button>
+      </div>
+    </aside>
+  </div>
+</section>

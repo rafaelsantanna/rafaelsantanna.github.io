@@ -1,0 +1,156 @@
+---
+import type { Locale } from '@/data/types';
+import type { Draft } from './draft.ts';
+import { shortDate } from './format.ts';
+import { LEGACY_MIN_ROWS, customerFields, customerOptions, gridRows, roleText, totalsText } from './render-legacy.ts';
+import type { Evaluation, Role } from './rules.ts';
+import type { Strings } from './strings.ts';
+import './legacy.css';
+
+interface Props { locale: Locale; t: Strings; draft: Draft; calc: Evaluation; role: Role }
+
+const { locale, t, draft, calc, role } = Astro.props;
+const l = t.legacy;
+const fields = customerFields(calc.customer, locale);
+const totals = totalsText(calc, locale);
+const accelerated = (label: string) => `<u>${label[0]}</u>${label.slice(1)}`;
+---
+
+<section class="vt-legacy" aria-labelledby="vt-l-title" data-legacy>
+  <div class="vt-l-titlebar" aria-hidden="true">
+    <svg class="vt-l-appicon" viewBox="0 0 16 16" width="16" height="16" focusable="false"><rect x="1.5" y="1.5" width="13" height="13" fill="#008080" stroke="#000"/><path d="M4 4.5 8 12l4-7.5" fill="none" stroke="#FFFF00" stroke-width="2"/></svg>
+    <p class="vt-l-title">{l.appTitle}</p>
+    <span class="vt-l-caption"><span>_</span><span>□</span><span>×</span></span>
+  </div>
+  <div class="vt-l-menubar" aria-hidden="true">
+    {l.menu.map((item) => <span><u>{item[0]}</u>{item.slice(1)}</span>)}
+  </div>
+  <div class="vt-l-toolbar" aria-hidden="true">
+    <span class="vt-l-tool"><svg viewBox="0 0 16 16" width="16" height="16"><path d="M3.5 1.5h6l3 3v10h-9z" fill="#FFF" stroke="#000"/><path d="M9.5 1.5v3h3" fill="none" stroke="#000"/></svg></span>
+    <span class="vt-l-tool"><svg viewBox="0 0 16 16" width="16" height="16"><path d="M1.5 4.5h5l1 1.5h7v8h-13z" fill="#FFD966" stroke="#806000"/></svg></span>
+    <span class="vt-l-tool"><svg viewBox="0 0 16 16" width="16" height="16"><path d="M2.5 2.5h11v11h-11z" fill="#000080" stroke="#000"/><path d="M4.5 2.5h7v4h-7z" fill="#FFF"/><path d="M5 10h6v3.5H5z" fill="#C0C0C0"/></svg></span>
+    <span class="vt-l-sep"></span>
+    <span class="vt-l-tool"><svg viewBox="0 0 16 16" width="16" height="16"><path d="M4.5 1.5h7v4h-7z" fill="#FFF" stroke="#000"/><path d="M1.5 5.5h13v6h-13z" fill="#C0C0C0" stroke="#000"/><path d="M4.5 9.5h7v5h-7z" fill="#FFF" stroke="#000"/></svg></span>
+    <span class="vt-l-tool"><svg viewBox="0 0 16 16" width="16" height="16"><circle cx="6.5" cy="6.5" r="4" fill="#CCE8FF" stroke="#000"/><path d="M9.5 9.5l5 5" stroke="#000" stroke-width="2"/></svg></span>
+    <span class="vt-l-tool is-disabled"><svg viewBox="0 0 16 16" width="16" height="16"><path d="M2.5 1.5h9v13h-9z" fill="#808080"/><path d="M11.5 8h3M13 6.5 14.5 8 13 9.5" stroke="#808080" fill="none"/></svg></span>
+  </div>
+
+  <div class="vt-l-mdi">
+    <div class="vt-l-window">
+      <div class="vt-l-titlebar">
+        <svg class="vt-l-appicon" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><rect x="1.5" y="2.5" width="13" height="11" fill="#FFF" stroke="#000"/><rect x="1.5" y="2.5" width="13" height="3" fill="#0A246A"/><path d="M4 8h8M4 10h5" stroke="#008080"/></svg>
+        <h3 class="vt-l-title" id="vt-l-title">{l.title}</h3>
+        <span class="vt-l-caption" aria-hidden="true"><span>_</span><span>□</span><span>×</span></span>
+      </div>
+      <div class="vt-l-body">
+        <table class="vt-l-layout vt-l-headrow" role="presentation">
+          <tbody>
+            <tr>
+              <td class="vt-l-lbl"><label for="vt-l-order">{l.orderNo}</label></td>
+              <td><input class="vt-l-input is-ro" id="vt-l-order" type="text" readonly value={l.orderNoValue} size="9" /></td>
+              <td class="vt-l-lbl"><label for="vt-l-date">{l.date}</label></td>
+              <td><input class="vt-l-input is-ro" id="vt-l-date" type="text" readonly value={shortDate(new Date(), locale)} size="10" data-l-date /></td>
+              <td class="vt-l-lbl"><label for="vt-l-seller">{l.seller}</label></td>
+              <td><input class="vt-l-input is-ro" id="vt-l-seller" type="text" readonly value={l.sellerValue} size="24" /></td>
+              <td class="vt-l-lbl"><label for="vt-l-role">{l.profile}</label></td>
+              <td><input class="vt-l-input is-ro" id="vt-l-role" type="text" readonly value={roleText(role, t)} size="10" data-l-role /></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <fieldset class="vt-l-group">
+          <legend>{l.groupCustomer}</legend>
+          <table class="vt-l-layout" role="presentation">
+            <tbody>
+              <tr>
+                <td class="vt-l-lbl"><label for="vt-l-customer">{l.customer}<span class="vt-l-req">*</span></label></td>
+                <td colspan="5"><select class="vt-l-select vt-l-select--customer" id="vt-l-customer" aria-required="true" data-l-customer set:html={customerOptions(draft.customerId, t)} /></td>
+              </tr>
+              <tr>
+                <td class="vt-l-lbl"><label for="vt-l-city">{l.city}</label></td>
+                <td><input class="vt-l-input is-ro" id="vt-l-city" type="text" readonly value={fields.city} size="22" data-l-city /></td>
+                <td class="vt-l-lbl"><label for="vt-l-region">{l.region}</label></td>
+                <td><input class="vt-l-input is-ro" id="vt-l-region" type="text" readonly value={fields.region} size="14" data-l-region /></td>
+                <td class="vt-l-lbl"><label for="vt-l-terms">{l.terms}</label></td>
+                <td><input class="vt-l-input is-ro" id="vt-l-terms" type="text" readonly value={fields.terms} size="12" data-l-terms /></td>
+              </tr>
+            </tbody>
+          </table>
+        </fieldset>
+
+        <fieldset class="vt-l-group">
+          <legend>{l.groupItems}</legend>
+          <table class="vt-l-grid">
+            <thead>
+              <tr>
+                <th scope="col" class="vt-l-col-seq">{l.columns.seq}</th>
+                <th scope="col" class="vt-l-col-product">{l.columns.product}<span class="vt-l-req">*</span></th>
+                <th scope="col" class="vt-l-col-unit">{l.columns.unit}</th>
+                <th scope="col" class="vt-l-col-qty">{l.columns.qty}<span class="vt-l-req">*</span></th>
+                <th scope="col" class="vt-l-col-money">{l.columns.price}</th>
+                <th scope="col" class="vt-l-col-money">{l.columns.total}</th>
+              </tr>
+            </thead>
+            <tbody data-l-rows set:html={gridRows(draft, calc, Math.max(LEGACY_MIN_ROWS, draft.lines.length), locale, t)} />
+          </table>
+          <div class="vt-l-gridtools">
+            <button type="button" class="vt-l-btn vt-l-btn--small" data-l-add>{l.addRow}</button>
+          </div>
+        </fieldset>
+
+        <div class="vt-l-bottom">
+          <p class="vt-l-note">{l.note}</p>
+          <fieldset class="vt-l-group vt-l-group--totals">
+            <legend>{l.groupTotals}</legend>
+            <table class="vt-l-layout" role="presentation">
+              <tbody>
+                <tr>
+                  <td class="vt-l-lbl"><label for="vt-l-subtotal">{l.subtotal}</label></td>
+                  <td><input class="vt-l-input is-ro vt-l-money" id="vt-l-subtotal" type="text" readonly value={totals.subtotal} size="12" data-l-subtotal /></td>
+                  <td class="vt-l-lbl"><label for="vt-l-discount">{l.discountPct}</label></td>
+                  <td><input class="vt-l-input vt-l-money" id="vt-l-discount" type="text" value={draft.discount} size="6" maxlength="6" autocomplete="off" data-l-discount /></td>
+                </tr>
+                <tr>
+                  <td class="vt-l-lbl"><label for="vt-l-discount-value">{l.discountValue}</label></td>
+                  <td><input class="vt-l-input is-ro vt-l-money" id="vt-l-discount-value" type="text" readonly value={totals.discount} size="12" data-l-discount-value /></td>
+                  <td class="vt-l-lbl"><label for="vt-l-freight">{l.freight}</label></td>
+                  <td><input class="vt-l-input is-ro vt-l-money" id="vt-l-freight" type="text" readonly value={totals.freight} size="6" data-l-freight /></td>
+                </tr>
+                <tr>
+                  <td class="vt-l-lbl"><label for="vt-l-total">{l.total}</label></td>
+                  <td colspan="3"><input class="vt-l-input is-ro vt-l-money vt-l-grand" id="vt-l-total" type="text" readonly value={totals.total} size="12" data-l-total /></td>
+                </tr>
+              </tbody>
+            </table>
+          </fieldset>
+        </div>
+
+        <div class="vt-l-actions">
+          <button type="button" class="vt-l-btn vt-l-btn--default" data-l-calc set:html={accelerated(l.calc)} />
+          <button type="button" class="vt-l-btn" data-l-save set:html={accelerated(l.save)} />
+          <button type="button" class="vt-l-btn" data-l-clear set:html={accelerated(l.clear)} />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="vt-l-statusbar">
+    <span class="vt-l-panel vt-l-panel--grow" role="status" data-l-status>{l.status.ready}</span>
+    <span class="vt-l-panel">{l.user}</span>
+    <span class="vt-l-panel" data-l-status-role>{roleText(role, t)}</span>
+    <span class="vt-l-panel">{l.branch}</span>
+    <span class="vt-l-panel">{l.version}</span>
+  </div>
+
+  <dialog class="vt-l-dialog" aria-labelledby="vt-l-dialog-title" aria-describedby="vt-l-dialog-message" data-l-dialog>
+    <div class="vt-l-titlebar">
+      <p class="vt-l-title" id="vt-l-dialog-title">{l.dialogTitle}</p>
+      <button type="button" class="vt-l-x" aria-label={l.close} data-l-dialog-close>×</button>
+    </div>
+    <div class="vt-l-dialog__body">
+      <span class="vt-l-dialog__icon" aria-hidden="true" data-l-dialog-icon></span>
+      <div class="vt-l-dialog__message" id="vt-l-dialog-message" data-l-dialog-message></div>
+    </div>
+    <div class="vt-l-dialog__actions" data-l-dialog-actions></div>
+  </dialog>
+</section>

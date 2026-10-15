@@ -1,40 +1,215 @@
 ---
-import { alternatePath, localize, withLocale, type Concept, type Locale } from '@/data/content';
-interface Props { locale: Locale; concept: Concept }
-const { locale, concept } = Astro.props;
+import DemoBar from '@/components/demos/DemoBar.astro';
+import { localize, withLocale, type Concept, type DemoProject, type Locale } from '@/data/content';
+
+interface Props { locale: Locale; concept: Concept; project: DemoProject }
+
+const { locale, concept, project } = Astro.props;
 const pt = locale === 'pt';
 const demoImage = concept.image.replace(/\.png$/, '.webp');
+const [intro, spaces, surroundings] = concept.sections[locale];
+const t = pt
+  ? {
+      nav: 'Navegação Casa Neblina',
+      tagline: 'refúgio de montanha',
+      house: 'A casa',
+      around: 'Arredores',
+      plan: 'Planeje',
+      planStay: 'Planejar estadia',
+      heroKicker: 'Serra · floresta · silêncio',
+      heroLede: 'Uma casa entre a névoa e a mata, para dias sem pressa e noites de janela aberta.',
+      heroCta: 'Planejar minha estadia',
+      heroCaption: 'Fim de tarde na varanda da mata',
+      introKicker: 'Uma pausa com espaço para respirar',
+      staysKicker: 'Do seu jeito',
+      stays: [
+        { tag: '01 / Descanso', title: 'Quartos serenos', text: 'Texturas naturais, luz suave e tempo para desligar.' },
+        { tag: '02 / Encontro', title: 'Casa compartilhada', text: 'Um lugar para café, conversa e planos que podem esperar.' },
+        { tag: '03 / Ar livre', title: 'Varanda na mata', text: 'A paisagem por perto, em qualquer estação.' },
+      ],
+      aroundKicker: 'Ao redor da casa',
+      aroundCta: 'Escolher o meu ritmo',
+      aroundAlt: 'Mata envolta pela névoa ao redor da Casa Neblina',
+      aroundCaption: 'A mata logo depois da porteira',
+      plannerKicker: 'Um começo simples',
+      plannerTitle: 'Rascunhe sua estadia.',
+      plannerLede: 'Escolha quando quer chegar, quantas noites e quantas pessoas. O resumo fica pronto para você mandar quando quiser.',
+      plannerNote: 'Este formulário de demonstração só organiza os dados no seu dispositivo durante esta visita. Não consulta disponibilidade nem envia informações.',
+      plannerGroup: 'Rascunho de estadia',
+      arrivalLabel: 'Chegada desejada',
+      nightsLabel: 'Quantas noites?',
+      guestsLabel: 'Quantas pessoas?',
+      choose: 'Escolha',
+      submit: 'Ver meu rascunho',
+      status: 'Preencha as opções para ver seu rascunho. Nenhum dado será enviado.',
+      noscript: 'O rascunho interativo precisa de JavaScript. As informações da página continuam disponíveis.',
+      labels: { arrival: 'Chegada', nights: 'Noites', guests: 'Pessoas', empty: 'Preencha as opções para ver seu rascunho.', invalidDate: 'Escolha uma data de hoje em diante.', ready: 'Rascunho local:' },
+      footerNote: 'Marca, hospedagem e conteúdo desta página são fictícios.',
+      contact: 'Fale com Rafael',
+      back: 'Voltar ao portfólio',
+    }
+  : {
+      nav: 'Casa Neblina navigation',
+      tagline: 'mountain hideaway',
+      house: 'The house',
+      around: 'Around here',
+      plan: 'Plan',
+      planStay: 'Plan your stay',
+      heroKicker: 'Mountains · forest · stillness',
+      heroLede: 'A house between the mist and the woods, for unhurried days and open-window nights.',
+      heroCta: 'Plan my stay',
+      heroCaption: 'Late afternoon on the woodland porch',
+      introKicker: 'A pause with room to breathe',
+      staysKicker: 'Make it your own',
+      stays: [
+        { tag: '01 / Rest', title: 'Quiet rooms', text: 'Natural textures, soft light, and time to switch off.' },
+        { tag: '02 / Gather', title: 'A shared home', text: 'A place for coffee, conversation, and plans that can wait.' },
+        { tag: '03 / Outdoors', title: 'A woodland porch', text: 'The landscape close by, in any season.' },
+      ],
+      aroundKicker: 'Beyond the doorstep',
+      aroundCta: 'Choose my own pace',
+      aroundAlt: 'Mist wrapped around the forest near Casa Neblina',
+      aroundCaption: 'The woods just past the gate',
+      plannerKicker: 'A simple starting point',
+      plannerTitle: 'Sketch out your stay.',
+      plannerLede: 'Pick when you would like to arrive, how many nights, and how many guests. The summary is ready whenever you want to send it.',
+      plannerNote: 'This demo form only organizes details on your device during this visit. It does not check availability or send information.',
+      plannerGroup: 'Stay draft',
+      arrivalLabel: 'A date to arrive',
+      nightsLabel: 'How many nights?',
+      guestsLabel: 'How many guests?',
+      choose: 'Choose',
+      submit: 'Preview my draft',
+      status: 'Choose a few options to see your draft. Nothing will be sent.',
+      noscript: 'The interactive draft needs JavaScript. The rest of the page remains available.',
+      labels: { arrival: 'Arrival', nights: 'Nights', guests: 'Guests', empty: 'Choose a few options to see your draft.', invalidDate: 'Choose today or a future date.', ready: 'Your local draft:' },
+      footerNote: 'The brand, lodging, and content on this page are fictional.',
+      contact: 'Contact Rafael',
+      back: 'Back to portfolio',
+    };
 ---
 
+<DemoBar locale={locale} project={project} />
 <article class="demo demo--neblina">
-  <aside class="demo-disclosure" aria-label={pt ? 'Aviso da demonstração' : 'Demonstration disclosure'}><span>{localize(concept.disclaimer, locale)}</span><div class="demo-disclosure__links"><a href={withLocale(locale, 'work')}>{pt ? 'Voltar ao trabalho' : 'Back to work'} ↗</a><a href={withLocale(locale, 'contact')}>{pt ? 'Fale com Rafael' : 'Contact Rafael'} ↗</a><a href={alternatePath(locale, `work/landing-pages/${concept.slug}`)} lang={pt ? 'en' : 'pt-BR'}>{pt ? 'English' : 'Português'}</a></div></aside>
-  <nav class="demo-nav" aria-label={pt ? 'Navegação Casa Neblina' : 'Casa Neblina navigation'}>
-    <a class="demo-brand" href="#casa-inicio"><span class="demo-brand__mark" aria-hidden="true">CN</span><span>casa neblina<small>{pt ? 'refúgio de montanha' : 'mountain hideaway'}</small></span></a>
-    <div class="demo-nav__links"><a href="#casa-estadia">{pt ? 'A casa' : 'The house'}</a><a href="#casa-arredores">{pt ? 'Arredores' : 'Around here'}</a><a href="#casa-planejar">{pt ? 'Planeje' : 'Plan a stay'}</a><a class="demo-nav__cta" href="#casa-planejar">{pt ? 'Planejar estadia' : 'Plan your stay'} <span aria-hidden="true">↗</span></a></div>
+  <nav class="demo-nav" aria-label={t.nav}>
+    <a class="demo-brand" href="#casa-inicio">
+      <span class="demo-brand__mark" aria-hidden="true">CN</span>
+      <span>casa neblina<small>{t.tagline}</small></span>
+    </a>
+    <div class="demo-nav__links">
+      <a href="#casa-estadia">{t.house}</a>
+      <a href="#casa-arredores">{t.around}</a>
+      <a href="#casa-planejar">{t.plan}</a>
+      <a class="demo-nav__cta" href="#casa-planejar">{t.planStay}</a>
+    </div>
   </nav>
 
   <header id="casa-inicio" class="neblina-hero">
     <img class="neblina-hero__image" src={demoImage} alt={localize(concept.imageAlt, locale)} width={concept.imageWidth} height={concept.imageHeight} fetchpriority="high" />
     <div class="neblina-hero__shade"></div>
-    <div class="neblina-hero__content"><p class="demo-kicker">{pt ? 'Serra · floresta · silêncio' : 'Mountains · forest · stillness'}</p><h1>{localize(concept.demoTagline, locale)}</h1><p>{pt ? 'Uma casa entre a névoa e a mata, para dias sem pressa e noites de janela aberta.' : 'A house between the mist and the woods, for unhurried days and open-window nights.'}</p><a class="neblina-button" href="#casa-planejar">{pt ? 'Descubra sua estadia' : 'Find your kind of stay'} <span aria-hidden="true">↓</span></a></div>
-    <p class="neblina-hero__caption">{pt ? 'Um lugar imaginado, feito para desacelerar.' : 'An imagined place, made for slowing down.'}</p>
+    <div class="neblina-hero__content">
+      <p class="demo-kicker">{t.heroKicker}</p>
+      <h1>{localize(concept.demoTagline, locale)}</h1>
+      <p>{t.heroLede}</p>
+      <a class="neblina-button" href="#casa-planejar">{t.heroCta} <span aria-hidden="true">↓</span></a>
+    </div>
+    <p class="neblina-hero__caption">{t.heroCaption}</p>
   </header>
 
-  <section id="casa-estadia" class="neblina-intro demo-shell"><p class="demo-kicker">{pt ? 'Uma pausa com espaço para respirar' : 'A pause with room to breathe'}</p><h2>{concept.sections[locale][0].title}</h2><p>{concept.sections[locale][0].text}</p></section>
+  <section id="casa-estadia" class="neblina-intro demo-shell">
+    <p class="demo-kicker">{t.introKicker}</p>
+    <h2>{intro.title}</h2>
+    <p>{intro.text}</p>
+  </section>
 
-  <section class="neblina-stays" aria-labelledby="neblina-stays-title"><div class="demo-shell neblina-stays__inner"><div><p class="demo-kicker">{pt ? 'Do seu jeito' : 'Make it your own'}</p><h2 id="neblina-stays-title">{concept.sections[locale][1].title}</h2><p>{concept.sections[locale][1].text}</p></div><div class="neblina-stays__cards"><article><span>01 / {pt ? 'Descanso' : 'Rest'}</span><h3>{pt ? 'Quartos serenos' : 'Quiet rooms'}</h3><p>{pt ? 'Texturas naturais, luz suave e tempo para desligar.' : 'Natural textures, soft light, and time to switch off.'}</p></article><article><span>02 / {pt ? 'Encontro' : 'Gather'}</span><h3>{pt ? 'Casa compartilhada' : 'A shared home'}</h3><p>{pt ? 'Um lugar para café, conversa e planos que podem esperar.' : 'A place for coffee, conversation, and plans that can wait.'}</p></article><article><span>03 / {pt ? 'Ar livre' : 'Outdoors'}</span><h3>{pt ? 'Varanda na mata' : 'A woodland porch'}</h3><p>{pt ? 'A paisagem por perto, em qualquer estação.' : 'The landscape close by, in any season.'}</p></article></div></div></section>
+  <section class="neblina-stays" aria-labelledby="neblina-stays-title">
+    <div class="demo-shell neblina-stays__inner">
+      <div>
+        <p class="demo-kicker">{t.staysKicker}</p>
+        <h2 id="neblina-stays-title">{spaces.title}</h2>
+        <p>{spaces.text}</p>
+      </div>
+      <div class="neblina-stays__cards">
+        {t.stays.map((stay) => (
+          <article>
+            <span>{stay.tag}</span>
+            <h3>{stay.title}</h3>
+            <p>{stay.text}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
 
-  <section id="casa-arredores" class="neblina-around demo-shell"><div><p class="demo-kicker">{pt ? 'Ao redor da casa' : 'Beyond the doorstep'}</p><h2>{concept.sections[locale][2].title}</h2><p>{concept.sections[locale][2].text}</p><a href="#casa-planejar">{pt ? 'Escolher o meu ritmo' : 'Choose my own pace'} →</a></div><figure><img src={demoImage} alt={pt ? 'Mata envolta pela névoa na paisagem imaginada da Casa Neblina' : 'Mist wrapped around the forest in Casa Neblina’s imagined landscape'} width={concept.imageWidth} height={concept.imageHeight} loading="lazy" /><figcaption>{pt ? 'Paisagem ilustrativa da demonstração' : 'Illustrative landscape for this demo'}</figcaption></figure></section>
+  <section id="casa-arredores" class="neblina-around demo-shell">
+    <div>
+      <p class="demo-kicker">{t.aroundKicker}</p>
+      <h2>{surroundings.title}</h2>
+      <p>{surroundings.text}</p>
+      <a href="#casa-planejar">{t.aroundCta} <span aria-hidden="true">→</span></a>
+    </div>
+    <figure>
+      <img src={demoImage} alt={t.aroundAlt} width={concept.imageWidth} height={concept.imageHeight} loading="lazy" />
+      <figcaption>{t.aroundCaption}</figcaption>
+    </figure>
+  </section>
 
-  <section id="casa-planejar" class="neblina-planner"><div class="demo-shell neblina-planner__inner"><div><p class="demo-kicker">{pt ? 'Um começo simples' : 'A simple starting point'}</p><h2>{pt ? 'Rascunhe uma estadia.' : 'Sketch out a stay.'}</h2><p>{pt ? 'Explore como um planejamento leve pode ajudar uma pessoa a organizar as próprias ideias.' : 'See how a lightweight planner can help someone organize their own thoughts.'}</p><p class="demo-local-note">{pt ? 'Este formulário de demonstração só organiza os dados no seu dispositivo durante esta visita. Não consulta disponibilidade nem envia informações.' : 'This demo form only organizes details on your device during this visit. It does not check availability or send information.'}</p></div><div role="group" aria-label={pt ? 'Rascunho de estadia' : 'Stay draft'} class="demo-planner" data-demo-planner data-label-arrival={pt ? 'Chegada' : 'Arrival'} data-label-nights={pt ? 'Noites' : 'Nights'} data-label-guests={pt ? 'Pessoas' : 'Guests'} data-label-empty={pt ? 'Preencha as opções para ver seu rascunho.' : 'Choose a few options to see your draft.'} data-label-invalid-date={pt ? 'Escolha uma data de hoje em diante.' : 'Choose today or a future date.'} data-label-ready={pt ? 'Rascunho local:' : 'Your local draft:'}>
-    <label>{pt ? 'Chegada desejada' : 'A date to arrive'}<input name="arrival" type="date" /></label>
-    <label>{pt ? 'Quantas noites?' : 'How many nights?'}<select name="nights"><option value="">{pt ? 'Escolha' : 'Choose'}</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4+</option></select></label>
-    <label>{pt ? 'Quantas pessoas?' : 'How many guests?'}<select name="guests"><option value="">{pt ? 'Escolha' : 'Choose'}</option><option value="1">1</option><option value="2">2</option><option value="3">3+</option></select></label>
-    <button type="button" data-demo-update>{pt ? 'Ver meu rascunho' : 'Preview my draft'} <span aria-hidden="true">↗</span></button><p class="demo-planner__status" role="status" aria-live="polite">{pt ? 'Preencha as opções para ver seu rascunho. Nenhum dado será enviado.' : 'Choose a few options to see your draft. Nothing will be sent.'}</p>
-    <noscript><p class="demo-noscript">{pt ? 'O rascunho interativo precisa de JavaScript. As informações da página continuam disponíveis.' : 'The interactive draft needs JavaScript. The rest of the page remains available.'}</p></noscript>
-  </div></div></section>
+  <section id="casa-planejar" class="neblina-planner">
+    <div class="demo-shell neblina-planner__inner">
+      <div>
+        <p class="demo-kicker">{t.plannerKicker}</p>
+        <h2>{t.plannerTitle}</h2>
+        <p>{t.plannerLede}</p>
+        <p class="demo-local-note">{t.plannerNote}</p>
+      </div>
+      <div
+        role="group"
+        aria-label={t.plannerGroup}
+        class="demo-planner"
+        data-demo-planner
+        data-label-arrival={t.labels.arrival}
+        data-label-nights={t.labels.nights}
+        data-label-guests={t.labels.guests}
+        data-label-empty={t.labels.empty}
+        data-label-invalid-date={t.labels.invalidDate}
+        data-label-ready={t.labels.ready}
+      >
+        <label>{t.arrivalLabel}<input name="arrival" type="date" /></label>
+        <label>
+          {t.nightsLabel}
+          <select name="nights">
+            <option value="">{t.choose}</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4+</option>
+          </select>
+        </label>
+        <label>
+          {t.guestsLabel}
+          <select name="guests">
+            <option value="">{t.choose}</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3+</option>
+          </select>
+        </label>
+        <button type="button" data-demo-update>{t.submit}</button>
+        <p class="demo-planner__status" role="status" aria-live="polite">{t.status}</p>
+        <noscript><p class="demo-noscript">{t.noscript}</p></noscript>
+      </div>
+    </div>
+  </section>
 
-  <footer class="demo-footer"><a class="demo-brand" href="#casa-inicio"><span class="demo-brand__mark" aria-hidden="true">CN</span><span>casa neblina<small>{pt ? 'refúgio de montanha' : 'mountain hideaway'}</small></span></a><p>{pt ? 'Marca, hospedagem e conteúdo desta página são ilustrativos.' : 'The brand, lodging, and content on this page are illustrative.'}</p><a href={withLocale(locale, 'contact')}>{pt ? 'Fale com Rafael' : 'Contact Rafael'} ↗</a><a class="demo-back" href={withLocale(locale, 'work')}>{pt ? 'Voltar ao portfólio' : 'Back to portfolio'} ↑</a></footer>
+  <footer class="demo-footer">
+    <a class="demo-brand" href="#casa-inicio">
+      <span class="demo-brand__mark" aria-hidden="true">CN</span>
+      <span>casa neblina<small>{t.tagline}</small></span>
+    </a>
+    <p>{t.footerNote}</p>
+    <a href={withLocale(locale, 'contact')}>{t.contact}</a>
+    <a class="demo-back" href={withLocale(locale, 'work')}>{t.back}</a>
+  </footer>
 </article>
 
 <script>
@@ -58,7 +233,8 @@ const demoImage = concept.image.replace(/\.png$/, '.webp');
         status.textContent = planner.dataset.labelInvalidDate || '';
         return;
       }
-      status.textContent = `${planner.dataset.labelReady || ''} ${planner.dataset.labelArrival}: ${arrival} · ${planner.dataset.labelNights}: ${nights} · ${planner.dataset.labelGuests}: ${guests}.`;
+      const arrivalLabel = new Intl.DateTimeFormat(document.documentElement.lang, { dateStyle: 'long' }).format(selectedDate);
+      status.textContent = `${planner.dataset.labelReady || ''} ${planner.dataset.labelArrival}: ${arrivalLabel} · ${planner.dataset.labelNights}: ${nights} · ${planner.dataset.labelGuests}: ${guests}.`;
     });
   });
 </script>

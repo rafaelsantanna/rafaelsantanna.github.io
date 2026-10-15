@@ -1,0 +1,23 @@
+---
+import Icon from './Icon.astro';
+import type { UiStrings } from './strings';
+
+interface Props { t: UiStrings }
+
+const { t } = Astro.props;
+---
+
+<dialog class="ka-reader" aria-labelledby="ka-reader-title" data-ka-reader>
+  <div class="ka-reader__sheet">
+    <header class="ka-reader__head">
+      <div class="ka-reader__heading">
+        <p class="ka-reader__meta" data-ka-reader-meta></p>
+        <h2 class="ka-reader__title" id="ka-reader-title" data-ka-reader-title></h2>
+      </div>
+      <button type="button" class="ka-reader__close" title={t.readerClose} data-ka-reader-close>
+        <Icon name="close" />
+      </button>
+    </header>
+    <div class="ka-reader__body" data-ka-reader-body></div>
+  </div>
+</dialog>

@@ -1,0 +1,524 @@
+/* App frame: sidebar, top bar and views. */
+.demo-logistics-control {
+  position: relative;
+  min-height: 100dvh;
+  background: var(--lc-bg);
+  color: var(--lc-ink);
+  font-family: var(--lc-font-ui);
+  font-size: 14px;
+  line-height: 1.45;
+  font-variant-numeric: tabular-nums;
+  -webkit-font-smoothing: antialiased;
+
+  & :focus-visible {
+    outline: 2px solid var(--lc-focus);
+    outline-offset: 2px;
+  }
+
+  & button {
+    font: inherit;
+    color: inherit;
+  }
+
+  .lc-sr {
+    position: absolute !important;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .lc-icon {
+    flex: 0 0 auto;
+    width: 16px;
+    height: 16px;
+  }
+
+  .lc-sprite {
+    position: absolute;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+  }
+
+  .lc-muted { color: var(--lc-ink-3); }
+  .lc-overdue { color: var(--lc-late); font-weight: 650; }
+
+  /* Layout */
+  /* The gradient continues the sidebar column below the sticky sidebar. */
+  .lc-app {
+    display: grid;
+    grid-template-columns: var(--lc-side-w) minmax(0, 1fr);
+    min-height: 100dvh;
+    background: linear-gradient(to right, var(--lc-side) calc(var(--lc-side-w) - 1px), var(--lc-line) calc(var(--lc-side-w) - 1px) var(--lc-side-w), transparent var(--lc-side-w));
+  }
+
+  .lc-main {
+    container: lc-main / inline-size;
+    min-width: 0;
+  }
+
+  /* Sidebar */
+  .lc-side {
+    position: sticky;
+    top: 0;
+    z-index: 30;
+    display: flex;
+    flex-direction: column;
+    height: 100dvh;
+    background: var(--lc-side);
+    border-right: 1px solid var(--lc-line);
+  }
+
+  .lc-side__bar {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    min-height: var(--lc-top-h);
+    padding: 0 16px 0 18px;
+  }
+
+  .lc-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-right: auto;
+  }
+
+  .lc-brand__mark {
+    width: 28px;
+    height: 28px;
+
+    & rect { fill: var(--lc-invert); }
+    & path { fill: none; stroke: var(--lc-accent); stroke-width: 2.6; stroke-linecap: round; }
+    & circle { fill: var(--lc-accent); }
+  }
+
+  .lc-brand__name {
+    font-family: var(--lc-font-display);
+    font-size: 19px;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1;
+  }
+
+  /* The bottom padding keeps the footer visible while the demo bar pushes the sticky sidebar down. */
+  .lc-side__panel {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    min-height: 0;
+    padding: 8px 12px 60px;
+  }
+
+  .lc-side__workspace {
+    margin: 4px 8px 10px;
+    color: var(--lc-ink-3);
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  .lc-nav ul {
+    display: grid;
+    gap: 2px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .lc-nav__link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 38px;
+    padding: 0 10px;
+    border-radius: 9px;
+    color: var(--lc-ink-2);
+    font-weight: 560;
+    text-decoration: none;
+    transition: background-color 160ms var(--lc-ease), color 160ms var(--lc-ease);
+
+    &:hover { background: color-mix(in srgb, var(--lc-ink) 6%, transparent); color: var(--lc-ink); }
+
+    &[aria-current='page'] {
+      background: var(--lc-panel);
+      color: var(--lc-ink);
+      box-shadow: 0 0 0 1px var(--lc-line), 0 1px 2px rgb(23 24 28 / 6%);
+
+      & .lc-icon { color: var(--lc-accent-text); }
+    }
+  }
+
+  .lc-nav__label { flex: 1; }
+
+  .lc-nav__count {
+    min-width: 26px;
+    padding: 1px 7px;
+    border-radius: 999px;
+    color: var(--lc-ink-3);
+    font-size: 12px;
+    font-weight: 600;
+    text-align: center;
+  }
+
+  .lc-nav__count--alert {
+    background: var(--lc-accent);
+    color: var(--lc-on-accent);
+  }
+
+  .lc-side__foot {
+    display: grid;
+    gap: 10px;
+    margin-top: auto;
+    padding: 14px 8px 0;
+    border-top: 1px solid var(--lc-line);
+  }
+
+  .lc-side__note {
+    color: var(--lc-ink-3);
+    font-size: 12px;
+    line-height: 1.45;
+  }
+
+  .lc-side__actions {
+    display: grid;
+    gap: 2px;
+    margin: 0 -8px;
+
+    & .lc-btn { justify-content: flex-start; width: 100%; }
+    & .lc-kbd { margin-left: auto; }
+  }
+
+  /* Top bar */
+  .lc-top {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    min-height: var(--lc-top-h);
+    padding: 0 var(--lc-pad);
+    background: var(--lc-bg);
+    border-bottom: 1px solid var(--lc-line);
+  }
+
+  .lc-top__when {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px 12px;
+    color: var(--lc-ink-2);
+    font-size: 13px;
+  }
+
+  .lc-top__date { font-weight: 600; color: var(--lc-ink); }
+
+  .lc-top__clock {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-variant-numeric: tabular-nums;
+
+    & .lc-icon { width: 14px; height: 14px; color: var(--lc-ink-3); }
+  }
+
+  /* "Simulated time" badge: a toggletip that explains why the clock is fixed, for touch users too. */
+  .lc-sim {
+    position: relative;
+    display: inline-flex;
+
+    &[hidden] { display: none; }
+  }
+
+  .lc-top__sim {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    min-height: 24px;
+    padding: 0 6px 0 8px;
+    border: 1px dashed var(--lc-line-2);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--lc-ink-3);
+    font-size: 11.5px;
+    font-weight: 600;
+
+    & .lc-icon { width: 14px; height: 14px; }
+    &:hover, &[aria-expanded='true'] { border-style: solid; color: var(--lc-ink); }
+  }
+
+  .lc-sim__note {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    z-index: 25;
+    width: max-content;
+    max-width: 300px;
+    padding: 10px 12px;
+    border: 1px solid var(--lc-line-2);
+    border-radius: 10px;
+    background: var(--lc-panel);
+    box-shadow: var(--lc-shadow);
+    color: var(--lc-ink);
+    font-size: 13px;
+    line-height: 1.45;
+
+    &[hidden] { display: none; }
+  }
+
+  .lc-search {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 1 1 260px;
+    max-width: 420px;
+    height: 36px;
+    margin-left: auto;
+    padding: 0 8px 0 12px;
+    border: 1px solid var(--lc-line-2);
+    border-radius: 9px;
+    background: var(--lc-panel);
+    color: var(--lc-ink-3);
+    text-align: left;
+    cursor: text;
+    transition: border-color 160ms var(--lc-ease);
+
+    &:hover { border-color: color-mix(in srgb, var(--lc-ink) 32%, transparent); }
+  }
+
+  .lc-search__text {
+    flex: 1;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .lc-top__tools {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .lc-role {
+    display: inline-flex;
+    padding: 3px;
+    border: 1px solid var(--lc-line-2);
+    border-radius: 10px;
+    background: var(--lc-panel);
+  }
+
+  .lc-role__option {
+    min-height: var(--lc-control-sm);
+    padding: 0 12px;
+    border: 0;
+    border-radius: 7px;
+    background: transparent;
+    color: var(--lc-ink-3);
+    font-size: 13px;
+    font-weight: 600;
+
+    &[aria-pressed='true'] {
+      background: var(--lc-invert);
+      color: var(--lc-on-invert);
+    }
+
+    &:not([aria-pressed='true']):hover { color: var(--lc-ink); }
+  }
+
+  .lc-user { display: inline-flex; }
+
+  .lc-avatar {
+    display: inline-grid;
+    place-items: center;
+    flex: 0 0 auto;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--lc-invert);
+    color: var(--lc-on-invert);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+  }
+
+  .lc-avatar--user {
+    width: 32px;
+    height: 32px;
+    background: var(--lc-accent);
+    color: var(--lc-on-accent);
+    font-size: 11.5px;
+  }
+
+  .lc-avatar--lg {
+    width: 38px;
+    height: 38px;
+    font-size: 13px;
+  }
+
+  .lc-theme-icon { display: inline-flex; }
+  .lc-theme-icon--sun { display: none; }
+
+  /* Views */
+  .lc-views { padding: 24px var(--lc-pad) 64px; }
+
+  .lc-view {
+    display: grid;
+    gap: 18px;
+    outline: none;
+    scroll-margin-top: calc(var(--lc-sticky) + 16px);
+  }
+
+  .lc-view + .lc-view { margin-top: 56px; }
+
+  .lc-view__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 12px 24px;
+  }
+
+  .lc-view__title {
+    font-family: var(--lc-font-display);
+    font-size: 26px;
+    font-weight: 650;
+    letter-spacing: -0.025em;
+    line-height: 1.15;
+  }
+
+  .lc-view__lead {
+    margin-top: 4px;
+    color: var(--lc-ink-3);
+    font-size: 14.5px;
+  }
+
+  .lc-noscript {
+    margin: 16px var(--lc-pad) 0;
+    padding: 12px 14px;
+    border: 1px solid var(--lc-line-2);
+    border-radius: 10px;
+    background: var(--lc-accent-soft);
+    color: var(--lc-ink);
+  }
+}
+
+:root[data-lc-theme='dark'] .demo-logistics-control {
+  .lc-theme-icon--sun { display: inline-flex; }
+  .lc-theme-icon--moon { display: none; }
+}
+
+/* Without JavaScript every view is visible and interactive-only controls are hidden. */
+:root:not(.js) .demo-logistics-control :is(.lc-js-only, .lc-xcard__actions, .lc-driver__go, .lc-col-select, .lc-hit, .lc-kpi__go, .lc-sort__icon) { display: none !important; }
+:root.js .demo-logistics-control .lc-view:not(.is-active) { display: none; }
+:root.js .demo-logistics-control .lc-view + .lc-view { margin-top: 0; }
+
+@media (min-width: 1024px) {
+  .demo-logistics-control .lc-mobile-only { display: none !important; }
+}
+
+@media (max-width: 1023.98px) {
+  .demo-logistics-control {
+    .lc-desktop-only { display: none !important; }
+
+    .lc-app { display: block; background: none; }
+
+    .lc-side {
+      height: auto;
+      border-right: 0;
+      border-bottom: 1px solid var(--lc-line);
+    }
+
+    .lc-side__bar {
+      min-height: 56px;
+      padding: 0 6px 0 16px;
+    }
+
+    .lc-nav__link { min-height: 44px; }
+
+    .lc-top {
+      position: static;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 10px 12px;
+      padding-top: 12px;
+      padding-bottom: 12px;
+      background: transparent;
+    }
+
+    /* The note hangs from the date row and uses the screen width, so it never overflows a phone. */
+    .lc-top__when { position: relative; }
+    .lc-sim { position: static; }
+
+    .lc-sim__note {
+      top: calc(100% + 6px);
+      width: min(420px, calc(100vw - 2 * var(--lc-pad)));
+      max-width: none;
+    }
+
+    .lc-search { display: none; }
+    .lc-top__tools { flex: 1 1 260px; }
+    .lc-top__tools .lc-role { flex: 1; }
+    .lc-role__option { flex: 1; }
+    .lc-views { padding-top: 16px; }
+    .lc-view__title { font-size: 23px; }
+  }
+
+  :root.js .demo-logistics-control {
+    .lc-side__panel {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      left: 0;
+      display: none;
+      max-height: calc(100dvh - 56px);
+      overflow-y: auto;
+      padding: 8px 12px 18px;
+      background: var(--lc-side);
+      border-bottom: 1px solid var(--lc-line-2);
+      box-shadow: 0 18px 30px rgb(23 24 28 / 14%);
+    }
+
+    .lc-side.is-open .lc-side__panel { display: flex; }
+    .lc-side__foot { margin-top: 14px; }
+  }
+}
+
+/* The badge stays small; its touch target reaches 44px. */
+@media (max-width: 1023.98px), (pointer: coarse) {
+  .demo-logistics-control .lc-top__sim::before {
+    position: absolute;
+    inset: -10px -4px;
+    content: '';
+  }
+}
+
+/* Forced colors drop backgrounds and shadows, so the current role and view need system indicators. */
+@media (forced-colors: active) {
+  .demo-logistics-control .lc-role__option[aria-pressed='true'] {
+    forced-color-adjust: none;
+    background: Highlight;
+    color: HighlightText;
+  }
+
+  .demo-logistics-control .lc-nav__link[aria-current='page'] {
+    padding-inline-start: 6px;
+    border-inline-start: 4px solid currentColor;
+    font-weight: 700;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .demo-logistics-control *,
+  .demo-logistics-control *::before,
+  .demo-logistics-control *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}

@@ -1,0 +1,11 @@
+---
+import DemoLayout from '@/layouts/DemoLayout.astro';
+import LogisticsControlDemo from '@/components/demos/logistics-control/LogisticsControlDemo.astro';
+import { findProject } from '@/data/content';
+
+const project = findProject('logistics-control')!;
+---
+
+<DemoLayout locale="pt" project={project}>
+  <LogisticsControlDemo locale="pt" project={project} />
+</DemoLayout>

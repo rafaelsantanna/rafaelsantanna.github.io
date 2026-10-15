@@ -1,0 +1,140 @@
+/* Trajeto design tokens. Light "paper" by default; dark theme via html[data-lc-theme="dark"]. */
+body.demo-page--logistics-control {
+  background: #f2f1ed;
+  color-scheme: light;
+}
+
+:root[data-lc-theme='dark'] body.demo-page--logistics-control {
+  background: #111215;
+  color-scheme: dark;
+}
+
+.demo-logistics-control {
+  --lc-bg: #f2f1ed;
+  --lc-panel: #fbfaf7;
+  --lc-panel-2: #f5f4f0;
+  --lc-sunken: #e9e8e2;
+  --lc-side: #e8e7e1;
+  --lc-ink: #17181c;
+  --lc-ink-2: #3d3e45;
+  --lc-ink-3: #5d5e66;
+  --lc-line: rgb(23 24 28 / 10%);
+  --lc-line-2: rgb(23 24 28 / 18%);
+  --lc-accent: #f59e0b;
+  --lc-accent-hover: #e48d00;
+  --lc-on-accent: #17181c;
+  --lc-accent-text: #8a5300;
+  --lc-accent-soft: rgb(245 158 11 / 14%);
+  --lc-selected: rgb(245 158 11 / 12%);
+  --lc-focus: #17181c;
+  --lc-invert: #17181c;
+  --lc-on-invert: #f4f3ef;
+  --lc-on-invert-2: #b9b8b2;
+  --lc-check: #17181c;
+  --lc-shadow: 0 18px 50px rgb(23 24 28 / 18%), 0 2px 8px rgb(23 24 28 / 8%);
+
+  --lc-route: #1d4fb8;
+  --lc-route-bg: #e3eaf8;
+  --lc-route-solid: #2f66d0;
+  --lc-late: #8a4b00;
+  --lc-late-bg: #fbeacb;
+  --lc-late-solid: #f59e0b;
+  --lc-issue: #b4231b;
+  --lc-issue-bg: #f9e1de;
+  --lc-issue-solid: #d9372b;
+  --lc-delivered: #1c6b3a;
+  --lc-delivered-bg: #dfefe3;
+  --lc-delivered-solid: #2e8a4e;
+  --lc-awaiting: #4c4d55;
+  --lc-awaiting-bg: #e6e5df;
+  --lc-awaiting-solid: #8a8b92;
+
+  --lc-map-ground: #fbfaf7;
+  --lc-map-block: #ebe9e2;
+  --lc-map-park: #dfe6d7;
+  --lc-map-river: #cfdde4;
+  --lc-map-bank: #bccdd6;
+  --lc-map-bridge: #fbfaf7;
+  --lc-map-label: #61626a;
+  --lc-map-route: rgb(23 24 28 / 46%);
+  --lc-map-hub: #17181c;
+  --lc-map-hub-ink: #f4f3ef;
+
+  --lc-font-ui: system-ui, 'Segoe UI', -apple-system, sans-serif;
+  --lc-font-display: 'Geologica', system-ui, 'Segoe UI', sans-serif;
+  --lc-font-mono: ui-monospace, 'Cascadia Code', Consolas, monospace;
+  --lc-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --lc-side-w: 232px;
+  --lc-top-h: 60px;
+  --lc-sticky: var(--lc-top-h);
+  --lc-pad: 28px;
+  --lc-control: 34px;
+  --lc-control-sm: 30px;
+  --lc-radius: 14px;
+}
+
+:root[data-lc-theme='dark'] .demo-logistics-control {
+  --lc-bg: #111215;
+  --lc-panel: #18191d;
+  --lc-panel-2: #1c1d22;
+  --lc-sunken: #24262c;
+  --lc-side: #0c0d0f;
+  --lc-ink: #ecebe5;
+  --lc-ink-2: #c4c3bc;
+  --lc-ink-3: #9a9993;
+  --lc-line: rgb(255 255 255 / 8%);
+  --lc-line-2: rgb(255 255 255 / 15%);
+  --lc-accent: #f5a524;
+  --lc-accent-hover: #ffb740;
+  --lc-on-accent: #17181c;
+  --lc-accent-text: #fbbf24;
+  --lc-accent-soft: rgb(245 165 36 / 15%);
+  --lc-selected: rgb(245 165 36 / 9%);
+  --lc-focus: #fbbf24;
+  --lc-invert: #ecebe5;
+  --lc-on-invert: #17181c;
+  --lc-on-invert-2: #4c4d55;
+  --lc-check: #f5a524;
+  --lc-shadow: 0 18px 50px rgb(0 0 0 / 50%), 0 2px 8px rgb(0 0 0 / 30%);
+
+  --lc-route: #9dbaff;
+  --lc-route-bg: rgb(98 140 255 / 15%);
+  --lc-route-solid: #6f98ff;
+  --lc-late: #fbbf24;
+  --lc-late-bg: rgb(245 158 11 / 15%);
+  --lc-late-solid: #f5a524;
+  --lc-issue: #ff978d;
+  --lc-issue-bg: rgb(240 90 78 / 16%);
+  --lc-issue-solid: #f0645a;
+  --lc-delivered: #82d6a0;
+  --lc-delivered-bg: rgb(70 190 115 / 14%);
+  --lc-delivered-solid: #4cbf77;
+  --lc-awaiting: #bdbcb5;
+  --lc-awaiting-bg: rgb(255 255 255 / 7%);
+  --lc-awaiting-solid: #8d8c87;
+
+  --lc-map-ground: #16171b;
+  --lc-map-block: #212328;
+  --lc-map-park: #1d2820;
+  --lc-map-river: #172631;
+  --lc-map-bank: #1f3442;
+  --lc-map-bridge: #2b2d33;
+  --lc-map-label: #8e8d88;
+  --lc-map-route: rgb(236 235 229 / 42%);
+  --lc-map-hub: #ecebe5;
+  --lc-map-hub-ink: #17181c;
+}
+
+@media (max-width: 1023.98px) {
+  .demo-logistics-control {
+    --lc-sticky: 56px;
+    --lc-pad: 16px;
+  }
+}
+
+@media (max-width: 1023.98px), (pointer: coarse) {
+  .demo-logistics-control {
+    --lc-control: 44px;
+    --lc-control-sm: 44px;
+  }
+}

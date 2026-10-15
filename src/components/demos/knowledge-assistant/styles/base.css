@@ -1,0 +1,303 @@
+/* Bússola: tokens, page shell, tabs and shared controls. Every rule is scoped under .ka. */
+body.demo-page--knowledge-assistant {
+  background: #121116;
+  color: #eeeae2;
+}
+
+.ka {
+  /* Brand foundation; the component overrides these three with project.palette. */
+  --ka-base: #121116;
+  --ka-ink: #eeeae2;
+  --ka-yellow: #f2c14e;
+  --ka-panel: #17161c;
+  --ka-raised: #1d1c23;
+  --ka-raised-2: #26252d;
+  --ka-line: rgb(238 234 226 / 9%);
+  --ka-line-strong: rgb(238 234 226 / 17%);
+  --ka-soft: #cdc8bd;
+  --ka-muted: #a39d92;
+  --ka-yellow-strong: #f7d27a;
+  --ka-yellow-tint: rgb(242 193 78 / 12%);
+  --ka-yellow-line: rgb(242 193 78 / 48%);
+  --ka-on-yellow: #1b1608;
+  --ka-font-ui: 'Geologica', system-ui, 'Segoe UI', sans-serif;
+  --ka-font-text: 'Atkinson Hyperlegible Next', system-ui, 'Segoe UI', sans-serif;
+  --ka-font-read: Georgia, 'Times New Roman', serif;
+  --ka-font-mono: ui-monospace, 'Cascadia Code', Consolas, monospace;
+  --ka-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --ka-radius: 14px;
+  --ka-radius-sm: 10px;
+  --ka-tabs-h: 3.25rem;
+  --ka-gutter: 1rem;
+
+  background: var(--ka-base);
+  color: var(--ka-ink);
+  font-family: var(--ka-font-text);
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.ka [hidden] { display: none !important; }
+
+.ka ::selection {
+  background: var(--ka-yellow);
+  color: var(--ka-on-yellow);
+}
+
+.ka :focus-visible {
+  outline: 2px solid var(--ka-yellow);
+  outline-offset: 2px;
+}
+
+.ka-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.ka-icon {
+  flex: none;
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.ka-highlight,
+.ka-mark-term {
+  padding: 0 0.14em;
+  border-radius: 0.22em;
+  background: var(--ka-yellow);
+  color: var(--ka-on-yellow);
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+/* Buttons */
+.ka-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 2.5rem;
+  padding: 0.5rem 0.95rem;
+  border: 1px solid transparent;
+  border-radius: var(--ka-radius-sm);
+  font: 600 0.875rem/1.2 var(--ka-font-ui);
+  letter-spacing: -0.005em;
+  text-align: center;
+  transition: background-color 180ms var(--ka-ease), border-color 180ms var(--ka-ease), color 180ms var(--ka-ease);
+}
+.ka-btn .ka-icon { width: 1.125rem; height: 1.125rem; }
+.ka-btn--primary { background: var(--ka-yellow); color: var(--ka-on-yellow); }
+.ka-btn--primary:hover { background: var(--ka-yellow-strong); }
+.ka-btn--primary:focus-visible { outline-color: var(--ka-ink); }
+.ka-btn--primary[aria-disabled='true'] {
+  border-color: var(--ka-line-strong);
+  background: transparent;
+  color: var(--ka-soft);
+  cursor: default;
+}
+.ka-btn--ghost { border-color: var(--ka-line-strong); background: transparent; color: var(--ka-ink); }
+.ka-btn--ghost:hover { border-color: rgb(238 234 226 / 30%); background: var(--ka-raised-2); }
+.ka-btn:disabled { opacity: 0.55; cursor: not-allowed; }
+
+.ka-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2rem;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--ka-soft);
+  font: 600 0.8125rem/1.3 var(--ka-font-ui);
+  text-decoration: underline;
+  text-decoration-color: var(--ka-line-strong);
+  text-underline-offset: 0.22em;
+}
+.ka-link:hover { color: var(--ka-ink); text-decoration-color: var(--ka-yellow); }
+
+/* App header */
+.ka-top {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem 1.25rem;
+  min-height: 4rem;
+  padding: 0.65rem var(--ka-gutter);
+  border-bottom: 1px solid var(--ka-line);
+  background: var(--ka-base);
+}
+.ka-brand { display: flex; align-items: center; gap: 0.75rem; min-width: 0; }
+.ka-mark { flex: none; width: 2.25rem; height: 2.25rem; color: var(--ka-ink); }
+.ka-brand__text { min-width: 0; }
+.ka-brand__name {
+  font: 650 1.3rem/1.1 var(--ka-font-ui);
+  letter-spacing: -0.025em;
+}
+.ka-brand__sub {
+  color: var(--ka-muted);
+  font: 400 0.8125rem/1.35 var(--ka-font-ui);
+}
+.ka-top__note {
+  display: none;
+  align-items: center;
+  gap: 0.5rem;
+  margin-inline-start: auto;
+  font: 500 0.75rem/1 var(--ka-font-ui);
+}
+.ka-top__note > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.4rem 0.7rem;
+  border: 1px solid var(--ka-line);
+  border-radius: 999px;
+  color: var(--ka-soft);
+}
+.ka-top__index::before {
+  content: '';
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  background: var(--ka-yellow);
+}
+.ka-top__reset { flex: none; margin-inline-start: auto; }
+html:not(.js) .ka-top__reset { display: none; }
+.ka-top__note + .ka-top__reset { margin-inline-start: 0; }
+
+/* Panes */
+.ka-pane { position: relative; min-width: 0; }
+/* Scrollers are positioned so visually hidden text inside them never overflows the page. */
+.ka-pane__scroll,
+.ka-thread { position: relative; }
+.ka-pane__head { padding: 1.25rem var(--ka-gutter) 0.85rem; }
+.ka-pane__title {
+  font: 600 1rem/1.25 var(--ka-font-ui);
+  letter-spacing: -0.01em;
+}
+.ka-pane__sub {
+  margin-top: 0.2rem;
+  color: var(--ka-muted);
+  font-size: 0.8125rem;
+  line-height: 1.45;
+}
+
+/* Tabs exist only for narrow screens with JavaScript. */
+.ka-tabs { display: none; }
+.ka-tab {
+  position: relative;
+  display: inline-flex;
+  flex: 1 1 0;
+  min-width: max-content;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  min-height: var(--ka-tabs-h);
+  padding: 0 0.5rem;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  background: none;
+  color: var(--ka-muted);
+  font: 600 0.9375rem/1.2 var(--ka-font-ui);
+}
+.ka-tab[aria-selected='true'] { border-bottom-color: var(--ka-yellow); color: var(--ka-ink); }
+.ka-tab:focus-visible { outline-offset: -4px; }
+.ka-tab__badge {
+  min-width: 1.4rem;
+  padding: 0.15rem 0.4rem;
+  border-radius: 999px;
+  background: var(--ka-raised-2);
+  color: var(--ka-soft);
+  font: 600 0.6875rem/1.2 var(--ka-font-mono);
+  text-align: center;
+}
+.ka-tab[aria-selected='true'] .ka-tab__badge { background: var(--ka-yellow); color: var(--ka-on-yellow); }
+
+@media (min-width: 40rem) {
+  .ka { --ka-gutter: 1.5rem; }
+}
+
+@media (max-width: 63.99rem) {
+  .js .ka-tabs {
+    position: sticky;
+    top: 0;
+    z-index: 30;
+    display: flex;
+    border-bottom: 1px solid var(--ka-line);
+    background: var(--ka-base);
+  }
+  .js .ka[data-tab='chat'] .ka-pane:not(.ka-pane--chat),
+  .js .ka[data-tab='evidence'] .ka-pane:not(.ka-pane--evidence),
+  .js .ka[data-tab='sources'] .ka-pane:not(.ka-pane--sources) { display: none; }
+  .ka-pane { border-bottom: 1px solid var(--ka-line); }
+  .js .ka-pane { min-height: calc(100dvh - var(--ka-tabs-h)); border-bottom: 0; }
+  .ka-pane--sources > *,
+  .ka-pane--evidence > * { max-width: 46rem; margin-inline: auto; }
+}
+
+@media (max-width: 22.5rem) {
+  .ka-tab { gap: 0.3rem; padding: 0 0.2rem; font-size: 0.8125rem; }
+  .ka-tab__badge { min-width: 1.2rem; padding-inline: 0.3rem; }
+}
+
+@media (max-width: 26rem) {
+  .ka-top__reset span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .ka-top__reset { width: 2.75rem; padding: 0; }
+}
+
+@media (min-width: 64rem) {
+  .ka-body {
+    display: grid;
+    grid-template-columns: 15.5rem minmax(0, 1fr) 19.5rem;
+  }
+  .ka-pane--sources { border-inline-end: 1px solid var(--ka-line); background: var(--ka-panel); }
+  .ka-pane--evidence { border-inline-start: 1px solid var(--ka-line); background: var(--ka-panel); }
+  .ka-top__note { display: flex; }
+}
+
+@media (min-width: 80rem) {
+  .ka-body { grid-template-columns: 18.5rem minmax(0, 1fr) 24rem; }
+}
+
+@media (min-width: 90rem) {
+  .ka-body { grid-template-columns: 19.5rem minmax(0, 1fr) 26rem; }
+}
+
+/* Wide and tall enough: the app fills the viewport and each pane scrolls on its own. */
+@media (min-width: 64rem) and (min-height: 37.5rem) {
+  body.demo-page--knowledge-assistant > main {
+    display: flex;
+    flex-direction: column;
+    height: 100dvh;
+  }
+  /* The disclosure bar keeps its natural height; only the app gives up space. */
+  body.demo-page--knowledge-assistant > main > :not(.ka) { flex-shrink: 0; }
+  .ka {
+    display: grid;
+    flex: 1 1 auto;
+    grid-template-rows: auto minmax(0, 1fr);
+    min-height: 0;
+  }
+  .ka-body { grid-template-rows: minmax(0, 1fr); min-height: 0; }
+  .ka-pane { display: flex; flex-direction: column; min-height: 0; }
+  .ka-pane__scroll { flex: 1 1 auto; min-height: 0; overflow-y: auto; overscroll-behavior: contain; }
+}
+
+@media (pointer: coarse) {
+  .ka-btn { min-height: 2.75rem; }
+  .ka-link { min-height: 2.75rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ka *,
+  .ka *::before,
+  .ka *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}

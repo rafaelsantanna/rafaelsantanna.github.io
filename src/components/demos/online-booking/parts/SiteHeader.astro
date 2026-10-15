@@ -1,0 +1,35 @@
+---
+import type { Locale } from '@/data/types';
+import { strings } from '../data/i18n';
+import { icons } from '../lib/icons';
+import BrandMark from './BrandMark.astro';
+
+interface Props { locale: Locale }
+
+const t = strings[Astro.props.locale];
+---
+
+<header class="site-header" data-site-header>
+  <div class="wrap site-header__inner">
+    <BrandMark href="#topo" label={t.brand.home} kind={t.brand.kind} />
+    {/*
+      Each layout shows one of the two booking buttons, so Tab follows what is on screen: on phones
+      the short one comes before the menu toggle, on wider screens the long one comes after the links.
+      The toggle sits right before the menu it opens, so Tab reaches the links next.
+    */}
+    <a class="btn btn--primary btn--header btn--header-short" href="#agendar" data-book>{t.ctaShort}</a>
+    <button type="button" class="menu-toggle" aria-expanded="false" aria-controls="cp-nav" aria-label={t.nav.menu} data-nav-toggle>
+      <span class="menu-toggle__open"><Fragment set:html={icons.menu} /></span>
+      <span class="menu-toggle__close"><Fragment set:html={icons.close} /></span>
+    </button>
+    <nav class="site-nav" id="cp-nav" aria-label={t.nav.label} data-nav>
+      <ul role="list">
+        <li><a href="#servicos">{t.nav.services}</a></li>
+        <li><a href="#equipe">{t.nav.team}</a></li>
+        <li><a href="#como-funciona">{t.nav.how}</a></li>
+        <li><a href="#agendar" data-book>{t.nav.book}</a></li>
+      </ul>
+    </nav>
+    <a class="btn btn--primary btn--header btn--header-long" href="#agendar" data-book>{t.cta}</a>
+  </div>
+</header>

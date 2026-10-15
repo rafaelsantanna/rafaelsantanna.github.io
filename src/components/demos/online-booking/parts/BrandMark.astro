@@ -1,0 +1,13 @@
+---
+interface Props { href: string; label: string; kind: string }
+
+const { href, label, kind } = Astro.props;
+---
+
+<a class="brand" href={href} aria-label={label}>
+  <span class="brand__mark" aria-hidden="true"><span>&amp;</span></span>
+  <span class="brand__text" aria-hidden="true">
+    <span class="brand__word">Corte <em>&amp;</em> Prosa</span>
+    <span class="brand__kind">{kind}</span>
+  </span>
+</a>

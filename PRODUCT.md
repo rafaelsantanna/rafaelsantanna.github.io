@@ -10,7 +10,7 @@ Product leaders, founders, operations leaders, engineering managers, and agencie
 
 ## Product Purpose
 
-Position Rafael Sant' Anna as a senior software engineer who builds and modernizes dependable B2B products, internal systems, and operational platforms. Mobile integrations and applied AI remain supporting capabilities, while LMS/LXP appears as proven experience rather than a current service. Success means visitors can identify a relevant service, verify experience through real case studies, and start a project conversation by email or WhatsApp. The site must also expose clear, factual, machine-readable content for search engines and agents.
+Position Rafael Sant' Anna as a senior software engineer who designs and builds dependable products end to end: B2B systems, internal tools, websites, mobile experiences, and applied AI. Because his client work cannot be shown, the portfolio proves capability through working demonstrations he built himself, each with a fictional brand, fictional data, and an explicit disclosure. Real experience (Affinity/Axians, Revvo, Trinks, aspecTI, EdgeData) is presented as text in About and CV. Success means visitors try at least one demo, understand which service fits them, and start a conversation by email or WhatsApp. The site must also expose clear, factual, machine-readable content for search engines and agents.
 
 ## Brand Personality
 
@@ -23,16 +23,17 @@ Inventive, personal, and precise. The voice is specific, commercially useful, an
 - Generic AI tool marketing with neon gradients, glass panels, vague claims, and empty futuristic decoration.
 - Editorial-magazine styling with display serifs, tiny mono labels, and ornamental rules.
 - Repeated identical card grids and framework-logo walls without evidence or context.
+- Screenshots of work that cannot be shown, or diagrams pretending to be evidence.
 - The legacy Simplefolio layout, generic developer slogans, and unclear calls to action.
 - Fictional projects, inflated metrics, implied client endorsements, or keyword stuffing.
 
 ## Design Principles
 
-1. **Proof before breadth.** Lead with five strong, verifiable cases and connect each of the five current services to relevant evidence. Present authorial landing-page demonstrations as commercial capabilities, with a discreet disclosure separating them from client work.
-2. **Complexity made legible.** Use maps, flows, and precise language to show how Rafael thinks about operations and systems.
-3. **Commercial clarity.** Make availability, services, project fit, and contact routes obvious without aggressive sales tactics.
+1. **Try before trust.** Every project can be opened and used. Each one explains the problem, what was built, the decisions behind it, and what the demo deliberately does not do.
+2. **Honest by construction.** Demonstrations carry a visible authorial disclosure and fictional data. No invented clients, testimonials, ratings, or outcomes. Real experience stays CV-backed.
+3. **Commercial clarity.** Availability, services, project fit, and contact routes are obvious without aggressive sales tactics.
 4. **Human and machine readable.** Semantic HTML, concise facts, structured data, Markdown alternatives, and complete bilingual content are one system.
-5. **Expression with purpose.** A dark technical stage, restrained motion, a personal cutout, and interactive evidence make the portfolio memorable while keeping projects and contact paths clear. Never trade accessibility or factual evidence for decoration.
+5. **A quiet frame for colorful work.** The portfolio stays dark and restrained so each demo's art direction stands out. Motion and interaction prove craft and never hide content.
 
 ## Accessibility & Inclusion
 

@@ -1,0 +1,45 @@
+---
+import Icon from './Icon.astro';
+import type { KbCorpus } from './corpus/types';
+import { formatMonth } from './lib/format';
+import type { Lang } from './lib/lang';
+import { fill, type UiStrings } from './strings';
+
+interface Props { lang: Lang; corpus: KbCorpus; t: UiStrings; passageCount: number }
+
+const { lang, corpus, t, passageCount } = Astro.props;
+---
+
+<section class="ka-pane ka-pane--sources" id="ka-pane-sources" aria-labelledby="ka-sources-title" data-ka-pane="sources">
+  <header class="ka-pane__head">
+    <h2 class="ka-pane__title" id="ka-sources-title">{t.sourcesTitle}</h2>
+    <p class="ka-pane__sub">{fill(t.sourcesCount, { docs: corpus.documents.length, passages: passageCount })}</p>
+  </header>
+  <div class="ka-pane__scroll">
+    <p class="ka-sources__hint" id="ka-sources-hint">{t.sourcesHint}</p>
+    <ul class="ka-docs">
+      {corpus.documents.map((doc) => (
+        <li class="ka-doc">
+          <button type="button" class="ka-doc__toggle" aria-pressed="false" data-ka-doc={doc.id}>
+            <span class="ka-doc__check" aria-hidden="true"><Icon name="check" /></span>
+            <span class="ka-doc__text">
+              <span class="ka-doc__title">{doc.title}</span>
+              <span class="ka-doc__summary">{doc.summary}</span>
+              <span class="ka-doc__meta">{doc.owner} · {fill(t.docSections, { n: doc.sections.length })} · <time datetime={doc.updated}>{formatMonth(doc.updated, lang)}</time></span>
+            </span>
+          </button>
+          <button type="button" class="ka-doc__read" data-ka-read={doc.id} title={fill(t.docRead, { title: doc.title })}>
+            <Icon name="doc" />
+          </button>
+        </li>
+      ))}
+    </ul>
+  </div>
+  <footer class="ka-sources__foot">
+    <div class="ka-filter">
+      <p class="ka-filter__text" data-ka-filter-text>{t.filterAll}</p>
+      <button type="button" class="ka-link" data-ka-filter-clear hidden>{t.filterClear}</button>
+    </div>
+    <p class="ka-sources__index"><span>{t.indexParams}</span><span data-ka-build></span></p>
+  </footer>
+</section>

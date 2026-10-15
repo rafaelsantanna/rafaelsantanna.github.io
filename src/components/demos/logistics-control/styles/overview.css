@@ -1,0 +1,388 @@
+/* Overview indicators and exceptions queue, plus the drivers view. */
+.demo-logistics-control {
+  /* KPI cards */
+  .lc-kpis {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 12px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .lc-kpi {
+    min-width: 0;
+    display: flex;
+  }
+
+  .lc-kpi__body {
+    position: relative;
+    display: grid;
+    grid-template-rows: auto auto auto 1fr;
+    width: 100%;
+    padding: 14px 16px 0;
+    overflow: hidden;
+    border: 1px solid var(--lc-line);
+    border-radius: 12px;
+    background: var(--lc-panel);
+    color: inherit;
+    text-align: left;
+    transition: border-color 160ms var(--lc-ease), box-shadow 160ms var(--lc-ease);
+  }
+
+  & button.lc-kpi__body:hover {
+    border-color: var(--lc-line-2);
+    box-shadow: 0 6px 18px rgb(23 24 28 / 7%);
+
+    & .lc-kpi__go { opacity: 1; transform: translateX(0); }
+  }
+
+  .lc-kpi__label {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    color: var(--lc-ink-2);
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  .lc-kpi__value {
+    margin-top: 8px;
+    font-family: var(--lc-font-display);
+    font-size: 30px;
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .lc-kpi__hint {
+    margin-top: 6px;
+    color: var(--lc-ink-3);
+    font-size: 12.5px;
+    line-height: 1.35;
+  }
+
+  .lc-kpi__go {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    color: var(--lc-ink-3);
+    opacity: 0;
+    transform: translateX(-4px);
+    transition: opacity 160ms var(--lc-ease), transform 160ms var(--lc-ease);
+  }
+
+  .lc-spark {
+    align-self: end;
+    width: calc(100% + 32px);
+    height: 38px;
+    margin: 12px -16px 0;
+    color: var(--lc-ink-3);
+  }
+
+  .lc-spark__line {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.75;
+    stroke-linejoin: round;
+    vector-effect: non-scaling-stroke;
+  }
+
+  .lc-spark__area {
+    fill: currentColor;
+    opacity: 0.1;
+  }
+
+  .lc-kpi--route .lc-kpi__label .lc-icon, .lc-kpi--route .lc-spark { color: var(--lc-route-solid); }
+  .lc-kpi--late .lc-kpi__label .lc-icon { color: var(--lc-late); }
+  .lc-kpi--late .lc-spark { color: var(--lc-late-solid); }
+  .lc-kpi--delivered .lc-kpi__label .lc-icon, .lc-kpi--delivered .lc-spark { color: var(--lc-delivered-solid); }
+  .lc-kpi--accent .lc-kpi__label .lc-icon { color: var(--lc-accent-text); }
+  .lc-kpi--accent .lc-spark { color: var(--lc-ink); }
+  .lc-kpi--late .lc-kpi__body { box-shadow: inset 0 3px 0 var(--lc-late-solid); }
+
+  /* Overview grid */
+  .lc-overview-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(300px, 380px);
+    gap: 16px;
+  }
+
+  /*
+   * Side by side, the queue matches the map height and scrolls inside. The scroller is positioned so
+   * absolutely positioned descendants (screen reader text) are clipped by it instead of growing the page.
+   */
+  .lc-queuepanel {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+
+    & .lc-queue {
+      position: relative;
+      flex: 1 1 0;
+      min-height: 0;
+      overflow-y: auto;
+      contain: size;
+      overscroll-behavior: contain;
+      scrollbar-width: thin;
+    }
+  }
+
+  /* Exceptions queue */
+  .lc-queuepanel .lc-panel__head { border-bottom: 1px solid var(--lc-line); }
+
+  .lc-queue {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .lc-xcard {
+    display: grid;
+    gap: 6px;
+    padding: 12px 16px 14px;
+    border-bottom: 1px solid var(--lc-line);
+
+    &:last-child { border-bottom: 0; }
+  }
+
+  .lc-xcard__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  .lc-kind {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12.5px;
+    font-weight: 650;
+
+    & .lc-icon { width: 15px; height: 15px; }
+  }
+
+  .lc-kind--late { color: var(--lc-late); }
+  .lc-kind--issue { color: var(--lc-issue); }
+
+  .lc-xcard__age {
+    color: var(--lc-ink-3);
+    font-size: 12px;
+    white-space: nowrap;
+  }
+
+  .lc-xcard__title {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 2px 10px;
+    min-width: 0;
+
+    & .lc-flag { margin-left: -6px; }
+  }
+
+  .lc-xcard__customer {
+    min-width: 0;
+    overflow: hidden;
+    font-weight: 600;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .lc-xcard__meta {
+    color: var(--lc-ink-3);
+    font-size: 12.5px;
+  }
+
+  .lc-xcard__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 4px;
+
+    & .lc-btn {
+      min-height: var(--lc-control-sm);
+      padding: 0 10px;
+      font-size: 12.5px;
+    }
+  }
+
+  .lc-empty-inline {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 20px 16px;
+    color: var(--lc-ink-3);
+
+    & .lc-icon { color: var(--lc-delivered-solid); }
+  }
+
+  .lc-queue--grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 12px;
+
+    & .lc-xcard {
+      border: 1px solid var(--lc-line);
+      border-radius: 12px;
+      background: var(--lc-panel);
+    }
+
+    & .lc-xcard--late { box-shadow: inset 3px 0 0 var(--lc-late-solid); }
+    & .lc-xcard--issue { box-shadow: inset 3px 0 0 var(--lc-issue-solid); }
+
+    & .lc-empty-inline {
+      grid-column: 1 / -1;
+      border: 1px dashed var(--lc-line-2);
+      border-radius: 12px;
+    }
+  }
+
+  /* Drivers view */
+  .lc-drivers {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 12px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .lc-driver {
+    display: grid;
+    gap: 14px;
+    padding: 16px;
+    border: 1px solid var(--lc-line);
+    border-radius: var(--lc-radius);
+    background: var(--lc-panel);
+  }
+
+  .lc-driver__head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .lc-driver__name {
+    font-family: var(--lc-font-display);
+    font-size: 16px;
+    font-weight: 620;
+    letter-spacing: -0.015em;
+  }
+
+  .lc-driver__meta {
+    color: var(--lc-ink-3);
+    font-size: 12.5px;
+  }
+
+  .lc-driver__progress {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 6px;
+    font-size: 12.5px;
+  }
+
+  .lc-driver__progress-label { color: var(--lc-ink-3); }
+  .lc-driver__progress-value { font-weight: 600; }
+
+  .lc-bar {
+    grid-column: 1 / -1;
+    height: 6px;
+    overflow: hidden;
+    border-radius: 999px;
+    background: var(--lc-sunken);
+
+    & span {
+      display: block;
+      height: 100%;
+      border-radius: inherit;
+      background: var(--lc-delivered-solid);
+    }
+  }
+
+  .lc-driver__counts {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .lc-driver__count {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    column-gap: 6px;
+    padding: 8px 10px;
+    border-radius: 10px;
+    background: var(--lc-panel-2);
+    color: var(--lc-ink-3);
+
+    & .lc-icon { width: 15px; height: 15px; }
+  }
+
+  .lc-driver__count-value {
+    color: var(--lc-ink);
+    font-family: var(--lc-font-display);
+    font-size: 17px;
+    font-weight: 600;
+  }
+
+  .lc-driver__count-label {
+    grid-column: 1 / -1;
+    font-size: 11.5px;
+  }
+
+  .lc-driver__count--route .lc-icon { color: var(--lc-route); }
+  .lc-driver__count--late.has-value { background: var(--lc-late-bg); color: var(--lc-late); }
+  .lc-driver__count--late .lc-icon { color: var(--lc-late); }
+  .lc-driver__count--issue.has-value { background: var(--lc-issue-bg); color: var(--lc-issue); }
+  .lc-driver__count--issue .lc-icon { color: var(--lc-issue); }
+  .lc-driver__go { justify-self: stretch; }
+}
+
+@container lc-main (max-width: 940px) {
+  .demo-logistics-control .lc-overview-grid { grid-template-columns: minmax(0, 1fr); }
+  .demo-logistics-control .lc-queuepanel .lc-queue { flex: none; contain: none; overflow: visible; }
+}
+
+@container lc-main (max-width: 900px) {
+  .demo-logistics-control .lc-kpis {
+    display: flex;
+    margin-inline: calc(var(--lc-pad) * -1);
+    padding: 2px var(--lc-pad) 6px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--lc-pad);
+    scrollbar-width: thin;
+  }
+
+  .demo-logistics-control .lc-kpi {
+    flex: 0 0 min(220px, 68%);
+    scroll-snap-align: start;
+  }
+}
+
+@container lc-main (max-width: 560px) {
+  .demo-logistics-control .lc-queuepanel .lc-xcard:nth-child(n + 5) { display: none; }
+}
+
+@media (hover: none) {
+  .demo-logistics-control .lc-kpi__go { opacity: 1; transform: none; }
+}
+
+/*
+ * On touch layouts the delivery ID is the card's only way into the detail panel. The target grows to
+ * 44px and reaches into the card's row gaps, so the card itself barely gets taller.
+ */
+@media (max-width: 1023.98px), (pointer: coarse) {
+  .demo-logistics-control .lc-xcard__title .lc-idlink {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    margin-block: -6px;
+  }
+}

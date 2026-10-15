@@ -2,23 +2,22 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import HomePage from '@/components/pages/HomePage.astro';
 import ListingPage from '@/components/pages/ListingPage.astro';
-import CasePage from '@/components/pages/CasePage.astro';
+import ProjectPage from '@/components/pages/ProjectPage.astro';
 import ServicePage from '@/components/pages/ServicePage.astro';
-import ConceptPage from '@/components/pages/ConceptPage.astro';
 import AboutPage from '@/components/pages/AboutPage.astro';
 import CvPage from '@/components/pages/CvPage.astro';
 import ContactPage from '@/components/pages/ContactPage.astro';
 import AgentsPage from '@/components/pages/AgentsPage.astro';
-import { cases, concepts, copy, identity, localize, services, type Locale } from '@/data/content';
+import { copy, identity, localize, previewImage, projects, services, withLocale, type Locale } from '@/data/content';
 
-type PageKind = 'home' | 'work' | 'services' | 'case' | 'service' | 'concept' | 'about' | 'cv' | 'contact' | 'agents';
+type PageKind = 'home' | 'work' | 'services' | 'project' | 'service' | 'about' | 'cv' | 'contact' | 'agents';
 interface PageProps { locale: Locale; kind: PageKind; routePath: string; slug?: string }
 
 export function getStaticPaths() {
   const pages: Array<{ path?: string; props: PageProps }> = [];
   for (const locale of ['en', 'pt'] as const) {
-    const prefix = locale === 'pt' ? 'pt/' : '';
-    pages.push({ path: locale === 'pt' ? 'pt' : undefined, props: { locale, kind: 'home', routePath: '' } });
+    const prefix = locale === 'en' ? 'en/' : '';
+    pages.push({ path: locale === 'en' ? 'en' : undefined, props: { locale, kind: 'home', routePath: '' } });
     for (const [routePath, kind] of [
       ['work', 'work'],
       ['services', 'services'],
@@ -29,14 +28,11 @@ export function getStaticPaths() {
     ] as const) {
       pages.push({ path: `${prefix}${routePath}`, props: { locale, kind, routePath } });
     }
-    for (const item of cases) {
-      pages.push({ path: `${prefix}work/${item.slug}`, props: { locale, kind: 'case', routePath: `work/${item.slug}`, slug: item.slug } });
+    for (const item of projects) {
+      pages.push({ path: `${prefix}work/${item.slug}`, props: { locale, kind: 'project', routePath: `work/${item.slug}`, slug: item.slug } });
     }
     for (const service of services) {
       pages.push({ path: `${prefix}services/${service.slug}`, props: { locale, kind: 'service', routePath: `services/${service.slug}`, slug: service.slug } });
-    }
-    for (const concept of concepts) {
-      pages.push({ path: `${prefix}work/landing-pages/${concept.slug}`, props: { locale, kind: 'concept', routePath: `work/landing-pages/${concept.slug}`, slug: concept.slug } });
     }
   }
   return pages.map(({ path, props }) => ({ params: { path }, props }));
@@ -44,24 +40,28 @@ export function getStaticPaths() {
 
 const { locale, kind, routePath, slug } = Astro.props as PageProps;
 const t = copy[locale];
-const caseItem = kind === 'case' ? cases.find((item) => item.slug === slug) : undefined;
+const projectItem = kind === 'project' ? projects.find((item) => item.slug === slug) : undefined;
 const serviceItem = kind === 'service' ? services.find((item) => item.slug === slug) : undefined;
-const conceptItem = kind === 'concept' ? concepts.find((item) => item.slug === slug) : undefined;
 
-if (kind === 'case' && !caseItem) throw new Error(`Unknown case study: ${slug}`);
+if (kind === 'project' && !projectItem) throw new Error(`Unknown project: ${slug}`);
 if (kind === 'service' && !serviceItem) throw new Error(`Unknown service: ${slug}`);
-if (kind === 'concept' && !conceptItem) throw new Error(`Unknown concept: ${slug}`);
 
 const metadata = (() => {
-  if (caseItem) return { title: caseItem.title, description: localize(caseItem.summary, locale), image: caseItem.image, imageAlt: localize(caseItem.imageAlt, locale) };
+  if (projectItem) {
+    return {
+      title: `${projectItem.name}: ${localize(projectItem.category, locale)}`,
+      description: `${localize(projectItem.summary, locale)} ${localize(projectItem.disclaimer, locale)}`,
+      image: previewImage(projectItem, locale),
+      imageAlt: localize(projectItem.preview.alt, locale),
+    };
+  }
   if (serviceItem) return { title: localize(serviceItem.title, locale), description: localize(serviceItem.summary, locale) };
-  if (conceptItem) return { title: localize(conceptItem.title, locale), description: `${localize(conceptItem.summary, locale)} ${localize(conceptItem.disclaimer, locale)}`, image: conceptItem.image, imageAlt: localize(conceptItem.imageAlt, locale) };
   const map = {
     home: { title: identity.role[locale], description: t.heroIntro },
     work: { title: t.workTitle, description: t.workIntro },
     services: { title: t.nav.services, description: t.servicesPageIntro },
     about: { title: t.nav.about, description: t.aboutIntro },
-    cv: { title: t.cvTitle, description: t.aboutIntro },
+    cv: { title: t.cvTitle, description: identity.summary[locale] },
     contact: { title: t.nav.contact, description: t.contactIntro },
     agents: { title: t.nav.agents, description: t.agentIntro },
   } as const;
@@ -69,17 +69,18 @@ const metadata = (() => {
 })();
 
 const pageSchema = (() => {
-  if (caseItem) {
+  if (projectItem) {
+    const path = withLocale(locale, `work/${projectItem.slug}`);
     return {
       '@context': 'https://schema.org',
-      '@type': caseItem.schemaType,
-      name: caseItem.title,
-      description: localize(caseItem.summary, locale),
+      '@type': 'CreativeWork',
+      name: projectItem.name,
+      description: `${localize(projectItem.summary, locale)} ${localize(projectItem.disclaimer, locale)}`,
       creator: { '@type': 'Person', name: identity.name },
-      image: new URL(caseItem.image, Astro.site).toString(),
-      url: new URL(`/${locale === 'pt' ? 'pt/' : ''}work/${caseItem.slug}/`, Astro.site).toString(),
-      applicationCategory: caseItem.schemaType === 'SoftwareApplication' ? 'BusinessApplication' : undefined,
-      operatingSystem: caseItem.schemaType === 'SoftwareApplication' ? 'Web' : undefined,
+      image: new URL(previewImage(projectItem, locale), Astro.site).toString(),
+      url: new URL(path, Astro.site).toString(),
+      genre: 'Portfolio demo',
+      keywords: projectItem.stack.join(', '),
     };
   }
   if (serviceItem) {
@@ -91,18 +92,6 @@ const pageSchema = (() => {
       provider: { '@type': 'Person', name: identity.name },
       areaServed: 'Worldwide',
       serviceType: localize(serviceItem.title, locale),
-    };
-  }
-  if (conceptItem) {
-    return {
-      '@context': 'https://schema.org',
-      '@type': 'CreativeWork',
-      name: localize(conceptItem.title, locale),
-      description: `${localize(conceptItem.summary, locale)} ${localize(conceptItem.disclaimer, locale)}`,
-      creator: { '@type': 'Person', name: identity.name },
-      image: new URL(conceptItem.image, Astro.site).toString(),
-      url: new URL(`/${locale === 'pt' ? 'pt/' : ''}work/landing-pages/${conceptItem.slug}/`, Astro.site).toString(),
-      educationalUse: 'Authorial portfolio demonstration',
     };
   }
   if (kind === 'home') {
@@ -121,13 +110,12 @@ const pageSchema = (() => {
 })();
 ---
 
-<BaseLayout locale={locale} title={metadata.title} description={metadata.description} routePath={routePath} image={'image' in metadata ? metadata.image : undefined} imageAlt={'imageAlt' in metadata ? metadata.imageAlt : undefined} pageSchema={pageSchema} showSiteChrome={kind !== 'concept'}>
+<BaseLayout locale={locale} title={metadata.title} description={metadata.description} routePath={routePath} image={'image' in metadata ? metadata.image : undefined} imageAlt={'imageAlt' in metadata ? metadata.imageAlt : undefined} pageSchema={pageSchema}>
   {kind === 'home' && <HomePage locale={locale} />}
   {kind === 'work' && <ListingPage locale={locale} type="work" />}
   {kind === 'services' && <ListingPage locale={locale} type="services" />}
-  {kind === 'case' && caseItem && <CasePage locale={locale} item={caseItem} />}
+  {kind === 'project' && projectItem && <ProjectPage locale={locale} project={projectItem} />}
   {kind === 'service' && serviceItem && <ServicePage locale={locale} service={serviceItem} />}
-  {kind === 'concept' && conceptItem && <ConceptPage locale={locale} concept={conceptItem} />}
   {kind === 'about' && <AboutPage locale={locale} />}
   {kind === 'cv' && <CvPage locale={locale} />}
   {kind === 'contact' && <ContactPage locale={locale} />}

@@ -1,0 +1,21 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Icon from '@/components/ui/Icon.astro';
+import { withLocale } from '@/data/content';
+
+// GitHub Pages serves this file for every unknown URL, in either language, so it speaks Portuguese first and links to English.
+---
+
+<BaseLayout locale="pt" title="Página não encontrada" description="Esta página não existe ou mudou de endereço." routePath="404" errorPage>
+  <header class="page-head shell">
+    <p class="section-index">404</p>
+    <h1>Esta página não existe ou mudou de endereço.</h1>
+    <p class="lede">O portfólio foi reorganizado e alguns endereços antigos mudaram. Os projetos, os serviços e o contato continuam aqui.</p>
+    <div class="button-row">
+      <a class="button button--primary" href={withLocale('pt', 'work')}>Ver os projetos<Icon name="arrow-right" /></a>
+      <a class="button button--secondary" href={withLocale('pt')}>Ir para o início</a>
+      <a class="button button--ghost" href={withLocale('pt', 'contact')}>Falar com Rafael</a>
+    </div>
+    <p class="small-meta" lang="en">Page not found. <a class="text-link" href={withLocale('en')}>Go to the English site</a></p>
+  </header>
+</BaseLayout>

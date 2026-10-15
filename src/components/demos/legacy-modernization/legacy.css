@@ -1,0 +1,261 @@
+/* Ventura ERP, circa 2009: classic desktop chrome, kept readable and keyboard operable. */
+.demo-legacy-modernization .vt-legacy {
+  --l-face: #D4D0C8;
+  --l-light: #FFFFFF;
+  --l-shadow: #808080;
+  --l-dark: #404040;
+  --l-select: #0A246A;
+  --l-font: 11px/1.3 Tahoma, Verdana, 'Segoe UI', sans-serif;
+
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 860px;
+  padding: 2px;
+  border: 1px solid;
+  border-color: var(--l-face) var(--l-dark) var(--l-dark) var(--l-face);
+  background: var(--l-face);
+  box-shadow: inset 1px 1px var(--l-light), inset -1px -1px var(--l-shadow);
+  color: #000000;
+  font: var(--l-font);
+  letter-spacing: 0;
+
+  & u { text-decoration: underline; text-underline-offset: 1px; }
+  & table { font: inherit; }
+  & label { cursor: default; }
+
+  .vt-l-titlebar {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    height: 20px;
+    padding: 0 2px 0 3px;
+    background: linear-gradient(90deg, var(--l-select) 0%, var(--l-select) 22%, #A6CAF0 100%);
+    color: #FFFFFF;
+  }
+  .vt-l-appicon { flex: none; }
+  .vt-l-title {
+    flex: 1;
+    min-width: 0;
+    margin: 0;
+    overflow: hidden;
+    font: bold 11px/1 Tahoma, Verdana, 'Segoe UI', sans-serif;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .vt-l-caption { display: flex; gap: 2px; }
+  .vt-l-caption span,
+  .vt-l-x {
+    display: grid;
+    place-items: center;
+    width: 16px;
+    height: 14px;
+    padding: 0;
+    border: 1px solid;
+    border-color: var(--l-light) var(--l-dark) var(--l-dark) var(--l-light);
+    background: var(--l-face);
+    box-shadow: inset -1px -1px var(--l-shadow);
+    color: #000000;
+    font: bold 10px/1 Tahoma, Verdana, sans-serif;
+  }
+  .vt-l-caption span:last-child { margin-inline-start: 2px; }
+  .vt-l-x:focus-visible { outline: 2px solid #FFFFFF; outline-offset: 1px; }
+
+  .vt-l-menubar { display: flex; padding: 1px 0; }
+  .vt-l-menubar span { padding: 2px 7px; }
+
+  .vt-l-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 1px;
+    padding: 2px 4px;
+    border-block: 1px solid;
+    border-color: var(--l-shadow) transparent var(--l-light);
+    box-shadow: inset 0 1px var(--l-light), 0 1px var(--l-shadow);
+  }
+  .vt-l-tool { display: grid; place-items: center; width: 23px; height: 22px; }
+  .vt-l-tool.is-disabled { opacity: 0.6; }
+  .vt-l-sep { width: 2px; height: 18px; margin-inline: 3px; border-inline: 1px solid; border-color: var(--l-shadow) var(--l-light); }
+
+  /* The order form is a child window on the gray MDI workspace of the main ERP window. */
+  .vt-l-mdi {
+    display: flex;
+    flex: 1;
+    align-items: flex-start;
+    padding: 6px;
+    border: 1px solid;
+    border-color: var(--l-shadow) var(--l-light) var(--l-light) var(--l-shadow);
+    background: #808080;
+  }
+  .vt-l-window {
+    display: flex;
+    flex-direction: column;
+    width: min(100%, 1000px);
+    padding: 2px;
+    border: 1px solid;
+    border-color: var(--l-face) var(--l-dark) var(--l-dark) var(--l-face);
+    background: var(--l-face);
+    box-shadow: inset 1px 1px var(--l-light), inset -1px -1px var(--l-shadow);
+  }
+  .vt-l-body { display: flex; flex-direction: column; gap: 6px; padding: 8px 8px 10px; }
+
+  .vt-l-layout { border-collapse: separate; border-spacing: 4px 3px; }
+  .vt-l-layout td { padding: 0; vertical-align: middle; }
+  .vt-l-lbl { padding-inline-end: 2px; text-align: end; white-space: nowrap; }
+  .vt-l-req { padding-inline-start: 1px; color: #A00000; }
+
+  .vt-l-group {
+    min-inline-size: 0;
+    margin: 0;
+    padding: 4px 8px 8px;
+    border: 1px solid var(--l-shadow);
+    box-shadow: inset 1px 1px var(--l-light), 1px 1px var(--l-light);
+  }
+  .vt-l-group legend { padding: 0 3px; }
+
+  .vt-l-input,
+  .vt-l-select {
+    height: 21px;
+    margin: 0;
+    padding: 1px 3px;
+    border: 1px solid;
+    border-color: var(--l-shadow) var(--l-light) var(--l-light) var(--l-shadow);
+    border-radius: 0;
+    background-color: #FFFFFF;
+    box-shadow: inset 1px 1px var(--l-dark), inset -1px -1px var(--l-face);
+    color: #000000;
+    font: var(--l-font);
+  }
+  .vt-l-input.is-ro { background-color: var(--l-face); }
+  .vt-l-input:focus,
+  .vt-l-select:focus { outline: 2px solid var(--l-select); outline-offset: 1px; }
+  .vt-l-money { text-align: end; }
+  .vt-l-grand { font-weight: bold; }
+  .vt-l-select {
+    padding-inline-end: 20px;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='17'%3E%3Crect width='16' height='17' fill='%23D4D0C8'/%3E%3Cpath d='M0 16.5h15.5V0' fill='none' stroke='%23404040'/%3E%3Cpath d='M.5 16V.5H15' fill='none' stroke='%23FFFFFF'/%3E%3Cpath d='M1 15.5h14V1' fill='none' stroke='%23808080'/%3E%3Cpath d='M5 7h6l-3 3z'/%3E%3C/svg%3E");
+    background-position: right 2px center;
+    background-repeat: no-repeat;
+    background-size: 16px 17px;
+  }
+  .vt-l-select--customer { width: 100%; max-width: 520px; }
+
+  .vt-l-grid {
+    width: 100%;
+    border: 1px solid;
+    border-color: var(--l-shadow) var(--l-light) var(--l-light) var(--l-shadow);
+    border-collapse: collapse;
+    background: #FFFFFF;
+    table-layout: fixed;
+  }
+  .vt-l-grid th {
+    height: 18px;
+    padding: 1px 4px;
+    border: 1px solid;
+    border-color: var(--l-light) var(--l-shadow) var(--l-shadow) var(--l-light);
+    background: var(--l-face);
+    font-weight: normal;
+    text-align: start;
+    white-space: nowrap;
+  }
+  .vt-l-col-seq { width: 40px; }
+  .vt-l-col-unit { width: 46px; }
+  .vt-l-col-qty { width: 70px; }
+  .vt-l-col-money { width: 96px; }
+  .vt-l-grid td {
+    height: 22px;
+    padding: 0 3px;
+    overflow: hidden;
+    border: 1px solid #C0C0C0;
+    white-space: nowrap;
+  }
+  .vt-l-grid .vt-l-select,
+  .vt-l-grid .vt-l-input {
+    width: 100%;
+    height: 20px;
+    border: 0;
+    box-shadow: none;
+    background-color: transparent;
+  }
+  .vt-l-grid .vt-l-select { background-color: #FFFFFF; }
+  .vt-l-grid .vt-l-select:focus,
+  .vt-l-grid .vt-l-input:focus { outline-offset: -2px; }
+  .vt-l-qty { text-align: end; }
+  .vt-l-seq,
+  .vt-l-center { text-align: center; }
+  .vt-l-num { text-align: end; font-variant-numeric: tabular-nums; }
+  .vt-l-grid tr:focus-within td:not(:has(select, input)) { background: var(--l-select); color: #FFFFFF; }
+  .vt-l-gridtools { margin-top: 6px; }
+
+  .vt-l-bottom { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; }
+  .vt-l-note { max-width: 340px; margin: 0 0 4px; }
+  .vt-l-group--totals { flex: none; }
+
+  .vt-l-actions { display: flex; justify-content: flex-end; gap: 6px; padding-top: 2px; }
+  .vt-l-btn {
+    min-width: 75px;
+    height: 23px;
+    padding: 0 10px;
+    border: 1px solid;
+    border-color: var(--l-light) var(--l-dark) var(--l-dark) var(--l-light);
+    border-radius: 0;
+    background: var(--l-face);
+    box-shadow: inset -1px -1px var(--l-shadow);
+    color: #000000;
+    font: var(--l-font);
+    cursor: default;
+  }
+  .vt-l-btn--default { outline: 1px solid #000000; outline-offset: 0; }
+  .vt-l-btn--small { min-width: 0; height: 21px; }
+  .vt-l-btn:active {
+    border-color: var(--l-dark) var(--l-light) var(--l-light) var(--l-dark);
+    box-shadow: inset 1px 1px var(--l-shadow);
+    padding: 1px 9px 0 11px;
+  }
+  .vt-l-btn:focus-visible {
+    outline: 1px dotted #000000;
+    outline-offset: -4px;
+    box-shadow: inset -1px -1px var(--l-shadow), 0 0 0 1px #000000, 0 0 0 3px var(--l-select);
+  }
+
+  .vt-l-statusbar { display: flex; gap: 2px; padding: 2px; }
+  .vt-l-panel {
+    padding: 2px 6px;
+    border: 1px solid;
+    border-color: var(--l-shadow) var(--l-light) var(--l-light) var(--l-shadow);
+    white-space: nowrap;
+  }
+  .vt-l-panel--grow { flex: 1; }
+
+  .vt-l-dialog {
+    width: min(440px, calc(100vw - 32px));
+    padding: 2px;
+    border: 1px solid;
+    border-color: var(--l-face) var(--l-dark) var(--l-dark) var(--l-face);
+    background: var(--l-face);
+    box-shadow: inset 1px 1px var(--l-light), inset -1px -1px var(--l-shadow), 4px 4px 0 rgb(0 0 0 / 28%);
+    color: #000000;
+    font: var(--l-font);
+  }
+  .vt-l-dialog::backdrop { background: rgb(0 0 0 / 14%); }
+  .vt-l-dialog__body { display: flex; gap: 12px; padding: 14px 12px 8px; }
+  .vt-l-dialog__icon { flex: none; }
+  .vt-l-dialog__message { min-width: 0; }
+  .vt-l-dialog__message p { margin: 0 0 6px; }
+  .vt-l-dialog__message ul { margin: 6px 0 0; padding-inline-start: 14px; }
+  .vt-l-dialog__message li { margin-bottom: 2px; }
+  .vt-l-dialog__actions { display: flex; justify-content: center; gap: 6px; padding: 6px 0 10px; }
+
+  /* Touch layouts keep the period look but grow every control to a 44px target. */
+  @media (pointer: coarse) {
+    .vt-l-input,
+    .vt-l-select,
+    .vt-l-grid .vt-l-select,
+    .vt-l-grid .vt-l-input,
+    .vt-l-grid td,
+    .vt-l-btn { height: 44px; }
+    .vt-l-dialog .vt-l-titlebar { height: auto; }
+    .vt-l-x { width: 44px; height: 44px; font-size: 16px; }
+  }
+}

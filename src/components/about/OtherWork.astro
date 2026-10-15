@@ -1,0 +1,75 @@
+---
+import { clients, selectedWork, type Locale } from '@/data/content';
+
+interface Props { locale: Locale }
+
+const { locale } = Astro.props;
+const pt = locale === 'pt';
+const ui = pt
+  ? {
+      projects: 'Outros projetos',
+      clients: 'Organizações',
+      clientsLead: 'Trabalhei em projetos para organizações como',
+    }
+  : {
+      projects: 'Other projects',
+      clients: 'Organizations',
+      clientsLead: 'I worked on projects for organizations such as',
+    };
+---
+
+<div class="other shell">
+  <div class="other__col">
+    <h2 class="other__title">{ui.projects}</h2>
+    <ul class="other__list">
+      {selectedWork.map((item) => (
+        <li class="other__item">
+          <h3>{item.title}</h3>
+          <p>{item.description[locale]}</p>
+          <ul class="tag-list">{item.technologies[locale].map((technology) => <li>{technology}</li>)}</ul>
+        </li>
+      ))}
+    </ul>
+  </div>
+
+  <div class="other__col">
+    <h2 class="other__title">{ui.clients}</h2>
+    <p class="other__clients"><span>{ui.clientsLead}</span> {clients.join(', ')}.</p>
+  </div>
+</div>
+
+<style>
+  .other {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: var(--space-7) clamp(2.5rem, 1.5rem + 4vw, 6rem);
+    padding-block-start: clamp(2.5rem, 2rem + 2vw, 4rem);
+    border-block-start: 1px solid var(--line-strong);
+  }
+  .other__col { display: grid; align-content: start; gap: var(--space-5); min-width: 0; }
+  .other__title { color: var(--text-muted); font-size: var(--step--1); font-weight: 560; letter-spacing: 0; line-height: 1.3; }
+  .other__list { display: grid; gap: var(--space-3); list-style: none; }
+  .other__item {
+    display: grid;
+    gap: var(--space-3);
+    padding: var(--space-5);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-panel);
+    background: var(--surface-1);
+  }
+  .other__item h3 { font-size: var(--step-2); letter-spacing: -0.035em; line-height: 1.15; }
+  .other__item p { color: var(--text-soft); }
+  .other__clients {
+    color: var(--text-soft);
+    font-family: var(--font-display);
+    font-size: var(--step-2);
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    line-height: 1.4;
+  }
+  .other__clients span { color: var(--text-muted); font-weight: 500; }
+
+  @media (max-width: 63.99em) {
+    .other { grid-template-columns: minmax(0, 1fr); }
+  }
+</style>

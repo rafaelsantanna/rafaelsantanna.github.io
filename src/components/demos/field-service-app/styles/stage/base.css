@@ -1,0 +1,158 @@
+/* Turno demo stage: tokens, resets, and the product mast. Every rule is scoped to .turno. */
+
+body.demo-page--field-service-app {
+  background: #e7ecf3;
+  color: #0e1525;
+}
+
+.turno {
+  --t-base: #f7f8fa;
+  --t-ink: #0e1525;
+  --t-accent: #2f6bff;
+  --t-surface: #ffffff;
+  --t-ink-2: #3d4659;
+  --t-ink-3: #5b6478;
+  --t-line: #e1e5ec;
+  --t-line-2: #c3cad6;
+  --t-field: #7d869a;
+  --t-blue: #2459e6;
+  --t-blue-ink: #1f4fcc;
+  --t-blue-soft: #e8efff;
+  --t-green: #0f6b37;
+  --t-green-soft: #e3f4ea;
+  --t-green-line: #b9dfc8;
+  --t-red: #b42318;
+  --t-red-soft: #fdecea;
+  --t-red-line: #f0b9b3;
+  --t-amber: #7a4f00;
+  --t-amber-soft: #fff3d1;
+  --t-amber-line: #efd48a;
+  --t-amber-bright: #ffb020;
+  --t-muted-fill: #edf0f5;
+  --t-stage: #e7ecf3;
+  --t-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --t-display: 'Geologica', system-ui, 'Segoe UI', sans-serif;
+  --t-body: 'Atkinson Hyperlegible Next', system-ui, 'Segoe UI', sans-serif;
+  --t-mono: ui-monospace, 'Cascadia Code', Consolas, monospace;
+  --t-screen-h: clamp(640px, calc(100dvh - 9rem), 844px);
+
+  position: relative;
+  color: var(--t-ink);
+  font-family: var(--t-body);
+  font-size: 1rem;
+  line-height: 1.5;
+  background-color: var(--t-stage);
+  background-image:
+    radial-gradient(ellipse 55% 65% at 50% 48%, rgb(255 255 255 / 0.7), rgb(255 255 255 / 0) 72%),
+    linear-gradient(rgb(14 21 37 / 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(14 21 37 / 0.045) 1px, transparent 1px);
+  background-size: 100% 100%, 32px 32px, 32px 32px;
+  background-position: center, -1px -1px, -1px -1px;
+}
+
+.turno *,
+.turno *::before,
+.turno *::after {
+  box-sizing: border-box;
+}
+
+.turno .t-sr {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.turno .t-ico {
+  inline-size: 1.25rem;
+  block-size: 1.25rem;
+  flex: none;
+}
+
+.turno :is(button, input, textarea, [tabindex]):focus-visible {
+  outline: 3px solid var(--t-accent);
+  outline-offset: 2px;
+}
+
+/* Zero specificity, so every button class below can set its own color and type. */
+:where(.turno) button {
+  font: inherit;
+  color: inherit;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html:not(.js) .turno [data-needs-js],
+html:not(.js) .turno .turno__sheet-btn {
+  display: none;
+}
+
+/* Mast: product name and context. */
+.turno__eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0 0 0.75rem;
+  color: var(--t-blue-ink);
+  font-size: 0.9375rem;
+  font-weight: 700;
+}
+
+.turno__eyebrow::before {
+  content: '';
+  inline-size: 0.5rem;
+  block-size: 0.5rem;
+  border-radius: 50%;
+  background: var(--t-accent);
+  box-shadow: 0 0 0 4px rgb(47 107 255 / 0.16);
+}
+
+.turno__brand {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+}
+
+.turno__logo {
+  display: grid;
+  color: var(--t-accent);
+}
+
+.turno__logo svg {
+  inline-size: 2.875rem;
+  block-size: 2.875rem;
+  filter: drop-shadow(0 8px 14px rgb(47 107 255 / 0.28));
+}
+
+.turno__name {
+  margin: 0;
+  font-family: var(--t-display);
+  font-size: clamp(2.75rem, 4vw, 3.75rem);
+  font-weight: 800;
+  line-height: 0.95;
+  letter-spacing: -0.045em;
+}
+
+.turno__mastline {
+  display: none;
+  margin: 0;
+  color: var(--t-ink-3);
+  font-size: 0.8125rem;
+  font-weight: 700;
+}
+
+.turno__sheet-btn {
+  display: none;
+}
+
+.turno__lede {
+  margin: 0;
+  max-inline-size: 32rem;
+  color: var(--t-ink-2);
+  font-size: 1rem;
+  line-height: 1.55;
+}

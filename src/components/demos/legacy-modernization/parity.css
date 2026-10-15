@@ -1,0 +1,130 @@
+/* Ventura demo: parity panel, the same order through both screens and the rule checklist. */
+.demo-legacy-modernization {
+  .vt-parity {
+    padding-block: clamp(2.5rem, 6vw, 4.5rem);
+    border-top: 1px solid var(--vt-line);
+    background: var(--vt-surface-2);
+  }
+  .vt-parity__intro { max-width: 48rem; margin-bottom: 1.75rem; }
+  .vt-parity__intro h2 {
+    margin-top: 0.5rem;
+    font-family: var(--vt-display);
+    font-size: clamp(1.75rem, 1.25rem + 1.8vw, 2.6rem);
+    font-weight: 700;
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+  }
+  .vt-parity__lead { margin-top: 0.75rem; color: var(--vt-ink-2); font-size: 1.05rem; }
+  .vt-code {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.25rem 0.75rem;
+    margin-top: 1rem;
+    padding: 0.5rem 0.85rem;
+    border-radius: 10px;
+    background: var(--vt-ink);
+    color: #E3F2EA;
+    font-family: var(--vt-mono);
+    font-size: 0.9rem;
+  }
+  .vt-code code { font: inherit; }
+  .vt-code__kw { color: #6EE7B7; }
+  .vt-code__note { color: #A7BFB2; font-size: 0.8rem; }
+  .vt-parity__grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.25rem; align-items: start; }
+  .vt-panel {
+    padding: clamp(1rem, 2.5vw, 1.5rem);
+    border: 1px solid var(--vt-line);
+    border-radius: 14px;
+    background: var(--vt-surface);
+  }
+  .vt-panel__head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 0.25rem 1rem; }
+  .vt-panel__head h3 { font-family: var(--vt-display); font-size: 1.2rem; font-weight: 700; letter-spacing: -0.01em; }
+  .vt-panel__count { color: var(--vt-muted); font-size: 0.92rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .vt-parity__verdict {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    padding: 0.85rem 1rem;
+    border-radius: 10px;
+    background: var(--vt-accent-soft);
+    color: var(--vt-accent-strong);
+    font-weight: 700;
+  }
+  .vt-parity__verdict .vt-icon { margin-top: 0.12em; }
+  .vt-parity__verdict.is-different { background: var(--vt-danger-soft); color: var(--vt-danger); }
+  .vt-parity__table {
+    width: 100%;
+    margin-top: 0.75rem;
+    border-collapse: collapse;
+    font-variant-numeric: tabular-nums;
+  }
+  .vt-parity__table th,
+  .vt-parity__table td {
+    padding: 0.7rem 0.6rem;
+    border-bottom: 1px solid var(--vt-line);
+    text-align: start;
+    vertical-align: top;
+  }
+  .vt-parity__table thead th {
+    color: var(--vt-muted);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  .vt-parity__table tbody th { font-weight: 700; }
+  .vt-parity__table td:not(.vt-parity__check) { font-family: var(--vt-display); font-weight: 500; }
+  .vt-parity__table tbody tr:last-child > * { border-bottom: 0; }
+  .vt-parity__check { color: var(--vt-accent-strong); font-weight: 700; white-space: nowrap; }
+  .vt-parity__mark { display: inline-flex; align-items: center; gap: 0.35rem; }
+  .is-different .vt-parity__check { color: var(--vt-danger); }
+  .vt-rules { display: grid; margin: 0.75rem 0 0; padding: 0; list-style: none; }
+  .vt-rule {
+    display: grid;
+    grid-template-columns: 8.25rem minmax(0, 1fr);
+    gap: 0.75rem;
+    padding-block: 0.75rem;
+    border-top: 1px solid var(--vt-line);
+  }
+  .vt-rule__status { display: inline-flex; align-items: flex-start; gap: 0.35rem; font-size: 0.88rem; font-weight: 700; }
+  .vt-rule__status .vt-icon { margin-top: 0.05em; }
+  .vt-rule.is-met .vt-rule__status { color: var(--vt-accent-strong); }
+  .vt-rule.is-unmet .vt-rule__status { color: var(--vt-danger); }
+  .vt-rule.is-waiting .vt-rule__status { color: var(--vt-muted); }
+  .vt-rule__name { display: block; font-weight: 700; line-height: 1.35; }
+  .vt-rule__detail { display: block; margin-top: 0.15rem; color: var(--vt-muted); font-size: 0.92rem; font-variant-numeric: tabular-nums; }
+
+  @media (min-width: 64rem) {
+    .vt-parity__grid { grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); }
+  }
+
+  @media (max-width: 40rem) {
+    .vt-parity__table thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+    .vt-parity__table, .vt-parity__table tbody { display: block; }
+    .vt-parity__table tr {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.2rem 0.75rem;
+      padding-block: 0.7rem;
+      border-bottom: 1px solid var(--vt-line);
+    }
+    .vt-parity__table tbody tr:last-child { border-bottom: 0; }
+    /* Label and check share the first line, so each value keeps half the row: money values never wrap. */
+    .vt-parity__table tbody th { grid-area: 1 / 1; }
+    .vt-parity__check { grid-area: 1 / 2; justify-self: end; }
+    .vt-parity__table th, .vt-parity__table td { padding: 0; border: 0; }
+    .vt-parity__table td[data-label]::before {
+      content: attr(data-label);
+      display: block;
+      color: var(--vt-muted);
+      font-family: var(--vt-body);
+      font-size: 0.78rem;
+      font-weight: 400;
+    }
+  }
+
+  @media (max-width: 30rem) {
+    .vt-rule { grid-template-columns: minmax(0, 1fr); gap: 0.2rem; }
+  }
+}

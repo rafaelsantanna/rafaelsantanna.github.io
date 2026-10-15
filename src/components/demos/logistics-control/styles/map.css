@@ -1,0 +1,245 @@
+/* Schematic route map, legend and driver list. */
+.demo-logistics-control {
+  /* Route map */
+  .lc-mappanel { overflow: hidden; }
+
+  .lc-map {
+    position: relative;
+    border-block: 1px solid var(--lc-line);
+    background: var(--lc-map-ground);
+  }
+
+  .lc-map__svg {
+    width: 100%;
+    height: auto;
+    font-family: var(--lc-font-ui);
+    user-select: none;
+  }
+
+  .lc-map__ground { fill: var(--lc-map-ground); }
+  .lc-map__block { fill: var(--lc-map-block); }
+  .lc-map__park { fill: var(--lc-map-park); }
+  .lc-map__bank { fill: none; stroke: var(--lc-map-bank); stroke-width: 40; stroke-linecap: round; }
+  .lc-map__river { fill: none; stroke: var(--lc-map-river); stroke-width: 32; stroke-linecap: round; }
+  .lc-map__bridge { fill: var(--lc-map-bridge); stroke: var(--lc-map-bank); stroke-width: 1; }
+
+  .lc-map__zone {
+    fill: var(--lc-map-label);
+    font-family: var(--lc-font-display);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    paint-order: stroke;
+    stroke: var(--lc-map-ground);
+    stroke-width: 4px;
+    stroke-linejoin: round;
+  }
+
+  .lc-map__hub {
+    & rect { fill: var(--lc-map-hub); }
+    & path { fill: none; stroke: var(--lc-map-hub-ink); stroke-width: 1.6; stroke-linejoin: round; stroke-linecap: round; }
+
+    & text {
+      fill: var(--lc-ink);
+      font-size: 12px;
+      font-weight: 700;
+      paint-order: stroke;
+      stroke: var(--lc-map-ground);
+      stroke-width: 4px;
+      stroke-linejoin: round;
+    }
+  }
+
+  .lc-route {
+    cursor: pointer;
+    transition: opacity 200ms var(--lc-ease);
+  }
+
+  .lc-route__hit {
+    fill: none;
+    stroke: transparent;
+    stroke-width: 14;
+  }
+
+  .lc-route__line {
+    fill: none;
+    stroke: var(--lc-map-route);
+    stroke-width: 1.6;
+    stroke-linejoin: round;
+    transition: stroke 200ms var(--lc-ease), stroke-width 200ms var(--lc-ease);
+  }
+
+  .lc-stop {
+    fill: var(--lc-map-route);
+    pointer-events: none;
+  }
+
+  .lc-stop--done {
+    fill: var(--lc-map-ground);
+    stroke: var(--lc-map-route);
+    stroke-width: 1.2;
+  }
+
+  .lc-stop--late {
+    fill: var(--lc-late-solid);
+    stroke: var(--lc-ink);
+    stroke-width: 1.2;
+  }
+
+  .lc-stop--issue {
+    fill: var(--lc-issue-solid);
+    stroke: var(--lc-map-ground);
+    stroke-width: 1;
+  }
+
+  .lc-route.is-hover .lc-route__line,
+  .lc-route.is-selected .lc-route__line {
+    stroke: var(--lc-ink);
+    stroke-width: 3;
+  }
+
+  .lc-route.is-selected .lc-route__line { stroke: var(--lc-accent); stroke-width: 3.5; }
+  .lc-map__routes:has(.is-selected) .lc-route:not(.is-selected) { opacity: 0.35; }
+
+  .lc-vehicle {
+    cursor: pointer;
+
+    & .lc-vehicle__halo { fill: var(--lc-map-ground); opacity: 0.85; }
+    & .lc-vehicle__body { fill: var(--lc-map-hub); }
+
+    & .lc-vehicle__label {
+      fill: var(--lc-map-hub-ink);
+      font-size: 11.5px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      pointer-events: none;
+    }
+
+    & .lc-vehicle__badge { stroke: var(--lc-map-ground); stroke-width: 1.5; }
+  }
+
+  .lc-vehicle--late .lc-vehicle__badge { fill: var(--lc-late-solid); stroke: var(--lc-ink); stroke-width: 1.2; }
+  .lc-vehicle--issue .lc-vehicle__badge { fill: var(--lc-issue-solid); }
+  .lc-vehicle.is-hover .lc-vehicle__body, .lc-vehicle.is-selected .lc-vehicle__body { fill: var(--lc-accent); }
+  .lc-vehicle.is-hover .lc-vehicle__label, .lc-vehicle.is-selected .lc-vehicle__label { fill: var(--lc-on-accent); }
+  .lc-map__vehicles:has(.is-selected) .lc-vehicle:not(.is-selected) { opacity: 0.45; }
+
+  .lc-map__tip {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    display: grid;
+    gap: 1px;
+    min-width: 150px;
+    padding: 8px 10px;
+    border-radius: 9px;
+    background: var(--lc-invert);
+    color: var(--lc-on-invert-2);
+    font-size: 12px;
+    line-height: 1.4;
+    box-shadow: var(--lc-shadow);
+    pointer-events: none;
+
+    & strong { color: var(--lc-on-invert); font-size: 13px; }
+    &[hidden] { display: none; }
+  }
+
+  .lc-map__tip-alert { color: var(--lc-accent); font-weight: 600; }
+
+  .lc-motion-icon { display: inline-flex; }
+  .lc-motion-icon--play,
+  .is-paused .lc-motion-icon--pause { display: none; }
+  .is-paused .lc-motion-icon--play { display: inline-flex; }
+
+  .lc-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 18px;
+    margin: 0;
+    padding: 10px 16px 4px;
+    color: var(--lc-ink-3);
+    font-size: 12px;
+    list-style: none;
+
+    & li { display: inline-flex; align-items: center; gap: 6px; }
+    & svg { width: 14px; height: 14px; }
+  }
+
+  .lc-legend__vehicle { fill: var(--lc-map-hub); }
+  .lc-legend__late { fill: var(--lc-late-solid); stroke: var(--lc-ink); stroke-width: 1.2; }
+  .lc-legend__issue { fill: var(--lc-issue-solid); }
+  .lc-legend__hub { fill: none; stroke: var(--lc-map-hub); stroke-width: 2; }
+
+  .lc-chips-title {
+    padding: 12px 16px 0;
+    color: var(--lc-ink-2);
+    font-size: 12.5px;
+    font-weight: 600;
+
+    & span { color: var(--lc-ink-3); font-weight: 400; }
+  }
+
+  .lc-driver-chips {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(148px, 1fr));
+    gap: 6px;
+    margin: 0;
+    padding: 8px 16px 16px;
+    list-style: none;
+  }
+
+  .lc-chip-driver {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    min-height: max(36px, var(--lc-control));
+    padding: 0 10px 0 6px;
+    border: 1px solid var(--lc-line);
+    border-radius: 10px;
+    background: var(--lc-panel-2);
+    font-size: 13px;
+    text-align: left;
+    transition: border-color 160ms var(--lc-ease), background-color 160ms var(--lc-ease);
+
+    &:hover { border-color: var(--lc-line-2); background: var(--lc-panel); }
+    &.is-selected { border-color: var(--lc-accent); background: var(--lc-accent-soft); }
+  }
+
+  .lc-chip-driver__name {
+    flex: 1;
+    overflow: hidden;
+    font-weight: 560;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .lc-chip-driver__count {
+    color: var(--lc-ink-3);
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  .lc-chip-driver__mark {
+    width: 10px;
+    height: 10px;
+  }
+
+  .lc-chip-driver--late .lc-chip-driver__mark { fill: var(--lc-late-solid); stroke: var(--lc-ink); stroke-width: 1; }
+  .lc-chip-driver--issue .lc-chip-driver__mark { fill: var(--lc-issue-solid); }
+}
+
+@container lc-main (max-width: 560px) {
+  .demo-logistics-control .lc-driver-chips { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .demo-logistics-control .lc-legend { gap: 6px 14px; }
+
+  /* On phones the map keeps a readable scale and pans sideways inside its frame. */
+  .demo-logistics-control .lc-map {
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scrollbar-width: thin;
+  }
+
+  .demo-logistics-control .lc-map__svg { width: 640px; max-width: none; }
+}

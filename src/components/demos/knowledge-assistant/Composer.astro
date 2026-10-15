@@ -1,0 +1,68 @@
+---
+import Icon from './Icon.astro';
+import { formatDecimal } from './lib/format';
+import type { Lang } from './lib/lang';
+import { THRESHOLD, TOP_K } from './lib/settings';
+import { fill, type UiStrings } from './strings';
+
+interface Props { lang: Lang; t: UiStrings }
+
+const { lang, t } = Astro.props;
+const MAX_LENGTH = 300;
+const threshold = formatDecimal(THRESHOLD.initial, lang);
+---
+
+<div class="ka-composer" data-ka-composer>
+  <noscript><p class="ka-noscript">{t.noscript}</p></noscript>
+  <div class="ka-composer__box">
+    <label class="ka-sr" for="ka-question">{t.composerLabel}</label>
+    <textarea id="ka-question" class="ka-composer__input" rows="1" maxlength={MAX_LENGTH} placeholder={t.placeholder} enterkeyhint="send" aria-describedby="ka-hint ka-honesty" data-ka-input></textarea>
+    <button type="button" class="ka-btn ka-btn--primary ka-composer__send" data-ka-send>
+      <span class="ka-composer__send-label">{t.send}</span>
+      <Icon name="send" />
+    </button>
+  </div>
+  <div class="ka-composer__meta">
+    <div class="ka-composer__tools">
+      <div class="ka-settings" data-ka-settings>
+        <button type="button" class="ka-tool" aria-expanded="false" aria-controls="ka-settings-panel" data-ka-settings-toggle>
+          <Icon name="sliders" />
+          <span>{t.settings}</span>
+          <span class="ka-tool__value" data-ka-settings-summary>{fill(t.settingsSummary, { k: TOP_K.initial, t: threshold })}</span>
+        </button>
+        <div class="ka-popover" id="ka-settings-panel" role="group" aria-labelledby="ka-settings-title" data-ka-settings-panel hidden>
+          <h3 class="ka-popover__title" id="ka-settings-title">{t.settingsTitle}</h3>
+          <div class="ka-field">
+            <div class="ka-field__row">
+              <label for="ka-topk">{t.topKLabel}</label>
+              <span class="ka-field__value" data-ka-topk-value aria-hidden="true">{TOP_K.initial}</span>
+            </div>
+            <input type="range" id="ka-topk" min={TOP_K.min} max={TOP_K.max} step={TOP_K.step} value={TOP_K.initial} aria-describedby="ka-topk-help" data-ka-topk />
+            <p class="ka-field__help" id="ka-topk-help">{t.topKHelp}</p>
+          </div>
+          <div class="ka-field">
+            <div class="ka-field__row">
+              <label for="ka-threshold">{t.thresholdLabel}</label>
+              <span class="ka-field__value" data-ka-threshold-value aria-hidden="true">{threshold}</span>
+            </div>
+            <input type="range" id="ka-threshold" min={THRESHOLD.min} max={THRESHOLD.max} step={THRESHOLD.step} value={THRESHOLD.initial} aria-valuetext={threshold} aria-describedby="ka-threshold-help" data-ka-threshold />
+            <p class="ka-field__help" id="ka-threshold-help">{t.thresholdHelp}</p>
+          </div>
+          <div class="ka-popover__foot">
+            <p class="ka-popover__note">{t.settingsNote}</p>
+            <button type="button" class="ka-link" data-ka-settings-restore>{t.settingsRestore}</button>
+          </div>
+        </div>
+      </div>
+      <p class="ka-chip" data-ka-filter-chip hidden>
+        <span data-ka-filter-chip-text></span>
+        <button type="button" class="ka-chip__clear" data-ka-filter-chip-clear>{t.filterChipClear}</button>
+      </p>
+    </div>
+    <p class="ka-hint" id="ka-hint">
+      <span data-ka-hint>{t.hint}</span>
+      <span class="ka-hint__count" data-ka-count data-max={MAX_LENGTH}>0/{MAX_LENGTH}</span>
+    </p>
+  </div>
+  <p class="ka-honesty" id="ka-honesty"><Icon name="info" />{t.honesty}</p>
+</div>

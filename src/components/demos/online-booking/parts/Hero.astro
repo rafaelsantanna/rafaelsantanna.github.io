@@ -1,0 +1,43 @@
+---
+import type { Locale } from '@/data/types';
+import { strings } from '../data/i18n';
+import { icons } from '../lib/icons';
+import ScissorsArt from './ScissorsArt.astro';
+
+interface Props { locale: Locale }
+
+const t = strings[Astro.props.locale];
+---
+
+<section class="hero" id="topo" aria-labelledby="cp-hero-title">
+  <div class="wrap hero__grid">
+    <div class="hero__copy">
+      <p class="eyebrow">{t.hero.eyebrow}</p>
+      <h1 id="cp-hero-title" class="hero__title">{t.hero.title} <em>{t.hero.accent}</em></h1>
+      <p class="hero__lede">{t.hero.lede}</p>
+      <div class="hero__actions">
+        <a class="btn btn--primary btn--large" href="#agendar" data-book>{t.cta} <Fragment set:html={icons.arrow} /></a>
+        <a class="btn btn--ghost btn--large" href="#servicos">{t.hero.secondary}</a>
+      </div>
+      <p class="hero__meta">
+        <span class="open-status" data-open-status hidden></span>
+        <span class="hero__hours"><Fragment set:html={icons.clock} />{t.hero.hours}</span>
+      </p>
+    </div>
+    <div class="hero__visual">
+      <div class="hero__art" aria-hidden="true">
+        <div class="arch">
+          <span class="arch__amp arch__amp--shadow">&amp;</span>
+          <span class="arch__amp">&amp;</span>
+          <ScissorsArt class="arch__scissors" />
+        </div>
+      </div>
+      <div class="ticket" data-next-slot>
+        <p class="ticket__label">{t.hero.nextLabel}</p>
+        <p class="ticket__when" data-next-when>{t.hero.nextFallback}</p>
+        <p class="ticket__who" data-next-who hidden></p>
+        <button type="button" class="btn btn--dark btn--small ticket__take" data-next-take hidden>{t.hero.nextTake}</button>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,23 +1,37 @@
 ---
+import Wordmark from '@/components/ui/Wordmark.astro';
 import { copy, identity, withLocale, type Locale } from '@/data/content';
+
 interface Props { locale: Locale }
+
 const { locale } = Astro.props;
 const t = copy[locale];
+const pt = locale === 'pt';
+const links = [
+  { href: `mailto:${identity.email}`, label: identity.email },
+  { href: identity.linkedin, label: 'LinkedIn', rel: 'me noreferrer' },
+  { href: identity.github, label: 'GitHub', rel: 'me noreferrer' },
+  { href: withLocale(locale, 'cv'), label: t.nav.cv },
+  { href: withLocale(locale, 'for-agents'), label: t.nav.agents },
+];
 ---
 
 <footer class="site-footer">
-  <div class="site-footer__main">
+  <div class="site-footer__inner shell">
     <div>
-      <p class="site-footer__title">{t.footerLine}</p>
-      <p>{identity.location}</p>
+      <a class="brand" href={withLocale(locale)}>
+        <Wordmark label={pt ? 'página inicial' : 'home'} />
+      </a>
+      <p class="site-footer__line">{t.footerLine}</p>
     </div>
-    <nav aria-label={locale === 'pt' ? 'Navegação do rodapé' : 'Footer navigation'}>
-      <a href={`mailto:${identity.email}`}>{identity.email}</a>
-      <a href={identity.linkedin} rel="me noreferrer">LinkedIn</a>
-      <a href={identity.github} rel="me noreferrer">GitHub</a>
-      <a href={withLocale(locale, 'cv')}>{t.nav.cv}</a>
-      <a href={withLocale(locale, 'for-agents')}>{t.nav.agents}</a>
+    <nav aria-label={pt ? 'Contato e outros links' : 'Contact and other links'}>
+      <ul class="site-footer__links">
+        {links.map((link) => <li><a href={link.href} rel={link.rel}>{link.label}</a></li>)}
+      </ul>
     </nav>
   </div>
-  <p class="site-footer__meta">© {new Date().getFullYear()} {identity.name}. {locale === 'pt' ? 'Construído como HTML estático e acessível.' : 'Built as static, accessible HTML.'}</p>
+  <div class="site-footer__meta shell">
+    <p>© {new Date().getFullYear()} {identity.name} · {identity.location}</p>
+    <p>{pt ? 'Construído como HTML estático e acessível.' : 'Built as static, accessible HTML.'}</p>
+  </div>
 </footer>

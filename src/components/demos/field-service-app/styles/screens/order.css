@@ -1,0 +1,488 @@
+/* Turno screens: work order hero, checklist, and measurements. */
+
+/* Work order: hero, facts, map, dispatch note. */
+.turno .t-hero {
+  display: grid;
+  gap: 0.375rem;
+  padding-block-start: 0.75rem;
+}
+
+.turno .t-hero__type {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  color: var(--t-blue-ink);
+  font-size: 0.9375rem;
+  font-weight: 700;
+}
+
+.turno .t-facts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem 1rem;
+  margin-block-start: 0.625rem;
+  padding: 0.875rem 1rem;
+  border: 1px solid var(--t-line);
+  border-radius: 16px;
+  background: var(--t-surface);
+}
+
+.turno .t-facts dt {
+  color: var(--t-ink-3);
+  font-size: 0.8125rem;
+  font-weight: 700;
+}
+
+.turno .t-facts dd {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.turno .t-map {
+  overflow: hidden;
+  border: 1px solid var(--t-line);
+  border-radius: 16px;
+  background: var(--t-surface);
+}
+
+.turno .t-map__svg {
+  display: block;
+  inline-size: 100%;
+  block-size: 8rem;
+}
+
+.turno .t-map__ground { fill: #e3e9f2; }
+.turno .t-map__park { fill: #d3eadb; }
+.turno .t-map__water { fill: #cfe0f7; }
+.turno .t-map__road { fill: none; stroke: #fff; stroke-width: 4; }
+.turno .t-map__road--main { stroke-width: 8; }
+.turno .t-map__route-casing { fill: none; stroke: #fff; stroke-width: 9; stroke-linecap: round; stroke-linejoin: round; }
+.turno .t-map__route { fill: none; stroke: var(--t-accent); stroke-width: 4.5; stroke-linecap: round; stroke-linejoin: round; }
+.turno .t-map__me { fill: var(--t-accent); stroke: #fff; stroke-width: 3; }
+.turno .t-map__me-halo { fill: rgb(47 107 255 / 0.2); }
+.turno .t-map__pin { fill: var(--t-ink); }
+.turno .t-map__pin-dot { fill: #fff; }
+
+.turno .t-map figcaption {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.5rem 0.875rem;
+  border-block-start: 1px solid var(--t-line);
+  color: var(--t-ink-3);
+  font-size: 0.8125rem;
+  font-weight: 700;
+}
+
+.turno .t-map figcaption span:last-child {
+  color: var(--t-ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.turno .t-dispatch {
+  display: grid;
+  gap: 0.25rem;
+  padding: 0.875rem 1rem;
+  border: 1px solid var(--t-amber-line);
+  border-radius: 16px;
+  background: var(--t-amber-soft);
+  line-height: 1.45;
+}
+
+.turno .t-dispatch__title {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  color: var(--t-amber);
+  font-size: 0.8125rem;
+  font-weight: 700;
+}
+
+.turno .t-dispatch__title .t-ico {
+  inline-size: 1rem;
+  block-size: 1rem;
+}
+
+.turno .t-order-sync {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--t-green);
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+
+.turno .t-order-sync[data-pending='true'] {
+  color: var(--t-amber);
+}
+
+.turno .t-order-sync .t-ico {
+  inline-size: 1.125rem;
+  block-size: 1.125rem;
+}
+
+/* Work order: locked checklist before the job starts. */
+.turno .t-locked {
+  display: grid;
+  gap: 0.25rem;
+  padding: 1rem 1.125rem 0.5rem;
+  border: 1px dashed var(--t-line-2);
+  border-radius: 18px;
+  background: rgb(255 255 255 / 0.6);
+}
+
+.turno .t-locked h3,
+.turno .t-checklist__head h3,
+.turno .t-notes h3,
+.turno .t-record h3 {
+  font-family: var(--t-display);
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+.turno .t-locked__hint {
+  color: var(--t-ink-3);
+  font-size: 0.875rem;
+}
+
+.turno .t-locked__list li {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  padding-block: 0.625rem;
+  color: var(--t-ink-2);
+  font-size: 0.9375rem;
+}
+
+.turno .t-locked__list li + li {
+  border-block-start: 1px solid var(--t-line);
+}
+
+.turno .t-locked__list .t-ico {
+  inline-size: 1rem;
+  block-size: 1rem;
+  color: var(--t-ink-3);
+}
+
+.turno .t-started {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--t-ink-2);
+  font-size: 0.875rem;
+}
+
+.turno .t-started .t-ico {
+  inline-size: 1.125rem;
+  block-size: 1.125rem;
+  color: var(--t-accent);
+}
+
+/* Work order: checklist. */
+.turno .t-checklist {
+  display: grid;
+  gap: 0.625rem;
+}
+
+.turno .t-checklist__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.turno .t-checklist__head p {
+  color: var(--t-ink-3);
+  font-size: 0.875rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.turno .t-progress {
+  overflow: hidden;
+  block-size: 6px;
+  border-radius: 3px;
+  background: var(--t-line);
+}
+
+.turno .t-progress span {
+  display: block;
+  block-size: 100%;
+  border-radius: 3px;
+  background: #1f9d57;
+  transition: inline-size 320ms var(--t-ease);
+}
+
+.turno .t-items {
+  display: grid;
+  gap: 0.625rem;
+  margin-block-start: 0.25rem;
+}
+
+.turno .t-item {
+  display: grid;
+  gap: 0.625rem;
+  padding: 0.875rem 1rem 1rem;
+  border: 1px solid var(--t-line);
+  border-radius: 18px;
+  background: var(--t-surface);
+  scroll-margin-block: 5rem 9rem;
+  transition: border-color 180ms var(--t-ease), box-shadow 180ms var(--t-ease);
+}
+
+.turno .t-item[data-state='done'] {
+  border-color: var(--t-green-line);
+}
+
+.turno .t-item[data-state='error'] {
+  border-color: var(--t-red-line);
+}
+
+.turno .t-item:focus-visible {
+  outline: 3px solid var(--t-accent);
+  outline-offset: 2px;
+}
+
+.turno .t-item--attention {
+  animation: t-attention 1.4s var(--t-ease);
+}
+
+@keyframes t-attention {
+  0%, 60% { box-shadow: 0 0 0 4px rgb(180 35 24 / 0.28); border-color: var(--t-red); }
+}
+
+.turno .t-item__row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.turno .t-item__mark {
+  display: grid;
+  flex: none;
+  place-items: center;
+  inline-size: 1.75rem;
+  block-size: 1.75rem;
+  border: 2px solid var(--t-field);
+  border-radius: 50%;
+  background: var(--t-surface);
+  color: #fff;
+  transition: background-color 180ms var(--t-ease), border-color 180ms var(--t-ease);
+}
+
+.turno .t-item__mark .t-ico {
+  inline-size: 1rem;
+  block-size: 1rem;
+  stroke-width: 3;
+}
+
+.turno [data-state='done'] .t-item__mark {
+  border-color: var(--t-green);
+  background: var(--t-green);
+  animation: t-pop 320ms var(--t-ease);
+}
+
+.turno [data-state='error'] .t-item__mark {
+  border-color: var(--t-red);
+  background: var(--t-red);
+}
+
+.turno .t-item__label {
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.turno .t-tag {
+  flex: none;
+  margin-inline-start: auto;
+  padding: 0.125rem 0.5rem;
+  border-radius: 999px;
+  background: var(--t-muted-fill);
+  color: var(--t-ink-2);
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.turno .t-item__help {
+  color: var(--t-ink-3);
+  font-size: 0.875rem;
+  line-height: 1.45;
+}
+
+.turno .t-item__help--indent {
+  margin-block-start: -0.375rem;
+  padding-inline-start: 2.5rem;
+}
+
+.turno .t-item__done-at {
+  color: var(--t-green);
+  font-weight: 700;
+}
+
+.turno .t-item__toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  inline-size: calc(100% + 1rem);
+  min-block-size: 48px;
+  margin: -0.375rem -0.5rem;
+  padding: 0.375rem 0.5rem;
+  border: 0;
+  border-radius: 12px;
+  background: none;
+  text-align: start;
+  cursor: pointer;
+}
+
+.turno .t-item__toggle:hover .t-item__mark {
+  border-color: var(--t-accent);
+}
+
+.turno .t-item__toggle:active {
+  background: var(--t-base);
+}
+
+/* Measurements. */
+.turno .t-measure__label {
+  margin-block-end: -0.25rem;
+  color: var(--t-ink-2);
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+
+.turno .t-measure {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.turno .t-measure__field {
+  position: relative;
+  display: flex;
+  flex: 1 1 auto;
+  align-items: center;
+  gap: 0.25rem;
+  min-inline-size: 0;
+  min-block-size: 52px;
+  padding-inline: 0.875rem;
+  border: 1.5px solid var(--t-field);
+  border-radius: 14px;
+  background: var(--t-surface);
+  transition: border-color 180ms var(--t-ease);
+}
+
+.turno .t-measure__field:focus-within {
+  border-color: var(--t-accent);
+  outline: 3px solid rgb(47 107 255 / 0.35);
+  outline-offset: 1px;
+}
+
+/* The input covers the whole field, so a tap on the sign, the unit, or the padding still lands in it. */
+.turno .t-measure__field input {
+  position: absolute;
+  inset: 0;
+  inline-size: 100%;
+  block-size: 100%;
+  padding: 0 3.75rem 0 0.875rem;
+  border: 0;
+  border-radius: inherit;
+  background: none;
+  color: var(--t-ink);
+  font-family: var(--t-display);
+  font-size: 1.25rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.turno .t-measure__field input:focus,
+.turno .t-measure__field input:focus-visible {
+  outline: none;
+}
+
+.turno [data-state='error'] .t-measure__field {
+  border-color: var(--t-red);
+}
+
+.turno .t-measure__field--signed input {
+  padding-inline-start: 1.875rem;
+}
+
+.turno .t-measure__prefix,
+.turno .t-measure__unit {
+  position: relative;
+  pointer-events: none;
+}
+
+.turno .t-measure__prefix {
+  color: var(--t-ink-2);
+  font-family: var(--t-display);
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.turno .t-measure__unit {
+  margin-inline-start: auto;
+  color: var(--t-ink-3);
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+
+.turno .t-measure .t-btn {
+  flex: none;
+  min-block-size: 52px;
+}
+
+.turno .t-item__msg {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.375rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.turno .t-item__msg[data-tone=''] {
+  margin-block-start: -0.625rem;
+}
+
+.turno .t-item__msg[data-tone='error'] {
+  color: var(--t-red);
+}
+
+.turno .t-item__msg[data-tone='ok'] {
+  color: var(--t-green);
+}
+
+.turno .t-item__msg .t-ico {
+  inline-size: 1.125rem;
+  block-size: 1.125rem;
+}
+
+.turno .t-item__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.turno .t-item__actions .t-btn {
+  flex: 1 1 auto;
+}
+
+.turno .t-item__fine {
+  margin-block-start: -0.25rem;
+  color: var(--t-ink-3);
+  font-size: 0.8125rem;
+}
+
+/* Forced colors drop backgrounds, so the decorative progress bar gets an outline and a system-colored fill. */
+@media (forced-colors: active) {
+  .turno .t-progress {
+    border: 1px solid CanvasText;
+  }
+
+  .turno .t-progress span {
+    forced-color-adjust: none;
+    background: CanvasText;
+  }
+}

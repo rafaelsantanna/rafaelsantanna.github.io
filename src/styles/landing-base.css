@@ -1,0 +1,37 @@
+/* Typographic foundation for the two original landing-page demonstrations (Casa Neblina and Clima Certa).
+   demo-base.css provides the reset; demos.css provides each landing's art direction. */
+:root {
+  --font-display: 'Geologica', 'Arial Narrow', sans-serif;
+  --font-body: 'Atkinson Hyperlegible Next', Verdana, sans-serif;
+  --step-2: clamp(1.45rem, 1.25rem + 0.75vw, 1.9rem);
+  --step-4: clamp(2.85rem, 2rem + 3vw, 5.6rem);
+  --step-5: clamp(3.5rem, 2.2rem + 5.3vw, 8.2rem);
+}
+
+html {
+  color-scheme: light;
+  font-family: var(--font-body);
+}
+
+html:has(.demo--neblina) { background: #f4f1e9; }
+html:has(.demo--clima) { background: #f5f7f8; }
+
+body {
+  font-size: 1rem;
+  line-height: 1.62;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-weight: 650;
+  line-height: 1.02;
+  letter-spacing: -0.055em;
+  text-wrap: balance;
+}
+
+h1 { font-size: var(--step-5); }
+h2 { font-size: var(--step-4); }
+h3 { font-size: var(--step-2); }
+
+p, li, dd { max-width: 70ch; }
+a { color: inherit; }

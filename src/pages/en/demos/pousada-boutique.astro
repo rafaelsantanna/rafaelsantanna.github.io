@@ -1,0 +1,14 @@
+---
+import DemoLayout from '@/layouts/DemoLayout.astro';
+import CasaNeblinaDemo from '@/components/demos/CasaNeblinaDemo.astro';
+import { concepts, findProject } from '@/data/content';
+import '@/styles/landing-base.css';
+import '@/styles/demos.css';
+
+const project = findProject('pousada-boutique')!;
+const concept = concepts.find((item) => item.slug === 'pousada-boutique')!;
+---
+
+<DemoLayout locale="en" project={project}>
+  <CasaNeblinaDemo locale="en" concept={concept} project={project} />
+</DemoLayout>

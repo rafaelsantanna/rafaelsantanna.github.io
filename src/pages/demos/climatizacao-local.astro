@@ -1,0 +1,14 @@
+---
+import DemoLayout from '@/layouts/DemoLayout.astro';
+import ClimaCertaDemo from '@/components/demos/ClimaCertaDemo.astro';
+import { concepts, findProject } from '@/data/content';
+import '@/styles/landing-base.css';
+import '@/styles/demos.css';
+
+const project = findProject('climatizacao-local')!;
+const concept = concepts.find((item) => item.slug === 'climatizacao-local')!;
+---
+
+<DemoLayout locale="pt" project={project}>
+  <ClimaCertaDemo locale="pt" concept={concept} project={project} />
+</DemoLayout>

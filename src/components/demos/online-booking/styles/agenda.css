@@ -1,0 +1,224 @@
+/* Corte & Prosa: shop-side schedule. */
+
+.cp .agenda { padding-block: clamp(4.5rem, 9vw, 7.5rem); }
+
+.cp .board {
+  padding: clamp(1rem, 2.5vw, 1.75rem);
+  border-radius: 20px;
+  box-shadow: 0 30px 80px rgb(0 0 0 / 30%);
+}
+
+.cp .board__nojs { padding: 2.5rem 1rem; color: var(--paper-soft); text-align: center; }
+.js .cp .board__nojs { display: none; }
+html:not(.js) .cp :is(.board__bar, .board__scroll, .board__foot) { display: none; }
+
+.cp .board__bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem 2rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--paper-line);
+}
+
+.cp .board__nav { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; }
+.cp .board__date { min-width: 16rem; padding-inline: 0.5rem; font: 400 1.35rem/1.2 var(--serif); text-align: center; }
+.cp .chip-btn--own { border-color: var(--base); background: var(--base); color: var(--ink); }
+.cp .chip-btn--own:hover { background: var(--base-3); }
+
+.cp .stats { display: flex; flex-wrap: wrap; gap: 0.75rem 1.75rem; margin: 0; }
+
+.cp .stat dt {
+  color: var(--paper-muted);
+  font: 600 0.68rem/1.2 var(--display);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.cp .stat dd { display: flex; align-items: center; gap: 0.5rem; margin-top: 0.3rem; }
+.cp .stat strong { font: 400 1.7rem/1 var(--serif); font-variant-numeric: lining-nums tabular-nums; }
+.cp .stat__note { max-width: 6.5rem; color: var(--paper-muted); font-size: 0.76rem; line-height: 1.2; }
+.cp .meter { width: 4.5rem; height: 6px; overflow: hidden; border-radius: 999px; background: var(--paper-3); }
+.cp .meter > span { display: block; height: 100%; border-radius: inherit; background: var(--base); }
+
+/* Timeline */
+.cp .board__scroll { margin-top: 1.25rem; overflow-x: auto; overscroll-behavior-x: contain; border-radius: 12px; }
+.cp .board__scroll:focus-visible { outline-offset: 2px; }
+
+.cp .tl {
+  --ppm: 1.2px;
+  --head: 4.25rem;
+  display: grid;
+  grid-template-columns: 3.4rem minmax(0, 1fr);
+  min-width: 38rem;
+}
+
+.cp .tl__gutter {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  height: calc(var(--head) + var(--span) * var(--ppm) + 1rem);
+  background-color: var(--paper);
+  background-image: var(--grain-dark);
+}
+
+.cp .tl__hour {
+  position: absolute;
+  top: calc(var(--head) + var(--at) * var(--ppm));
+  right: 0.6rem;
+  color: var(--paper-muted);
+  font: 600 0.72rem/1 var(--display);
+  font-variant-numeric: tabular-nums;
+  transform: translateY(-50%);
+}
+
+.cp .tl__cols { position: relative; display: grid; grid-template-columns: repeat(3, minmax(10.5rem, 1fr)); gap: 0.5rem; }
+.cp .tl__head { display: flex; align-items: center; gap: 0.65rem; height: var(--head); padding-inline: 0.25rem; }
+.cp .tl__who { display: grid; gap: 0.15rem; min-width: 0; }
+.cp .tl__head h3 { overflow: hidden; font: 400 1.05rem/1.15 var(--serif); text-overflow: ellipsis; white-space: nowrap; }
+.cp .tl__count { color: var(--paper-muted); font-size: 0.8rem; }
+
+.cp .tl__body {
+  position: relative;
+  height: calc(var(--span) * var(--ppm));
+  margin: 0 0 1rem;
+  padding: 0;
+  border: 1px solid var(--paper-line);
+  border-radius: 10px;
+  background-color: color-mix(in oklab, var(--paper) 55%, white);
+  background-image:
+    repeating-linear-gradient(to bottom, color-mix(in oklab, var(--base) 13%, transparent) 0 1px, transparent 1px calc(60 * var(--ppm))),
+    repeating-linear-gradient(to bottom, transparent 0 calc(30 * var(--ppm)), color-mix(in oklab, var(--base) 6%, transparent) calc(30 * var(--ppm)) calc(30 * var(--ppm) + 1px), transparent calc(30 * var(--ppm) + 1px) calc(60 * var(--ppm)));
+  list-style: none;
+}
+
+.cp .appt {
+  position: absolute;
+  top: calc(var(--at) * var(--ppm) + 1px);
+  right: 4px;
+  left: 4px;
+  height: calc(var(--len) * var(--ppm) - 2px);
+  padding: 0.25rem 0.5rem;
+  overflow: hidden;
+  border-left: 3px solid color-mix(in oklab, var(--base) 32%, var(--paper));
+  border-radius: 6px;
+  background: var(--paper-3);
+  color: var(--paper-soft);
+  font-size: 0.76rem;
+  line-height: 1.25;
+}
+
+.cp .appt__line { display: flex; gap: 0.4rem; overflow: hidden; white-space: nowrap; }
+.cp .appt__time { font: 700 0.72rem/1.25 var(--display); font-variant-numeric: tabular-nums; }
+.cp .appt__client { overflow: hidden; text-overflow: ellipsis; }
+.cp .appt__svc { display: block; overflow: hidden; color: var(--paper-soft); text-overflow: ellipsis; white-space: nowrap; }
+.cp .appt[data-size='xs'] { display: flex; align-items: center; padding-block: 0; }
+.cp .appt[data-size='xs'] .appt__svc { display: none; }
+
+.cp .appt--own {
+  z-index: 1;
+  border-left: 4px solid var(--accent);
+  background: var(--base);
+  box-shadow: 0 8px 20px rgb(0 0 0 / 24%);
+  color: var(--ink);
+}
+
+.cp .appt--own .appt__client { color: var(--accent); font-weight: 700; }
+.cp .appt--own .appt__svc { color: var(--ink-soft); }
+.cp .appt--own:focus-visible { outline: 3px solid var(--base); outline-offset: 2px; }
+.cp .appt--own.is-flash { animation: cp-flash 900ms var(--ease) 2; }
+
+@keyframes cp-flash {
+  50% { box-shadow: 0 0 0 6px color-mix(in oklab, var(--accent) 55%, transparent), 0 8px 20px rgb(0 0 0 / 24%); }
+}
+
+.cp .appt--pause {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px dashed color-mix(in oklab, var(--base) 22%, transparent);
+  background: repeating-linear-gradient(135deg, transparent 0 5px, color-mix(in oklab, var(--base) 9%, transparent) 5px 6px);
+  color: var(--paper-muted);
+  font-style: italic;
+}
+
+.cp .appt--off {
+  top: 0;
+  right: 0;
+  left: 0;
+  display: grid;
+  place-items: center;
+  height: 100%;
+  padding: 1rem;
+  border: 0;
+  background: repeating-linear-gradient(135deg, transparent 0 7px, color-mix(in oklab, var(--base) 8%, transparent) 7px 8px);
+  color: var(--paper-soft);
+  font: italic 400 1rem/1.35 var(--serif);
+  text-align: center;
+}
+
+.cp .tl__now {
+  position: absolute;
+  top: calc(var(--head) + var(--at) * var(--ppm));
+  right: 0;
+  left: 0;
+  z-index: 3;
+  border-top: 2px solid var(--brass-deep);
+  pointer-events: none;
+}
+
+.cp .tl__now span {
+  position: absolute;
+  top: -0.7rem;
+  left: 0.3rem;
+  padding: 0.12rem 0.45rem;
+  border-radius: 999px;
+  background: var(--brass-deep);
+  color: var(--paper);
+  font: 700 0.66rem/1.2 var(--display);
+}
+
+.cp .board__closed { display: grid; justify-items: center; gap: 0.6rem; padding: 4rem 1rem; text-align: center; }
+.cp .board__closed-title { font: 400 2.2rem/1.1 var(--serif); }
+.cp .board__closed p:not(.board__closed-title) { color: var(--paper-soft); }
+.cp .board__closed .btn { margin-top: 0.75rem; }
+
+.cp .board__foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 2rem;
+  margin-top: 0.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--paper-line);
+}
+
+.cp .legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.25rem;
+  margin: 0;
+  padding: 0;
+  color: var(--paper-soft);
+  font-size: 0.85rem;
+  list-style: none;
+}
+
+.cp .legend li { display: flex; align-items: center; gap: 0.45rem; }
+.cp .legend__swatch { width: 1.15rem; height: 0.85rem; border-radius: 3px; }
+.cp .legend__swatch--sample { border-left: 3px solid color-mix(in oklab, var(--base) 32%, var(--paper)); background: var(--paper-3); }
+.cp .legend__swatch--own { border-left: 3px solid var(--accent); background: var(--base); }
+.cp .legend__swatch--pause { border: 1px dashed color-mix(in oklab, var(--base) 30%, transparent); background: repeating-linear-gradient(135deg, transparent 0 3px, color-mix(in oklab, var(--base) 18%, transparent) 3px 4px); }
+.cp .board__hint { display: none; color: var(--paper-muted); font-size: 0.85rem; }
+.cp .board__foot .text-btn { margin-inline-start: auto; }
+
+@media (max-width: 48rem) {
+  .cp .board { border-radius: 16px; }
+  .cp .board__nav { width: 100%; }
+  /* The date takes the rest of the first row, so Today and My booking wrap together below. */
+  .cp .board__date { flex: 1 1 calc(100% - 7rem); min-width: 0; padding-inline: 0.25rem; font-size: 1.08rem; }
+  .cp .board__hint { display: block; }
+  .cp .stats { gap: 0.75rem 1.25rem; }
+  .cp .tl { --ppm: 1.1px; }
+}

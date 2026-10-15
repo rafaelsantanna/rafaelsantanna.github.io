@@ -1,0 +1,369 @@
+---
+import DemoBar from '@/components/demos/DemoBar.astro';
+import type { DemoProject, Locale } from '@/data/content';
+import { strings } from './i18n';
+import { nowLabel, snapshotClock } from './lib/clock';
+import { derive } from './lib/derive';
+import { fill, formatNumber, plural } from './lib/format';
+import { generateDay } from './lib/generate';
+import { MAP } from './lib/geometry';
+import { createLookup, SORT_KEYS } from './lib/query';
+import { buildRoutes } from './lib/routes';
+import { DEFAULT_UI } from './lib/store';
+import { SUPERVISOR_HINT_ID, type RenderContext } from './render/context';
+import { renderDriverCards } from './render/drivers';
+import { icon, iconSprite } from './render/html';
+import { renderKpis } from './render/kpis';
+import { renderDriverChips, renderMapBase, renderRoutes, renderVehicles } from './render/map';
+import { OVERVIEW_QUEUE_LIMIT, renderKindChips, renderQueue } from './render/queue';
+import { pageCheckState, renderCards, renderHead, renderPagination, renderRange, renderRows, renderStatusChips } from './render/table';
+import './styles/tokens.css';
+import './styles/shell.css';
+import './styles/controls.css';
+import './styles/overview.css';
+import './styles/map.css';
+import './styles/list.css';
+import './styles/overlays.css';
+
+interface Props { locale: Locale; project: DemoProject }
+
+const { locale, project } = Astro.props;
+const t = strings[locale];
+const day = generateDay();
+const lookup = createLookup(day);
+const clock = snapshotClock();
+const ctx: RenderContext = { t, lang: t.lang, clock, zones: day.zones, hubs: day.hubs, drivers: day.drivers, lookup, role: DEFAULT_UI.role };
+const state = { deliveries: day.deliveries, ui: DEFAULT_UI };
+const view = derive(state, clock, day.drivers, lookup);
+const routes = buildRoutes(day.drivers, day.hubs, day.deliveries);
+const noSelection = new Set<string>();
+const sortedDrivers = [...day.drivers].sort((a, b) => a.name.localeCompare(b.name, t.lang));
+const sortOptions = SORT_KEYS.flatMap((key) => (['asc', 'desc'] as const).map((dir) => ({ value: `${key}:${dir}`, label: `${key === 'volumes' ? t.list.volumesLong : t.list.columns[key]} · ${dir === 'asc' ? t.list.asc : t.list.desc}` })));
+const navItems = [
+  { view: 'overview', label: t.nav.overview, iconName: 'overview', count: '' },
+  { view: 'deliveries', label: t.nav.deliveries, iconName: 'deliveries', count: formatNumber(t.lang, day.deliveries.length) },
+  { view: 'drivers', label: t.nav.drivers, iconName: 'drivers', count: formatNumber(t.lang, day.drivers.length) },
+  { view: 'exceptions', label: t.nav.exceptions, iconName: 'exceptions', count: formatNumber(t.lang, view.queue.length), alert: true },
+];
+const config = { locale, strings: t };
+const lead = fill(t.overview.lead, { total: day.deliveries.length, zones: day.zones.length, drivers: day.drivers.length, hubs: day.hubs.length });
+---
+
+<DemoBar locale={locale} project={project} />
+<script is:inline>
+  (function () {
+    try {
+      var theme = localStorage.getItem('rs-demo-logistics-control:theme');
+      if (theme === 'dark' || theme === 'light') document.documentElement.setAttribute('data-lc-theme', theme);
+    } catch (error) {}
+  })();
+</script>
+
+<div class="demo-logistics-control" data-lc-root data-view="overview">
+  <script type="application/json" data-lc-config set:html={JSON.stringify(config)} />
+  <Fragment set:html={iconSprite()} />
+  <p class="lc-sr" id={SUPERVISOR_HINT_ID}>{t.permissions.supervisorOnly}</p>
+
+  <div class="lc-app" data-lc-app>
+    <aside class="lc-side">
+      <div class="lc-side__bar">
+        <div class="lc-brand">
+          <svg class="lc-brand__mark" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+            <rect width="32" height="32" rx="8" />
+            <path d="M7.5 22.5c3.2-8.6 8.6-1.8 12.6-9.4" />
+            <circle cx="22.6" cy="11.4" r="2.8" />
+          </svg>
+          <h1 class="lc-brand__name">{t.brand.product}<span class="lc-sr">{t.brand.srSuffix}</span></h1>
+        </div>
+        <button type="button" class="lc-iconbtn lc-js-only lc-mobile-only" data-action="palette" aria-label={t.top.search} aria-haspopup="dialog">
+          <Fragment set:html={icon('search')} />
+        </button>
+        <button type="button" class="lc-iconbtn lc-js-only lc-mobile-only lc-menu-toggle" data-action="menu" aria-expanded="false" aria-controls="lc-nav-panel" data-label-open={t.nav.openMenu} data-label-close={t.nav.closeMenu} aria-label={t.nav.openMenu}>
+          <Fragment set:html={icon('menu')} />
+        </button>
+      </div>
+      <div class="lc-side__panel" id="lc-nav-panel">
+        <p class="lc-side__workspace">{t.brand.workspace}</p>
+        <nav class="lc-nav" aria-label={t.nav.label}>
+          <ul>
+            {navItems.map((item) => (
+              <li>
+                <a class="lc-nav__link" href={`#lc-${item.view}`} data-view-link={item.view} aria-current={item.view === 'overview' ? 'page' : undefined}>
+                  <Fragment set:html={icon(item.iconName)} />
+                  <span class="lc-nav__label">{item.label}</span>
+                  {item.count && <span class:list={['lc-nav__count', item.alert && 'lc-nav__count--alert']} data-nav-count={item.view}>{item.count}</span>}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+        <div class="lc-side__foot">
+          <p class="lc-side__note">{t.side.note}</p>
+          <div class="lc-side__actions lc-js-only">
+            <button type="button" class="lc-btn lc-btn--quiet lc-btn--sm" data-action="shortcuts" aria-haspopup="dialog"><Fragment set:html={icon('keyboard')} /><span>{t.side.shortcuts}</span><kbd class="lc-kbd">?</kbd></button>
+            <button type="button" class="lc-btn lc-btn--quiet lc-btn--sm" data-action="reset"><Fragment set:html={icon('reset')} /><span>{t.side.reset}</span></button>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <div class="lc-main">
+      <header class="lc-top">
+        <p class="lc-top__when">
+          <span class="lc-top__date" data-lc-date>{t.top.today}</span>
+          <span class="lc-top__clock"><Fragment set:html={icon('late')} /><span class="lc-sr">{t.top.clockLabel}: </span><time data-lc-clock>{nowLabel(clock)}</time></span>
+          <span class="lc-sim lc-js-only" data-lc-sim hidden>
+            <button type="button" class="lc-top__sim" data-action="sim-note" aria-expanded="false" aria-controls="lc-sim-note">{t.top.simulated}<Fragment set:html={icon('info')} /></button>
+            <span class="lc-sim__note" id="lc-sim-note" data-lc-sim-note hidden>{t.top.simulatedNote}</span>
+          </span>
+        </p>
+        <button type="button" class="lc-search lc-js-only" data-action="palette" aria-haspopup="dialog">
+          <Fragment set:html={icon('search')} />
+          <span class="lc-search__text">{t.top.search}</span>
+          <kbd class="lc-kbd" data-lc-mod>Ctrl K</kbd>
+        </button>
+        <div class="lc-top__tools lc-js-only">
+          <div class="lc-role" role="group" aria-label={t.top.role}>
+            <button type="button" class="lc-role__option" data-action="role" data-role="operator" aria-pressed="true">{t.top.operator}</button>
+            <button type="button" class="lc-role__option" data-action="role" data-role="supervisor" aria-pressed="false">{t.top.supervisor}</button>
+          </div>
+          <button type="button" class="lc-iconbtn" data-action="theme" aria-label={t.top.themeToDark} data-label-dark={t.top.themeToDark} data-label-light={t.top.themeToLight}>
+            <span class="lc-theme-icon lc-theme-icon--moon"><Fragment set:html={icon('moon')} /></span>
+            <span class="lc-theme-icon lc-theme-icon--sun"><Fragment set:html={icon('sun')} /></span>
+          </button>
+          <button type="button" class="lc-iconbtn lc-desktop-only" data-action="shortcuts" aria-label={t.top.shortcuts} aria-haspopup="dialog"><Fragment set:html={icon('keyboard')} /></button>
+          <span class="lc-user lc-desktop-only" title={t.top.user}><span class="lc-avatar lc-avatar--user" aria-hidden="true">{t.top.userInitials}</span><span class="lc-sr">{t.top.user}</span></span>
+        </div>
+      </header>
+
+      <noscript><p class="lc-noscript">{t.noscript}</p></noscript>
+
+      <div class="lc-views">
+        <section id="lc-overview" class="lc-view is-active" data-view="overview" aria-labelledby="lc-overview-title" tabindex="-1">
+          <div class="lc-view__head">
+            <div>
+              <h2 class="lc-view__title" id="lc-overview-title">{t.overview.title}</h2>
+              <p class="lc-view__lead">{lead}</p>
+            </div>
+            <button type="button" class="lc-btn lc-js-only" data-action="kpi" data-status="late"><Fragment set:html={icon('late')} /><span>{t.overview.seeLate}</span></button>
+          </div>
+
+          <ul class="lc-kpis" aria-label={t.overview.kpis} data-region="kpis" set:html={renderKpis(view.kpis, ctx)} />
+
+          <div class="lc-overview-grid">
+            <section class="lc-panel lc-mappanel" aria-labelledby="lc-map-title">
+              <div class="lc-panel__head">
+                <div>
+                  <h3 class="lc-panel__title" id="lc-map-title">{t.map.title}</h3>
+                  <p class="lc-panel__hint lc-js-only">{t.map.hint}</p>
+                </div>
+                <button type="button" class="lc-btn lc-btn--quiet lc-btn--sm lc-js-only" data-action="motion" data-label-pause={t.map.pause} data-label-resume={t.map.resume} data-label-reduced={t.map.reduced}>
+                  <span class="lc-motion-icon lc-motion-icon--pause"><Fragment set:html={icon('pause')} /></span>
+                  <span class="lc-motion-icon lc-motion-icon--play"><Fragment set:html={icon('play')} /></span>
+                  <span data-motion-label>{t.map.pause}</span>
+                </button>
+              </div>
+              <div class="lc-map" data-lc-map>
+                <svg class="lc-map__svg" viewBox={`0 0 ${MAP.width} ${MAP.height}`} role="img" aria-label={fill(t.map.summary, { hubs: day.hubs.length, routes: day.drivers.length })} data-lc-map-svg>
+                  <g set:html={renderMapBase(ctx)} />
+                  <g class="lc-map__routes" data-region="routes" set:html={renderRoutes(routes, view.stats, '')} />
+                  <g class="lc-map__vehicles" data-region="vehicles" set:html={renderVehicles(routes, view.stats, ctx, '')} />
+                </svg>
+                <div class="lc-map__tip" data-lc-tip hidden></div>
+              </div>
+              <ul class="lc-legend" aria-label={t.map.legend}>
+                <li><svg viewBox="0 0 16 16" aria-hidden="true"><circle class="lc-legend__vehicle" cx="8" cy="8" r="6" /></svg>{t.map.legendVehicle}</li>
+                <li><svg viewBox="0 0 16 16" aria-hidden="true"><circle class="lc-legend__late" cx="8" cy="8" r="4.5" /></svg>{t.map.legendLate}</li>
+                <li><svg viewBox="0 0 16 16" aria-hidden="true"><path class="lc-legend__issue" d="M8 2.5 13.5 12.5H2.5Z" /></svg>{t.map.legendIssue}</li>
+                <li><svg viewBox="0 0 16 16" aria-hidden="true"><rect class="lc-legend__hub" x="2" y="2" width="12" height="12" rx="3" /></svg>{t.map.legendHub}</li>
+              </ul>
+              <h4 class="lc-chips-title">{t.map.drivers} <span>· {t.map.driversHint}</span></h4>
+              <ul class="lc-driver-chips" data-region="driver-chips" set:html={renderDriverChips(view.stats, ctx, '')} />
+            </section>
+
+            <section class="lc-panel lc-queuepanel" aria-labelledby="lc-queue-title">
+              <div class="lc-panel__head">
+                <div>
+                  <h3 class="lc-panel__title" id="lc-queue-title">{t.queue.title}</h3>
+                  <p class="lc-panel__hint" data-region="queue-count">{plural(t.lang, view.queue.length, t.queue.count)}</p>
+                </div>
+                <a class="lc-btn lc-btn--quiet lc-btn--sm" href="#lc-exceptions" data-view-link="exceptions" data-region="queue-all">{fill(t.queue.seeAll, { n: view.queue.length })}</a>
+              </div>
+              <ol class="lc-queue" data-region="queue-overview" set:html={renderQueue(view.queue.slice(0, OVERVIEW_QUEUE_LIMIT), ctx, 'ov', t.queue.empty)} />
+            </section>
+          </div>
+        </section>
+
+        <section id="lc-deliveries" class="lc-view" data-view="deliveries" aria-labelledby="lc-deliveries-title" tabindex="-1">
+          <div class="lc-view__head">
+            <div>
+              <h2 class="lc-view__title" id="lc-deliveries-title">{t.list.title}</h2>
+              <p class="lc-view__lead">{t.list.lead}</p>
+            </div>
+          </div>
+
+          <div class="lc-filters lc-js-only" role="group" aria-label={t.list.filters}>
+            <div class="lc-field lc-field--search">
+              <label class="lc-sr" for="lc-query">{t.list.search}</label>
+              <Fragment set:html={icon('search')} />
+              <input id="lc-query" class="lc-input" type="search" placeholder={t.list.searchPlaceholder} autocomplete="off" spellcheck="false" data-lc-query />
+            </div>
+            <div class="lc-field">
+              <label class="lc-field__label" for="lc-zone">{t.list.zone}</label>
+              <select id="lc-zone" class="lc-select" data-lc-zone>
+                <option value="">{t.list.allZones}</option>
+                {day.zones.map((zone) => <option value={zone.id}>{zone.name}</option>)}
+              </select>
+              <Fragment set:html={icon('down', 'lc-icon lc-field__chev')} />
+            </div>
+            <div class="lc-field">
+              <label class="lc-field__label" for="lc-driver">{t.list.driver}</label>
+              <select id="lc-driver" class="lc-select" data-lc-driver>
+                <option value="">{t.list.allDrivers}</option>
+                {sortedDrivers.map((driver) => <option value={driver.id}>{driver.name}</option>)}
+              </select>
+              <Fragment set:html={icon('down', 'lc-icon lc-field__chev')} />
+            </div>
+            <div class="lc-field lc-field--sort">
+              <label class="lc-field__label" for="lc-sort">{t.list.sort}</label>
+              <select id="lc-sort" class="lc-select" data-lc-sort>
+                {sortOptions.map((option) => <option value={option.value}>{option.label}</option>)}
+              </select>
+              <Fragment set:html={icon('down', 'lc-icon lc-field__chev')} />
+            </div>
+            <button type="button" class="lc-btn lc-btn--quiet" data-action="clear-filters" aria-disabled="true"><Fragment set:html={icon('clear')} /><span>{t.list.clear}</span></button>
+          </div>
+
+          <div class="lc-chips lc-js-only" role="group" aria-label={t.list.statusGroup} data-region="status-chips" set:html={renderStatusChips([], view.facets, ctx)} />
+
+          <div class="lc-results">
+            <p class="lc-results__range" data-region="range" set:html={renderRange(view.slice, ctx)} />
+            <p class="lc-sr" aria-live="polite" data-lc-results-live></p>
+          </div>
+
+          <div class="lc-bulk" role="region" aria-label={t.bulk.label} data-region="bulk" hidden></div>
+
+          <noscript><p class="lc-noscript">{t.list.noscript}</p></noscript>
+
+          <div class="lc-table-wrap" data-lc-table>
+            <table class="lc-table">
+              <caption class="lc-sr" data-region="caption">{fill(t.list.caption, { sort: fill(t.list.sortedBy, { col: t.list.columns.status, dir: t.list.asc }) })}</caption>
+              <thead data-region="thead" set:html={renderHead(DEFAULT_UI.sort, pageCheckState(view.slice.items, noSelection), ctx)} />
+              <tbody data-region="rows" set:html={renderRows(view.slice.items, noSelection, ctx)} />
+            </table>
+          </div>
+          <ul class="lc-dcards" data-region="cards" set:html={renderCards(view.slice.items, noSelection, ctx)} />
+
+          <div class="lc-empty" data-region="empty" hidden>
+            <svg class="lc-empty__art" viewBox="0 0 120 80" aria-hidden="true" focusable="false">
+              <path d="M10 62c18-4 22-30 44-30s26 20 56 14" />
+              <circle cx="54" cy="32" r="5" />
+              <path d="M78 22h22M84 30h16" />
+            </svg>
+            <h3 class="lc-empty__title">{t.list.emptyTitle}</h3>
+            <p class="lc-empty__text">{t.list.emptyText}</p>
+            <button type="button" class="lc-btn lc-btn--primary" data-action="clear-filters" data-key="empty-clear"><Fragment set:html={icon('clear')} /><span>{t.list.clear}</span></button>
+          </div>
+
+          <nav class="lc-pagination lc-js-only" aria-label={t.list.pagination} data-region="pagination" set:html={renderPagination(view.slice, ctx)} />
+        </section>
+
+        <section id="lc-drivers" class="lc-view" data-view="drivers" aria-labelledby="lc-drivers-title" tabindex="-1">
+          <div class="lc-view__head">
+            <div>
+              <h2 class="lc-view__title" id="lc-drivers-title">{t.driversView.title}</h2>
+              <p class="lc-view__lead">{fill(t.driversView.lead, { drivers: day.drivers.length, hubs: day.hubs.length })}</p>
+            </div>
+          </div>
+          <ul class="lc-drivers" data-region="drivers" set:html={renderDriverCards(view.stats, ctx)} />
+        </section>
+
+        <section id="lc-exceptions" class="lc-view" data-view="exceptions" aria-labelledby="lc-exceptions-title" tabindex="-1">
+          <div class="lc-view__head">
+            <div>
+              <h2 class="lc-view__title" id="lc-exceptions-title">{t.exceptionsView.title}</h2>
+              <p class="lc-view__lead">{t.exceptionsView.lead}</p>
+            </div>
+          </div>
+          <div class="lc-chips lc-js-only" role="group" aria-label={t.queue.filterLabel} data-region="kind-chips" set:html={renderKindChips(view.queue, '', ctx)} />
+          <ol class="lc-queue lc-queue--grid" data-region="queue-full" set:html={renderQueue(view.queueFiltered, ctx, 'ex', t.queue.empty)} />
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <dialog class="lc-drawer" data-dialog="drawer" aria-labelledby="lc-drawer-title">
+    <div class="lc-drawer__inner" data-region="drawer"></div>
+    <div class="lc-toast-slot" aria-live="polite" data-toast-slot></div>
+  </dialog>
+
+  <dialog class="lc-modal lc-palette" data-dialog="palette" aria-labelledby="lc-palette-title">
+    <h2 class="lc-sr" id="lc-palette-title">{t.palette.title}</h2>
+    <div class="lc-palette__field">
+      <Fragment set:html={icon('search')} />
+      <input class="lc-palette__input" type="text" role="combobox" aria-expanded="true" aria-controls="lc-palette-list" aria-autocomplete="list" aria-label={t.palette.label} placeholder={t.palette.placeholder} autocomplete="off" spellcheck="false" data-lc-palette-input />
+      <kbd class="lc-kbd">Esc</kbd>
+    </div>
+    <div class="lc-palette__list" id="lc-palette-list" role="listbox" aria-label={t.palette.label} data-region="palette-list"></div>
+    <p class="lc-palette__hint"><span aria-hidden="true">{t.palette.hint}</span><span class="lc-sr" aria-live="polite" data-lc-palette-live></span></p>
+  </dialog>
+
+  <dialog class="lc-modal lc-keys" data-dialog="shortcuts" aria-labelledby="lc-keys-title">
+    <div class="lc-modal__head">
+      <div>
+        <h2 class="lc-modal__title" id="lc-keys-title">{t.keys.title}</h2>
+        <p class="lc-modal__lead">{t.keys.lead}</p>
+      </div>
+      <button type="button" class="lc-iconbtn" data-action="close-dialog" aria-label={t.keys.close}><Fragment set:html={icon('close')} /></button>
+    </div>
+    <dl class="lc-keys__list">
+      <div><dt><kbd class="lc-kbd" data-lc-mod>Ctrl K</kbd></dt><dd>{t.keys.palette}</dd></div>
+      <div><dt><kbd class="lc-kbd">?</kbd></dt><dd>{t.keys.help}</dd></div>
+      <div><dt><kbd class="lc-kbd">/</kbd></dt><dd>{t.keys.search}</dd></div>
+      <div><dt><kbd class="lc-kbd">1</kbd> <kbd class="lc-kbd">2</kbd> <kbd class="lc-kbd">3</kbd> <kbd class="lc-kbd">4</kbd></dt><dd>{t.keys.views}</dd></div>
+      <div><dt><kbd class="lc-kbd">Esc</kbd></dt><dd>{t.keys.escape}</dd></div>
+      <div><dt><kbd class="lc-kbd" data-lc-undo>Ctrl Z</kbd></dt><dd>{t.keys.undo}</dd></div>
+    </dl>
+    <div class="lc-keys__setting">
+      <div>
+        <p class="lc-keys__setting-title" id="lc-keys-single">{t.keys.single}</p>
+        <p class="lc-keys__setting-hint" id="lc-keys-single-hint">{t.keys.singleHint}</p>
+      </div>
+      <button type="button" class="lc-switch" role="switch" aria-checked="true" aria-labelledby="lc-keys-single" aria-describedby="lc-keys-single-hint" data-action="single-keys" data-label-on={t.keys.on} data-label-off={t.keys.off}>
+        <span class="lc-switch__track" aria-hidden="true"><span class="lc-switch__thumb"></span></span>
+        <span class="lc-switch__text" aria-hidden="true" data-switch-text>{t.keys.on}</span>
+      </button>
+    </div>
+  </dialog>
+
+  <dialog class="lc-modal lc-pickdialog" data-dialog="reassign" aria-labelledby="lc-reassign-title" aria-describedby="lc-reassign-lead">
+    <div class="lc-modal__head">
+      <div>
+        <h2 class="lc-modal__title" id="lc-reassign-title" data-region="reassign-title"></h2>
+        <p class="lc-modal__lead" id="lc-reassign-lead">{t.reassignDialog.lead}</p>
+      </div>
+      <button type="button" class="lc-iconbtn" data-action="close-dialog" aria-label={t.reassignDialog.cancel}><Fragment set:html={icon('close')} /></button>
+    </div>
+    <ul class="lc-picker" data-region="reassign-list"></ul>
+  </dialog>
+
+  <dialog class="lc-modal lc-pickdialog" data-dialog="issue" aria-labelledby="lc-issue-title" aria-describedby="lc-issue-lead">
+    <div class="lc-modal__head">
+      <div>
+        <h2 class="lc-modal__title" id="lc-issue-title">{t.issueDialog.title}</h2>
+        <p class="lc-modal__lead" id="lc-issue-lead" data-region="issue-lead"></p>
+      </div>
+      <button type="button" class="lc-iconbtn" data-action="close-dialog" aria-label={t.issueDialog.cancel}><Fragment set:html={icon('close')} /></button>
+    </div>
+    <ul class="lc-picker lc-picker--issues" data-region="issue-list"></ul>
+  </dialog>
+
+  <div class="lc-toast-slot lc-toast-slot--global" aria-live="polite" data-toast-slot></div>
+  <p class="lc-sr" aria-live="polite" data-lc-announcer></p>
+</div>
+
+<script>
+  import { boot } from './client/main';
+
+  boot();
+</script>

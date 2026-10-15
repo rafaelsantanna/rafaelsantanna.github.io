@@ -1,0 +1,109 @@
+---
+import { alternatePath, localize, withLocale, type DemoProject, type Locale } from '@/data/content';
+
+interface Props { locale: Locale; project: DemoProject }
+
+const { locale, project } = Astro.props;
+const pt = locale === 'pt';
+const shortNote = pt ? 'Demo autoral · marca e dados fictícios' : 'Portfolio demo · fictional brand and data';
+---
+
+<aside class="demo-bar" aria-label={pt ? 'Aviso da demonstração' : 'Demonstration disclosure'} data-demo-bar>
+  <p class="demo-bar__note">
+    <span class="demo-bar__badge">Demo</span>
+    <span class="demo-bar__full">{localize(project.disclaimer, locale)}</span>
+    <span class="demo-bar__short" aria-hidden="true">{shortNote}</span>
+  </p>
+  <nav class="demo-bar__links" aria-label={pt ? 'Sair da demonstração' : 'Leave the demonstration'}>
+    <a href={alternatePath(locale, `demos/${project.slug}`)} lang={pt ? 'en' : 'pt-BR'} hreflang={pt ? 'en' : 'pt-BR'}>{pt ? 'English' : 'Português'}</a>
+    <a href={withLocale(locale, `work/${project.slug}`)}>{pt ? 'Sobre o projeto' : 'About the project'}</a>
+    <a href={withLocale(locale, 'work')}>{pt ? 'Voltar ao portfólio' : 'Back to portfolio'}</a>
+    <a href={withLocale(locale, 'contact')}>{pt ? 'Fale com Rafael' : 'Contact Rafael'}</a>
+  </nav>
+</aside>
+
+<style>
+  .demo-bar {
+    position: relative;
+    z-index: 50;
+    display: flex;
+    flex-wrap: wrap;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.35rem 1.25rem;
+    min-height: 2.5rem;
+    padding: 0.4rem max(1rem, calc((100% - 90rem) / 2));
+    background: #0b0a10;
+    color: #f4f3f8;
+    font-family: 'Atkinson Hyperlegible Next', system-ui, sans-serif;
+    font-size: 0.78rem;
+    line-height: 1.35;
+  }
+  .demo-bar__note { display: flex; align-items: center; gap: 0.6rem; margin: 0; }
+  .demo-bar__short { display: none; }
+  .demo-bar__badge {
+    flex: 0 0 auto;
+    padding: 0.12rem 0.45rem;
+    border: 1px solid #b9a4ff;
+    border-radius: 999px;
+    color: #d9ccff;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .demo-bar__links { display: flex; flex-wrap: wrap; gap: 0 1rem; }
+  .demo-bar__links a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2rem;
+    color: #f4f3f8;
+    font-weight: 700;
+    text-decoration: underline;
+    text-decoration-color: rgb(244 243 248 / 35%);
+    text-underline-offset: 0.25em;
+    white-space: nowrap;
+  }
+  .demo-bar__links a:hover { text-decoration-color: #b9a4ff; }
+  .demo-bar__links a:focus-visible { outline: 2px solid #d9ccff; outline-offset: -2px; border-radius: 2px; }
+
+  /* Phones: one short disclosure line and one scrollable row of links, so the demo starts sooner. */
+  @media (max-width: 40rem) {
+    .demo-bar { flex-direction: column; flex-wrap: nowrap; align-items: stretch; gap: 0; padding: 0.35rem 0 0; }
+    .demo-bar__note { min-width: 0; padding-inline: 1rem; }
+    .demo-bar__full {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+      white-space: nowrap;
+    }
+    .demo-bar__short { display: inline; }
+    .demo-bar__links {
+      flex-wrap: nowrap;
+      gap: 0 1.1rem;
+      min-width: 0;
+      max-width: 100%;
+      overflow-x: auto;
+      padding-inline: 1rem 2rem;
+      scroll-padding-inline: 1rem 2rem;
+      scrollbar-width: none;
+      /* The row scrolls sideways when it does not fit; the fade signals the hidden links. */
+      mask-image: linear-gradient(to right, #000 calc(100% - 2rem), transparent);
+    }
+    .demo-bar__links::-webkit-scrollbar { display: none; }
+    .demo-bar__links a { min-height: 2.75rem; }
+  }
+</style>
+
+<script>
+  // On phones the links scroll sideways; keep the focused link fully in view for keyboard users.
+  document.querySelectorAll<HTMLElement>('.demo-bar__links').forEach((strip) => {
+    strip.addEventListener('focusin', (event) => {
+      if (strip.scrollWidth <= strip.clientWidth || !(event.target instanceof HTMLElement)) return;
+      event.target.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+    });
+  });
+</script>

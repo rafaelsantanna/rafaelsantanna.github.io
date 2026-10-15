@@ -1,0 +1,127 @@
+---
+import Icon from '@/components/ui/Icon.astro';
+import { copy, identity, withLocale, type Locale } from '@/data/content';
+
+interface Props { locale: Locale; experienceId: string }
+
+const { locale, experienceId } = Astro.props;
+const t = copy[locale];
+const pt = locale === 'pt';
+const ui = pt
+  ? {
+      index: 'Sobre',
+      moreBefore: 'Também criei o',
+      moreAfter: ', um produto próprio para equipes de infraestrutura que operam milhares de servidores e equipamentos de rede.',
+      experience: 'Ver experiência',
+      portraitAlt: 'Rafael Sant’ Anna usando óculos e fones de ouvido',
+      facts: [
+        { label: 'Experiência', value: '10+ anos' },
+        { label: 'Foco', value: 'Produtos B2B e sistemas internos' },
+        { label: 'Disponível para', value: 'PJ remoto e freelance', live: true },
+      ],
+    }
+  : {
+      index: 'About',
+      moreBefore: 'I also created',
+      moreAfter: ', my own product for infrastructure teams that operate thousands of servers and network devices.',
+      experience: 'See experience',
+      portraitAlt: 'Rafael Sant’ Anna wearing glasses and headphones',
+      facts: [
+        { label: 'Experience', value: '10+ years' },
+        { label: 'Focus', value: 'B2B products and internal systems' },
+        { label: 'Available for', value: 'Remote contract (PJ) and freelance', live: true },
+      ],
+    };
+---
+
+<header class="intro shell">
+  <div class="intro__text">
+    <p class="section-index">{ui.index}</p>
+    <h1>{t.aboutTitle}</h1>
+    <p class="lede">{t.aboutIntro}</p>
+    <p class="intro__more">{ui.moreBefore} <a href="#edgedata">EdgeData</a>{ui.moreAfter}</p>
+    <div class="button-row">
+      <a class="button button--primary" href={withLocale(locale, 'work')}>{t.seeWork}<Icon name="arrow-right" /></a>
+      <a class="button button--secondary" href={`#${experienceId}`}>{ui.experience}<Icon name="arrow-down" /></a>
+    </div>
+  </div>
+
+  <div class="intro__visual">
+    <div class="window intro__window">
+      <div class="window__bar">
+        <span class="mini__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span class="window__title">{identity.name}</span>
+        <span class="window__meta">{identity.location}</span>
+      </div>
+      <img class="intro__portrait" src="/images/profile.jpg" width="960" height="950" alt={ui.portraitAlt} loading="eager" decoding="async" />
+    </div>
+    <dl class="intro__card">
+      {ui.facts.map((fact) => (
+        <div>
+          <dt>{fact.label}</dt>
+          <dd>{fact.live && <span class="intro__dot" aria-hidden="true"></span>}{fact.value}</dd>
+        </div>
+      ))}
+    </dl>
+  </div>
+</header>
+
+<style>
+  .intro {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+    align-items: center;
+    gap: var(--space-7) clamp(3rem, 2rem + 5vw, 7rem);
+    padding-block: clamp(2.5rem, 2rem + 4vw, 6rem) clamp(3rem, 2rem + 4vw, 6rem);
+  }
+  .intro__text { display: grid; justify-items: start; gap: var(--space-5); min-width: 0; }
+  .intro h1 { max-width: 13ch; font-size: var(--step-6); font-weight: 700; letter-spacing: -0.052em; line-height: 0.98; }
+  .intro__more { max-width: 56ch; color: var(--text-muted); }
+  .intro__more a { color: var(--text); text-decoration-color: var(--violet-line); }
+  .intro__more a:hover { text-decoration-color: var(--violet); }
+  .intro .button-row { margin-block-start: var(--space-2); }
+
+  .intro__visual { min-width: 0; }
+  .intro__window { position: relative; }
+  /* Crop from the top (plain wall) so the shirt strip under the card stays as tall as possible. */
+  .intro__portrait {
+    width: 100%;
+    aspect-ratio: 1 / 0.94;
+    object-fit: cover;
+    object-position: 50% 100%;
+    filter: saturate(0.82) contrast(1.06) brightness(0.96);
+  }
+
+  /* The card only overlaps the bottom strip of the photo (shirt), never the face. */
+  .intro__card {
+    position: relative;
+    display: grid;
+    margin-block-start: -2.5rem;
+    margin-inline-start: clamp(-3rem, -2vw, -1rem);
+    gap: var(--space-3);
+    width: min(19rem, 82%);
+    padding: var(--space-4) var(--space-5);
+    border: 1px solid rgb(255 255 255 / 14%);
+    border-radius: var(--radius-window);
+    background: var(--surface-2);
+    box-shadow: var(--shadow-float);
+  }
+  .intro__card > div { display: grid; gap: 0.1rem; }
+  .intro__card > div + div { padding-block-start: var(--space-3); border-block-start: 1px solid var(--line); }
+  .intro__card dt { color: var(--text-muted); font-size: 0.8125rem; line-height: 1.4; }
+  .intro__card dd { display: flex; align-items: center; gap: var(--space-2); color: var(--text); font-family: var(--font-display); font-weight: 560; letter-spacing: -0.01em; line-height: 1.3; }
+  .intro__dot { width: 0.5rem; height: 0.5rem; flex: none; border-radius: 50%; background: var(--violet); box-shadow: 0 0 0 4px var(--violet-soft); }
+
+  @media (max-width: 63.99em) {
+    .intro { grid-template-columns: minmax(0, 1fr); }
+    .intro__visual { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); align-items: end; gap: var(--space-5); }
+    .intro__card { position: static; width: auto; margin: 0; box-shadow: none; }
+  }
+
+  @media (max-width: 47.99em) {
+    .intro h1 { font-size: clamp(2.5rem, 1.2rem + 6.5vw, 3.5rem); }
+    .intro__visual { grid-template-columns: minmax(0, 1fr); }
+    .intro__portrait { aspect-ratio: 4 / 3.4; object-position: 50% 34%; }
+    .intro .button-row .button { flex: 1 1 13rem; }
+  }
+</style>

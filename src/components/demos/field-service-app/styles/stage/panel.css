@@ -1,0 +1,193 @@
+/* Turno demo stage: control cards in the demo panel. */
+
+/* Cards in the demo panel. */
+.turno__card {
+  padding: 1rem 1.125rem 1.125rem;
+  border: 1px solid rgb(14 21 37 / 0.08);
+  border-radius: 18px;
+  background: var(--t-surface);
+  box-shadow: 0 1px 2px rgb(14 21 37 / 0.04), 0 12px 32px -20px rgb(14 21 37 / 0.25);
+}
+
+.turno__card-title {
+  margin: 0;
+  font-family: var(--t-display);
+  font-size: 1.0625rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.turno__switch-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-block: 0.75rem;
+  padding: 0.5rem 0.5rem 0.5rem 0.875rem;
+  border-radius: 14px;
+  background: var(--t-base);
+}
+
+.turno__switch-text {
+  display: grid;
+  gap: 0.125rem;
+}
+
+.turno__switch-label {
+  font-weight: 700;
+}
+
+.turno__switch-hint {
+  color: var(--t-ink-3);
+  font-size: 0.875rem;
+  line-height: 1.35;
+}
+
+.turno__switch {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: 0.625rem;
+  min-block-size: 48px;
+  padding: 0 0.25rem 0 0.5rem;
+  border: 0;
+  border-radius: 999px;
+  background: none;
+  cursor: pointer;
+}
+
+.turno__switch-state {
+  min-inline-size: 3.6em;
+  font-weight: 700;
+  text-align: end;
+  color: var(--t-blue-ink);
+}
+
+.turno__switch-track {
+  position: relative;
+  inline-size: 3.25rem;
+  block-size: 2rem;
+  border-radius: 999px;
+  background: var(--t-blue);
+  transition: background-color 180ms var(--t-ease);
+}
+
+.turno__switch-thumb {
+  position: absolute;
+  inset-block-start: 3px;
+  inset-inline-start: 3px;
+  inline-size: 26px;
+  block-size: 26px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 2px 6px rgb(14 21 37 / 0.3);
+  transform: translateX(20px);
+  transition: transform 180ms var(--t-ease);
+}
+
+.turno__switch[aria-checked='false'] .turno__switch-track {
+  background: var(--t-ink-3);
+}
+
+.turno__switch[aria-checked='false'] .turno__switch-thumb {
+  transform: none;
+}
+
+.turno__switch[aria-checked='false'] .turno__switch-state {
+  color: var(--t-ink);
+}
+
+.turno__buttons {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+  gap: 0.5rem;
+}
+
+.turno__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.375rem;
+  min-block-size: 48px;
+  padding: 0.5rem 0.75rem;
+  border: 1.5px solid var(--t-line-2);
+  border-radius: 14px;
+  background: var(--t-surface);
+  color: var(--t-ink);
+  font-weight: 700;
+  font-size: 0.9375rem;
+  white-space: nowrap;
+  line-height: 1.2;
+  cursor: pointer;
+  transition: background-color 180ms var(--t-ease), border-color 180ms var(--t-ease), transform 120ms var(--t-ease);
+}
+
+.turno__btn:hover {
+  border-color: var(--t-field);
+  background: var(--t-base);
+}
+
+.turno__btn:active {
+  transform: scale(0.98);
+}
+
+.turno__btn--primary {
+  border-color: var(--t-blue);
+  background: var(--t-blue);
+  color: #fff;
+}
+
+.turno__btn--primary:hover {
+  border-color: var(--t-blue-ink);
+  background: var(--t-blue-ink);
+}
+
+/* Two lines stay reserved, so a message appearing or clearing never shifts the stage around the phone. */
+.turno__status {
+  min-block-size: 2.8em;
+  margin: 0.75rem 0 0;
+  color: var(--t-ink-2);
+  font-size: 0.875rem;
+  line-height: 1.4;
+}
+
+.turno__local {
+  display: flex;
+  gap: 0.5rem;
+  margin: 0.75rem 0 0;
+  color: var(--t-ink-3);
+  font-size: 0.8125rem;
+  line-height: 1.45;
+}
+
+.turno__local .t-ico {
+  inline-size: 1rem;
+  block-size: 1rem;
+  margin-block-start: 0.1rem;
+}
+
+/* Forced colors drop backgrounds, so the switch is redrawn with system colors. */
+@media (forced-colors: active) {
+  .turno__switch[aria-checked] .turno__switch-track {
+    forced-color-adjust: none;
+    border: 2px solid ButtonText;
+    background: Canvas;
+  }
+
+  .turno__switch[aria-checked] .turno__switch-thumb {
+    forced-color-adjust: none;
+    inset-block-start: 1px;
+    inset-inline-start: 1px;
+    background: ButtonText;
+    box-shadow: none;
+  }
+
+  .turno__switch[aria-checked='true'] .turno__switch-track {
+    border-color: Highlight;
+    background: Highlight;
+  }
+
+  .turno__switch[aria-checked='true'] .turno__switch-thumb {
+    background: HighlightText;
+  }
+}

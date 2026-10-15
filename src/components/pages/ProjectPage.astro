@@ -1,0 +1,165 @@
+---
+import Icon from '@/components/ui/Icon.astro';
+import ProjectFrame from '@/components/ui/ProjectFrame.astro';
+import { paletteStyle } from '@/components/ui/palette';
+import { copy, localize, projects, services, withLocale, type DemoProject, type Locale } from '@/data/content';
+
+interface Props { locale: Locale; project: DemoProject }
+
+const { locale, project } = Astro.props;
+const t = copy[locale];
+const pt = locale === 'pt';
+const position = projects.findIndex((item) => item.slug === project.slug);
+const previous = projects[(position - 1 + projects.length) % projects.length];
+const next = projects[(position + 1) % projects.length];
+const pad = (value: number) => String(value).padStart(2, '0');
+const related = project.services
+  .map((slug) => services.find((service) => service.slug === slug))
+  .filter((service) => service !== undefined);
+const demoHref = withLocale(locale, `demos/${project.slug}`);
+const ui = pt
+  ? {
+      contact: 'Falar com Rafael',
+      problem: 'O problema',
+      approach: 'O que foi construído',
+      highlights: 'O que você pode testar',
+      decisions: 'Decisões',
+      boundary: 'Limites da demo',
+      facts: 'Ficha técnica',
+      category: 'Segmento',
+      stack: 'Stack',
+      services: 'Serviços relacionados',
+      demo: 'Demo',
+      others: 'Outros projetos',
+      previous: 'Anterior',
+      next: 'Próximo',
+    }
+  : {
+      contact: 'Talk to Rafael',
+      problem: 'The problem',
+      approach: 'What was built',
+      highlights: 'What you can try',
+      decisions: 'Decisions',
+      boundary: 'Demo boundaries',
+      facts: 'At a glance',
+      category: 'Segment',
+      stack: 'Stack',
+      services: 'Related services',
+      demo: 'Demo',
+      others: 'Other projects',
+      previous: 'Previous',
+      next: 'Next',
+    };
+---
+
+<article class="project" style={paletteStyle(project.palette)}>
+  <header class="project-hero shell">
+    <a class="back-link" href={withLocale(locale, 'work')}><Icon name="arrow-left" />{t.backWork}</a>
+    <div class="project-hero__grid">
+      <div class="project-hero__title">
+        <p class="project-hero__eyebrow"><span class="mono">{pad(position + 1)} / {pad(projects.length)}</span><span class="eyebrow">{localize(project.category, locale)}</span></p>
+        <h1>{project.name}</h1>
+        <p class="project-hero__tagline">{localize(project.tagline, locale)}</p>
+      </div>
+      <div class="project-hero__aside">
+        <p class="lede">{localize(project.summary, locale)}</p>
+        <div class="button-row">
+          <a class="button button--primary" href={demoHref} data-icon="up-right">{t.openDemo}<Icon name="arrow-up-right" /></a>
+          <a class="button button--secondary" href={withLocale(locale, 'contact')}>{ui.contact}</a>
+        </div>
+        <p class="note"><Icon name="info" /><span>{localize(project.disclaimer, locale)}</span></p>
+      </div>
+    </div>
+  </header>
+
+  <div class="project-stage shell">
+    <a class="project-stage__panel stage" href={demoHref} tabindex="-1">
+      <ProjectFrame project={project} locale={locale} loading="eager" sizes="(min-width: 64em) 70vw, 100vw" />
+    </a>
+  </div>
+
+  <div class="project-body shell">
+    <div class="project-main">
+      <div class="project-split">
+        <div class="project-split__item">
+          <h2 class="project-label">{ui.problem}</h2>
+          <p>{localize(project.problem, locale)}</p>
+        </div>
+        <div class="project-split__item">
+          <h2 class="project-label">{ui.approach}</h2>
+          <p>{localize(project.approach, locale)}</p>
+        </div>
+      </div>
+
+      <section class="project-section" aria-labelledby="project-highlights">
+        <h2 id="project-highlights" class="project-section__title">{ui.highlights}</h2>
+        <ol class="highlights">
+          {project.highlights[locale].map((item, index) => (
+            <li class="highlight">
+              <span class="highlight__index" aria-hidden="true">{pad(index + 1)}</span>
+              <h3>{item.title}</h3>
+              <p>{item.text}</p>
+            </li>
+          ))}
+        </ol>
+      </section>
+
+      <section class="project-section" aria-labelledby="project-decisions">
+        <h2 id="project-decisions" class="project-section__title">{ui.decisions}</h2>
+        <ul class="decisions">
+          {project.decisions[locale].map((item) => (
+            <li class="decision">
+              <h3>{item.title}</h3>
+              <p>{item.text}</p>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <aside class="callout project-boundary" aria-labelledby="project-boundary">
+        <Icon name="shield" />
+        <div>
+          <h2 id="project-boundary">{ui.boundary}</h2>
+          <p>{localize(project.boundary, locale)}</p>
+        </div>
+      </aside>
+    </div>
+
+    <aside class="project-facts" aria-labelledby="project-facts">
+      <div class="project-facts__panel">
+        <h2 id="project-facts" class="project-facts__title">{ui.facts}</h2>
+        <dl class="facts">
+          <div>
+            <dt>{ui.category}</dt>
+            <dd>{localize(project.category, locale)}</dd>
+          </div>
+          <div>
+            <dt>{ui.stack}</dt>
+            <dd><ul class="tag-list">{project.stack.map((item) => <li>{item}</li>)}</ul></dd>
+          </div>
+          <div>
+            <dt>{ui.services}</dt>
+            <dd>
+              <ul class="facts__links">
+                {related.map((service) => (
+                  <li><a href={withLocale(locale, `services/${service.slug}`)}>{localize(service.title, locale)}</a></li>
+                ))}
+              </ul>
+            </dd>
+          </div>
+        </dl>
+        <a class="button button--primary project-facts__cta" href={demoHref} data-icon="up-right">{t.openDemo}<Icon name="arrow-up-right" /></a>
+      </div>
+    </aside>
+  </div>
+
+  <nav class="project-nav shell" aria-label={ui.others}>
+    {[{ item: previous, label: ui.previous, icon: 'arrow-left' as const, dir: 'prev' }, { item: next, label: ui.next, icon: 'arrow-right' as const, dir: 'next' }].map(({ item, label, icon, dir }) => (
+      <a class:list={['project-nav__link', `project-nav__link--${dir}`]} href={withLocale(locale, `work/${item.slug}`)} rel={dir} style={paletteStyle(item.palette)}>
+        <span class="project-nav__label"><Icon name={icon} />{label}</span>
+        <span class="project-nav__name"><span class="chip-link__swatch" aria-hidden="true"></span>{item.name}</span>
+        <span class="project-nav__tagline">{localize(item.tagline, locale)}</span>
+      </a>
+    ))}
+  </nav>
+</article>

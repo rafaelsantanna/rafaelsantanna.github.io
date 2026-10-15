@@ -1,0 +1,47 @@
+---
+import type { Locale } from '@/data/content';
+import { BUFFER_MINUTES, SLOT_STEP, localizedBarbers, localizedServices, weeklyHours } from '@/components/demos/online-booking/data/catalog';
+import type { Appointment } from '@/components/demos/online-booking/data/model';
+import { fitsBarber } from '@/components/demos/online-booking/lib/availability';
+import { clockLabel } from '@/components/demos/online-booking/lib/time';
+
+interface Props { locale: Locale }
+
+const { locale } = Astro.props;
+const pt = locale === 'pt';
+const FRIDAY = 5;
+const FIRST_SLOT = 10 * 60;
+const PICKED_SLOT = 11 * 60;
+const SLOT_COUNT = 6;
+
+const service = localizedServices(locale).find((item) => item.id === 'corte-barba');
+const barber = localizedBarbers(locale).find((item) => item.id === 'davi');
+const hours = weeklyHours[FRIDAY];
+if (!service || !barber || !hours) throw new Error('The Corte & Prosa catalog no longer matches the desk miniature.');
+
+// Slots follow the demo's own rules: its step grid, the barber's hours and breaks, and the buffer after
+// an appointment that is already on the book at opening time.
+const rules = { duration: service.duration, buffer: BUFFER_MINUTES, step: SLOT_STEP };
+const booked: Appointment = { id: 'desk', barberId: barber.id, day: '', start: hours.start, end: hours.start + service.duration, serviceIds: [service.id], client: '', own: false };
+const slots = Array.from({ length: SLOT_COUNT }, (_, index) => FIRST_SLOT + index * SLOT_STEP).map((start) => {
+  const free = fitsBarber(barber, hours, [booked], start, rules);
+  return { time: clockLabel(start), free, selected: free && start === PICKED_SLOT };
+});
+---
+
+<div class="m-book">
+  <p class="m-label">{pt ? 'Sexta-feira' : 'Friday'} · {service.name}</p>
+  <p class="m-title">{pt ? 'Escolha um horário' : 'Pick a time'}</p>
+  <div class="m-slots">
+    {slots.map((slot) => (
+      <span class:list={['m-slot', { 'is-on': slot.selected, 'is-off': !slot.free }]}>
+        {slot.selected && <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 6.5 5 9l4.5-5.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" /></svg>}
+        {slot.time}
+      </span>
+    ))}
+  </div>
+  <div class="m-confirm">
+    <span>{pt ? 'Com' : 'With'} {barber.firstName} · {service.duration} min</span>
+    <span class="m-cta">{pt ? 'Confirmar' : 'Confirm'}</span>
+  </div>
+</div>

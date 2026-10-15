@@ -1,0 +1,85 @@
+---
+import DemoBar from '@/components/demos/DemoBar.astro';
+import type { DemoProject, Locale } from '@/data/content';
+import ChatPane from './ChatPane.astro';
+import CompassMark from './CompassMark.astro';
+import EvidencePane from './EvidencePane.astro';
+import Icon from './Icon.astro';
+import ReaderDialog from './ReaderDialog.astro';
+import SourcesPane from './SourcesPane.astro';
+import { corpusFor } from './corpus';
+import { icons, type IconName } from './icons';
+import { chunkCorpus } from './lib/passages';
+import { fill, uiStrings } from './strings';
+import './styles/base.css';
+import './styles/sources.css';
+import './styles/chat.css';
+import './styles/answer.css';
+import './styles/composer.css';
+import './styles/evidence.css';
+import './styles/reader.css';
+
+interface Props { locale: Locale; project: DemoProject }
+
+const { locale, project } = Astro.props;
+const corpus = corpusFor(locale);
+const t = uiStrings[locale];
+const passageCount = chunkCorpus(corpus).length;
+const brandStyle = `--ka-base: ${project.palette.base}; --ka-ink: ${project.palette.ink}; --ka-yellow: ${project.palette.accent};`;
+// Escape "<" so document text can never close the script element.
+const clientData = JSON.stringify({ lang: locale, corpus, strings: t }).replace(/</g, '\\u003c');
+const tabs = [
+  { id: 'chat', label: t.tabChat },
+  { id: 'evidence', label: t.tabEvidence },
+  { id: 'sources', label: t.tabSources },
+] as const;
+---
+
+<DemoBar locale={locale} project={project} />
+<div class="ka demo-knowledge-assistant" style={brandStyle} data-ka data-tab="chat">
+  <header class="ka-top">
+    <div class="ka-brand">
+      <CompassMark />
+      <div class="ka-brand__text">
+        <h1 class="ka-brand__name">{project.name}</h1>
+        <p class="ka-brand__sub">{t.brandSub}</p>
+      </div>
+    </div>
+    <p class="ka-top__note">
+      <span class="ka-top__index">{fill(t.indexBadge, { passages: passageCount })}</span>
+      <span class="ka-top__fiction">{t.fictional}</span>
+    </p>
+    <button type="button" class="ka-btn ka-btn--ghost ka-top__reset" data-ka-reset>
+      <Icon name="reset" />
+      <span>{t.reset}</span>
+    </button>
+  </header>
+
+  <div class="ka-tabs" role="tablist" aria-label={t.tablist} data-ka-tabs>
+    {tabs.map((tab, index) => (
+      <button type="button" role="tab" class="ka-tab" id={`ka-tab-${tab.id}`} aria-controls={`ka-pane-${tab.id}`} aria-selected={index === 0 ? 'true' : 'false'} tabindex={index === 0 ? 0 : -1} data-ka-tab={tab.id}>
+        <span>{tab.label}</span>
+        <span class="ka-tab__badge" data-ka-badge={tab.id} hidden></span>
+      </button>
+    ))}
+  </div>
+
+  <div class="ka-body">
+    <SourcesPane lang={locale} corpus={corpus} t={t} passageCount={passageCount} />
+    <ChatPane lang={locale} t={t} />
+    <EvidencePane t={t} />
+  </div>
+
+  <p class="ka-sr" role="status" aria-live="polite" data-ka-status></p>
+  <ReaderDialog t={t} />
+  <template data-ka-icons>
+    {(Object.keys(icons) as IconName[]).map((name) => <Icon name={name} />)}
+  </template>
+  <script type="application/json" data-ka-data set:html={clientData} />
+</div>
+
+<script>
+  import { mountKnowledgeAssistant } from './client/app';
+
+  document.querySelectorAll<HTMLElement>('[data-ka]').forEach(mountKnowledgeAssistant);
+</script>

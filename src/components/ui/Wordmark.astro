@@ -1,0 +1,12 @@
+---
+import { identity } from '@/data/content';
+
+interface Props {
+  /** Hidden continuation of the link name, such as "home". */
+  label: string;
+}
+
+const [first, ...rest] = identity.name.split(' ');
+---
+
+<span>{first}<span class="brand__light"> {rest.join(' ')}</span><span class="visually-hidden">, {Astro.props.label}</span></span>

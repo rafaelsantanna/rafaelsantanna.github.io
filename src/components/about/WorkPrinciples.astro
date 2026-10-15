@@ -1,0 +1,94 @@
+---
+import Icon from '@/components/ui/Icon.astro';
+import { experience, type Locale } from '@/data/content';
+
+interface Props { locale: Locale }
+
+const { locale } = Astro.props;
+const pt = locale === 'pt';
+const companyOf = (slug: string) => experience.find((item) => item.slug === slug)?.company ?? '';
+// Each principle restates text from the CV-backed experience and points to the entry where it shows.
+const principles = pt
+  ? [
+      { title: 'Começo pela operação', text: 'Antes de escolher a tecnologia, entendo quem usa o sistema, em que contexto e quais regras não podem quebrar. É o desafio que orienta a decisão técnica.', example: 'edgedata' },
+      { title: 'Entrego em partes que funcionam', text: 'Transformo necessidades ambíguas em decisões claras e entregas incrementais. Em sistemas legados, modernizo aos poucos, sem perder as regras que mantêm a operação de pé.', example: 'academic-operations' },
+      { title: 'Cuido do ciclo inteiro', text: 'Do levantamento de requisitos à implantação e à manutenção, trabalho perto de produto, operações e engenharia, com comunicação direta. O objetivo é um sistema que a equipe consiga manter.', example: 'enterprise-operations' },
+    ]
+  : [
+      { title: 'I start from the operation', text: 'Before choosing technology, I learn who uses the system, in what context, and which rules cannot break. The challenge shapes the technical decision.', example: 'edgedata' },
+      { title: 'I ship in parts that work', text: 'I turn ambiguous needs into clear decisions and incremental delivery. In legacy systems, I modernize step by step without losing the rules that keep the operation running.', example: 'academic-operations' },
+      { title: 'I own the whole cycle', text: 'From requirements to deployment and maintenance, I work close to product, operations, and engineering, and I communicate directly. The goal is a system the team can maintain.', example: 'enterprise-operations' },
+    ];
+const ui = pt
+  ? { index: 'Princípios', title: 'Como eu trabalho.', example: 'Exemplo na trajetória' }
+  : { index: 'Principles', title: 'How I work.', example: 'Example from my career' };
+---
+
+<section class="principles section" aria-labelledby="principles-title">
+  <div class="shell">
+    <header class="principles__head" data-reveal>
+      <p class="section-index">{ui.index}</p>
+      <h2 id="principles-title">{ui.title}</h2>
+    </header>
+    <ol class="principles__list">
+      {principles.map((item, index) => (
+        <li class="principle" data-reveal>
+          <span class="principle__index" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+          <h3>{item.title}</h3>
+          <p>{item.text}</p>
+          <a class="principle__example" href={`#${item.example}`}>
+            <span class="principle__example-label">{ui.example}</span>
+            <span class="principle__example-name">{companyOf(item.example)}<Icon name="arrow-down" /></span>
+          </a>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<style>
+  .principles { padding-block-start: 0; }
+  .principles__head { display: grid; gap: var(--space-4); margin-block-end: clamp(2rem, 1.5rem + 2vw, 3.5rem); }
+  .principles__list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-6) clamp(1.5rem, 1rem + 2vw, 3rem); list-style: none; }
+  .principle {
+    display: grid;
+    grid-template-rows: auto auto 1fr auto;
+    align-content: start;
+    gap: var(--space-4);
+    min-width: 0;
+    padding-block-start: var(--space-5);
+    border-block-start: 1px solid var(--line-strong);
+  }
+  .principle__index { color: var(--violet); font-family: var(--font-mono); font-size: 0.875rem; font-variant-numeric: tabular-nums; }
+  .principle h3 { font-size: var(--step-2); letter-spacing: -0.035em; line-height: 1.15; }
+  .principle p { color: var(--text-soft); line-height: 1.6; }
+  .principle__example {
+    display: grid;
+    gap: 0.1rem;
+    justify-self: start;
+    min-height: 2.75rem;
+    padding-block: var(--space-2);
+    color: var(--text);
+    text-decoration: none;
+  }
+  .principle__example-label { color: var(--text-muted); font-size: 0.8125rem; }
+  .principle__example-name {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-family: var(--font-display);
+    font-weight: 600;
+    text-decoration: underline;
+    text-decoration-color: var(--violet-line);
+    text-underline-offset: 0.3em;
+  }
+  .principle__example-name :global(.icon) { color: var(--violet); transition: transform var(--dur) var(--ease); }
+  .principle__example:hover .principle__example-name { text-decoration-color: var(--violet); }
+  .principle__example:hover :global(.icon) { transform: translateY(2px); }
+
+  @media (max-width: 63.99em) {
+    .principles__list { grid-template-columns: minmax(0, 1fr); }
+    .principle { grid-template-columns: 3rem minmax(0, 1fr); grid-template-rows: auto; }
+    .principle__index { grid-row: span 3; padding-block-start: 0.3rem; }
+  }
+</style>

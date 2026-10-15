@@ -1,0 +1,56 @@
+---
+import DemoBar from '@/components/demos/DemoBar.astro';
+import type { DemoProject, Locale } from '@/data/types';
+import { buildClientConfig, serializeConfig } from './data/config';
+import { CONFIG_ID } from './data/contract';
+import { strings } from './data/i18n';
+import BookingDialog from './parts/BookingDialog.astro';
+import BookSection from './parts/BookSection.astro';
+import Hero from './parts/Hero.astro';
+import HowSection from './parts/HowSection.astro';
+import ServicesSection from './parts/ServicesSection.astro';
+import ShopAgenda from './parts/ShopAgenda.astro';
+import SiteFooter from './parts/SiteFooter.astro';
+import SiteHeader from './parts/SiteHeader.astro';
+import TeamSection from './parts/TeamSection.astro';
+import './styles/base.css';
+import './styles/site.css';
+import './styles/flow.css';
+import './styles/agenda.css';
+
+interface Props { locale: Locale; project: DemoProject }
+
+const { locale, project } = Astro.props;
+const t = strings[locale];
+const palette = `--brand-base: ${project.palette.base}; --brand-ink: ${project.palette.ink}; --brand-accent: ${project.palette.accent};`;
+---
+
+<DemoBar locale={locale} project={project} />
+<div class="cp" style={palette} aria-label={t.rootLabel} role="region" data-cp-root>
+  <SiteHeader locale={locale} />
+  <div class="booked" data-booked hidden>
+    <div class="wrap booked__inner">
+      <p class="booked__text"><span class="booked__label">{t.booked.label}</span> <span data-booked-text></span></p>
+      <div class="booked__actions">
+        <button type="button" class="chip-btn" data-booked-details>{t.booked.details}</button>
+        <button type="button" class="chip-btn" data-booked-agenda>{t.booked.agenda}</button>
+      </div>
+    </div>
+  </div>
+  <Hero locale={locale} />
+  <ServicesSection locale={locale} />
+  <TeamSection locale={locale} />
+  <HowSection locale={locale} />
+  <BookSection locale={locale} />
+  <ShopAgenda locale={locale} />
+  <SiteFooter locale={locale} />
+  <BookingDialog locale={locale} />
+  <p class="sr-only" aria-live="polite" data-live></p>
+  <script type="application/json" id={CONFIG_ID} set:html={serializeConfig(buildClientConfig(locale))} />
+</div>
+
+<script>
+  import { start } from './client/main';
+
+  start();
+</script>

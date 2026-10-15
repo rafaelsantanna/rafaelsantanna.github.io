@@ -1,0 +1,31 @@
+---
+import type { Locale } from '@/data/content';
+import { corpusFor } from '@/components/demos/knowledge-assistant/corpus';
+
+interface Props { locale: Locale }
+
+const { locale } = Astro.props;
+// The question is one of the demo's own suggestions; the answer condenses the passage the demo cites for it.
+const copy = locale === 'pt'
+  ? {
+      question: 'Qual o prazo para pedir reembolso de uma despesa?',
+      answer: 'Até 30 dias corridos após a data da despesa',
+      evidence: '30 dias corridos após a data da despesa',
+    }
+  : {
+      question: 'What is the deadline to request reimbursement for an expense?',
+      answer: 'Within 30 calendar days of the expense date',
+      evidence: '30 calendar days of the expense date',
+    };
+const policy = corpusFor(locale).documents.find((item) => item.id === 'reembolso');
+const section = policy?.sections.find((item) => item.id === 'prazos');
+if (!policy || !section || !section.paragraphs.some((paragraph) => paragraph.includes(copy.evidence))) {
+  throw new Error('The Bússola corpus no longer supports the desk miniature answer.');
+}
+---
+
+<div class="m-chat">
+  <p class="m-question">{copy.question}</p>
+  <p class="m-answer">{copy.answer}<span class="m-cite">1</span></p>
+  <p class="m-source"><span class="m-cite is-on">1</span>{policy.title} · {section.heading}</p>
+</div>

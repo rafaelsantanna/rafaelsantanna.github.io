@@ -1,0 +1,9 @@
+---
+import { icons, type IconName } from './icons';
+
+interface Props { name: IconName; class?: string }
+
+const { name, class: className } = Astro.props;
+---
+
+<svg class:list={['ka-icon', className]} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" data-icon={name} set:html={icons[name]} />

@@ -1,0 +1,224 @@
+/* Composer: question box, tools, settings popover and the honesty line. */
+.ka-composer {
+  position: relative;
+  z-index: 10;
+  display: grid;
+  gap: 0.55rem;
+  padding: 0.85rem var(--ka-gutter) 1rem;
+  border-top: 1px solid var(--ka-line);
+  background: var(--ka-base);
+}
+.ka-composer > * {
+  width: 100%;
+  max-width: 44rem;
+  margin-inline: auto;
+}
+
+.ka-composer__box {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.5rem;
+  padding: 0.45rem 0.45rem 0.45rem 0.95rem;
+  border: 1px solid var(--ka-line-strong);
+  border-radius: var(--ka-radius);
+  background: var(--ka-raised);
+  transition: border-color 180ms var(--ka-ease), box-shadow 180ms var(--ka-ease);
+}
+.ka-composer__box:focus-within {
+  border-color: var(--ka-yellow-line);
+  box-shadow: 0 0 0 3px var(--ka-yellow-tint);
+}
+.ka-composer__input {
+  flex: 1 1 auto;
+  min-width: 0;
+  min-height: 2.6rem;
+  max-height: 9.5rem;
+  padding: 0.55rem 0;
+  border: 0;
+  background: transparent;
+  color: var(--ka-ink);
+  font: 1rem/1.5 var(--ka-font-text);
+  resize: none;
+  field-sizing: content;
+}
+.ka-composer__input::placeholder { color: var(--ka-muted); opacity: 1; }
+.ka-composer__input:focus,
+.ka-composer__input:focus-visible { outline: none; }
+.ka-composer__input:disabled { color: var(--ka-muted); }
+.ka-composer__send { flex: none; min-height: 2.6rem; }
+.ka-composer__send .ka-icon { width: 1rem; height: 1rem; }
+
+.ka-composer__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.4rem 1rem;
+}
+.ka-composer__tools { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem; min-width: 0; }
+
+.ka-tool {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-height: 2.25rem;
+  padding: 0.3rem 0.7rem;
+  border: 1px solid var(--ka-line-strong);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ka-soft);
+  font: 500 0.8125rem/1.2 var(--ka-font-ui);
+  transition: border-color 180ms var(--ka-ease), color 180ms var(--ka-ease), background-color 180ms var(--ka-ease);
+}
+.ka-tool .ka-icon { width: 1rem; height: 1rem; }
+.ka-tool:hover,
+.ka-tool[aria-expanded='true'] { border-color: rgb(238 234 226 / 34%); background: var(--ka-raised); color: var(--ka-ink); }
+.ka-tool__value { color: var(--ka-muted); font: 500 0.75rem/1 var(--ka-font-mono); }
+
+.ka-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 2.25rem;
+  padding: 0.2rem 0.3rem 0.2rem 0.75rem;
+  border: 1px solid var(--ka-yellow-line);
+  border-radius: 999px;
+  background: var(--ka-yellow-tint);
+  color: var(--ka-ink);
+  font: 500 0.8125rem/1.2 var(--ka-font-ui);
+}
+.ka-chip[hidden] { display: none; }
+.ka-chip__clear {
+  min-height: 1.75rem;
+  padding: 0.2rem 0.6rem;
+  border: 0;
+  border-radius: 999px;
+  background: var(--ka-base);
+  color: var(--ka-ink);
+  font: 600 0.75rem/1.2 var(--ka-font-ui);
+}
+.ka-chip__clear:hover { background: var(--ka-raised-2); }
+
+.ka-hint {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.25rem 0.75rem;
+  color: var(--ka-muted);
+  font-size: 0.8125rem;
+  line-height: 1.4;
+}
+.ka-hint.is-warning { color: var(--ka-ink); }
+.ka-hint.is-warning [data-ka-hint]::before { content: '! '; color: var(--ka-yellow); font-weight: 700; }
+.ka-hint__count { font: 500 0.75rem/1 var(--ka-font-mono); }
+.ka-hint__count.is-near { color: var(--ka-yellow); }
+
+.ka-honesty {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  color: var(--ka-muted);
+  font-size: 0.8125rem;
+  line-height: 1.45;
+}
+.ka-honesty .ka-icon { width: 1rem; height: 1rem; margin-top: 0.1rem; color: var(--ka-yellow); }
+
+.ka-noscript {
+  padding: 0.85rem 1rem;
+  border: 1px dashed var(--ka-line-strong);
+  border-radius: var(--ka-radius-sm);
+  color: var(--ka-soft);
+  font-size: 0.9375rem;
+}
+html:not(.js) .ka-composer__box,
+html:not(.js) .ka-composer__meta { display: none; }
+
+/* Settings popover */
+.ka-settings { position: relative; }
+.ka-popover {
+  position: absolute;
+  bottom: calc(100% + 0.6rem);
+  left: 0;
+  z-index: 40;
+  display: grid;
+  gap: 1.1rem;
+  width: min(22rem, calc(100vw - 2 * var(--ka-gutter)));
+  /* Short screens: the panel scrolls instead of running past the top of the viewport. */
+  max-height: calc(100dvh - var(--ka-tabs-h) - 9rem);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 1.1rem 1.15rem 1rem;
+  border: 1px solid var(--ka-line-strong);
+  border-radius: var(--ka-radius);
+  background: var(--ka-raised);
+  box-shadow: 0 24px 60px -20px rgb(0 0 0 / 70%);
+}
+.ka-popover[hidden] { display: none; }
+.ka-popover__title { font: 600 0.9375rem/1.3 var(--ka-font-ui); }
+.ka-field { display: grid; gap: 0.4rem; }
+.ka-field__row { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; }
+.ka-field__row label { font: 500 0.875rem/1.3 var(--ka-font-ui); }
+.ka-field__value { color: var(--ka-yellow); font: 600 0.875rem/1 var(--ka-font-mono); }
+.ka-field__help { color: var(--ka-muted); font-size: 0.8125rem; line-height: 1.45; }
+.ka-field input[type='range'] {
+  width: 100%;
+  height: 1.75rem;
+  margin: 0;
+  accent-color: var(--ka-yellow);
+  cursor: pointer;
+}
+.ka-popover__foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.25rem 1rem;
+  padding-top: 0.85rem;
+  border-top: 1px solid var(--ka-line);
+}
+.ka-popover__note { flex: 1 1 12rem; color: var(--ka-muted); font-size: 0.75rem; line-height: 1.45; }
+
+@media (pointer: coarse) {
+  .ka-tool,
+  .ka-chip { min-height: 2.75rem; }
+  .ka-chip { padding-block: 0; }
+  .ka-chip__clear { min-height: 2.75rem; }
+  .ka-field input[type='range'] { height: 2.75rem; }
+}
+
+@media (max-width: 63.99rem) {
+  .js .ka-composer {
+    position: sticky;
+    bottom: 0;
+    padding-bottom: max(0.85rem, env(safe-area-inset-bottom));
+    box-shadow: 0 -16px 32px -18px rgb(0 0 0 / 80%);
+  }
+  /* The open settings panel must sit above the sticky tab bar. */
+  .js .ka-composer:has(.ka-popover:not([hidden])) { z-index: 35; }
+}
+
+@media (max-width: 30rem) {
+  .ka-composer { gap: 0.45rem; padding-top: 0.65rem; }
+  .ka-composer__send-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .ka-composer__send { width: 2.75rem; min-height: 2.75rem; padding: 0; }
+  .ka-composer__send .ka-icon { width: 1.25rem; height: 1.25rem; }
+  .ka-hint [data-ka-hint] { display: none; }
+  .ka-hint.is-warning [data-ka-hint] { display: inline; }
+  .ka-honesty { font-size: 0.75rem; }
+  /* Still read as the description of the question box; the thread shows a visible copy. */
+  .js .ka-composer > .ka-honesty {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
+  }
+}
+
+@media (max-width: 22.5rem) {
+  .ka-tool__value { display: none; }
+}

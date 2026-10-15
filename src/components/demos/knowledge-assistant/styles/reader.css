@@ -1,0 +1,97 @@
+/* Document reader: a paper sheet in a modal dialog. */
+.ka-reader {
+  width: min(45rem, calc(100vw - 2rem));
+  max-width: none;
+  height: min(52rem, calc(100dvh - 2rem));
+  max-height: none;
+  margin: auto;
+  padding: 0;
+  border: 0;
+  border-radius: var(--ka-radius);
+  background: #f3eee3;
+  color: #201d18;
+  box-shadow: 0 40px 120px -30px rgb(0 0 0 / 80%);
+}
+.ka-reader::backdrop { background: rgb(9 8 12 / 72%); }
+.ka-reader[open] { animation: ka-reader-in 320ms var(--ka-ease) both; }
+
+.ka-reader__sheet { display: flex; flex-direction: column; height: 100%; }
+.ka-reader__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.25rem 1.25rem 1rem 1.75rem;
+  border-bottom: 1px solid rgb(32 29 24 / 14%);
+}
+.ka-reader__meta { color: #5f584c; font: 500 0.8125rem/1.4 var(--ka-font-ui); }
+.ka-reader__title {
+  margin-top: 0.25rem;
+  font: 600 clamp(1.4rem, 1.1rem + 1.2vw, 1.85rem)/1.15 var(--ka-font-ui);
+  letter-spacing: -0.025em;
+}
+.ka-reader__close {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 1px solid rgb(32 29 24 / 18%);
+  border-radius: 50%;
+  background: transparent;
+  color: #201d18;
+}
+.ka-reader__close:hover { background: rgb(32 29 24 / 8%); }
+.ka-reader .ka-reader__close:focus-visible,
+.ka-reader .ka-reader__target:focus-visible { outline: 2px solid #201d18; outline-offset: 3px; }
+
+.ka-reader__body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 1.5rem 1.75rem 3rem;
+  font: 1.125rem/1.75 var(--ka-font-read);
+  overscroll-behavior: contain;
+}
+.ka-reader__body > * { max-width: 38rem; }
+.ka-reader__summary { color: #5f584c; font-style: italic; }
+.ka-reader__section { margin-top: 1.75rem; }
+.ka-reader__section h3 {
+  margin-bottom: 0.4rem;
+  font: 600 1.0625rem/1.35 var(--ka-font-ui);
+  letter-spacing: -0.01em;
+}
+.ka-reader__section p + p { margin-top: 0.85rem; }
+
+.ka-reader__target {
+  position: relative;
+  margin-inline: -0.85rem;
+  padding: 0.75rem 0.85rem 0.85rem;
+  border-inline-start: 4px solid #c99412;
+  border-radius: 4px;
+  background: rgb(242 193 78 / 26%);
+  scroll-margin: 2rem;
+}
+.ka-reader__target:focus { outline: none; }
+.ka-reader__flag {
+  display: block;
+  margin-bottom: 0.25rem;
+  color: #6b4f05;
+  font: 600 0.75rem/1.4 var(--ka-font-ui);
+}
+.ka-reader .ka-mark-term { background: #f2c14e; color: #1b1608; }
+
+@keyframes ka-reader-in {
+  from { opacity: 0; transform: translateY(10px) scale(0.99); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (max-width: 40rem) {
+  .ka-reader {
+    width: 100vw;
+    height: 100dvh;
+    border-radius: 0;
+  }
+  .ka-reader__head { padding: 1rem 1rem 0.85rem 1.25rem; }
+  .ka-reader__body { padding: 1.25rem 1.25rem 2.5rem; font-size: 1.0625rem; }
+}

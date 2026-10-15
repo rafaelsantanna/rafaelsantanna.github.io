@@ -1,0 +1,192 @@
+---
+import type { Locale } from '@/data/types';
+import { localizedBarbers, localizedServices } from '../data/catalog';
+import { strings } from '../data/i18n';
+import { NOTE_MAX } from '../lib/flow';
+import { createFormat, fill } from '../lib/format';
+import { icons } from '../lib/icons';
+import BarberAvatar from './BarberAvatar.astro';
+
+interface Props { locale: Locale }
+
+const { locale } = Astro.props;
+const t = strings[locale];
+const f = t.flow;
+const fmt = createFormat(t.intl, t.client.format);
+const services = localizedServices(locale);
+const barbers = localizedBarbers(locale);
+const stepIds = ['services', 'barber', 'day', 'time', 'details', 'review'];
+---
+
+<dialog class="flow" aria-labelledby="cp-flow-title" data-flow>
+  <div class="flow__top">
+    <span class="flow__mark" aria-hidden="true">&amp;</span>
+    <div class="flow__heading">
+      <h2 id="cp-flow-title" class="flow__title">{f.title}</h2>
+      <p class="flow__count" data-flow-count></p>
+    </div>
+    <button type="button" class="icon-btn flow__close" aria-label={f.close} data-flow-close><Fragment set:html={icons.close} /></button>
+  </div>
+
+  <nav class="progress" aria-label={f.stepsLabel} data-flow-progress>
+    <ol role="list">
+      {f.steps.map((label, index) => (
+        <li>
+          <button type="button" class="progress__step" data-goto={index}>
+            <span class="progress__num" aria-hidden="true"><span class="progress__digit">{index + 1}</span><Fragment set:html={icons.check} /></span>
+            <span class="progress__label">{label}</span>
+            <span class="sr-only" data-step-state></span>
+          </button>
+        </li>
+      ))}
+    </ol>
+  </nav>
+
+  <div class="flow__main" data-flow-main>
+    <section class="step" data-step={stepIds[0]} aria-labelledby="cp-step-0">
+      <header class="step__head">
+        <h3 id="cp-step-0" tabindex="-1">{f.headings[0]}</h3>
+        <p>{f.helpers[0]}</p>
+      </header>
+      <div class="hint" data-combo-hint hidden>
+        <p data-combo-text></p>
+        <button type="button" class="btn btn--ghost btn--small" data-combo-apply>{f.comboApply}</button>
+      </div>
+      <ul class="svc-list" role="list">
+        {services.map((service) => (
+          <li>
+            <button type="button" class="svc" aria-pressed="false" data-service={service.id} aria-labelledby={`cp-svc-${service.id}-name cp-svc-${service.id}-meta`} aria-describedby={`cp-svc-${service.id}-desc cp-svc-${service.id}-note`}>
+              <span class="svc__check" aria-hidden="true"><Fragment set:html={icons.check} /></span>
+              <span class="svc__text">
+                <span class="svc__name" id={`cp-svc-${service.id}-name`}>{service.name}</span>
+                <span class="svc__desc" id={`cp-svc-${service.id}-desc`}>{service.description}</span>
+                <span class="svc__note" id={`cp-svc-${service.id}-note`} data-service-note></span>
+              </span>
+              <span class="svc__meta" id={`cp-svc-${service.id}-meta`}>
+                <span class="svc__price">{fmt.price(service.price)}</span>
+                <span class="svc__time">{fmt.minutes(service.duration)}</span>
+              </span>
+            </button>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <section class="step" data-step={stepIds[1]} aria-labelledby="cp-step-1" hidden>
+      <header class="step__head">
+        <h3 id="cp-step-1" tabindex="-1">{f.headings[1]}</h3>
+        <p>{f.helpers[1]}</p>
+      </header>
+      <div class="barbers" role="radiogroup" aria-labelledby="cp-step-1" data-barbers>
+        <button type="button" role="radio" aria-checked="false" class="pick" data-barber="any" aria-labelledby="cp-pick-any-name" aria-describedby="cp-pick-any-meta">
+          <span class="avatar avatar--md avatar--any" aria-hidden="true"><Fragment set:html={icons.shuffle} /></span>
+          <span class="pick__text">
+            <span class="pick__name" id="cp-pick-any-name">{t.client.anyBarber}</span>
+            <span class="pick__meta" id="cp-pick-any-meta">{f.anyText}</span>
+          </span>
+          <span class="pick__radio" aria-hidden="true"></span>
+        </button>
+        {barbers.map((barber) => (
+          <button type="button" role="radio" aria-checked="false" class="pick" data-barber={barber.id} aria-labelledby={`cp-pick-${barber.id}-name`} aria-describedby={`cp-pick-${barber.id}-meta`}>
+            <BarberAvatar id={barber.id} initials={barber.initials} />
+            <span class="pick__text">
+              <span class="pick__name" id={`cp-pick-${barber.id}-name`}>{barber.name}</span>
+              <span class="pick__meta" id={`cp-pick-${barber.id}-meta`}>{barber.specialty}. {barber.daysLabel}.</span>
+            </span>
+            <span class="pick__radio" aria-hidden="true"></span>
+          </button>
+        ))}
+      </div>
+    </section>
+
+    <section class="step" data-step={stepIds[2]} aria-labelledby="cp-step-2" hidden>
+      <header class="step__head">
+        <h3 id="cp-step-2" tabindex="-1">{f.headings[2]}</h3>
+        <p>{f.helpers[2]}</p>
+      </header>
+      <div class="days" role="radiogroup" aria-labelledby="cp-step-2" data-days></div>
+      <p class="step__reason" data-day-reason aria-live="polite"></p>
+    </section>
+
+    <section class="step" data-step={stepIds[3]} aria-labelledby="cp-step-3" hidden>
+      <header class="step__head">
+        <h3 id="cp-step-3" tabindex="-1">{f.headings[3]}</h3>
+        <p data-time-helper></p>
+      </header>
+      <ul class="slot-legend" role="list" aria-label={f.legend}>
+        <li><span class="slot slot--sample" aria-hidden="true">09:00</span>{t.client.legendFree}</li>
+        <li><span class="slot slot--sample is-unavailable" aria-hidden="true">09:15</span>{t.client.legendTaken}</li>
+      </ul>
+      <div class="periods" data-slots></div>
+      <p class="step__reason" data-slot-reason aria-live="polite"></p>
+    </section>
+
+    <section class="step" data-step={stepIds[4]} aria-labelledby="cp-step-4" hidden>
+      <header class="step__head">
+        <h3 id="cp-step-4" tabindex="-1">{f.headings[4]}</h3>
+        <p>{f.helpers[4]}</p>
+      </header>
+      <div class="fields">
+        <div class="field" data-field="name">
+          <label for="cp-name">{f.fields.name}</label>
+          <input id="cp-name" type="text" autocomplete="name" autocapitalize="words" enterkeyhint="next" maxlength="60" spellcheck="false" aria-describedby="cp-name-error" data-input="name" />
+          <p class="field__error" id="cp-name-error" data-error="name"></p>
+        </div>
+        <div class="field" data-field="phone">
+          <label for="cp-phone">{f.fields.phone}</label>
+          <input id="cp-phone" type="tel" inputmode="numeric" autocomplete="tel-national" enterkeyhint="next" placeholder={f.fields.phonePlaceholder} aria-describedby="cp-phone-hint cp-phone-error" data-input="phone" />
+          <p class="field__hint" id="cp-phone-hint">{f.fields.phoneHint}</p>
+          <p class="field__error" id="cp-phone-error" data-error="phone"></p>
+        </div>
+        <div class="field" data-field="note">
+          <label for="cp-note">{f.fields.note} <span class="field__optional">({f.fields.optional})</span></label>
+          <textarea id="cp-note" rows="3" maxlength={NOTE_MAX} placeholder={f.fields.notePlaceholder} aria-describedby="cp-note-count" data-input="note"></textarea>
+          <p class="field__hint field__count" id="cp-note-count" data-note-count>{fill(t.client.noteCount, { n: 0, max: NOTE_MAX })}</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="step" data-step={stepIds[5]} aria-labelledby="cp-step-5" hidden>
+      <header class="step__head">
+        <h3 id="cp-step-5" tabindex="-1">{f.headings[5]}</h3>
+        <p>{f.helpers[5]}</p>
+      </header>
+      <dl class="review" data-review></dl>
+      <p class="demo-note demo-note--warn" data-replace hidden></p>
+      <p class="demo-note"><Fragment set:html={icons.info} />{t.demoNote}</p>
+    </section>
+
+    <section class="step step--done" data-step="done" aria-labelledby="cp-done-title" hidden data-done-panel></section>
+  </div>
+
+  <aside class="summary" aria-labelledby="cp-summary-title" data-summary>
+    <button type="button" class="summary__toggle" aria-expanded="false" aria-controls="cp-summary-body" data-summary-toggle>
+      <span class="summary__toggle-label">{f.summary.title}</span>
+      <span class="summary__compact" data-sum-compact></span>
+      <Fragment set:html={icons.chevronUp} />
+    </button>
+    <div class="summary__body" id="cp-summary-body">
+      <h3 class="summary__title" id="cp-summary-title">{f.summary.title}</h3>
+      <dl class="summary__list">
+        <div><dt>{f.summary.services}</dt><dd data-sum="services"></dd></div>
+        <div><dt>{f.summary.barber}</dt><dd data-sum="barber"></dd></div>
+        <div><dt>{f.summary.day}</dt><dd data-sum="day"></dd></div>
+        <div><dt>{f.summary.time}</dt><dd data-sum="time"></dd></div>
+      </dl>
+      <dl class="summary__totals">
+        <div><dt>{f.summary.duration}</dt><dd data-sum="duration"></dd></div>
+        <div><dt>{f.summary.total}</dt><dd data-sum="total"></dd></div>
+      </dl>
+      <p class="summary__pay">{f.summary.pay}</p>
+      <p class="summary__demo">{t.demoNote}</p>
+    </div>
+  </aside>
+
+  <div class="flow__actions" data-flow-actions>
+    <p class="flow__error" role="alert" data-flow-error></p>
+    <button type="button" class="btn btn--ghost" data-flow-back><Fragment set:html={icons.chevronLeft} />{f.back}</button>
+    <button type="button" class="btn btn--primary" data-flow-next><span data-label-next>{f.next}</span><span data-label-confirm hidden><span class="flow__long">{f.confirm}</span><span class="flow__short">{f.confirmShort}</span></span><Fragment set:html={icons.arrow} /></button>
+  </div>
+
+  <p class="sr-only" aria-live="polite" data-flow-live></p>
+</dialog>

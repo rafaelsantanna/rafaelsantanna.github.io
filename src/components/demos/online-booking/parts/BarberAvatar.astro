@@ -1,0 +1,7 @@
+---
+interface Props { id: string; initials: string; size?: 'sm' | 'md' | 'lg' }
+
+const { id, initials, size = 'md' } = Astro.props;
+---
+
+<span class={`avatar avatar--${size}`} data-tone={id} aria-hidden="true"><span>{initials}</span></span>

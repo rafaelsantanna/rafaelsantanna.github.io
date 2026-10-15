@@ -1,0 +1,311 @@
+/* Turno screens: Today and its loading skeleton. */
+
+/* Today: day summary. */
+.turno .t-summary {
+  padding: 1.125rem 1.25rem 1rem;
+  border-radius: 20px;
+  background: var(--t-ink);
+  color: #fff;
+  box-shadow: 0 18px 32px -22px rgb(14 21 37 / 0.8);
+}
+
+.turno .t-summary__count {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.25rem 0.625rem;
+}
+
+.turno .t-summary__big {
+  font-family: var(--t-display);
+  font-size: 2.25rem;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+}
+
+.turno .t-summary__label {
+  color: #c6cfdf;
+  font-size: 0.9375rem;
+  font-weight: 700;
+}
+
+.turno .t-summary__bar {
+  display: grid;
+  grid-auto-columns: 1fr;
+  grid-auto-flow: column;
+  gap: 4px;
+  margin-block: 0.875rem 0.75rem;
+}
+
+.turno .t-summary__seg {
+  block-size: 8px;
+  border-radius: 4px;
+  background: rgb(255 255 255 / 0.16);
+}
+
+.turno .t-summary__seg--done,
+.turno .t-summary__key--done {
+  background: #34c77b;
+}
+
+.turno .t-summary__seg--in-progress,
+.turno .t-summary__key--in-progress {
+  background: #7aa3ff;
+}
+
+.turno .t-summary__key--scheduled {
+  background: rgb(255 255 255 / 0.3);
+}
+
+.turno .t-summary__legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1rem;
+  color: #c6cfdf;
+  font-size: 0.8125rem;
+}
+
+.turno .t-summary__legend li {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+}
+
+.turno .t-summary__legend b {
+  color: #fff;
+}
+
+.turno .t-summary__key {
+  inline-size: 0.625rem;
+  block-size: 0.625rem;
+  border-radius: 3px;
+}
+
+.turno .t-summary__next {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  margin-block-start: 0.875rem;
+  padding-block-start: 0.875rem;
+  border-block-start: 1px solid rgb(255 255 255 / 0.12);
+  font-size: 0.9375rem;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.turno .t-summary__next .t-ico {
+  color: #8fb0ff;
+}
+
+/* Today: work order cards. */
+.turno .t-orders {
+  display: grid;
+  gap: 0.625rem;
+}
+
+.turno .t-order {
+  display: grid;
+  grid-template-columns: 3.25rem minmax(0, 1fr) auto;
+  align-items: start;
+  gap: 0.875rem;
+  inline-size: 100%;
+  padding: 0.875rem 0.625rem 0.875rem 1rem;
+  border: 1px solid var(--t-line);
+  border-radius: 18px;
+  background: var(--t-surface);
+  color: var(--t-ink);
+  text-align: start;
+  box-shadow: 0 1px 2px rgb(14 21 37 / 0.04);
+  cursor: pointer;
+  transition: transform 140ms var(--t-ease), background-color 180ms var(--t-ease), border-color 180ms var(--t-ease);
+}
+
+.turno .t-order:hover {
+  border-color: var(--t-line-2);
+}
+
+.turno .t-order:active {
+  transform: scale(0.985);
+  background: #f2f5f9;
+}
+
+.turno .t-order--in-progress {
+  border-color: #b9cdfb;
+  box-shadow: inset 4px 0 0 var(--t-accent), 0 8px 20px -16px rgb(36 89 230 / 0.6);
+}
+
+.turno .t-order--done {
+  background: #fbfcfd;
+}
+
+.turno .t-order__time {
+  display: grid;
+  gap: 0.125rem;
+  padding-block-start: 0.0625rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.turno .t-order__start {
+  font-family: var(--t-display);
+  font-size: 1.0625rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.turno .t-order__end {
+  color: var(--t-ink-3);
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+
+.turno .t-order--done .t-order__start,
+.turno .t-order--done .t-order__customer {
+  color: var(--t-ink-2);
+}
+
+.turno .t-order__body {
+  display: grid;
+  gap: 0.125rem;
+  min-inline-size: 0;
+}
+
+.turno .t-order__type {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  color: var(--t-blue-ink);
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+
+.turno .t-order__type .t-ico {
+  inline-size: 1.125rem;
+  block-size: 1.125rem;
+}
+
+.turno .t-order__customer {
+  overflow-wrap: anywhere;
+  font-family: var(--t-display);
+  font-size: 1.0625rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.turno .t-order__place {
+  color: var(--t-ink-3);
+  font-size: 0.875rem;
+}
+
+.turno .t-order__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375rem;
+  margin-block-start: 0.5rem;
+}
+
+.turno .t-order__pending {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  margin-block-start: 0.375rem;
+  color: var(--t-amber);
+  font-size: 0.8125rem;
+  font-weight: 700;
+}
+
+.turno .t-order__pending[hidden] {
+  display: none;
+}
+
+.turno .t-order__pending .t-ico {
+  inline-size: 1rem;
+  block-size: 1rem;
+}
+
+.turno .t-order__chev {
+  align-self: center;
+  color: var(--t-ink-3);
+}
+
+/* Skeleton shown while the schedule downloads again after a reset or a wipe. */
+.turno .t-skel {
+  display: block;
+  border-radius: 8px;
+  background: linear-gradient(90deg, #e3e8ef 0%, #eef1f6 40%, #e3e8ef 80%);
+  background-size: 300% 100%;
+  animation: t-shimmer 1.2s linear infinite;
+}
+
+.turno .t-skel--summary {
+  block-size: 9.5rem;
+  border-radius: 20px;
+}
+
+.turno .t-skel--time {
+  flex: none;
+  inline-size: 2.75rem;
+  block-size: 2.5rem;
+}
+
+.turno .t-skel--sm {
+  inline-size: 40%;
+  block-size: 0.75rem;
+}
+
+.turno .t-skel--md {
+  inline-size: 60%;
+  block-size: 0.75rem;
+}
+
+.turno .t-skel--lg {
+  inline-size: 80%;
+  block-size: 1rem;
+}
+
+.turno .t-section-head .t-skel--sm {
+  inline-size: 9rem;
+  block-size: 1rem;
+}
+
+.turno .t-skel-card {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+  border: 1px solid var(--t-line);
+  border-radius: 18px;
+  background: var(--t-surface);
+}
+
+.turno .t-skel-card__lines {
+  display: grid;
+  flex: 1;
+  gap: 0.5rem;
+}
+
+@keyframes t-shimmer {
+  from { background-position: 100% 0; }
+  to { background-position: -50% 0; }
+}
+
+/* Forced colors drop backgrounds, so the day summary bar and its key are redrawn with system colors. */
+@media (forced-colors: active) {
+  .turno .t-summary__seg,
+  .turno .t-summary__key {
+    forced-color-adjust: none;
+    border: 1px solid CanvasText;
+    background: Canvas;
+  }
+
+  .turno .t-summary__seg--done,
+  .turno .t-summary__key--done {
+    background: CanvasText;
+  }
+
+  .turno .t-summary__seg--in-progress,
+  .turno .t-summary__key--in-progress {
+    border-color: Highlight;
+    background: Highlight;
+  }
+}

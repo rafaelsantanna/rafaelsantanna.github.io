@@ -1,0 +1,50 @@
+---
+import type { Locale } from '@/data/types';
+import { parityHtml, rulesHtml } from './render-parity.ts';
+import type { Evaluation } from './rules.ts';
+import type { Strings } from './strings.ts';
+import './parity.css';
+
+interface Props { locale: Locale; t: Strings; evaluation: Evaluation }
+
+// Server-rendered state: the legacy screen starts already calculated, so both screens show the same order.
+const { locale, t, evaluation } = Astro.props;
+const p = t.parity;
+const parity = parityHtml({ shown: evaluation, live: evaluation, stale: false }, evaluation, locale, t);
+const rules = rulesHtml(evaluation, locale, t);
+---
+
+<section class="vt-parity" aria-labelledby="vt-parity-title" data-parity>
+  <div class="vt-wrap">
+    <div class="vt-parity__intro">
+      <p class="vt-eyebrow">{p.eyebrow}</p>
+      <h2 id="vt-parity-title">{p.title}</h2>
+      <p class="vt-parity__lead">{p.lead}</p>
+      <p class="vt-code" aria-hidden="true"><code><span class="vt-code__kw">evaluateOrder</span>(order, role)</code><span class="vt-code__note">rules.ts</span></p>
+    </div>
+    <div class="vt-parity__grid">
+      <div class="vt-panel">
+        <p class:list={['vt-parity__verdict', { 'is-different': !parity.agree }]} data-parity-verdict set:html={parity.verdict} />
+        <table class="vt-parity__table" role="table">
+          <caption class="vt-sr-only">{p.caption}</caption>
+          <thead role="rowgroup">
+            <tr role="row">
+              <th scope="col" role="columnheader">{p.columns.value}</th>
+              <th scope="col" role="columnheader">{p.columns.legacy}</th>
+              <th scope="col" role="columnheader">{p.columns.modern}</th>
+              <th scope="col" role="columnheader">{p.columns.check}</th>
+            </tr>
+          </thead>
+          <tbody role="rowgroup" data-parity-rows set:html={parity.rows} />
+        </table>
+      </div>
+      <div class="vt-panel">
+        <div class="vt-panel__head">
+          <h3>{p.rulesTitle}</h3>
+          <p class="vt-panel__count" data-rules-count>{rules.count}</p>
+        </div>
+        <ol class="vt-rules" data-rules-list set:html={rules.list} />
+      </div>
+    </div>
+  </div>
+</section>

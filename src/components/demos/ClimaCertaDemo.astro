@@ -1,43 +1,208 @@
 ---
-import { alternatePath, localize, withLocale, type Concept, type Locale } from '@/data/content';
-interface Props { locale: Locale; concept: Concept }
-const { locale, concept } = Astro.props;
+import DemoBar from '@/components/demos/DemoBar.astro';
+import { localize, withLocale, type Concept, type DemoProject, type Locale } from '@/data/content';
+
+interface Props { locale: Locale; concept: Concept; project: DemoProject }
+
+const { locale, concept, project } = Astro.props;
 const pt = locale === 'pt';
 const demoImage = concept.image.replace(/\.png$/, '.webp');
-const serviceLabels = pt ? ['NOVO PROJETO', 'CUIDADO CONTÍNUO', 'JÁ TENHO UM APARELHO'] : ['NEW PROJECT', 'ONGOING CARE', 'EXISTING EQUIPMENT'];
-const serviceActions = pt ? ['Descrever ambiente', 'Contar o que acontece', 'Preparar detalhes'] : ['Describe a space', 'Describe an issue', 'Prepare some details'];
 const serviceIcons = ['↗', '⌁', '＋'];
+const t = pt
+  ? {
+      nav: 'Navegação Clima Certa',
+      tagline: 'climatização, com clareza',
+      services: 'Serviços',
+      process: 'Como funciona',
+      request: 'Pedir orçamento',
+      heroKicker: 'Instalação · manutenção · conserto',
+      heroLede: 'Ar-condicionado instalado, revisado ou consertado sem enrolação. Conte o que está acontecendo e o técnico já chega sabendo o que levar.',
+      heroCta: 'Montar meu pedido',
+      heroCaption: 'Conforto começa no ambiente',
+      servicesKicker: 'O que você precisa?',
+      servicesTitle: 'Cada ambiente pede uma solução.',
+      servicesLede: 'Escolha o caso mais parecido com o seu. A conversa começa a partir dele.',
+      serviceLabels: ['APARELHO NOVO', 'CUIDADO CONTÍNUO', 'ALGO NÃO VAI BEM'],
+      serviceActions: ['Descrever o ambiente', 'Agendar uma revisão', 'Contar o problema'],
+      processKicker: 'Sem surpresa no dia',
+      processTitle: 'Do primeiro contato à visita.',
+      steps: [
+        { title: 'Conte o que precisa', text: 'Tipo de serviço, tamanho do ambiente e o que você já percebeu no aparelho.' },
+        { title: 'Receba as opções', text: 'O técnico responde com o que faz sentido para o seu caso e uma estimativa de valor.' },
+        { title: 'Marque a visita', text: 'Você escolhe o melhor dia e o técnico chega com o material certo.' },
+      ],
+      requestKicker: 'Seu pedido em um minuto',
+      requestTitle: 'O que está acontecendo no seu espaço?',
+      requestLede: 'Escolha o tipo de serviço e descreva em poucas palavras. Assim o primeiro contato já começa com contexto.',
+      requestNote: 'Demonstração local: não calcula capacidade, não verifica agenda e não envia seus dados.',
+      plannerGroup: 'Rascunho do pedido',
+      kindLabel: 'Qual é o serviço?',
+      kindPlaceholder: 'Escolha uma opção',
+      kinds: ['Instalação nova', 'Manutenção', 'Conserto', 'Ainda não sei'],
+      noteLabel: 'O que você observou?',
+      notePlaceholder: 'Ex.: o quarto recebe sol à tarde e o aparelho está pingando.',
+      submit: 'Montar rascunho',
+      status: 'Escolha uma opção e escreva uma observação. Nenhum dado será enviado.',
+      noscript: 'O rascunho interativo precisa de JavaScript. O conteúdo da página continua disponível.',
+      labels: { kind: 'Serviço', note: 'Observação', empty: 'Escolha uma opção e escreva uma observação.', ready: 'Rascunho local:' },
+      footerNote: 'Marca e dados fictícios: esta empresa não existe.',
+      contact: 'Fale com Rafael',
+      back: 'Voltar ao portfólio',
+    }
+  : {
+      nav: 'Clima Certa navigation',
+      tagline: 'climate comfort, clearly',
+      services: 'Services',
+      process: 'How it works',
+      request: 'Request a quote',
+      heroKicker: 'Installation · maintenance · repair',
+      heroLede: 'Air conditioning installed, serviced, or repaired without the runaround. Tell us what is happening and the technician arrives knowing what to bring.',
+      heroCta: 'Start my request',
+      heroCaption: 'Comfort begins with the space',
+      servicesKicker: 'What do you need?',
+      servicesTitle: 'Every space needs its own solution.',
+      servicesLede: 'Pick the case closest to yours. The conversation starts from there.',
+      serviceLabels: ['NEW UNIT', 'ONGOING CARE', 'SOMETHING IS WRONG'],
+      serviceActions: ['Describe the space', 'Book a service visit', 'Describe the problem'],
+      processKicker: 'No surprises on the day',
+      processTitle: 'From first contact to the visit.',
+      steps: [
+        { title: 'Tell us what you need', text: 'Type of service, room size, and anything you have noticed about the unit.' },
+        { title: 'Get your options', text: 'The technician replies with what makes sense for your case and an estimated price.' },
+        { title: 'Book the visit', text: 'You pick the day and the technician arrives with the right parts.' },
+      ],
+      requestKicker: 'Your request in a minute',
+      requestTitle: 'What is happening in your space?',
+      requestLede: 'Choose the type of service and describe it in a few words, so the first conversation starts with context.',
+      requestNote: 'Local demo: it does not size equipment, check a schedule, or send your details.',
+      plannerGroup: 'Request draft',
+      kindLabel: 'Which service?',
+      kindPlaceholder: 'Choose an option',
+      kinds: ['New installation', 'Maintenance', 'Repair', 'Not sure yet'],
+      noteLabel: 'What have you noticed?',
+      notePlaceholder: 'For example: the bedroom gets afternoon sun and the unit is dripping.',
+      submit: 'Build my draft',
+      status: 'Choose an option and add a note. Nothing will be sent.',
+      noscript: 'The interactive draft needs JavaScript. The rest of the page remains available.',
+      labels: { kind: 'Service', note: 'Note', empty: 'Choose an option and add a note.', ready: 'Your local draft:' },
+      footerNote: 'Fictional brand and data: this company does not exist.',
+      contact: 'Contact Rafael',
+      back: 'Back to portfolio',
+    };
 ---
 
+<DemoBar locale={locale} project={project} />
 <article class="demo demo--clima">
-  <aside class="demo-disclosure" aria-label={pt ? 'Aviso da demonstração' : 'Demonstration disclosure'}><span>{localize(concept.disclaimer, locale)}</span><div class="demo-disclosure__links"><a href={withLocale(locale, 'work')}>{pt ? 'Voltar ao trabalho' : 'Back to work'} ↗</a><a href={withLocale(locale, 'contact')}>{pt ? 'Fale com Rafael' : 'Contact Rafael'} ↗</a><a href={alternatePath(locale, `work/landing-pages/${concept.slug}`)} lang={pt ? 'en' : 'pt-BR'}>{pt ? 'English' : 'Português'}</a></div></aside>
-  <nav class="clima-nav" aria-label={pt ? 'Navegação Clima Certa' : 'Clima Certa navigation'}>
-    <a class="clima-brand" href="#clima-inicio"><span class="clima-brand__mark" aria-hidden="true">CC</span><span>clima certa<small>{pt ? 'climatização, com clareza' : 'climate comfort, clearly'}</small></span></a>
-    <div class="clima-nav__links"><a href="#clima-servicos">{pt ? 'Serviços' : 'Services'}</a><a href="#clima-processo">{pt ? 'Como funciona' : 'How it works'}</a><a class="clima-nav__cta" href="#clima-pedido">{pt ? 'Montar pedido' : 'Build a request'} <span aria-hidden="true">↗</span></a></div>
+  <nav class="clima-nav" aria-label={t.nav}>
+    <a class="clima-brand" href="#clima-inicio">
+      <span class="clima-brand__mark" aria-hidden="true">CC</span>
+      <span>clima certa<small>{t.tagline}</small></span>
+    </a>
+    <div class="clima-nav__links">
+      <a href="#clima-servicos">{t.services}</a>
+      <a href="#clima-processo">{t.process}</a>
+      <a class="clima-nav__cta" href="#clima-pedido">{t.request}</a>
+    </div>
   </nav>
 
-  <header id="clima-inicio" class="clima-hero"><div class="clima-hero__copy"><p class="demo-kicker">{pt ? 'Instalação · manutenção · conforto' : 'Installation · maintenance · comfort'}</p><h1>{localize(concept.demoTagline, locale)}</h1><p>{pt ? 'Uma página clara para entender cada etapa, organizar o que você precisa e preparar uma conversa sobre climatização.' : 'A clear place to understand each step, organize what you need, and prepare a conversation about climate control.'}</p><a class="clima-button" href="#clima-pedido">{pt ? 'Preparar meu pedido' : 'Prepare a request'} <span aria-hidden="true">↓</span></a><p class="clima-hero__footnote">{pt ? 'Uma demonstração de experiência digital; marca e operação ilustrativas.' : 'A digital experience demo; the brand and operation are illustrative.'}</p></div><figure class="clima-hero__visual"><img src={demoImage} alt={localize(concept.imageAlt, locale)} width={concept.imageWidth} height={concept.imageHeight} fetchpriority="high" /><figcaption><span>01</span> / {pt ? 'Conforto começa no ambiente' : 'Comfort begins with the space'}</figcaption></figure><div class="clima-hero__grid" aria-hidden="true"></div></header>
+  <header id="clima-inicio" class="clima-hero">
+    <div class="clima-hero__copy">
+      <p class="demo-kicker">{t.heroKicker}</p>
+      <h1>{localize(concept.demoTagline, locale)}</h1>
+      <p>{t.heroLede}</p>
+      <a class="clima-button" href="#clima-pedido">{t.heroCta} <span aria-hidden="true">↓</span></a>
+    </div>
+    <figure class="clima-hero__visual">
+      <img src={demoImage} alt={localize(concept.imageAlt, locale)} width={concept.imageWidth} height={concept.imageHeight} fetchpriority="high" />
+      <figcaption><span>01</span> / {t.heroCaption}</figcaption>
+    </figure>
+    <div class="clima-hero__grid" aria-hidden="true"></div>
+  </header>
 
   <section id="clima-servicos" class="clima-services demo-shell">
-    <div class="clima-section-head"><p class="demo-kicker">{pt ? 'O que você procura?' : 'What do you need?'}</p><h2>{pt ? 'Cada ambiente pede uma solução.' : 'Every space needs its own solution.'}</h2><p>{pt ? 'Entenda os caminhos mais comuns sem promessas genéricas ou especificações antes da hora.' : 'Explore common paths without generic promises or premature specifications.'}</p></div>
+    <div class="clima-section-head">
+      <p class="demo-kicker">{t.servicesKicker}</p>
+      <h2>{t.servicesTitle}</h2>
+      <p>{t.servicesLede}</p>
+    </div>
     <div class="clima-service-grid">
       {concept.sections[locale].map((section, index) => (
         <article>
           <span class="clima-service-icon" aria-hidden="true">{serviceIcons[index]}</span>
-          <p class="clima-service-index">{String(index + 1).padStart(2, '0')} / {serviceLabels[index]}</p>
+          <p class="clima-service-index">{String(index + 1).padStart(2, '0')} / {t.serviceLabels[index]}</p>
           <h3>{section.title}</h3>
           <p>{section.text}</p>
-          <a href="#clima-pedido">{serviceActions[index]} →</a>
+          <a href="#clima-pedido">{t.serviceActions[index]} <span aria-hidden="true">→</span></a>
         </article>
       ))}
     </div>
   </section>
 
-  <section id="clima-processo" class="clima-process"><div class="demo-shell"><div class="clima-section-head"><p class="demo-kicker">{pt ? 'Um processo sem mistério' : 'A process with no guesswork'}</p><h2>{pt ? 'Do contexto ao próximo passo.' : 'From context to a next step.'}</h2></div><ol class="clima-steps"><li><span>01</span><div><h3>{pt ? 'Descreva o espaço' : 'Describe the space'}</h3><p>{pt ? 'Conte como o ambiente é usado e o que você gostaria de melhorar.' : 'Share how the space is used and what you would like to improve.'}</p></div></li><li><span>02</span><div><h3>{pt ? 'Organize suas observações' : 'Gather your observations'}</h3><p>{pt ? 'Reúna medidas aproximadas e sinais que já percebeu, se tiver.' : 'Gather approximate dimensions and anything you have already noticed, if available.'}</p></div></li><li><span>03</span><div><h3>{pt ? 'Converse sobre opções' : 'Discuss the options'}</h3><p>{pt ? 'Use seu rascunho para iniciar uma conversa com um profissional escolhido por você.' : 'Use your draft to start a conversation with a professional you choose.'}</p></div></li></ol></div></section>
+  <section id="clima-processo" class="clima-process">
+    <div class="demo-shell">
+      <div class="clima-section-head">
+        <p class="demo-kicker">{t.processKicker}</p>
+        <h2>{t.processTitle}</h2>
+      </div>
+      <ol class="clima-steps">
+        {t.steps.map((step, index) => (
+          <li>
+            <span>{String(index + 1).padStart(2, '0')}</span>
+            <div>
+              <h3>{step.title}</h3>
+              <p>{step.text}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
 
-  <section id="clima-pedido" class="clima-request"><div class="demo-shell clima-request__inner"><div><p class="demo-kicker">{pt ? 'Prepare uma conversa' : 'Prepare a conversation'}</p><h2>{pt ? 'O que acontece no seu espaço?' : 'What is happening in your space?'}</h2><p>{pt ? 'Escolha um contexto e anote uma descrição breve. O resumo fica apenas nesta página.' : 'Choose a context and add a short note. Your summary stays on this page.'}</p><p class="demo-local-note">{pt ? 'Demonstração local: não calcula capacidade, não verifica agenda e não envia seus dados.' : 'Local demo: it does not size equipment, check a schedule, or send your details.'}</p></div><div role="group" aria-label={pt ? 'Rascunho do pedido' : 'Request draft'} class="demo-planner clima-planner" data-demo-planner data-label-kind={pt ? 'Contexto' : 'Context'} data-label-note={pt ? 'Observação' : 'Note'} data-label-empty={pt ? 'Escolha uma opção e escreva uma observação.' : 'Choose an option and add a note.'} data-label-ready={pt ? 'Rascunho local:' : 'Your local draft:'}><label>{pt ? 'Qual é o contexto?' : 'What is the context?'}<select name="kind"><option value="">{pt ? 'Escolha uma opção' : 'Choose an option'}</option><option>{pt ? 'Instalação nova' : 'New installation'}</option><option>{pt ? 'Manutenção' : 'Maintenance'}</option><option>{pt ? 'Reparo' : 'Repair'}</option><option>{pt ? 'Ainda não sei' : 'Not sure yet'}</option></select></label><label>{pt ? 'O que você observou?' : 'What have you noticed?'}<textarea name="note" rows="4" maxlength="240" placeholder={pt ? 'Ex.: a sala recebe sol à tarde…' : 'For example: the room gets afternoon sun…'}></textarea></label><button type="button" data-demo-update>{pt ? 'Montar rascunho' : 'Build my draft'} <span aria-hidden="true">↗</span></button><p class="demo-planner__status" role="status" aria-live="polite">{pt ? 'Escolha uma opção e escreva uma observação. Nenhum dado será enviado.' : 'Choose an option and add a note. Nothing will be sent.'}</p><noscript><p class="demo-noscript">{pt ? 'O rascunho interativo precisa de JavaScript. O conteúdo da página continua disponível.' : 'The interactive draft needs JavaScript. The rest of the page remains available.'}</p></noscript></div></div></section>
+  <section id="clima-pedido" class="clima-request">
+    <div class="demo-shell clima-request__inner">
+      <div>
+        <p class="demo-kicker">{t.requestKicker}</p>
+        <h2>{t.requestTitle}</h2>
+        <p>{t.requestLede}</p>
+        <p class="demo-local-note">{t.requestNote}</p>
+      </div>
+      <div
+        role="group"
+        aria-label={t.plannerGroup}
+        class="demo-planner clima-planner"
+        data-demo-planner
+        data-label-kind={t.labels.kind}
+        data-label-note={t.labels.note}
+        data-label-empty={t.labels.empty}
+        data-label-ready={t.labels.ready}
+      >
+        <label>
+          {t.kindLabel}
+          <select name="kind">
+            <option value="">{t.kindPlaceholder}</option>
+            {t.kinds.map((kind) => <option>{kind}</option>)}
+          </select>
+        </label>
+        <label>
+          {t.noteLabel}
+          <textarea name="note" rows="4" maxlength="240" placeholder={t.notePlaceholder}></textarea>
+        </label>
+        <button type="button" data-demo-update>{t.submit}</button>
+        <p class="demo-planner__status" role="status" aria-live="polite">{t.status}</p>
+        <noscript><p class="demo-noscript">{t.noscript}</p></noscript>
+      </div>
+    </div>
+  </section>
 
-  <footer class="demo-footer clima-footer"><a class="clima-brand" href="#clima-inicio"><span class="clima-brand__mark" aria-hidden="true">CC</span><span>clima certa<small>{pt ? 'climatização, com clareza' : 'climate comfort, clearly'}</small></span></a><p>{pt ? 'Esta demonstração não representa uma empresa ou serviço real.' : 'This demonstration does not represent a real company or service.'}</p><a href={withLocale(locale, 'contact')}>{pt ? 'Fale com Rafael' : 'Contact Rafael'} ↗</a><a class="demo-back" href={withLocale(locale, 'work')}>{pt ? 'Voltar ao portfólio' : 'Back to portfolio'} ↑</a></footer>
+  <footer class="demo-footer clima-footer">
+    <a class="clima-brand" href="#clima-inicio">
+      <span class="clima-brand__mark" aria-hidden="true">CC</span>
+      <span>clima certa<small>{t.tagline}</small></span>
+    </a>
+    <p>{t.footerNote}</p>
+    <a href={withLocale(locale, 'contact')}>{t.contact}</a>
+    <a class="demo-back" href={withLocale(locale, 'work')}>{t.back}</a>
+  </footer>
 </article>
 
 <script>

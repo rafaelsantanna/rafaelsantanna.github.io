@@ -8,10 +8,11 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "npm run validate:content && astro build && npm run validate:dist",
+    "build": "npm run validate:content && npm test && astro build && npm run validate:dist",
     "preview": "astro preview",
     "validate:content": "node scripts/validate-content.mjs",
-    "validate:dist": "node scripts/validate-dist.mjs"
+    "validate:dist": "node scripts/validate-dist.mjs",
+    "test": "node --test \"src/**/*.test.ts\""
   },
   "dependencies": {
     "@astrojs/sitemap": "3.7.3",

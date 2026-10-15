@@ -1,0 +1,175 @@
+---
+import DemoBar from '@/components/demos/DemoBar.astro';
+import type { DemoProject, Locale } from '@/data/content';
+import { ordersFor, seedFor } from './content/seed';
+import { strings } from './content/strings';
+import { WORKDAY_START } from './lib/clock';
+import { countByStatus } from './lib/queue';
+import { buildSeedState } from './lib/state';
+import { createFormatters } from './lib/text';
+import { eventStatusIcons } from './views/common';
+import { icon } from './views/icons';
+import { legendOrder, legendStrip } from './views/legend';
+import { renderToday } from './views/today';
+import './styles/stage/base.css';
+import './styles/stage/panel.css';
+import './styles/stage/legend.css';
+import './styles/stage/notes.css';
+import './styles/stage/phone.css';
+import './styles/stage/layout.css';
+import './styles/app/shell.css';
+import './styles/app/controls.css';
+import './styles/screens/today.css';
+import './styles/screens/order.css';
+import './styles/screens/capture.css';
+import './styles/screens/queue.css';
+import './styles/screens/settings.css';
+
+interface Props { locale: Locale; project: DemoProject }
+
+const { locale, project } = Astro.props;
+const s = strings[locale];
+const orders = ordersFor(locale);
+const seed = seedFor(locale);
+const state = buildSeedState(orders, seed, Date.now());
+const todayHtml = renderToday({ s, f: createFormatters(s.intl), orders, state, now: null, drain: { done: 0, total: 0 } });
+const counts = countByStatus(state.events);
+// Only this locale's strings reach the browser; "<" is escaped so the JSON can never close the script element.
+const config = JSON.stringify({ locale, strings: s, orders, seed }).replace(/</g, '\\u003c');
+const palette = `--t-base: ${project.palette.base}; --t-ink: ${project.palette.ink}; --t-accent: ${project.palette.accent};`;
+---
+
+<DemoBar locale={locale} project={project} />
+<div class="turno" style={palette} data-turno data-online="true">
+  <script type="application/json" data-turno-config set:html={config} />
+
+  <header class="turno__mast" data-panel-inert>
+    <p class="turno__eyebrow">{s.stage.eyebrow}</p>
+    <div class="turno__brand">
+      <span class="turno__logo" aria-hidden="true">
+        <svg viewBox="0 0 40 40" width="40" height="40" focusable="false">
+          <rect width="40" height="40" rx="12" fill="currentColor" />
+          <path d="M20 9.5a10.5 10.5 0 1 1-9.4 5.8" fill="none" stroke="#fff" stroke-width="3.6" stroke-linecap="round" />
+          <path d="M20 20V14.5M20 20l4 2.6" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" />
+          <circle cx="10.6" cy="15.3" r="2.6" fill="#fff" />
+        </svg>
+      </span>
+      <h1 class="turno__name">{project.name}</h1>
+    </div>
+    <p class="turno__mastline">{s.stage.mastLine}</p>
+    <button type="button" class="turno__sheet-btn" data-panel-open aria-expanded="false" aria-controls="turno-panel">
+      <Fragment set:html={icon('sliders')} />
+      <span>{s.stage.openControls}</span>
+    </button>
+  </header>
+
+  <div class="turno__scrim" data-panel-scrim hidden></div>
+
+  <div class="turno__panel" id="turno-panel" data-panel>
+    <div class="turno__sheet-head">
+      <h2 id="turno-panel-title" tabindex="-1" data-panel-title>{s.stage.controlsTitle}</h2>
+      <button type="button" class="turno__close" data-panel-close aria-label={s.stage.closeControls}><Fragment set:html={icon('close')} /></button>
+    </div>
+
+    <p class="turno__lede">{s.stage.lede}</p>
+
+    <section class="turno__card turno__controls" aria-labelledby="turno-controls-title" data-needs-js>
+      <h2 class="turno__card-title" id="turno-controls-title">{s.stage.controlsTitle}</h2>
+      <div class="turno__switch-row">
+        <div class="turno__switch-text">
+          <span class="turno__switch-label" id="turno-conn-label">{s.stage.connection}</span>
+          <span class="turno__switch-hint" id="turno-conn-hint">{s.stage.connectionHint}</span>
+        </div>
+        <button type="button" role="switch" aria-checked="true" aria-labelledby="turno-conn-label" aria-describedby="turno-conn-hint" class="turno__switch" data-control="connection">
+          <span class="turno__switch-state" data-conn-text aria-hidden="true">{s.stage.online}</span>
+          <span class="turno__switch-track" aria-hidden="true"><span class="turno__switch-thumb"></span></span>
+        </button>
+      </div>
+      <div class="turno__buttons">
+        <button type="button" class="turno__btn turno__btn--primary" data-control="sync"><Fragment set:html={icon('sync')} />{s.stage.syncNow}</button>
+        <button type="button" class="turno__btn" data-control="reset"><Fragment set:html={icon('reset')} />{s.stage.reset}</button>
+      </div>
+      <p class="turno__status" data-control-status></p>
+      <p class="turno__local"><Fragment set:html={icon('lock')} /><span>{s.stage.localOnly}</span></p>
+    </section>
+
+    <section class="turno__card turno__legend" aria-labelledby="turno-legend-title" data-needs-js>
+      <div class="turno__legend-head">
+        <h2 class="turno__card-title" id="turno-legend-title">{s.stage.legendTitle}</h2>
+        <span class="turno__live"><span class="turno__live-dot" aria-hidden="true"></span>{s.stage.legendLive}</span>
+      </div>
+      <p class="turno__strip-label" aria-hidden="true">{s.stage.legendNext}</p>
+      <div class="turno__strip" aria-hidden="true" data-legend-strip set:html={legendStrip(s, state.events)} />
+      <ul class="turno__legend-list">
+        {legendOrder.map((status) => (
+          <li data-status={status}>
+            <span class="turno__legend-icon" set:html={icon(eventStatusIcons[status])} />
+            <span class="turno__legend-label">{s.stage.legend[status]}</span>
+            <span class="turno__legend-count" data-legend-count={status}>{counts[status]}</span>
+          </li>
+        ))}
+      </ul>
+      <p class="turno__legend-note">{s.stage.legendNote}</p>
+    </section>
+
+    <section class="turno__notes" aria-labelledby="turno-notes-title">
+      <h2 id="turno-notes-title">{s.stage.notesTitle}</h2>
+      <ol>
+        {s.stage.notes.map((note, index) => (
+          <li>
+            <span class="turno__note-index" aria-hidden="true">{index + 1}</span>
+            <div>
+              <h3>{note.title}</h3>
+              <p>{note.text}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </section>
+  </div>
+
+  <section class="turno__device" aria-label={s.stage.deviceLabel} data-panel-inert>
+    <div class="t-phone">
+      <div class="t-app" data-app data-screen="today">
+        <div class="t-statusbar" aria-hidden="true">
+          <span class="t-statusbar__time" data-clock>{WORKDAY_START}</span>
+          <span class="t-statusbar__island"></span>
+          <span class="t-statusbar__icons">
+            <span class="t-statusbar__netwrap" data-net><Fragment set:html={icon('signal')} /><span class="t-statusbar__net">4G</span></span>
+            <span class="t-battery"><span></span></span>
+          </span>
+        </div>
+        <div class="t-banner" data-banner hidden></div>
+        <div class="t-host" data-host>
+          <noscript><p class="t-noscript">{s.stage.noscript}</p></noscript>
+          <Fragment set:html={todayHtml} />
+        </div>
+        <p class="t-toast" data-toast hidden></p>
+        <nav class="t-tabs" aria-label={s.tabs.nav} data-tabs>
+          <button type="button" class="t-tab" data-action="tab" data-tab="today" aria-current="page">
+            <span class="t-tab__icon" set:html={icon('today')} />
+            <span class="t-tab__label">{s.tabs.today}</span>
+          </button>
+          <button type="button" class="t-tab" data-action="tab" data-tab="queue">
+            <span class="t-tab__icon"><Fragment set:html={icon('queue')} /><span class="t-badge" data-badge hidden>0</span></span>
+            <span class="t-tab__label">{s.tabs.queue}<span class="t-sr" data-badge-sr></span></span>
+          </button>
+          <button type="button" class="t-tab" data-action="tab" data-tab="settings">
+            <span class="t-tab__icon" set:html={icon('settings')} />
+            <span class="t-tab__label">{s.tabs.settings}</span>
+          </button>
+        </nav>
+        <div class="t-home" aria-hidden="true"></div>
+        <div class="t-modal-host" data-modal-host></div>
+      </div>
+    </div>
+  </section>
+
+  <p class="t-sr" data-live aria-live="polite"></p>
+</div>
+
+<script>
+  import { mountTurno } from './client/app';
+
+  document.querySelectorAll<HTMLElement>('[data-turno]').forEach(mountTurno);
+</script>

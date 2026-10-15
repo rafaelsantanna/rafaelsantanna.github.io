@@ -1,0 +1,271 @@
+/* Shared controls: buttons, keys, status badges, chips and panels. */
+.demo-logistics-control {
+  /* Buttons */
+  .lc-btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    min-height: var(--lc-control);
+    padding: 0 12px;
+    border: 1px solid var(--lc-line-2);
+    border-radius: 9px;
+    background: var(--lc-panel);
+    color: var(--lc-ink);
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.2;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background-color 160ms var(--lc-ease), border-color 160ms var(--lc-ease), color 160ms var(--lc-ease);
+
+    &:hover { background: var(--lc-sunken); }
+    &:active { transform: translateY(1px); }
+    &[aria-disabled='true'] { opacity: 0.45; cursor: default; }
+    &[aria-disabled='true']:hover { background: var(--lc-panel); }
+  }
+
+  .lc-btn--primary {
+    border-color: transparent;
+    background: var(--lc-accent);
+    color: var(--lc-on-accent);
+
+    &:hover { background: var(--lc-accent-hover); }
+  }
+
+  .lc-btn--ghost { background: transparent; }
+
+  .lc-btn--quiet {
+    border-color: transparent;
+    background: transparent;
+    color: var(--lc-ink-2);
+
+    &:hover { background: color-mix(in srgb, var(--lc-ink) 6%, transparent); color: var(--lc-ink); }
+    &[aria-disabled='true']:hover { background: transparent; }
+  }
+
+  .lc-btn--sm {
+    min-height: var(--lc-control-sm);
+    padding: 0 10px;
+    font-size: 12.5px;
+  }
+
+  /* Locked, not inactive: the dashed border and lock icon say so, and the label stays readable. */
+  .lc-btn.is-restricted {
+    border-style: dashed;
+    background: transparent;
+    color: var(--lc-ink-3);
+    opacity: 1;
+    cursor: not-allowed;
+
+    &:hover { background: transparent; }
+  }
+
+  /* Action icon kept for layouts that hide the label (see the bulk bar); hidden while the label shows. */
+  .lc-btn__alt { display: none; }
+
+  .lc-iconbtn {
+    display: inline-grid;
+    place-items: center;
+    flex: 0 0 auto;
+    width: var(--lc-control);
+    height: var(--lc-control);
+    padding: 0;
+    border: 1px solid transparent;
+    border-radius: 9px;
+    background: transparent;
+    color: var(--lc-ink-2);
+    transition: background-color 160ms var(--lc-ease);
+
+    &:hover { background: color-mix(in srgb, var(--lc-ink) 7%, transparent); color: var(--lc-ink); }
+    & .lc-icon { width: 18px; height: 18px; }
+  }
+
+  .lc-iconbtn--sm {
+    width: var(--lc-control-sm);
+    height: var(--lc-control-sm);
+  }
+
+  .lc-linkbtn {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--lc-control-sm);
+    padding: 0;
+    border: 0;
+    background: none;
+    color: inherit;
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-thickness: 1px;
+  }
+
+  .lc-idlink {
+    padding: 2px 0;
+    border: 0;
+    background: none;
+    color: var(--lc-ink);
+    font-family: var(--lc-font-mono);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    text-decoration: underline;
+    text-decoration-color: transparent;
+    text-underline-offset: 3px;
+
+    &:hover { text-decoration-color: currentColor; }
+  }
+
+  .lc-kbd {
+    display: inline-block;
+    min-width: 20px;
+    padding: 1px 6px;
+    border: 1px solid var(--lc-line-2);
+    border-bottom-width: 2px;
+    border-radius: 6px;
+    background: var(--lc-panel-2);
+    color: var(--lc-ink-2);
+    font-family: var(--lc-font-mono);
+    font-size: 11.5px;
+    line-height: 1.5;
+    text-align: center;
+  }
+
+  /* Status badge */
+  .lc-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    min-height: 24px;
+    padding: 0 9px 0 7px;
+    border-radius: 999px;
+    font-size: 12.5px;
+    font-weight: 600;
+    white-space: nowrap;
+
+    & .lc-icon { width: 14px; height: 14px; }
+  }
+
+  .lc-status--route { background: var(--lc-route-bg); color: var(--lc-route); }
+  .lc-status--late { background: var(--lc-late-bg); color: var(--lc-late); }
+  .lc-status--issue { background: var(--lc-issue-bg); color: var(--lc-issue); }
+  .lc-status--delivered { background: var(--lc-delivered-bg); color: var(--lc-delivered); }
+  .lc-status--awaiting { background: var(--lc-awaiting-bg); color: var(--lc-awaiting); }
+
+  .lc-flag {
+    display: inline-flex;
+    margin-left: 6px;
+    color: var(--lc-accent-text);
+    vertical-align: -3px;
+
+    & .lc-icon { width: 15px; height: 15px; }
+  }
+
+  .lc-flag-text {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    color: var(--lc-accent-text);
+    font-weight: 600;
+  }
+
+  /* Chips */
+  .lc-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .lc-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    min-height: max(32px, var(--lc-control));
+    padding: 0 6px 0 11px;
+    border: 1px solid var(--lc-line-2);
+    border-radius: 999px;
+    background: var(--lc-panel);
+    color: var(--lc-ink-2);
+    font-size: 13px;
+    font-weight: 560;
+    white-space: nowrap;
+    transition: background-color 160ms var(--lc-ease), border-color 160ms var(--lc-ease);
+
+    &:hover { border-color: color-mix(in srgb, var(--lc-ink) 34%, transparent); }
+    & .lc-chip__icon { width: 15px; height: 15px; }
+
+    &[aria-pressed='true'] {
+      border-color: currentColor;
+      font-weight: 650;
+    }
+  }
+
+  .lc-chip__count {
+    min-width: 24px;
+    padding: 1px 7px;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--lc-ink) 7%, transparent);
+    color: var(--lc-ink-2);
+    font-size: 12px;
+    font-weight: 600;
+    text-align: center;
+  }
+
+  .lc-chip--all, .lc-chip--route, .lc-chip--late, .lc-chip--issue, .lc-chip--delivered, .lc-chip--awaiting { padding-left: 11px; }
+  .lc-chip--route .lc-chip__icon { color: var(--lc-route); }
+  .lc-chip--late .lc-chip__icon { color: var(--lc-late); }
+  .lc-chip--issue .lc-chip__icon { color: var(--lc-issue); }
+  .lc-chip--delivered .lc-chip__icon { color: var(--lc-delivered); }
+  .lc-chip--awaiting .lc-chip__icon { color: var(--lc-awaiting); }
+  .lc-chip--route[aria-pressed='true'] { background: var(--lc-route-bg); color: var(--lc-route); }
+  .lc-chip--late[aria-pressed='true'] { background: var(--lc-late-bg); color: var(--lc-late); }
+  .lc-chip--issue[aria-pressed='true'] { background: var(--lc-issue-bg); color: var(--lc-issue); }
+  .lc-chip--delivered[aria-pressed='true'] { background: var(--lc-delivered-bg); color: var(--lc-delivered); }
+  .lc-chip--awaiting[aria-pressed='true'] { background: var(--lc-awaiting-bg); color: var(--lc-awaiting); }
+  .lc-chip--all[aria-pressed='true'] { background: var(--lc-invert); color: var(--lc-on-invert); border-color: var(--lc-invert); }
+  .lc-chip--all[aria-pressed='true'] .lc-chip__count { background: color-mix(in srgb, var(--lc-on-invert) 16%, transparent); color: var(--lc-on-invert); }
+  .lc-chip[aria-pressed='true'] .lc-chip__count { background: color-mix(in srgb, currentColor 14%, transparent); color: inherit; }
+
+  /* Panels */
+  .lc-panel {
+    min-width: 0;
+    border: 1px solid var(--lc-line);
+    border-radius: var(--lc-radius);
+    background: var(--lc-panel);
+  }
+
+  .lc-panel__head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 14px 16px 12px;
+  }
+
+  .lc-panel__title {
+    font-family: var(--lc-font-display);
+    font-size: 15.5px;
+    font-weight: 620;
+    letter-spacing: -0.015em;
+  }
+
+  .lc-panel__hint {
+    margin-top: 2px;
+    color: var(--lc-ink-3);
+    font-size: 12.5px;
+  }
+}
+
+/* Forced colors drop backgrounds, so pressed chips use the system highlight. */
+@media (forced-colors: active) {
+  .demo-logistics-control .lc-chip[aria-pressed='true'] {
+    forced-color-adjust: none;
+    border-color: Highlight;
+    background: Highlight;
+    color: HighlightText;
+
+    & .lc-chip__icon { color: inherit; }
+    & .lc-chip__count { background: Canvas; color: CanvasText; }
+  }
+}

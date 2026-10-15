@@ -1,0 +1,100 @@
+---
+import Icon from '@/components/ui/Icon.astro';
+import ProjectFrame from '@/components/ui/ProjectFrame.astro';
+import { paletteStyle } from '@/components/ui/palette';
+import { copy, findProject, localize, services, withLocale, type DemoProject, type Locale } from '@/data/content';
+
+interface Props {
+  locale: Locale;
+  headingLevel?: 'h2' | 'h3';
+  /** Adds the "good fit for" line under each summary (services page). */
+  detailed?: boolean;
+  /** Shows a sticky preview of the first related project on wide screens. */
+  preview?: boolean;
+}
+
+const { locale, headingLevel = 'h3', detailed = false, preview = false } = Astro.props;
+const t = copy[locale];
+const pt = locale === 'pt';
+const Heading = headingLevel;
+const rows = services.map((service) => ({
+  service,
+  related: service.projects
+    .map((slug) => findProject(slug))
+    .filter((item): item is DemoProject => item !== undefined),
+}));
+---
+
+<div class:list={['services-layout', { 'services-layout--preview': preview }]} data-services>
+  <ol class="service-list">
+    {rows.map(({ service, related }, index) => (
+      <li class="service-row" data-service-index={index} data-reveal>
+        <div class="service-row__main">
+          <Heading class="service-row__title">{localize(service.title, locale)}</Heading>
+          <p class="service-row__summary">{localize(service.summary, locale)}</p>
+          {detailed && (
+            <div class="service-row__fit">
+              <p>{t.fit}</p>
+              <ul>{service.idealFor[locale].map((item) => <li>{item}</li>)}</ul>
+            </div>
+          )}
+        </div>
+        <div class="service-row__side">
+          <p class="service-row__label">{pt ? 'Veja na prática' : 'See it in practice'}</p>
+          <ul class="service-row__projects">
+            {related.map((item) => (
+              <li>
+                <a class="chip-link" href={withLocale(locale, `work/${item.slug}`)} style={paletteStyle(item.palette)}>
+                  <span class="chip-link__swatch" aria-hidden="true"></span>{item.name}
+                </a>
+              </li>
+            ))}
+          </ul>
+          <a class="text-link" href={withLocale(locale, `services/${service.slug}`)}>
+            {t.viewService}<span class="visually-hidden">: {localize(service.title, locale)}</span><Icon name="arrow-right" />
+          </a>
+        </div>
+      </li>
+    ))}
+  </ol>
+  {preview && (
+    <div class="services-preview" aria-hidden="true">
+      <div class="services-preview__sticky">
+        {rows.map(({ related }, index) => related[0] && (
+          <div class="services-preview__item stage" style={paletteStyle(related[0].palette)} data-preview-index={index} data-active={index === 0 ? '' : undefined}>
+            <ProjectFrame project={related[0]} locale={locale} decorative sizes="(min-width: 64em) 26vw, 100vw" />
+            <p class="services-preview__caption"><span>{pt ? 'Projeto relacionado' : 'Related project'}</span>{related[0].name}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  )}
+</div>
+
+<script>
+  /** A thin band just above the middle of the viewport: the row crossing it is the one being read. */
+  const READING_BAND = '-45% 0px -50% 0px';
+
+  document.querySelectorAll<HTMLElement>('[data-services]').forEach((layout) => {
+    const items = [...layout.querySelectorAll<HTMLElement>('[data-preview-index]')];
+    const rows = [...layout.querySelectorAll<HTMLElement>('[data-service-index]')];
+    if (!items.length) return;
+    const activate = (index: string | undefined) => {
+      if (index === undefined) return;
+      items.forEach((item) => item.toggleAttribute('data-active', item.dataset.previewIndex === index));
+    };
+
+    // Scrolling follows the row in the reading band; pointer and keyboard focus take over when used.
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting && entry.target instanceof HTMLElement) activate(entry.target.dataset.serviceIndex);
+      });
+    }, { rootMargin: READING_BAND });
+    rows.forEach((row) => {
+      const select = () => activate(row.dataset.serviceIndex);
+      row.addEventListener('pointerenter', select);
+      row.addEventListener('focusin', select);
+      observer.observe(row);
+    });
+  });
+</script>

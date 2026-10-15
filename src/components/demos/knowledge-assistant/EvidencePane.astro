@@ -1,0 +1,27 @@
+---
+import Icon from './Icon.astro';
+import type { UiStrings } from './strings';
+
+interface Props { t: UiStrings }
+
+const { t } = Astro.props;
+---
+
+<section class="ka-pane ka-pane--evidence" id="ka-pane-evidence" aria-labelledby="ka-evidence-title" data-ka-pane="evidence">
+  <header class="ka-pane__head">
+    <h2 class="ka-pane__title" id="ka-evidence-title">{t.evidenceTitle}</h2>
+    <p class="ka-pane__sub">{t.evidenceIntro}</p>
+  </header>
+  <div class="ka-pane__scroll" data-ka-evidence-scroll>
+    <div class="ka-ev-empty" data-ka-evidence-empty>
+      <div class="ka-ev-empty__art" aria-hidden="true">
+        <span></span><span></span><span></span>
+        <Icon name="search" />
+      </div>
+      <p class="ka-ev-empty__title">{t.evidenceEmptyTitle}</p>
+      <p class="ka-ev-empty__text">{t.evidenceEmptyText}</p>
+      <p class="ka-ev-empty__legend">{t.evidenceLegend}</p>
+    </div>
+    <div class="ka-ev-view" data-ka-evidence hidden></div>
+  </div>
+</section>

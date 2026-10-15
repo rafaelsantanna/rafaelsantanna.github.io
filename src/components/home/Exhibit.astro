@@ -1,0 +1,55 @@
+---
+import Icon from '@/components/ui/Icon.astro';
+import ProjectFrame from '@/components/ui/ProjectFrame.astro';
+import { paletteStyle } from '@/components/ui/palette';
+import { copy, localize, withLocale, type DemoProject, type Locale } from '@/data/content';
+
+interface Props {
+  project: DemoProject;
+  locale: Locale;
+  /** 0-based position in the full project list. */
+  index: number;
+  /** Prints the position as "01"; only meaningful where the exhibits follow the project order. */
+  showIndex?: boolean;
+}
+
+const { project, locale, index, showIndex = false } = Astro.props;
+const t = copy[locale];
+const pt = locale === 'pt';
+const number = String(index + 1).padStart(2, '0');
+const headingId = `exhibit-${project.slug}`;
+const tryItems = project.highlights[locale].slice(0, 3);
+---
+
+<article class="exhibit" style={paletteStyle(project.palette)} aria-labelledby={headingId}>
+  <div class="exhibit__media">
+    <a class="exhibit__stage stage" href={withLocale(locale, `demos/${project.slug}`)} tabindex="-1">
+      <div class="exhibit__float">
+        <ProjectFrame project={project} locale={locale} />
+      </div>
+    </a>
+  </div>
+  <div class="exhibit__body">
+    <p class="exhibit__meta">{showIndex && <span class="exhibit__index">{number}</span>}<span class="eyebrow">{localize(project.category, locale)}</span></p>
+    <h3 id={headingId} class="exhibit__name">{project.name}</h3>
+    <p class="exhibit__tagline">{localize(project.tagline, locale)}</p>
+    <p class="exhibit__summary">{localize(project.summary, locale)}</p>
+    <div class="exhibit__try">
+      <p class="exhibit__try-title">{pt ? 'O que você pode testar' : 'What you can try'}</p>
+      <ul>
+        {tryItems.map((item) => <li><Icon name="cursor" />{item.title}</li>)}
+      </ul>
+    </div>
+    <div class="button-row exhibit__actions">
+      <a class="button button--primary" href={withLocale(locale, `demos/${project.slug}`)} data-icon="up-right">
+        {t.openDemo}<span class="visually-hidden">: {project.name}</span><Icon name="arrow-up-right" />
+      </a>
+      <a class="text-link" href={withLocale(locale, `work/${project.slug}`)}>
+        {t.viewProject}<span class="visually-hidden">: {project.name}</span><Icon name="arrow-right" />
+      </a>
+    </div>
+    <ul class="tag-list exhibit__stack" aria-label={pt ? `Tecnologias de ${project.name}` : `${project.name} technologies`}>
+      {project.stack.map((item) => <li>{item}</li>)}
+    </ul>
+  </div>
+</article>

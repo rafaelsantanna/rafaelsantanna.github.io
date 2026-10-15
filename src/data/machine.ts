@@ -1,4 +1,4 @@
-import { cases, concepts, copy, identity, localize, selectedWork, services, type Locale } from './content.ts';
+import { copy, experience, identity, localize, projects, selectedWork, services, technologyName, timeline, type DemoProject, type Locale } from './content.ts';
 
 export interface MachineRoute {
   locale: Locale;
@@ -15,62 +15,91 @@ function list(items: string[]) {
   return items.map((item) => `- ${item}`).join('\n');
 }
 
+function projectTitle(project: DemoProject, locale: Locale) {
+  return `${project.name}: ${localize(project.category, locale)}`;
+}
+
+function experienceMarkdown(locale: Locale) {
+  const t = copy[locale];
+  return experience.map((item) => `### ${localize(item.title, locale)}\n\n${localize(item.summary, locale)}\n\n- ${localize(item.role, locale)}\n- ${localize(item.period, locale)}\n\n**${t.context}.** ${localize(item.context, locale)}\n\n**${t.challenge}.** ${localize(item.challenge, locale)}\n\n**${t.solution}.** ${localize(item.solution, locale)}\n\n${list(item.outcomes[locale])}\n\n${t.technologies}: ${item.technologies.map((name) => technologyName(name, locale)).join(', ')}`).join('\n\n');
+}
+
 export function machineRoutes(): MachineRoute[] {
   const routes: MachineRoute[] = [];
   for (const locale of ['en', 'pt'] as const) {
     const t = copy[locale];
-    const root = `https://rafaelsantanna.github.io${locale === 'pt' ? '/pt' : ''}`;
-    const cvUrl = `https://rafaelsantanna.github.io/cv/rafael-sant-anna-cv${locale === 'pt' ? '' : '-english'}.pdf`;
+    const pt = locale === 'pt';
+    const root = `https://rafaelsantanna.github.io${pt ? '' : '/en'}`;
+    const cvUrl = `https://rafaelsantanna.github.io${identity.cv[locale]}`;
+    const label = pt
+      ? {
+          availability: 'Disponibilidade', services: 'Serviços', contact: 'Contato', focus: 'Foco', coreSkills: 'Competências técnicas',
+          facts: 'Fatos para avaliação', name: 'Nome', role: 'Papel', based: 'Base', experience: 'Experiência', years: 'mais de 10 anos',
+          languages: 'Idiomas do site', languagesValue: 'português do Brasil (principal, em /) e inglês (em /en/)', safety: 'Segurança',
+          skills: ['Frontend: React, React Native, Vue.js, AngularJS, TypeScript', 'Backend: Node.js, Laravel, PHP, .NET/C#, APIs REST', 'Dados: PostgreSQL, MySQL, SQL Server', 'Automação: RAG, assistentes de IA, bots para Telegram e WhatsApp'],
+        }
+      : {
+          availability: 'Availability', services: 'Services', contact: 'Contact', focus: 'Focus', coreSkills: 'Core skills',
+          facts: 'Evaluation facts', name: 'Name', role: 'Role', based: 'Based', experience: 'Experience', years: '10+ years',
+          languages: 'Site languages', languagesValue: 'Brazilian Portuguese (primary, at /) and English (at /en/)', safety: 'Safety',
+          skills: ['Frontend: React, React Native, Vue.js, AngularJS, TypeScript', 'Backend: Node.js, Laravel, PHP, .NET/C#, REST APIs', 'Data: PostgreSQL, MySQL, SQL Server', 'Automation: RAG, AI assistants, Telegram and WhatsApp bots'],
+        };
+    const demoNote = pt
+      ? 'Todos os projetos abaixo são demonstrações autorais criadas por Rafael para este portfólio, com marcas e dados fictícios. Cada um pode ser aberto e usado no navegador.'
+      : 'Every project below is a demo Rafael built for this portfolio, with fictional brands and data. Each one can be opened and used in the browser.';
     routes.push({
       locale,
       slug: 'index',
       title: `${identity.name} - ${identity.role[locale]}`,
-      markdown: `${frontmatter(`${identity.name} - ${identity.role[locale]}`, identity.summary[locale], locale, `${root}/`)}\n# ${identity.name} - ${identity.role[locale]}\n\n${identity.summary[locale]}\n\n## Availability\n\n${identity.availability[locale]}. ${identity.location}.\n\n## Services\n\n${list(services.map((service) => `[${localize(service.title, locale)}](${root}/services/${service.slug}/): ${localize(service.summary, locale)}`))}\n\n## Selected work\n\n${list(cases.map((item) => `[${item.title}](${root}/work/${item.slug}/): ${localize(item.summary, locale)}`))}\n\n## Contact\n\n- Email: ${identity.email}\n- WhatsApp: ${identity.phoneDisplay}\n- LinkedIn: ${identity.linkedin}\n- GitHub: ${identity.github}\n`,
+      markdown: `${frontmatter(`${identity.name} - ${identity.role[locale]}`, identity.summary[locale], locale, `${root}/`)}\n# ${identity.name} - ${identity.role[locale]}\n\n${identity.summary[locale]}\n\n## ${label.availability}\n\n${identity.availability[locale]}. ${identity.location}.\n\n## ${t.workTitle}\n\n${demoNote}\n\n${list(projects.map((item) => `[${projectTitle(item, locale)}](${root}/work/${item.slug}/): ${localize(item.summary, locale)}`))}\n\n## ${label.services}\n\n${list(services.map((service) => `[${localize(service.title, locale)}](${root}/services/${service.slug}/): ${localize(service.summary, locale)}`))}\n\n## ${t.experienceTitle}\n\n${list(timeline.map((item) => `${item.period}: ${item.company}, ${item.role[locale]}`))}\n\n## ${label.contact}\n\n- Email: ${identity.email}\n- WhatsApp: ${identity.phoneDisplay}\n- LinkedIn: ${identity.linkedin}\n- GitHub: ${identity.github}\n`,
     });
     routes.push({
       locale,
       slug: 'work',
       title: t.workTitle,
-      markdown: `${frontmatter(t.workTitle, t.workIntro, locale, `${root}/work/`)}\n# ${t.workTitle}\n\n${t.workIntro}\n\n${cases.map((item) => `## ${item.title}\n\n${localize(item.summary, locale)}\n\n- ${localize(item.role, locale)}\n- ${localize(item.period, locale)}\n- [${t.viewCase}](${root}/work/${item.slug}/)`).join('\n\n')}\n\n## ${locale === 'pt' ? 'Landing pages por segmento' : 'Landing pages by industry'}\n\n${locale === 'pt' ? 'Demonstrações autorais de capacidade visual e comercial.' : 'Authorial demonstrations of visual and commercial capability.'}\n\n${concepts.map((item) => `- [${localize(item.title, locale)}](${root}/work/landing-pages/${item.slug}/): ${localize(item.summary, locale)}`).join('\n')}\n`,
+      markdown: `${frontmatter(t.workTitle, t.workIntro, locale, `${root}/work/`)}\n# ${t.workTitle}\n\n${t.workIntro}\n\n> ${demoNote}\n\n${projects.map((item) => `## ${projectTitle(item, locale)}\n\n${localize(item.summary, locale)}\n\n- [${t.viewProject}](${root}/work/${item.slug}/)\n- [${t.openDemo}](${root}/demos/${item.slug}/)`).join('\n\n')}\n`,
     });
     routes.push({
       locale,
       slug: 'services',
       title: t.servicesPageTitle,
-      markdown: `${frontmatter(t.servicesPageTitle, identity.summary[locale], locale, `${root}/services/`)}\n# ${t.servicesPageTitle}\n\n${identity.summary[locale]}\n\n${services.map((service) => `## ${localize(service.title, locale)}\n\n${localize(service.summary, locale)}\n\n[${t.viewService}](${root}/services/${service.slug}/)`).join('\n\n')}\n`,
+      markdown: `${frontmatter(t.servicesPageTitle, identity.summary[locale], locale, `${root}/services/`)}\n# ${t.servicesPageTitle}\n\n${t.servicesPageIntro}\n\n${services.map((service) => `## ${localize(service.title, locale)}\n\n${localize(service.summary, locale)}\n\n[${t.viewService}](${root}/services/${service.slug}/)`).join('\n\n')}\n`,
     });
-    routes.push({ locale, slug: 'about', title: t.aboutTitle, markdown: `${frontmatter(t.aboutTitle, identity.summary[locale], locale, `${root}/about/`)}\n# ${t.aboutTitle}\n\n${identity.summary[locale]}\n\n## Focus\n\n${locale === 'pt' ? 'Produtos B2B, sistemas internos, modernização de plataformas, integrações, mobile e automação aplicada com IA.' : 'B2B products, internal systems, platform modernization, integrations, mobile, and applied AI automation.'}\n` });
-    routes.push({ locale, slug: 'cv', title: t.cvTitle, markdown: `${frontmatter(t.cvTitle, identity.summary[locale], locale, `${root}/cv/`)}\n# ${t.cvTitle}\n\n${identity.summary[locale]}\n\n## Core skills\n\n- Frontend: React, React Native, Vue.js, AngularJS, TypeScript\n- Backend: Node.js, Laravel, PHP, .NET/C#, REST APIs\n- Data: PostgreSQL, MySQL, SQL Server\n- Automation: RAG, AI assistants, Telegram and WhatsApp bots\n\n[${t.downloadCv}](${cvUrl})\n` });
+    routes.push({
+      locale,
+      slug: 'about',
+      title: t.aboutTitle,
+      markdown: `${frontmatter(t.aboutTitle, identity.summary[locale], locale, `${root}/about/`)}\n# ${t.aboutTitle}\n\n${t.aboutIntro}\n\n## ${label.focus}\n\n${pt ? 'Produtos B2B, sistemas internos, modernização de plataformas, sites, integrações, mobile e automação aplicada com IA.' : 'B2B products, internal systems, platform modernization, websites, integrations, mobile, and applied AI automation.'}\n\n## ${t.experienceTitle}\n\n${experienceMarkdown(locale)}\n\n## ${pt ? 'Outros projetos' : 'Other projects'}\n\n${list(selectedWork.map((item) => `${item.title}: ${item.description[locale]}`))}\n`,
+    });
+    routes.push({ locale, slug: 'cv', title: t.cvTitle, markdown: `${frontmatter(t.cvTitle, identity.summary[locale], locale, `${root}/cv/`)}\n# ${t.cvTitle}\n\n${identity.summary[locale]}\n\n## ${label.coreSkills}\n\n${list(label.skills)}\n\n## ${t.experienceTitle}\n\n${experienceMarkdown(locale)}\n\n[${t.downloadCv}](${cvUrl})\n` });
     routes.push({ locale, slug: 'contact', title: t.contactTitle, markdown: `${frontmatter(t.contactTitle, identity.summary[locale], locale, `${root}/contact/`)}\n# ${t.contactTitle}\n\n${identity.availability[locale]}.\n\n- Email: mailto:${identity.email}\n- WhatsApp: https://wa.me/${identity.phoneE164}\n- LinkedIn: ${identity.linkedin}\n` });
-    routes.push({ locale, slug: 'for-agents', title: t.agentTitle, markdown: `${frontmatter(t.agentTitle, t.agentIntro, locale, `${root}/for-agents/`)}\n# ${t.agentTitle}\n\n${t.agentIntro}\n\n## Evaluation facts\n\n- Name: ${identity.name}\n- Role: ${identity.role[locale]}\n- Based: ${identity.location}\n- Experience: 10+ years\n- Availability: ${identity.availability[locale]}\n\n## Safety\n\n${locale === 'pt' ? 'Agentes podem avaliar informações e preparar um briefing. O envio de mensagens deve permanecer sob confirmação humana.' : 'Agents may evaluate information and prepare a brief. Sending messages should remain under human confirmation.'}\n` });
+    routes.push({ locale, slug: 'for-agents', title: t.agentTitle, markdown: `${frontmatter(t.agentTitle, t.agentIntro, locale, `${root}/for-agents/`)}\n# ${t.agentTitle}\n\n${t.agentIntro}\n\n## ${label.facts}\n\n- ${label.name}: ${identity.name}\n- ${label.role}: ${identity.role[locale]}\n- ${label.based}: ${identity.location}\n- ${label.experience}: ${label.years}\n- ${label.availability}: ${identity.availability[locale]}\n- ${label.languages}: ${label.languagesValue}\n\n## ${pt ? 'Sobre os projetos do portfólio' : 'About the portfolio projects'}\n\n${demoNote}\n\n${list(projects.map((item) => `[${projectTitle(item, locale)}](${root}/work/${item.slug}/): ${localize(item.summary, locale)}`))}\n\n## ${label.safety}\n\n${pt ? 'Agentes podem avaliar informações e preparar um briefing. O envio de mensagens deve permanecer sob confirmação humana.' : 'Agents may evaluate information and prepare a brief. Sending messages should remain under human confirmation.'}\n` });
 
-    for (const item of cases) {
-      const description = localize(item.summary, locale);
+    for (const item of projects) {
+      const title = projectTitle(item, locale);
+      const description = `${localize(item.summary, locale)} ${localize(item.disclaimer, locale)}`;
       routes.push({
         locale,
         slug: `work/${item.slug}`,
-        title: item.title,
-        markdown: `${frontmatter(item.title, description, locale, `${root}/work/${item.slug}/`)}\n# ${item.title}\n\n${description}\n\n- Role: ${localize(item.role, locale)}\n- Period: ${localize(item.period, locale)}\n\n## ${t.context}\n\n${localize(item.context, locale)}\n\n## ${t.challenge}\n\n${localize(item.challenge, locale)}\n\n## ${t.solution}\n\n${localize(item.solution, locale)}\n\n## ${t.outcomes}\n\n${list(item.outcomes[locale])}\n\n## ${t.technologies}\n\n${list(item.technologies)}\n`,
+        title,
+        markdown: `${frontmatter(title, description, locale, `${root}/work/${item.slug}/`)}\n# ${title}\n\n> ${localize(item.disclaimer, locale)}\n\n${localize(item.tagline, locale)}\n\n${localize(item.summary, locale)}\n\n## ${pt ? 'O problema' : 'The problem'}\n\n${localize(item.problem, locale)}\n\n## ${pt ? 'O que foi construído' : 'What was built'}\n\n${localize(item.approach, locale)}\n\n## ${pt ? 'O que a demo mostra' : 'What the demo shows'}\n\n${list(item.highlights[locale].map((entry) => `${entry.title}: ${entry.text}`))}\n\n## ${pt ? 'Decisões' : 'Decisions'}\n\n${list(item.decisions[locale].map((entry) => `${entry.title}: ${entry.text}`))}\n\n## ${t.technologies}\n\n${list(item.stack)}\n\n## ${pt ? 'Limites da demonstração' : 'Demonstration boundaries'}\n\n${localize(item.boundary, locale)}\n\n[${t.openDemo}](${root}/demos/${item.slug}/)\n`,
+      });
+      routes.push({
+        locale,
+        slug: `demos/${item.slug}`,
+        title: `${item.name} (${pt ? 'demo' : 'live demo'})`,
+        markdown: `${frontmatter(`${item.name} (${pt ? 'demo' : 'live demo'})`, description, locale, `${root}/demos/${item.slug}/`)}\n# ${item.name} (${pt ? 'demo' : 'live demo'})\n\n> ${localize(item.disclaimer, locale)}\n\n${localize(item.tagline, locale)}\n\n${localize(item.summary, locale)}\n\n${localize(item.boundary, locale)}\n\n[${t.viewProject}](${root}/work/${item.slug}/) · [${pt ? 'Falar com Rafael' : 'Contact Rafael'}](${root}/contact/)\n`,
       });
     }
     for (const service of services) {
       const title = localize(service.title, locale);
       const description = localize(service.summary, locale);
+      const related = service.projects.map((slug) => projects.find((item) => item.slug === slug)!);
       routes.push({
         locale,
         slug: `services/${service.slug}`,
         title,
-        markdown: `${frontmatter(title, description, locale, `${root}/services/${service.slug}/`)}\n# ${title}\n\n${description}\n\n## ${t.fit}\n\n${list(service.idealFor[locale])}\n\n## ${t.deliverables}\n\n${list(service.deliverables[locale])}\n\n## ${t.technologies}\n\n${list(service.technologies)}\n`,
-      });
-    }
-    for (const concept of concepts) {
-      const title = localize(concept.title, locale);
-      const description = `${localize(concept.summary, locale)} ${localize(concept.disclaimer, locale)}`;
-      routes.push({
-        locale,
-        slug: `work/landing-pages/${concept.slug}`,
-        title,
-        markdown: `${frontmatter(title, description, locale, `${root}/work/landing-pages/${concept.slug}/`)}\n# ${localize(concept.demoName, locale)}\n\n> ${localize(concept.disclaimer, locale)}\n\n${localize(concept.demoTagline, locale)}\n\n${localize(concept.summary, locale)}\n\n## ${locale === 'pt' ? 'Conteúdo da demonstração' : 'Demonstration content'}\n\n${concept.sections[locale].map((section) => `### ${section.title}\n\n${section.text}`).join('\n\n')}\n\n## ${locale === 'pt' ? 'Próximo passo ilustrativo' : 'Illustrative next step'}\n\n${concept.theme === 'hospitality' ? (locale === 'pt' ? 'Um rascunho de estadia pode organizar chegada, duração e número de pessoas apenas localmente. Não verifica disponibilidade e não envia dados.' : 'A stay draft can organize an arrival date, length, and guest count locally. It does not check availability or send data.') : (locale === 'pt' ? 'Um rascunho pode organizar o tipo de serviço e uma observação apenas localmente. Não dimensiona equipamentos, não verifica agenda e não envia dados.' : 'A draft can organize a service type and a note locally. It does not size equipment, check a schedule, or send data.')}\n\n[${locale === 'pt' ? 'Voltar aos projetos' : 'Back to work'}](${root}/work/) · [${locale === 'pt' ? 'Falar com Rafael' : 'Contact Rafael'}](${root}/contact/)\n`,
+        markdown: `${frontmatter(title, description, locale, `${root}/services/${service.slug}/`)}\n# ${title}\n\n${description}\n\n## ${t.fit}\n\n${list(service.idealFor[locale])}\n\n## ${t.deliverables}\n\n${list(service.deliverables[locale])}\n\n## ${t.evidence}\n\n${list(related.map((item) => `[${projectTitle(item, locale)}](${root}/work/${item.slug}/): ${localize(item.summary, locale)}`))}\n\n## ${t.technologies}\n\n${list(service.technologies.map((name) => technologyName(name, locale)))}\n`,
       });
     }
   }
@@ -78,9 +107,9 @@ export function machineRoutes(): MachineRoute[] {
 }
 
 export function llmsIndex() {
-  return `# ${identity.name}: Senior Software Engineer\n\n> ${identity.summary.en}\n> ${identity.availability.en}.\n\n## Main sections\n\n- [Home](https://rafaelsantanna.github.io/): Positioning, proof, services, and contact.\n- [Work](https://rafaelsantanna.github.io/work/): Five detailed case studies and two authorial landing-page demonstrations.\n- [Services](https://rafaelsantanna.github.io/services/): B2B systems, websites and landing pages, modernization, AI automation, and mobile integrations.\n- [About](https://rafaelsantanna.github.io/about/): Professional background and project context.\n- [CV](https://rafaelsantanna.github.io/cv/): Human-readable curriculum and PDF download.\n- [For agents](https://rafaelsantanna.github.io/for-agents/): Evaluation facts and machine-readable resources.\n- [Português](https://rafaelsantanna.github.io/pt/): Complete pt-BR version.\n\n## Selected work\n\n${list(cases.map((item) => `[${item.title}](https://rafaelsantanna.github.io/work/${item.slug}/): ${item.summary.en}`))}\n\n## Landing pages by industry\n\nAuthorial demonstrations created by Rafael for this portfolio.\n\n${list(concepts.map((item) => `[${item.title.en}](https://rafaelsantanna.github.io/work/landing-pages/${item.slug}/): ${item.summary.en}`))}\n\n## Services\n\n${list(services.map((service) => `[${service.title.en}](https://rafaelsantanna.github.io/services/${service.slug}/): ${service.summary.en}`))}\n\n## Contact\n\n- Email: ${identity.email}\n- WhatsApp: ${identity.phoneDisplay}\n- LinkedIn: ${identity.linkedin}\n- GitHub: ${identity.github}\n`;
+  return `# ${identity.name}: Senior Software Engineer\n\n> ${identity.summary.en}\n> ${identity.availability.en}.\n\n## Main sections\n\n- [Home](https://rafaelsantanna.github.io/en/): Positioning, working projects, services, and contact.\n- [Work](https://rafaelsantanna.github.io/en/work/): ${projects.length} demos with fictional brands and data, each with a project page and a live demo.\n- [Services](https://rafaelsantanna.github.io/en/services/): B2B systems, websites and landing pages, modernization, AI automation, and mobile integrations.\n- [About](https://rafaelsantanna.github.io/en/about/): Professional background and experience.\n- [CV](https://rafaelsantanna.github.io/en/cv/): Human-readable curriculum and PDF download.\n- [For agents](https://rafaelsantanna.github.io/en/for-agents/): Evaluation facts and machine-readable resources.\n- [Português](https://rafaelsantanna.github.io/): Primary pt-BR version of the whole site.\n\n## Projects\n\nDemos Rafael built for this portfolio. Brands and data are fictional.\n\n${list(projects.map((item) => `[${item.name}: ${item.category.en}](https://rafaelsantanna.github.io/en/work/${item.slug}/): ${item.summary.en} Live demo: https://rafaelsantanna.github.io/en/demos/${item.slug}/`))}\n\n## Services\n\n${list(services.map((service) => `[${service.title.en}](https://rafaelsantanna.github.io/en/services/${service.slug}/): ${service.summary.en}`))}\n\n## Experience\n\n${list(experience.map((item) => `${item.title.en} (${item.period.en}): ${item.summary.en}`))}\n\n## Contact\n\n- Email: ${identity.email}\n- WhatsApp: ${identity.phoneDisplay}\n- LinkedIn: ${identity.linkedin}\n- GitHub: ${identity.github}\n`;
 }
 
 export function llmsFull() {
-  return `# ${identity.name} - Complete portfolio content\n\n${machineRoutes().filter((route) => route.locale === 'en').map((route) => `${route.markdown}\n\n---`).join('\n\n')}\n\n## Additional selected work\n\n${selectedWork.map((item) => `### ${item.title}\n\n${item.description.en}\n\nTechnology: ${item.technologies.join(', ')}`).join('\n\n')}\n`;
+  return `# ${identity.name} - Complete portfolio content\n\n> Primary language: Brazilian Portuguese at https://rafaelsantanna.github.io/. This file contains the English mirror under /en/.\n\n${machineRoutes().filter((route) => route.locale === 'en' && !route.slug.startsWith('demos/')).map((route) => `${route.markdown}\n\n---`).join('\n\n')}\n`;
 }

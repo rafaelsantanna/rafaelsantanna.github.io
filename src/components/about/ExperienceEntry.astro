@@ -1,0 +1,167 @@
+---
+import Icon from '@/components/ui/Icon.astro';
+import { copy, localize, technologyName, type Experience, type Locale } from '@/data/content';
+
+interface Props { item: Experience; locale: Locale }
+
+const { item, locale } = Astro.props;
+const t = copy[locale];
+const pt = locale === 'pt';
+const headingId = `xp-${item.slug}`;
+// A no-break space keeps the slash with the preceding name ("Affinity /" then "Axians") when the heading wraps.
+const companyHeading = item.company.replaceAll(' / ', '\u00A0/ ');
+const eyebrow = localize(item.eyebrow, locale);
+const period = localize(item.period, locale).replace(' - ', ' – ');
+const story = [
+  { label: t.context, text: localize(item.context, locale) },
+  { label: t.challenge, text: localize(item.challenge, locale) },
+  { label: t.solution, text: localize(item.solution, locale) },
+];
+const ui = pt
+  ? { details: 'Contexto, desafio e solução' }
+  : { details: 'Context, challenge, and solution' };
+---
+
+<article class="xp" id={item.slug} aria-labelledby={headingId}>
+  <header class="xp__head">
+    <h3 id={headingId} class="xp__company">{companyHeading}</h3>
+    {localize(item.title, locale) !== item.company && <p class="xp__title">{localize(item.title, locale)}</p>}
+    <p class="xp__role">{localize(item.role, locale)}</p>
+    <p class="xp__meta">
+      <span class:list={['xp__period', { 'xp__period--dated': /\d/.test(period) }]}>{period}</span>
+      {eyebrow !== item.company && <span class="xp__eyebrow">{eyebrow}</span>}
+    </p>
+  </header>
+
+  <div class="xp__body">
+    <p class="xp__summary">{localize(item.summary, locale)}</p>
+
+    <div class="xp__block">
+      <h4 class="xp__label">{t.outcomes}</h4>
+      <ul class="xp__outcomes">
+        {item.outcomes[locale].map((outcome) => <li><Icon name="check" />{outcome}</li>)}
+      </ul>
+    </div>
+
+    <div class="xp__block">
+      <h4 class="xp__label">{t.technologies}</h4>
+      <ul class="tag-list">
+        {item.technologies.map((technology) => <li>{technologyName(technology, locale)}</li>)}
+      </ul>
+    </div>
+
+    <details class="xp__details">
+      <summary>
+        <span>{ui.details}<span class="visually-hidden">: {item.company}</span></span>
+        <span class="xp__toggle" aria-hidden="true"></span>
+      </summary>
+      <dl class="xp__story">
+        {story.map((entry) => (
+          <div>
+            <dt>{entry.label}</dt>
+            <dd>{entry.text}</dd>
+          </div>
+        ))}
+      </dl>
+    </details>
+
+    {item.externalUrl && item.externalLabel && (
+      <a class="text-link xp__external" href={item.externalUrl} rel="noreferrer" data-icon="up-right">
+        {localize(item.externalLabel, locale)}<Icon name="arrow-up-right" />
+      </a>
+    )}
+  </div>
+</article>
+
+<style>
+  .xp {
+    display: grid;
+    grid-template-columns: minmax(0, 0.75fr) minmax(0, 1.5fr);
+    gap: var(--space-5) clamp(2rem, 1rem + 4vw, 5.5rem);
+    padding-block: clamp(2rem, 1.5rem + 2vw, 3.5rem);
+    border-block-start: 1px solid var(--line-strong);
+  }
+
+  .xp__head {
+    position: sticky;
+    top: calc(var(--header-height) + 1.5rem);
+    align-self: start;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    min-width: 0;
+  }
+  .xp__meta { order: -1; display: flex; flex-wrap: wrap; gap: var(--space-1) var(--space-3); margin-block-end: var(--space-2); }
+  .xp__period { color: var(--violet); font-family: var(--font-display); font-size: 0.8125rem; font-weight: 600; }
+  .xp__period--dated { font-family: var(--font-mono); font-weight: 500; font-variant-numeric: tabular-nums; }
+  .xp__eyebrow { color: var(--text-muted); font-size: 0.8125rem; }
+  .xp__company { font-size: var(--step-4); font-weight: 700; letter-spacing: -0.05em; line-height: 1; overflow-wrap: anywhere; }
+  .xp__title { color: var(--text); font-family: var(--font-display); font-size: var(--step-1); font-weight: 520; letter-spacing: -0.02em; line-height: 1.3; }
+  .xp__role { color: var(--text-soft); font-size: 0.9375rem; }
+
+  .xp__body { display: grid; align-content: start; gap: var(--space-6); min-width: 0; }
+  .xp__summary { max-width: 62ch; color: var(--text); font-size: var(--step-1); line-height: 1.55; }
+  .xp__block { display: grid; gap: var(--space-3); }
+  .xp__label { color: var(--text-muted); font-size: var(--step--1); font-weight: 560; letter-spacing: 0; line-height: 1.3; }
+  .xp__outcomes { display: grid; gap: var(--space-3); max-width: 64ch; list-style: none; }
+  .xp__outcomes li { display: flex; align-items: flex-start; gap: var(--space-3); color: var(--text-soft); line-height: 1.55; }
+  .xp__outcomes :global(.icon) { margin-block-start: 0.2em; color: var(--violet); }
+
+  .xp__details { border: 1px solid var(--line); border-radius: var(--radius-control); background: var(--surface-1); }
+  .xp__details summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    min-height: 3.25rem;
+    padding: var(--space-3) var(--space-5);
+    border-radius: inherit;
+    color: var(--text);
+    font-family: var(--font-display);
+    font-weight: 600;
+    cursor: pointer;
+    list-style: none;
+    transition: background-color var(--dur-fast) var(--ease);
+  }
+  .xp__details summary::-webkit-details-marker { display: none; }
+  .xp__details summary:hover { background: var(--surface-2); }
+  .xp__details summary:focus-visible { border-radius: var(--radius-control); outline-offset: 2px; }
+  .xp__details[open] summary { border-end-start-radius: 0; border-end-end-radius: 0; border-block-end: 1px solid var(--line); }
+  .xp__toggle { position: relative; width: 0.875rem; height: 0.875rem; flex: none; color: var(--violet); }
+  .xp__toggle::before,
+  .xp__toggle::after {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    inset-block-start: calc(50% - 1px);
+    height: 2px;
+    border-radius: 2px;
+    background: currentColor;
+    transition: transform var(--dur) var(--ease);
+  }
+  .xp__toggle::after { transform: rotate(90deg); }
+  .xp__details[open] .xp__toggle::after { transform: rotate(0deg); }
+
+  .xp__story { display: grid; gap: var(--space-5); padding: var(--space-5); }
+  .xp__story > div { display: grid; grid-template-columns: minmax(0, 11rem) minmax(0, 1fr); gap: var(--space-2) var(--space-5); }
+  .xp__story dt { color: var(--text); font-family: var(--font-display); font-size: 0.9375rem; font-weight: 600; line-height: 1.4; }
+  .xp__story dd { max-width: 62ch; color: var(--text-soft); line-height: 1.6; }
+
+  .xp__external { justify-self: start; margin-block-start: calc(var(--space-2) * -1); }
+
+  @media (max-width: 63.99em) {
+    .xp { grid-template-columns: minmax(0, 1fr); }
+    .xp__head { position: static; }
+  }
+
+  @media (max-width: 47.99em) {
+    .xp__story > div { grid-template-columns: minmax(0, 1fr); }
+    .xp__details summary { padding-inline: var(--space-4); }
+    .xp__story { padding: var(--space-4); }
+  }
+
+  @media (forced-colors: active) {
+    .xp__details { border-color: CanvasText; }
+    .xp__toggle::before, .xp__toggle::after { background: CanvasText; }
+  }
+</style>

@@ -1,0 +1,121 @@
+---
+import DemoBar from '@/components/demos/DemoBar.astro';
+import type { DemoProject, Locale } from '@/data/content';
+import { customers, products } from './catalog.ts';
+import { exampleDraft, toOrderInput } from './draft.ts';
+import { fill, percent } from './format.ts';
+import { icons, logo } from './icons.ts';
+import LegacyScreen from './LegacyScreen.astro';
+import ModernScreen from './ModernScreen.astro';
+import ParityPanel from './ParityPanel.astro';
+import { DISCOUNT_LIMIT, RULE_IDS, evaluateOrder } from './rules.ts';
+import { strings } from './strings.ts';
+import './ventura.css';
+
+interface Props { locale: Locale; project: DemoProject }
+
+const { locale, project } = Astro.props;
+const t = strings[locale];
+const p = t.page;
+const draft = exampleDraft();
+const evaluation = evaluateOrder(toOrderInput(draft), 'seller');
+const facts: Array<[number, string]> = [
+  [products.length, p.facts.products],
+  [customers.length, p.facts.customers],
+  [RULE_IDS.length, p.facts.rules],
+  [1, p.facts.modules],
+];
+const modes = ['legacy', 'compare', 'modern'] as const;
+const config = { locale, t };
+---
+
+<DemoBar locale={locale} project={project} />
+
+<div class="demo-legacy-modernization vt" data-ventura data-mode="compare">
+  <header class="vt-hero">
+    <div class="vt-wrap">
+      <p class="vt-brand"><Fragment set:html={logo} /><span class="vt-brand__name">Ventura</span><span class="vt-brand__dot" aria-hidden="true">·</span><span>{p.module}</span><span class="vt-brand__line">{p.brandLine}</span></p>
+      <div class="vt-hero__grid">
+        <div class="vt-hero__copy">
+          <p class="vt-eyebrow">{p.eyebrow}</p>
+          <h1>{p.title}</h1>
+          <p class="vt-hero__lead">{p.lead}</p>
+        </div>
+        <dl class="vt-facts">
+          {facts.map(([value, label]) => <div><dt>{label}</dt><dd>{value}</dd></div>)}
+        </dl>
+      </div>
+    </div>
+  </header>
+
+  <div class="vt-controls" data-controls>
+    <div class="vt-wrap vt-controls__inner">
+      <div class="vt-control">
+        <span class="vt-control__label" id="vt-mode-label">{p.modeLabel}</span>
+        <div class="vt-seg vt-seg--mode" role="radiogroup" aria-labelledby="vt-mode-label" data-radio="mode">
+          {modes.map((mode) => (
+            <button type="button" class="vt-seg__option" role="radio" aria-checked={mode === 'compare' ? 'true' : 'false'} tabindex={mode === 'compare' ? 0 : -1} data-value={mode}>{p.modes[mode]}</button>
+          ))}
+        </div>
+      </div>
+      <div class="vt-control">
+        <span class="vt-control__label" id="vt-role-label">{p.roleLabel}</span>
+        <div class="vt-seg" role="radiogroup" aria-labelledby="vt-role-label" data-radio="role">
+          <button type="button" class="vt-seg__option" role="radio" aria-checked="true" tabindex="0" data-value="seller">{t.roles.seller}</button>
+          <button type="button" class="vt-seg__option" role="radio" aria-checked="false" tabindex="-1" data-value="manager">{t.roles.manager}</button>
+        </div>
+        <span class="vt-control__hint" data-role-hint>{fill(p.roleHint, { limit: percent(DISCOUNT_LIMIT.seller, locale) })}</span>
+      </div>
+      <button type="button" class="vt-btn vt-btn--quiet vt-controls__reset" data-reset><Fragment set:html={icons.reset} /><span>{p.reset}</span></button>
+    </div>
+  </div>
+
+  <section class="vt-stage-section" aria-labelledby="vt-stage-title">
+    <div class="vt-wrap">
+      <div class="vt-stage-head">
+        <h2 class="vt-stage-head__title" id="vt-stage-title">{p.stageTitle}</h2>
+        <p class="vt-stage-head__caption" data-stage-caption>{p.captions.compare}</p>
+        <noscript><p class="vt-noscript">{p.noscript}</p></noscript>
+      </div>
+
+      <div class="vt-stage" data-stage style="--vt-split: 50%">
+        <div class="vt-stage__pane vt-stage__pane--legacy" data-pane="legacy">
+          <p class="vt-stage__scroll-hint">{p.scrollHint}</p>
+          <div class="vt-stage__scroll" data-legacy-frame data-region-label={p.scrollRegion}>
+            <LegacyScreen locale={locale} t={t} draft={draft} calc={evaluation} role="seller" />
+          </div>
+        </div>
+        <div class="vt-stage__pane vt-stage__pane--modern" data-pane="modern">
+          <ModernScreen locale={locale} t={t} draft={draft} evaluation={evaluation} />
+        </div>
+        <div class="vt-stage__scrub" aria-hidden="true" data-scrub></div>
+        <div class="vt-divider" data-divider>
+          <div class="vt-divider__grip">
+            <span class="vt-divider__tag vt-divider__tag--before" aria-hidden="true"><strong>{p.sides.before}</strong>{p.dividerNotes.before}</span>
+            <div class="vt-divider__knob" role="slider" tabindex="0" aria-label={p.divider} aria-orientation="horizontal" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50" aria-valuetext={fill(p.dividerValue, { legacy: 50, modern: 50 })} data-slider>
+              <Fragment set:html={icons.grip} />
+            </div>
+            <span class="vt-divider__tag vt-divider__tag--after" aria-hidden="true"><strong>{p.sides.after}</strong>{p.dividerNotes.after}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <ParityPanel locale={locale} t={t} evaluation={evaluation} />
+
+  <footer class="vt-foot">
+    <div class="vt-wrap">
+      <p><Fragment set:html={logo} /><span>{p.footer}</span></p>
+    </div>
+  </footer>
+
+  <p class="vt-sr-only" aria-live="polite" data-live></p>
+  <script type="application/json" data-ventura-config set:html={JSON.stringify(config).replace(/</g, '\\u003c')} />
+</div>
+
+<script>
+  import { boot } from './client/boot.ts';
+
+  boot();
+</script>

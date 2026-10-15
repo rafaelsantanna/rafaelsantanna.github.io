@@ -1,0 +1,35 @@
+---
+import Document from '@/layouts/Document.astro';
+import '@/styles/demo-base.css';
+import { identity, localize, previewImage, withLocale, type DemoProject, type Locale } from '@/data/content';
+
+interface Props { locale: Locale; project: DemoProject }
+
+const { locale, project } = Astro.props;
+const routePath = `demos/${project.slug}`;
+const title = `${project.name} (${locale === 'pt' ? 'demo' : 'live demo'})`;
+const description = `${localize(project.tagline, locale)} ${localize(project.summary, locale)} ${localize(project.disclaimer, locale)}`;
+const pageSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'CreativeWork',
+  name: project.name,
+  description: `${localize(project.summary, locale)} ${localize(project.disclaimer, locale)}`,
+  creator: { '@type': 'Person', name: identity.name },
+  image: new URL(previewImage(project, locale), Astro.site).toString(),
+  url: new URL(withLocale(locale, routePath), Astro.site).toString(),
+  genre: 'Portfolio demo',
+  keywords: project.stack.join(', '),
+};
+// WCAG relative luminance of the brand base decides the browser color scheme for the demo.
+const luminance = [1, 3, 5]
+  .map((start) => Number.parseInt(project.palette.base.slice(start, start + 2), 16) / 255)
+  .map((channel) => (channel <= 0.03928 ? channel / 12.92 : ((channel + 0.055) / 1.055) ** 2.4))
+  .reduce((sum, channel, index) => sum + channel * [0.2126, 0.7152, 0.0722][index], 0);
+const isLight = luminance > 0.18;
+---
+
+<Document locale={locale} title={title} description={description} routePath={routePath} image={previewImage(project, locale)} imageAlt={localize(project.preview.alt, locale)} pageSchema={pageSchema} themeColor={project.palette.base} colorScheme={isLight ? 'light' : 'dark'} bodyClass={`demo-page demo-page--${project.slug}`}>
+  <main id="main-content">
+    <slot />
+  </main>
+</Document>

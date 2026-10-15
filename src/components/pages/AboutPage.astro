@@ -1,107 +1,72 @@
 ---
-import { cases, clients, copy, identity, timeline, withLocale, type Locale } from '@/data/content';
+import Icon from '@/components/ui/Icon.astro';
+import AboutIntro from '@/components/about/AboutIntro.astro';
+import WorkPrinciples from '@/components/about/WorkPrinciples.astro';
+import ExperienceEntry from '@/components/about/ExperienceEntry.astro';
+import OtherWork from '@/components/about/OtherWork.astro';
+import { copy, experience, withLocale, type Locale } from '@/data/content';
+
 interface Props { locale: Locale }
+
 const { locale } = Astro.props;
 const t = copy[locale];
-const localizeText = (text: { pt: string; en: string }, currentLocale: Locale) => text[currentLocale];
-const projectExamples = [
-  {
-    slug: 'edgedata',
-    challenge: { pt: 'Inventário, credenciais e histórico operacional espalhados por ferramentas diferentes.', en: 'Inventory, credentials, and operational history spread across separate tools.' },
-    decision: { pt: 'Reunir essas tarefas em um workspace on-premise com acesso por papéis e histórico rastreável.', en: 'Bring those tasks into an on-premise workspace with role-based access and traceable history.' },
-  },
-  {
-    slug: 'academic-operations',
-    challenge: { pt: 'Jornadas acadêmicas longas com documentos, validações condicionais e diferentes permissões.', en: 'Long academic journeys involving documents, conditional validation, and different permissions.' },
-    decision: { pt: 'Compor interfaces reutilizáveis e APIs autenticadas para manter módulos críticos consistentes.', en: 'Combine reusable interfaces and authenticated APIs to keep critical modules consistent.' },
-  },
-  {
-    slug: 'corporate-learning',
-    challenge: { pt: 'Plataformas de aprendizagem que precisam se adaptar aos dados e processos de cada organização.', en: 'Learning platforms that need to fit each organization’s data and processes.' },
-    decision: { pt: 'Conectar jornadas e relatórios a sistemas empresariais, incluindo ERP, CRM, BI e ferramentas de RH.', en: 'Connect learning journeys and reporting to enterprise systems, including ERP, CRM, BI, and HR tools.' },
-  },
-].map((example) => ({ ...example, case: cases.find((item) => item.slug === example.slug)! }));
+const pt = locale === 'pt';
+// Legacy case-study URLs redirect here, so the anchor names stay stable per locale.
+const experienceId = pt ? 'experiencia' : 'experience';
+const ui = pt
+  ? {
+      title: 'Do produto próprio a plataformas com milhares de usuários.',
+      lede: 'Abra cada item para ver o contexto, o desafio e a solução.',
+      cv: 'Ver currículo completo',
+      ctaTitle: 'Agora veja o trabalho funcionando.',
+      ctaText: 'Os projetos deste portfólio são demonstrações autorais que você pode abrir e usar no navegador. O currículo completo está em PDF.',
+      cvShort: 'Ver currículo',
+    }
+  : {
+      title: 'From an owned product to platforms with thousands of users.',
+      lede: 'Open any entry for the context, the challenge, and the solution.',
+      cv: 'View the full CV',
+      ctaTitle: 'Now see the work running.',
+      ctaText: 'The projects in this portfolio are demos I built that you can open and use in your browser. The full CV is available as a PDF.',
+      cvShort: 'View CV',
+    };
 ---
 
-<section class="page-hero page-hero--about shell">
-  <p class="section-index">{t.nav.about}</p>
-  <h1>{t.aboutTitle}</h1>
-  <p>{t.aboutIntro}</p>
-  <dl class="about-hero__facts">
-    <div><dt>10+</dt><dd>{locale === 'pt' ? 'anos construindo software' : 'years building software'}</dd></div>
-    <div><dt>{identity.location}</dt><dd>{locale === 'pt' ? 'base atual' : 'current base'}</dd></div>
-  </dl>
-</section>
+<AboutIntro locale={locale} experienceId={experienceId} />
 
-<section class="about-evidence shell" aria-labelledby="about-evidence-title">
-  <header class="about-evidence__heading" data-reveal>
-    <p class="section-index">{locale === 'pt' ? 'Trabalho em contexto' : 'Work in context'}</p>
-    <h2 id="about-evidence-title">{locale === 'pt' ? 'O desafio orienta a decisão técnica.' : 'The challenge shapes the technical decision.'}</h2>
-    <p>{locale === 'pt' ? 'Alguns exemplos de como necessidades operacionais se traduzem em sistemas e fluxos.' : 'A few examples of how operational needs translate into systems and workflows.'}</p>
-  </header>
-  <ol class="about-evidence__list">
-    {projectExamples.map((example, index) => (
-      <li class="about-evidence__item" data-reveal>
-        <span class="about-evidence__index">0{index + 1} <span aria-hidden="true">/</span> {example.case.title}</span>
-        <div class="about-evidence__columns">
-          <div><h3>{locale === 'pt' ? 'Desafio' : 'Challenge'}</h3><p>{localizeText(example.challenge, locale)}</p></div>
-          <div><h3>{locale === 'pt' ? 'Decisão' : 'Decision'}</h3><p>{localizeText(example.decision, locale)}</p></div>
-        </div>
-        <a class="text-link" href={withLocale(locale, `work/${example.case.slug}`)}>{locale === 'pt' ? 'Ler o caso' : 'Read the case'}<span aria-hidden="true">↗</span></a>
-      </li>
-    ))}
-  </ol>
-</section>
+<WorkPrinciples locale={locale} />
 
-<section class="timeline shell">
-  <div class="section-heading section-heading--compact" data-reveal>
-    <p class="section-index">{locale === 'pt' ? 'Trajetória' : 'Experience'}</p>
-    <h2>{locale === 'pt' ? 'Mais de uma década entregando sistemas.' : 'More than a decade shipping systems.'}</h2>
-  </div>
-  <ol>
-    {timeline.map((item) => (
-      <li data-reveal><time>{item.period}</time><div><strong>{item.company}</strong><span>{item.role[locale]}</span></div></li>
-    ))}
-  </ol>
-</section>
-
-<section class="experience-context">
+<section class="experience-detail" id={experienceId} aria-labelledby="experience-detail-title">
   <div class="shell">
-    <p class="section-index">{locale === 'pt' ? 'Experiência' : 'Selected organizations'}</p>
-    <h2>{locale === 'pt' ? 'Projetos em educação, varejo, infraestrutura, logística, saúde e operações empresariais.' : 'Projects across education, retail, infrastructure, logistics, healthcare, and enterprise operations.'}</h2>
-    <div class="experience-context__names">{clients.map((client) => <span>{client}</span>)}</div>
-    <div class="experience-context__source"><p class="small-meta">{locale === 'pt' ? 'Organizações citadas como contexto de projetos no currículo profissional.' : 'Organizations cited as project context in the professional CV.'}</p><a class="text-link" href={withLocale(locale, 'cv')}>{locale === 'pt' ? 'Ver currículo' : 'View CV'}<span aria-hidden="true">↗</span></a></div>
+    <header class="section-head" data-reveal>
+      <div class="section-head__title">
+        <p class="section-index">{t.experienceTitle}</p>
+        <h2 id="experience-detail-title">{ui.title}</h2>
+      </div>
+      <div class="section-head__aside">
+        <p class="lede">{ui.lede}</p>
+        <a class="text-link" href={withLocale(locale, 'cv')}>{ui.cv}<Icon name="arrow-right" /></a>
+      </div>
+    </header>
+    <ol class="experience-detail__list">
+      {experience.map((item) => <li><ExperienceEntry item={item} locale={locale} /></li>)}
+    </ol>
   </div>
+  <OtherWork locale={locale} />
 </section>
+
+<aside class="cta-band shell" aria-labelledby="about-cta-title">
+  <div>
+    <h2 id="about-cta-title">{ui.ctaTitle}</h2>
+    <p>{ui.ctaText}</p>
+  </div>
+  <div class="button-row">
+    <a class="button button--primary" href={withLocale(locale, 'work')}>{t.seeWork}<Icon name="arrow-right" /></a>
+    <a class="button button--secondary" href={withLocale(locale, 'cv')}>{ui.cvShort}</a>
+  </div>
+</aside>
 
 <style>
-  .about-evidence { padding-block: 0 var(--space-7); }
-  .about-evidence__heading { display: grid; grid-template-columns: minmax(9rem, 0.42fr) minmax(0, 1.58fr); gap: 0.8rem var(--space-5); margin-block-end: clamp(2rem, 4vw, 3rem); }
-  .about-evidence__heading .section-index { grid-row: span 2; }
-  .about-evidence__heading h2 { max-width: 17ch; font-size: clamp(2rem, 4vw, 3.5rem); }
-  .about-evidence__heading > p:last-child { max-width: 55ch; color: var(--ink-soft); }
-  .about-evidence__list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(1rem, 2.5vw, 2rem); margin: 0; padding: 0; list-style: none; }
-  .about-evidence__item { display: grid; grid-template-rows: auto 1fr auto; gap: 1.25rem; min-width: 0; padding: 1.2rem; border: 1px solid var(--line); background: var(--paper-soft); }
-  .about-evidence__index { color: var(--cobalt); font-family: var(--font-display); font-size: 0.8rem; font-weight: 680; }
-  .about-evidence__index span { padding-inline: 0.25rem; color: var(--muted); }
-  .about-evidence__columns { display: grid; align-content: start; gap: 1rem; }
-  .about-evidence__columns h3 { margin-block-end: 0.35rem; color: var(--muted); font-family: var(--font-display); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
-  .about-evidence__columns p { color: var(--ink-soft); font-size: 0.91rem; }
-  .about-evidence__item .text-link { justify-self: start; }
-  .experience-context__source { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem 1.25rem; margin-block-start: var(--space-4); }
-  .experience-context__source .small-meta { margin: 0; }
-  @media (max-width: 54rem) { .about-evidence__list { grid-template-columns: 1fr; } }
-  @media (max-width: 42rem) { .about-evidence__heading { grid-template-columns: 1fr; } .about-evidence__heading .section-index { grid-row: auto; } }
+  .experience-detail { padding-block-start: var(--section-space); border-block-start: 1px solid var(--line); background: linear-gradient(180deg, var(--surface-1), var(--canvas) 22rem); }
+  .experience-detail__list { list-style: none; }
 </style>
-
-<section class="portrait-note shell" data-reveal>
-  <figure class="portrait-note__frame">
-    <img src="/images/profile.jpg" alt={locale === 'pt' ? 'Rafael Sant’ Anna usando óculos e fones de ouvido' : 'Rafael Sant’ Anna wearing glasses and headphones'} width="960" height="950" />
-    <figcaption>RAFAEL / VISEU · PT</figcaption>
-  </figure>
-  <div>
-    <p class="section-index">{locale === 'pt' ? 'Sobre mim' : 'About me'}</p>
-    <h2>{locale === 'pt' ? 'Engenharia com contexto, responsabilidade e comunicação direta.' : 'Engineering with context, ownership, and direct communication.'}</h2>
-    <p>{locale === 'pt' ? 'Trabalho próximo de produto, operações e engenharia para transformar necessidades ambíguas em decisões claras, entregas incrementais e sistemas sustentáveis.' : 'I work closely with product, operations, and engineering to turn ambiguous needs into clear decisions, incremental delivery, and maintainable systems.'}</p>
-  </div>
-</section>

@@ -1,0 +1,39 @@
+---
+import type { Locale } from '@/data/content';
+import { strings } from '@/components/demos/logistics-control/i18n';
+import { nowLabel, snapshotClock, timeOf } from '@/components/demos/logistics-control/lib/clock';
+import { formatNumber } from '@/components/demos/logistics-control/lib/format';
+import { generateDay } from '@/components/demos/logistics-control/lib/generate';
+import { computeKpis } from '@/components/demos/logistics-control/lib/query';
+
+interface Props { locale: Locale }
+
+const pt = Astro.props.locale === 'pt';
+const t = strings[Astro.props.locale];
+const BAR_COUNT = 10;
+/** computeKpis samples the day every 30 minutes up to the clock anchor, then appends the live value. */
+const SAMPLE_MINUTES = 30;
+/** Same vertical scale as the demo's on-time sparkline. */
+const SCALE = { min: 0.7, max: 1 };
+
+// The demo's own snapshot: the same seeded day and clock its server render shows.
+const clock = snapshotClock();
+const kpis = computeKpis(generateDay().deliveries, clock);
+const bars = kpis.series.onTime.slice(-BAR_COUNT).map((ratio) => {
+  const share = (ratio - SCALE.min) / (SCALE.max - SCALE.min);
+  return Math.round(Math.min(Math.max(share, 0.06), 1) * 100);
+});
+const firstSample = timeOf(clock, -SAMPLE_MINUTES * (BAR_COUNT - 2));
+---
+
+<div class="m-chart">
+  <div class="m-row">
+    <span class="m-label">{pt ? 'Entregas no prazo' : 'On-time deliveries'}</span>
+    <span class="m-pill">{nowLabel(clock)}</span>
+  </div>
+  <p class="m-kpi">{formatNumber(t.lang, kpis.onTime * 100, 1)}<small>%</small></p>
+  <div class="m-bars">
+    {bars.map((height, index) => <i class:list={{ 'is-on': index === bars.length - 1 }} style={`--h:${height}%`}></i>)}
+  </div>
+  <div class="m-axis"><span>{firstSample}</span><span>{pt ? 'agora' : 'now'}</span></div>
+</div>

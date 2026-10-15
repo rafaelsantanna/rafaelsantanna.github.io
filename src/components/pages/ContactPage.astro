@@ -1,82 +1,268 @@
 ---
+import Icon from '@/components/ui/Icon.astro';
 import { copy, identity, type Locale } from '@/data/content';
+
 interface Props { locale: Locale }
+
 const { locale } = Astro.props;
 const t = copy[locale];
-const emailSubject = encodeURIComponent(locale === 'pt' ? 'Projeto ou oportunidade PJ' : 'Project or remote contract opportunity');
-const whatsappText = encodeURIComponent(locale === 'pt' ? 'Olá Rafael, gostaria de conversar sobre um projeto ou oportunidade PJ.' : 'Hello Rafael, I would like to discuss a project or remote contract opportunity.');
+const pt = locale === 'pt';
+const ui = pt
+  ? {
+      channels: 'Fale direto comigo',
+      subject: 'Projeto ou oportunidade PJ',
+      whatsappText: 'Olá, Rafael! Gostaria de conversar sobre um projeto ou uma oportunidade PJ.',
+      copy: 'Copiar',
+      copied: 'Copiado',
+      copyEmail: 'email',
+      copyPhone: 'telefone',
+      emailDone: 'Email copiado para a área de transferência.',
+      phoneDone: 'Telefone copiado para a área de transferência.',
+      failed: 'Não foi possível copiar. Selecione o contato e copie manualmente.',
+      cv: 'Baixar CV',
+      cvMeta: 'PDF em português',
+      briefTitle: 'O que mandar na primeira mensagem',
+      briefLede: 'Não precisa ser formal. Com estes pontos eu já entendo o caso na primeira leitura. Links e prints ajudam.',
+      brief: [
+        { title: 'Contexto', text: 'A empresa, o produto ou a operação, e o que acontece hoje.' },
+        { title: 'Quem vai usar', text: 'Equipe interna, clientes ou pessoas em campo, e em que situação.' },
+        { title: 'O que precisa ficar pronto', text: 'Um sistema novo, uma modernização, um site, uma automação com IA ou um app.' },
+        { title: 'Prazo e fase atual', text: 'Se é ideia, protótipo ou algo já em produção, e as principais restrições.' },
+        { title: 'Formato', text: 'Vaga PJ remota ou projeto freelance, e como a equipe trabalha hoje.' },
+      ],
+      template: 'Escrever email com este roteiro',
+      greeting: 'Olá, Rafael!',
+      availability: 'Disponibilidade',
+      where: `${identity.location} · Remoto · ${identity.workingHours.pt}`,
+    }
+  : {
+      channels: 'Reach me directly',
+      subject: 'Project or remote contract opportunity',
+      whatsappText: 'Hi Rafael, I would like to talk about a project or a remote contract opportunity.',
+      copy: 'Copy',
+      copied: 'Copied',
+      copyEmail: 'email',
+      copyPhone: 'phone number',
+      emailDone: 'Email copied to the clipboard.',
+      phoneDone: 'Phone number copied to the clipboard.',
+      failed: 'Could not copy. Select the contact and copy it manually.',
+      cv: 'Download CV',
+      cvMeta: 'PDF in English',
+      briefTitle: 'What to send in your first message',
+      briefLede: 'No need to be formal. With these points I can understand the case on the first read. Links and screenshots help.',
+      brief: [
+        { title: 'Context', text: 'The company, product, or operation, and what happens today.' },
+        { title: 'Who will use it', text: 'An internal team, customers, or field staff, and in what situation.' },
+        { title: 'What needs to ship', text: 'A new system, a modernization, a website, an AI automation, or an app.' },
+        { title: 'Timeline and stage', text: 'Idea, prototype, or already in production, plus the main constraints.' },
+        { title: 'Format', text: 'Remote contract (PJ) role or freelance project, and how the team works today.' },
+      ],
+      template: 'Write an email with this outline',
+      greeting: 'Hi Rafael,',
+      availability: 'Availability',
+      where: `${identity.location} · Remote · ${identity.workingHours.en}`,
+    };
+const emailHref = `mailto:${identity.email}?subject=${encodeURIComponent(ui.subject)}`;
+const templateBody = [ui.greeting, '', ...ui.brief.map((item) => `${item.title}: `)].join('\n');
+const templateHref = `${emailHref}&body=${encodeURIComponent(templateBody)}`;
+const whatsappHref = `https://wa.me/${identity.phoneE164}?text=${encodeURIComponent(ui.whatsappText)}`;
+const channels = [
+  { label: 'Email', icon: 'mail' as const, href: emailHref, value: identity.email, hidden: '', copyWhat: ui.copyEmail, done: ui.emailDone },
+  { label: 'WhatsApp', icon: 'message' as const, href: whatsappHref, value: identity.phoneDisplay, hidden: `${t.whatsapp}: `, copyWhat: ui.copyPhone, done: ui.phoneDone, rel: 'noreferrer' },
+];
+const routes = [
+  { href: identity.linkedin, label: 'LinkedIn', meta: identity.linkedinHandle, icon: 'arrow-up-right' as const, rel: 'me noreferrer' },
+  { href: identity.github, label: 'GitHub', meta: identity.github.replace('https://github.com', ''), icon: 'arrow-up-right' as const, rel: 'me noreferrer' },
+  { href: identity.cv[locale], label: ui.cv, meta: ui.cvMeta, icon: 'download' as const, download: true },
+];
 ---
 
-<section class="contact-page shell">
-  <div class="contact-page__heading">
-    <p class="availability">{identity.availability[locale]}</p>
+<div class="contact shell">
+  <header class="contact__head">
+    <p class="status-pill"><span class="status-pill__dot" aria-hidden="true"></span>{identity.availabilityShort[locale]}</p>
     <h1>{t.contactTitle}</h1>
-    <p>{t.contactIntro}</p>
-  </div>
-  <div class="contact-routes">
-    <a href={`mailto:${identity.email}?subject=${emailSubject}`}>
-      <span><strong>{t.email}</strong><small>{identity.email}</small></span>
-      <b aria-hidden="true">↗</b>
-    </a>
-    <a href={`https://wa.me/${identity.phoneE164}?text=${whatsappText}`} rel="noreferrer">
-      <span><strong>{t.whatsapp}</strong><small>{identity.phoneDisplay}</small></span>
-      <b aria-hidden="true">↗</b>
-    </a>
-    <a href={identity.linkedin} rel="me noreferrer">
-      <span><strong>LinkedIn</strong><small>/in/devrafaelsantanna</small></span>
-      <b aria-hidden="true">↗</b>
-    </a>
-  </div>
-  <aside class="contact-brief" data-reveal>
-    <p class="section-index">{locale === 'pt' ? 'O que incluir na mensagem' : 'What to include in your message'}</p>
-    <ul>
-      <li>{locale === 'pt' ? 'O problema operacional ou objetivo do produto.' : 'The operational problem or product goal.'}</li>
-      <li>{locale === 'pt' ? 'Quem utilizará o sistema e em qual contexto.' : 'Who will use the system and in what context.'}</li>
-      <li>{locale === 'pt' ? 'Prazo, estágio atual e principais restrições.' : 'Timeline, current stage, and primary constraints.'}</li>
-    </ul>
-  </aside>
-  <div class="contact-copy-tools" data-reveal>
-    <p>{locale === 'pt' ? 'Prefere copiar o contato?' : 'Prefer to copy the contact?'}</p>
-    <div>
-      <button type="button" data-copy-value={identity.email} data-copy-label={locale === 'pt' ? 'Email copiado.' : 'Email copied.'}>{locale === 'pt' ? 'Copiar email' : 'Copy email'}</button>
-      <button type="button" data-copy-value={identity.phoneDisplay} data-copy-label={locale === 'pt' ? 'Telefone copiado.' : 'Phone copied.'}>{locale === 'pt' ? 'Copiar telefone' : 'Copy phone'}</button>
+    <p class="lede">{t.contactIntro}</p>
+  </header>
+
+  <div class="contact__grid">
+    <div class="contact__main">
+      <section class="channels" aria-labelledby="channels-title" data-copy-root>
+        <h2 id="channels-title" class="channels__title">{ui.channels}</h2>
+        <ul class="channels__list">
+          {channels.map((channel) => (
+            <li class="channel">
+              <span class="channel__label"><Icon name={channel.icon} />{channel.label}</span>
+              <a class="channel__value" href={channel.href} rel={channel.rel}>
+                {channel.hidden && <span class="visually-hidden">{channel.hidden}</span>}{channel.value}
+              </a>
+              <button
+                class="button button--secondary button--small channel__copy"
+                type="button"
+                hidden
+                data-copy-button
+                data-copy-value={channel.value}
+                data-label-idle={ui.copy}
+                data-label-done={ui.copied}
+                data-status-done={channel.done}
+                data-status-failed={ui.failed}
+              >
+                <span class="channel__copy-icon channel__copy-icon--idle"><Icon name="copy" /></span>
+                <span class="channel__copy-icon channel__copy-icon--done"><Icon name="check" /></span>
+                <span data-copy-label>{ui.copy}</span><span class="visually-hidden"> {channel.copyWhat}</span>
+              </button>
+            </li>
+          ))}
+        </ul>
+        <p class="channels__status" role="status" data-copy-status></p>
+
+        <ul class="channels__routes">
+          {routes.map((route) => (
+            <li>
+              <a class="route" href={route.href} rel={route.rel} download={route.download ? '' : undefined}>
+                <Icon name={route.icon} />
+                <span class="route__text"><span class="route__label">{route.label}</span><span class="route__meta">{route.meta}</span></span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <aside class="callout contact__availability" aria-labelledby="availability-title">
+        <Icon name="clock" />
+        <div>
+          <h2 id="availability-title">{ui.availability}</h2>
+          <p>{identity.availability[locale]}.</p>
+          <p class="contact__where">{ui.where}</p>
+        </div>
+      </aside>
     </div>
-    <p class="contact-copy-tools__status" aria-live="polite" role="status" data-copy-error={locale === 'pt' ? 'Não foi possível copiar. Selecione e copie o contato manualmente.' : 'Could not copy. Select and copy the contact manually.'}></p>
+
+    <aside class="brief" aria-labelledby="brief-title">
+      <h2 id="brief-title">{ui.briefTitle}</h2>
+      <p class="brief__lede">{ui.briefLede}</p>
+      <ol class="brief__list">
+        {ui.brief.map((item, index) => (
+          <li>
+            <span class="brief__index" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+            <span class="brief__text"><strong>{item.title}</strong> {item.text}</span>
+          </li>
+        ))}
+      </ol>
+      <a class="button button--secondary brief__action" href={templateHref}><Icon name="mail" />{ui.template}</a>
+    </aside>
   </div>
-</section>
+
+</div>
 
 <script>
-  const status = document.querySelector<HTMLElement>('.contact-copy-tools__status');
-  const copyFallback = (value: string) => {
-    const field = document.createElement('textarea');
-    field.value = value;
-    field.style.position = 'fixed';
-    field.style.opacity = '0';
-    document.body.append(field);
-    try {
-      field.select();
-      return document.execCommand('copy');
-    } finally {
-      field.remove();
-    }
-  };
-  document.querySelectorAll<HTMLButtonElement>('[data-copy-value]').forEach((button) => {
-    button.addEventListener('click', async () => {
-      const value = button.dataset.copyValue ?? '';
-      let copied = false;
-      try {
-        await navigator.clipboard.writeText(value);
-        copied = true;
-      } catch {
-        try {
-          copied = copyFallback(value);
-        } catch {
-          copied = false;
-        }
-      }
-      if (status) {
-        status.textContent = copied ? button.dataset.copyLabel ?? '' : status.dataset.copyError ?? '';
-      }
-    });
-  });
+  import { enhanceCopyButtons } from '@/components/ui/copy-buttons';
+
+  document.querySelectorAll<HTMLElement>('[data-copy-root]').forEach(enhanceCopyButtons);
 </script>
+
+<style>
+  .contact { padding-block: clamp(2.5rem, 2rem + 4vw, 6rem) 0; }
+  .contact__head {
+    display: grid;
+    grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+    grid-template-areas: 'pill pill' 'title lede';
+    align-items: end;
+    gap: var(--space-5) var(--space-8);
+  }
+  .contact__head .status-pill { grid-area: pill; justify-self: start; }
+  .contact__head h1 { grid-area: title; max-width: 12ch; font-size: var(--step-6); font-weight: 700; letter-spacing: -0.052em; line-height: 0.98; }
+  .contact__head .lede { grid-area: lede; max-width: 46ch; padding-block-end: 0.4rem; }
+
+  .contact__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+    align-items: start;
+    gap: var(--space-7) clamp(2.5rem, 1.5rem + 4vw, 6rem);
+    margin-block-start: clamp(3rem, 2rem + 3vw, 5rem);
+  }
+
+  .channels { display: grid; gap: var(--space-5); min-width: 0; container-type: inline-size; }
+  .channels__title, .brief h2 { color: var(--text-muted); font-size: var(--step--1); font-weight: 560; letter-spacing: 0; line-height: 1.3; }
+  .channels__list { list-style: none; border-block-start: 1px solid var(--line); }
+  .channel {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas: 'label copy' 'value value';
+    align-items: center;
+    gap: var(--space-3) var(--space-5);
+    padding-block: var(--space-5);
+    border-block-end: 1px solid var(--line);
+  }
+  .channel__copy { grid-area: copy; }
+  .channel__label { grid-area: label; display: inline-flex; align-items: center; gap: var(--space-2); color: var(--text-muted); font-family: var(--font-display); font-size: var(--step--1); font-weight: 520; }
+  .channel__label :global(.icon) { color: var(--violet); }
+  .channel__value {
+    grid-area: value;
+    display: inline-flex;
+    align-items: center;
+    min-width: 0;
+    min-height: 2.75rem;
+    justify-self: start;
+    color: var(--text);
+    font-family: var(--font-display);
+    font-size: min(2.625rem, 7cqi);
+    font-weight: 600;
+    letter-spacing: -0.04em;
+    line-height: 1.15;
+    overflow-wrap: anywhere;
+    text-decoration: underline;
+    text-decoration-color: var(--violet-line);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 0.18em;
+    transition: text-decoration-color var(--dur-fast) var(--ease);
+  }
+  .channel__value:hover { text-decoration-color: var(--violet); }
+  .channel__copy-icon { display: inline-flex; }
+  .channel__copy-icon--done,
+  .channel__copy[data-copied] .channel__copy-icon--idle { display: none; }
+  .channel__copy[data-copied] .channel__copy-icon--done { display: inline-flex; color: var(--violet); }
+  .channel__copy[data-copied] { border-color: var(--violet-line); }
+  .channels__status { min-height: 1.5em; margin-block-start: calc(var(--space-3) * -1); color: var(--text-soft); font-size: var(--step--1); }
+  .channels__status[data-error] { color: #ffb4b4; }
+  .channels__routes { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-3); list-style: none; }
+  @container (min-width: 42rem) {
+    .channels__routes { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  }
+  .channels__routes .route { height: 100%; padding-inline: var(--space-4); }
+
+  .brief {
+    display: grid;
+    gap: var(--space-5);
+    min-width: 0;
+    padding: clamp(1.5rem, 1rem + 2vw, 2.5rem);
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-panel);
+    background:
+      radial-gradient(70% 60% at 100% 0%, rgb(169 139 255 / 10%), transparent 70%),
+      var(--surface-1);
+  }
+  .brief__lede { color: var(--text-soft); }
+  .brief__list { display: grid; list-style: none; border-block-start: 1px solid var(--line); }
+  .brief__list li { display: grid; grid-template-columns: 2.25rem minmax(0, 1fr); gap: var(--space-3); padding-block: var(--space-4); border-block-end: 1px solid var(--line); }
+  .brief__index { padding-block-start: 0.15rem; color: var(--violet); font-family: var(--font-mono); font-size: 0.8125rem; font-variant-numeric: tabular-nums; }
+  .brief__text { color: var(--text-soft); line-height: 1.5; }
+  .brief__text strong { display: block; margin-block-end: 0.15rem; color: var(--text); font-family: var(--font-display); font-weight: 600; }
+  .brief__action { justify-self: start; }
+
+  .contact__main { display: grid; gap: clamp(2rem, 1.5rem + 2vw, 3rem); min-width: 0; }
+  .contact__where { color: var(--text-muted); font-size: var(--step--1); }
+  .contact__availability p + p { margin-block-start: var(--space-2); }
+
+  @media (max-width: 63.99em) {
+    .contact__head { grid-template-columns: minmax(0, 1fr); grid-template-areas: 'pill' 'title' 'lede'; }
+    .contact__grid { grid-template-columns: minmax(0, 1fr); }
+  }
+
+  @media (max-width: 47.99em) {
+    .brief__action { justify-self: stretch; }
+  }
+
+  @media (max-width: 39.99em) {
+    .contact__head h1 { font-size: clamp(2.5rem, 1.2rem + 6.5vw, 3.5rem); }
+  }
+</style>

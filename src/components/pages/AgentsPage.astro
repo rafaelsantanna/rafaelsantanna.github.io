@@ -1,46 +1,306 @@
 ---
-import { cases, copy, identity, localize, services, type Locale } from '@/data/content';
+import Icon from '@/components/ui/Icon.astro';
+import { paletteStyle } from '@/components/ui/palette';
+import { copy, identity, localize, projects, services, withLocale, type Locale } from '@/data/content';
+
 interface Props { locale: Locale }
+
 const { locale } = Astro.props;
 const t = copy[locale];
+const pt = locale === 'pt';
+const markdown = (slug: string) => `/markdown/${locale}/${slug}.md`;
+const ui = pt
+  ? {
+      index: 'Informações para agentes',
+      facts: 'Fatos para avaliação',
+      name: 'Nome',
+      role: 'Papel',
+      based: 'Base',
+      experience: 'Experiência',
+      years: '10+ anos',
+      availability: 'Disponibilidade',
+      languages: 'Idiomas do site',
+      languagesValue: 'Português do Brasil (principal, em /) e inglês (em /en/)',
+      files: 'Arquivos legíveis por máquina',
+      filesLede: 'Arquivos para descoberta e citação. Todos são gerados a partir do mesmo conteúdo das páginas.',
+      fileList: [
+        { href: '/llms.txt', type: 'text/plain', text: 'Índice curto: seções, projetos, serviços, experiência e contato.' },
+        { href: '/llms-full.txt', type: 'text/plain', text: 'Conteúdo completo do site em inglês, em um único arquivo.' },
+        { href: '/ai-index.json', type: 'application/json', text: 'Dados estruturados de serviços, projetos, experiência e contato. Declara que não há MCP, A2A nem API de agendamento.' },
+        { href: '/AGENTS.md', type: 'text/markdown', text: 'Orientações para avaliar Rafael e preparar um briefing.' },
+        { href: '/sitemap.xml', type: 'application/xml', text: 'Mapa do site com as versões em inglês e português de cada página.' },
+      ],
+      markdownTitle: 'Versões em Markdown',
+      markdownLede: 'Cada página também aponta para a própria versão em Markdown com um link alternate do tipo text/markdown.',
+      pages: [
+        { slug: 'index', label: 'Início' },
+        { slug: 'work', label: 'Projetos' },
+        { slug: 'services', label: 'Serviços' },
+        { slug: 'about', label: 'Sobre' },
+        { slug: 'cv', label: 'CV' },
+        { slug: 'contact', label: 'Contato' },
+        { slug: 'for-agents', label: 'Para agentes' },
+      ],
+      projects: 'Projetos',
+      projectsNote: 'Demonstrações autorais criadas por Rafael para este portfólio, com marcas e dados fictícios. Não são trabalhos de clientes e não representam resultados reais.',
+      demo: 'Demo',
+      services: 'Serviços',
+      contact: 'Contato',
+      contactText: 'Um agente pode avaliar estas informações e preparar um briefing. O envio de qualquer mensagem deve permanecer sob confirmação humana.',
+    }
+  : {
+      index: 'Information for agents',
+      facts: 'Evaluation facts',
+      name: 'Name',
+      role: 'Role',
+      based: 'Based',
+      experience: 'Experience',
+      years: '10+ years',
+      availability: 'Availability',
+      languages: 'Site languages',
+      languagesValue: 'Brazilian Portuguese (primary, at /) and English (at /en/)',
+      files: 'Machine-readable files',
+      filesLede: 'Files for discovery and citation. All of them are generated from the same content as the pages.',
+      fileList: [
+        { href: '/llms.txt', type: 'text/plain', text: 'Short index: sections, projects, services, experience, and contact.' },
+        { href: '/llms-full.txt', type: 'text/plain', text: 'The complete site content in English, in a single file.' },
+        { href: '/ai-index.json', type: 'application/json', text: 'Structured data for services, projects, experience, and contact. States that there is no MCP, A2A, or booking API.' },
+        { href: '/AGENTS.md', type: 'text/markdown', text: 'Guidance for evaluating Rafael and drafting a project brief.' },
+        { href: '/sitemap.xml', type: 'application/xml', text: 'Site map with the English and Portuguese version of every page.' },
+      ],
+      markdownTitle: 'Markdown versions',
+      markdownLede: 'Every page also points to its own Markdown version with an alternate link of type text/markdown.',
+      pages: [
+        { slug: 'index', label: 'Home' },
+        { slug: 'work', label: 'Work' },
+        { slug: 'services', label: 'Services' },
+        { slug: 'about', label: 'About' },
+        { slug: 'cv', label: 'CV' },
+        { slug: 'contact', label: 'Contact' },
+        { slug: 'for-agents', label: 'For agents' },
+      ],
+      projects: 'Projects',
+      projectsNote: 'Demos Rafael built for this portfolio, with fictional brands and data. They are not client work and do not represent real outcomes.',
+      demo: 'Demo',
+      services: 'Services',
+      contact: 'Contact',
+      contactText: 'An agent may evaluate this information and prepare a brief. Sending any message should remain under human confirmation.',
+    };
+const facts = [
+  { label: ui.name, value: identity.name },
+  { label: ui.role, value: identity.role[locale] },
+  { label: ui.based, value: identity.location },
+  { label: ui.experience, value: ui.years },
+  { label: ui.availability, value: identity.availability[locale] },
+  { label: ui.languages, value: ui.languagesValue },
+];
 ---
 
-<section class="page-hero agent-hero shell">
-  <p class="section-index">{locale === 'pt' ? 'Informações para agentes' : 'Information for agents'}</p>
+<header class="page-head shell">
+  <p class="section-index">{ui.index}</p>
   <h1>{t.agentTitle}</h1>
-  <p>{t.agentIntro}</p>
-  <dl class="agent-hero__facts">
-    <div><dt>{locale === 'pt' ? 'Papel' : 'Role'}</dt><dd>{identity.role[locale]}</dd></div>
-    <div><dt>{locale === 'pt' ? 'Base' : 'Based'}</dt><dd>{identity.location}</dd></div>
-    <div><dt>{locale === 'pt' ? 'Experiência' : 'Experience'}</dt><dd>10+ {locale === 'pt' ? 'anos' : 'years'}</dd></div>
-    <div><dt>{locale === 'pt' ? 'Disponibilidade' : 'Availability'}</dt><dd>{identity.availability[locale]}</dd></div>
-  </dl>
-</section>
+  <p class="lede">{t.agentIntro}</p>
+</header>
 
-<div class="agent-grid shell">
-  <section data-reveal>
-    <p class="section-index">{locale === 'pt' ? 'Serviços' : 'Services'}</p>
-    <ul class="agent-links">{services.map((service) => <li><a href={`/${locale === 'pt' ? 'pt/' : ''}services/${service.slug}/`}>{localize(service.title, locale)}</a></li>)}</ul>
+<div class="agents shell">
+  <div class="agents__top">
+    <section class="agents__panel" aria-labelledby="agents-facts">
+      <h2 id="agents-facts" class="agents__title">{ui.facts}</h2>
+      <dl class="facts-sheet">
+        {facts.map((fact) => (
+          <div>
+            <dt>{fact.label}</dt>
+            <dd>{fact.value}</dd>
+          </div>
+        ))}
+      </dl>
+    </section>
+
+    <section class="agents__files" aria-labelledby="agents-files">
+      <h2 id="agents-files" class="agents__title">{ui.files}</h2>
+      <p class="agents__lede">{ui.filesLede}</p>
+      <ul class="files">
+        {ui.fileList.map((file) => (
+          <li>
+            <a class="file" href={file.href}>
+              <span class="file__name">{file.href.slice(1)}</span>
+              <span class="file__type">{file.type}</span>
+              <span class="file__text">{file.text}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+      <h3 class="agents__subtitle">{ui.markdownTitle}</h3>
+      <p class="agents__lede">{ui.markdownLede}</p>
+      <ul class="md-links">
+        {ui.pages.map((page) => (
+          <li><a href={markdown(page.slug)}><span class="md-links__label">{page.label}</span><span class="md-links__path">{markdown(page.slug)}</span></a></li>
+        ))}
+      </ul>
+    </section>
+  </div>
+
+  <section class="agents__section" aria-labelledby="agents-projects">
+    <h2 id="agents-projects" class="agents__heading">{ui.projects}</h2>
+    <p class="note"><Icon name="info" /><span><strong>{ui.projectsNote}</strong></span></p>
+    <ol class="rows">
+      {projects.map((item, index) => (
+        <li class="row" style={paletteStyle(item.palette)}>
+          <span class="row__index" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+          <span class="row__main">
+            <a class="row__name" href={withLocale(locale, `work/${item.slug}`)}><span class="chip-link__swatch" aria-hidden="true"></span>{item.name}</a>
+            <span class="row__meta">{localize(item.category, locale)}</span>
+          </span>
+          <span class="row__links">
+            <a href={withLocale(locale, `demos/${item.slug}`)}>{ui.demo}<span class="visually-hidden">: {item.name}</span></a>
+            <a href={markdown(`work/${item.slug}`)}>Markdown<span class="visually-hidden">: {item.name}</span></a>
+          </span>
+        </li>
+      ))}
+    </ol>
   </section>
-  <section data-reveal>
-    <p class="section-index">{locale === 'pt' ? 'Projetos' : 'Projects'}</p>
-    <ul class="agent-links">{cases.map((item) => <li><a href={`/${locale === 'pt' ? 'pt/' : ''}work/${item.slug}/`}>{item.title}</a></li>)}</ul>
+
+  <section class="agents__section" aria-labelledby="agents-services">
+    <h2 id="agents-services" class="agents__heading">{ui.services}</h2>
+    <ol class="rows">
+      {services.map((service) => (
+        <li class="row">
+          <span class="row__index" aria-hidden="true">{service.index}</span>
+          <span class="row__main">
+            <a class="row__name" href={withLocale(locale, `services/${service.slug}`)}>{localize(service.title, locale)}</a>
+            <span class="row__meta">{localize(service.summary, locale)}</span>
+          </span>
+          <span class="row__links">
+            <a href={markdown(`services/${service.slug}`)}>Markdown<span class="visually-hidden">: {localize(service.title, locale)}</span></a>
+          </span>
+        </li>
+      ))}
+    </ol>
   </section>
-  <section data-reveal>
-    <p class="section-index">{locale === 'pt' ? 'Contato' : 'Contact'}</p>
-    <p>{locale === 'pt' ? 'Um agente pode avaliar estas informações e preparar um briefing. O envio de qualquer mensagem deve permanecer sob confirmação humana.' : 'An agent may evaluate this information and prepare a brief. Sending any message should remain under human confirmation.'}</p>
-    <div class="agent-contact"><a href={`mailto:${identity.email}`}>{identity.email}</a><a href={`https://wa.me/${identity.phoneE164}`} rel="noreferrer">{identity.phoneDisplay}</a></div>
-  </section>
+
+  <aside class="callout agents__contact" aria-labelledby="agents-contact">
+    <Icon name="shield" />
+    <div>
+      <h2 id="agents-contact">{ui.contact}</h2>
+      <p>{ui.contactText}</p>
+      <ul class="agents__contact-links">
+        <li><a class="text-link" href={`mailto:${identity.email}`}>{identity.email}</a></li>
+        <li><a class="text-link" href={`https://wa.me/${identity.phoneE164}`} rel="noreferrer">WhatsApp {identity.phoneDisplay}</a></li>
+        <li><a class="text-link" href={identity.linkedin} rel="me noreferrer">LinkedIn</a></li>
+      </ul>
+    </div>
+  </aside>
 </div>
 
-<section class="machine-files shell" data-reveal>
-  <p class="section-index">{locale === 'pt' ? 'Arquivos legíveis por máquina' : 'Machine-readable files'}</p>
-  <h2>{locale === 'pt' ? 'Arquivos para descoberta e citação' : 'Files for discovery and citation'}</h2>
-  <div>
-    <a href="/llms.txt">llms.txt</a>
-    <a href="/llms-full.txt">llms-full.txt</a>
-    <a href="/ai-index.json">ai-index.json</a>
-    <a href="/AGENTS.md">AGENTS.md</a>
-    <a href="/sitemap-index.xml">sitemap</a>
-  </div>
-</section>
+<style>
+  .agents { display: grid; gap: clamp(3.5rem, 2.5rem + 4vw, 6rem); }
+
+  .agents__top { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); align-items: start; gap: var(--space-7) clamp(2rem, 1rem + 4vw, 5rem); }
+  .agents__title { color: var(--text-muted); font-size: var(--step--1); font-weight: 560; letter-spacing: 0; line-height: 1.3; }
+  .agents__subtitle { margin-block-start: var(--space-4); font-size: var(--step-1); letter-spacing: var(--tracking-tight); }
+  .agents__lede { color: var(--text-soft); }
+
+  .agents__panel { position: sticky; top: calc(var(--header-height) + 1.5rem); display: grid; gap: var(--space-5); padding: clamp(1.25rem, 1rem + 1.5vw, 2rem); border: 1px solid var(--line-strong); border-radius: var(--radius-panel); background: var(--surface-1); }
+  .facts-sheet { display: grid; border-block-start: 1px solid var(--line); }
+  .facts-sheet > div { display: grid; grid-template-columns: minmax(7.5rem, 0.4fr) minmax(0, 1fr); gap: var(--space-1) var(--space-4); padding-block: var(--space-4); border-block-end: 1px solid var(--line); }
+  .facts-sheet > div:last-child { border-block-end: 0; padding-block-end: 0; }
+  .facts-sheet dt { color: var(--text-muted); font-size: 0.9375rem; }
+  .facts-sheet dd { color: var(--text); font-family: var(--font-display); font-weight: 520; line-height: 1.4; }
+
+  .agents__files { display: grid; gap: var(--space-4); min-width: 0; }
+  .files { display: grid; gap: var(--space-2); list-style: none; }
+  .file {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: var(--space-1) var(--space-4);
+    padding: var(--space-4) var(--space-5);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-control);
+    background: var(--surface-1);
+    color: var(--text);
+    text-decoration: none;
+    transition: border-color var(--dur-fast) var(--ease), background-color var(--dur-fast) var(--ease);
+  }
+  .file:hover { border-color: var(--violet-line); background: var(--surface-2); }
+  .file__name { font-family: var(--font-mono); font-size: 0.9375rem; font-weight: 600; text-decoration: underline; text-decoration-color: var(--violet-line); text-underline-offset: 0.3em; }
+  .file:hover .file__name { text-decoration-color: var(--violet); }
+  .file__type { align-self: center; color: var(--text-muted); font-family: var(--font-mono); font-size: 0.75rem; }
+  .file__text { grid-column: 1 / -1; color: var(--text-soft); font-size: 0.9375rem; line-height: 1.5; }
+
+  .md-links { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 var(--space-5); list-style: none; border-block-start: 1px solid var(--line); }
+  .md-links a {
+    display: grid;
+    min-height: 3.25rem;
+    align-content: center;
+    padding-block: var(--space-2);
+    border-block-end: 1px solid var(--line);
+    color: var(--text);
+    text-decoration: none;
+  }
+  .md-links__label { font-family: var(--font-display); font-weight: 560; }
+  .md-links__path { color: var(--text-muted); font-family: var(--font-mono); font-size: 0.75rem; overflow-wrap: anywhere; }
+  .md-links a:hover .md-links__label { text-decoration: underline; text-decoration-color: var(--violet); text-underline-offset: 0.3em; }
+
+  .agents__section { display: grid; gap: var(--space-5); }
+  .agents__heading { font-size: var(--step-3); letter-spacing: var(--tracking-display); line-height: 1.1; }
+  .rows { list-style: none; border-block-start: 1px solid var(--line-strong); }
+  .row {
+    display: grid;
+    grid-template-columns: 2.5rem minmax(0, 1fr) auto;
+    align-items: center;
+    gap: var(--space-2) var(--space-4);
+    padding-block: var(--space-4);
+    border-block-end: 1px solid var(--line);
+  }
+  .row__index { color: var(--text-muted); font-family: var(--font-mono); font-size: 0.8125rem; font-variant-numeric: tabular-nums; }
+  .row__main { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); align-items: center; gap: var(--space-1) var(--space-5); min-width: 0; }
+  .row__name {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-3);
+    justify-self: start;
+    min-height: 2.75rem;
+    color: var(--text);
+    font-family: var(--font-display);
+    font-size: var(--step-1);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    text-decoration: underline;
+    text-decoration-color: var(--violet-line);
+    text-underline-offset: 0.3em;
+  }
+  .row__name:hover { text-decoration-color: var(--violet); }
+  .row__meta { color: var(--text-soft); font-size: 0.9375rem; line-height: 1.5; }
+  .row__links { display: flex; gap: var(--space-2); }
+  .row__links a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
+    padding-inline: 0.85rem;
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-pill);
+    color: var(--text-soft);
+    font-family: var(--font-display);
+    font-size: 0.875rem;
+    font-weight: 560;
+    text-decoration: none;
+    transition: border-color var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease);
+  }
+  .row__links a:hover { border-color: var(--violet-line); color: var(--text); }
+
+  .agents__contact-links { display: flex; flex-wrap: wrap; gap: 0 var(--space-5); margin-block-start: var(--space-3); list-style: none; }
+
+  @media (max-width: 63.99em) {
+    .agents__top { grid-template-columns: minmax(0, 1fr); }
+    .agents__panel { position: static; }
+    .row__main { grid-template-columns: minmax(0, 1fr); }
+  }
+
+  @media (max-width: 47.99em) {
+    .row { grid-template-columns: 2rem minmax(0, 1fr); align-items: start; }
+    .row__index { padding-block-start: 0.85rem; }
+    .row__links { grid-column: 2; }
+    .md-links { grid-template-columns: minmax(0, 1fr); }
+    .facts-sheet > div { grid-template-columns: minmax(0, 1fr); }
+  }
+</style>

@@ -1,0 +1,51 @@
+---
+import type { Locale } from '@/data/types';
+import { localizedBarbers } from '../data/catalog';
+import { strings } from '../data/i18n';
+import { createFormat, fill } from '../lib/format';
+import BarberAvatar from './BarberAvatar.astro';
+
+interface Props { locale: Locale }
+
+const { locale } = Astro.props;
+const t = strings[locale];
+const fmt = createFormat(t.intl, t.client.format);
+const barbers = localizedBarbers(locale);
+// Monday first, the way a shop week reads.
+const week = [1, 2, 3, 4, 5, 6, 0];
+---
+
+<section class="team" id="equipe" aria-labelledby="cp-team-title">
+  <div class="wrap">
+    <header class="section-head">
+      <p class="eyebrow">{t.team.eyebrow}</p>
+      <h2 id="cp-team-title">{t.team.title}</h2>
+      <p class="section-head__lede">{t.team.lede}</p>
+    </header>
+    <ul class="team__grid" role="list">
+      {barbers.map((barber) => (
+        <li class="barber-card">
+          <BarberAvatar id={barber.id} initials={barber.initials} size="lg" />
+          <h3 class="barber-card__name">{barber.name}</h3>
+          <p class="barber-card__specialty">{barber.specialty}</p>
+          <p class="barber-card__bio">{barber.bio}</p>
+          <dl class="barber-card__facts">
+            <div>
+              <dt>{t.team.days}</dt>
+              <dd>
+                <span class="week" aria-hidden="true">
+                  {week.map((day) => <span class:list={['week__day', { 'is-on': barber.days.includes(day) }]}>{t.team.dayInitials[day]}</span>)}
+                </span>
+                <span class="barber-card__days">{barber.daysLabel}</span>
+              </dd>
+            </div>
+            <div>
+              <dt>{t.team.lunch}</dt>
+              <dd>{barber.breaks.map((pause) => fill(t.team.lunchRange, { start: fmt.hour(pause.start), end: fmt.hour(pause.end) })).join(', ')}</dd>
+            </div>
+          </dl>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>

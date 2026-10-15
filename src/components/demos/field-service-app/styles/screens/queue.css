@@ -1,0 +1,234 @@
+/* Turno screens: sync queue and the shared empty state. */
+
+/* Sync queue. */
+.turno .t-syncard {
+  display: grid;
+  gap: 0.625rem;
+  padding: 1rem 1.125rem;
+  border: 1px solid var(--t-green-line);
+  border-radius: 18px;
+  background: var(--t-green-soft);
+  color: var(--t-green);
+}
+
+.turno .t-syncard[data-tone='sending'] {
+  border-color: #c9d8fb;
+  background: var(--t-blue-soft);
+  color: var(--t-blue-ink);
+}
+
+.turno .t-syncard[data-tone='retry'] {
+  border-color: var(--t-red-line);
+  background: var(--t-red-soft);
+  color: var(--t-red);
+}
+
+.turno .t-syncard[data-tone='pending'] {
+  border-color: var(--t-amber-line);
+  background: var(--t-amber-soft);
+  color: var(--t-amber);
+}
+
+.turno .t-syncard[data-tone='offline'] {
+  border-color: var(--t-ink);
+  background: var(--t-ink);
+  color: #fff;
+}
+
+.turno .t-syncard[data-tone='offline'] .t-ico {
+  color: var(--t-amber-bright);
+}
+
+.turno .t-syncard__state {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--t-display);
+  font-size: 1.125rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.turno .t-syncard__bar {
+  overflow: hidden;
+  block-size: 6px;
+  border-radius: 3px;
+  background: rgb(14 21 37 / 0.1);
+}
+
+.turno .t-syncard[data-tone='offline'] .t-syncard__bar {
+  display: none;
+}
+
+.turno .t-syncard__bar span {
+  display: block;
+  block-size: 100%;
+  border-radius: 3px;
+  background: currentColor;
+  transition: inline-size 320ms var(--t-ease);
+}
+
+.turno .t-syncard__meta {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  opacity: 0.9;
+}
+
+.turno .t-explain {
+  color: var(--t-ink-2);
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.turno .t-queue-lists {
+  display: grid;
+  gap: 0.625rem;
+}
+
+.turno .t-events {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.turno .t-event {
+  display: grid;
+  grid-template-columns: 2rem minmax(0, 1fr) auto;
+  align-items: start;
+  gap: 0.75rem;
+  padding: 0.75rem 0.75rem 0.75rem 0.875rem;
+  border: 1px solid var(--t-line);
+  border-radius: 16px;
+  background: var(--t-surface);
+}
+
+.turno .t-event[data-status='failed'] {
+  border-color: var(--t-red-line);
+}
+
+.turno .t-event[data-status='sending'] {
+  border-color: #b9cdfb;
+}
+
+.turno .t-event__icon {
+  display: grid;
+  place-items: center;
+  inline-size: 2rem;
+  block-size: 2rem;
+  border-radius: 10px;
+  background: var(--t-muted-fill);
+  color: var(--t-ink-2);
+}
+
+.turno .t-event__icon .t-ico {
+  inline-size: 1.125rem;
+  block-size: 1.125rem;
+}
+
+.turno [data-status='sending'] > .t-event__icon {
+  background: var(--t-blue-soft);
+  color: var(--t-blue-ink);
+}
+
+.turno [data-status='failed'] > .t-event__icon {
+  background: var(--t-red-soft);
+  color: var(--t-red);
+}
+
+.turno [data-status='synced'] > .t-event__icon {
+  background: var(--t-green-soft);
+  color: var(--t-green);
+}
+
+.turno .t-event__body {
+  display: grid;
+  gap: 0.0625rem;
+  min-inline-size: 0;
+}
+
+.turno .t-event__title {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  line-height: 1.3;
+  overflow-wrap: anywhere;
+}
+
+.turno .t-event__meta {
+  color: var(--t-ink-3);
+  font-size: 0.8125rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.turno .t-event__note {
+  color: var(--t-ink-2);
+  font-size: 0.8125rem;
+  line-height: 1.4;
+}
+
+.turno [data-status='failed'] .t-event__note {
+  color: var(--t-red);
+  font-weight: 700;
+}
+
+.turno .t-events--sent .t-event {
+  background: rgb(255 255 255 / 0.6);
+}
+
+.turno .t-events__empty {
+  padding: 0.75rem 0.875rem;
+  border: 1px dashed var(--t-line-2);
+  border-radius: 14px;
+  color: var(--t-ink-3);
+  font-size: 0.875rem;
+}
+
+.turno .t-events__more {
+  margin-block-start: -0.375rem;
+  color: var(--t-ink-3);
+  font-size: 0.8125rem;
+}
+
+.turno .t-empty {
+  display: grid;
+  justify-items: center;
+  gap: 0.75rem;
+  padding: 2rem 1rem;
+  border: 1px dashed var(--t-line-2);
+  border-radius: 18px;
+  color: var(--t-ink-2);
+  text-align: center;
+}
+
+.turno .t-empty .t-ico {
+  inline-size: 2.5rem;
+  block-size: 2.5rem;
+  color: var(--t-green);
+}
+
+/* Today uses the same empty state while a wiped phone waits for a connection to download the schedule. */
+.turno .t-empty--offline {
+  gap: 0.375rem;
+}
+
+.turno .t-empty--offline .t-ico {
+  margin-block-end: 0.375rem;
+  color: var(--t-ink-3);
+}
+
+.turno .t-empty__title {
+  color: var(--t-ink);
+  font-family: var(--t-display);
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+/* Forced colors drop backgrounds, so the decorative progress bar gets an outline and a system-colored fill. */
+@media (forced-colors: active) {
+  .turno .t-syncard__bar {
+    border: 1px solid CanvasText;
+  }
+
+  .turno .t-syncard__bar span {
+    forced-color-adjust: none;
+    background: CanvasText;
+  }
+}

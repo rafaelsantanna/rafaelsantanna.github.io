@@ -1,0 +1,118 @@
+---
+import Icon from '@/components/ui/Icon.astro';
+import MiniWindow from '@/components/home/MiniWindow.astro';
+import RouteChart from '@/components/home/minis/RouteChart.astro';
+import TimeSlots from '@/components/home/minis/TimeSlots.astro';
+import CitedAnswer from '@/components/home/minis/CitedAnswer.astro';
+import SyncQueue from '@/components/home/minis/SyncQueue.astro';
+import { paletteStyle } from '@/components/ui/palette';
+import { copy, findProject, identity, localize, withLocale, type DemoProject, type Locale } from '@/data/content';
+
+interface Props {
+  locale: Locale;
+  projectsId: string;
+  contactId: string;
+}
+
+const { locale, projectsId, contactId } = Astro.props;
+const t = copy[locale];
+const pt = locale === 'pt';
+
+const ui = pt
+  ? {
+      accent: 'testar agora',
+      remote: 'Remoto',
+      portraitAlt: "Rafael Sant' Anna, de óculos e fones de ouvido, sorrindo para a câmera",
+      viewProject: 'ver projeto',
+      dragHint: 'Clique para abrir o projeto. Arraste pela barra de título para mover.',
+      reset: 'Restaurar posições',
+      swipe: 'Deslize para ver os projetos',
+    }
+  : {
+      accent: 'try right now',
+      remote: 'Remote',
+      portraitAlt: "Rafael Sant' Anna wearing glasses and headphones, smiling at the camera",
+      viewProject: 'view project',
+      dragHint: 'Click to open the project. Drag by the title bar to move.',
+      reset: 'Reset layout',
+      swipe: 'Swipe to see the projects',
+    };
+
+const accentAt = t.heroTitle.lastIndexOf(ui.accent);
+const title = accentAt >= 0
+  ? { before: t.heroTitle.slice(0, accentAt), accent: ui.accent, after: t.heroTitle.slice(accentAt + ui.accent.length) }
+  : { before: t.heroTitle, accent: '', after: '' };
+
+const project = (slug: string): DemoProject => {
+  const found = findProject(slug);
+  if (!found) throw new Error(`Unknown project in desk: ${slug}`);
+  return found;
+};
+const minis = [
+  { key: 'chart', item: project('logistics-control'), body: RouteChart },
+  { key: 'answer', item: project('knowledge-assistant'), body: CitedAnswer },
+  { key: 'slots', item: project('online-booking'), body: TimeSlots },
+  { key: 'phone', item: project('field-service-app'), body: SyncQueue },
+];
+---
+
+<section class="hero" aria-labelledby="hero-title">
+  <div class="hero__inner shell">
+    <div class="hero__copy">
+      <p class="status-pill"><span class="status-pill__dot" aria-hidden="true"></span>{identity.availabilityShort[locale]}</p>
+      <h1 id="hero-title" class="display-title hero__title">
+        {title.before}{title.accent && <span class="hero__accent">{title.accent}</span>}{title.after}
+      </h1>
+      <p class="hero__intro">{t.heroIntro}</p>
+      <div class="button-row hero__actions">
+        <a class="button button--primary" href={`#${projectsId}`}>{t.seeWork}<Icon name="arrow-down" /></a>
+        <a class="button button--secondary" href={`#${contactId}`}>{t.discuss}</a>
+      </div>
+      <ul class="hero__meta">
+        <li><Icon name="pin" />{identity.location}</li>
+        <li><Icon name="globe" />{ui.remote}</li>
+        <li><Icon name="clock" />{identity.workingHours[locale]}</li>
+      </ul>
+    </div>
+
+    <div class="desk" data-desk>
+      <div class="desk__stage">
+        <div class="desk-item desk-item--portrait" data-desk-item>
+          <div class="window window--portrait">
+            <div class="window__bar" data-desk-handle>
+              <span class="mini__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+              <span class="window__title">{identity.name}</span>
+              <span class="window__meta">{identity.location}</span>
+            </div>
+            <img class="window__portrait" src="/images/profile.jpg" width="960" height="950" alt={ui.portraitAlt} loading="eager" fetchpriority="high" decoding="async" />
+          </div>
+        </div>
+        <div class="desk__minis" data-desk-row>
+          {minis.map(({ key, item, body: Body }) => (
+            <MiniWindow
+              class={`desk-item--${key}`}
+              variant={key === 'phone' ? 'phone' : 'window'}
+              style={paletteStyle(item.palette)}
+              href={withLocale(locale, `work/${item.slug}`)}
+              title={item.name}
+              label={`, ${localize(item.category, locale)}: ${ui.viewProject}`}
+            >
+              <Body locale={locale} />
+            </MiniWindow>
+          ))}
+        </div>
+      </div>
+      <p class="desk__swipe" aria-hidden="true"><Icon name="swipe" />{ui.swipe}</p>
+      <div class="desk__controls" data-desk-controls hidden>
+        <p>{ui.dragHint}</p>
+        <button class="button button--ghost button--small" type="button" data-desk-reset><Icon name="reset" />{ui.reset}</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { initDesk } from './desk';
+
+  document.querySelectorAll<HTMLElement>('[data-desk]').forEach(initDesk);
+</script>

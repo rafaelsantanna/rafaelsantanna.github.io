@@ -1,0 +1,347 @@
+/* Turno demo stage: desktop stage and the compact layout with the controls sheet. */
+
+/* Desktop: a presentation stage with the phone as the product shot. */
+@media (min-width: 64rem) {
+  .turno {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-rows: 1fr auto auto auto auto 1fr auto;
+    grid-template-areas:
+      '. device'
+      'mast device'
+      'lede device'
+      'ctrl device'
+      'legend device'
+      '. device'
+      'notes notes';
+    column-gap: clamp(2.5rem, 5vw, 4.5rem);
+    min-block-size: calc(100dvh - 3rem);
+    padding: 1.5rem clamp(1.5rem, 4vw, 3.5rem) 2rem;
+  }
+
+  .turno__panel {
+    display: contents;
+  }
+
+  .turno__mast {
+    grid-area: mast;
+    margin-block-end: 1rem;
+  }
+
+  .turno__lede {
+    grid-area: lede;
+    margin-block-end: 1.25rem;
+  }
+
+  .turno__controls {
+    grid-area: ctrl;
+    margin-block-end: 0.75rem;
+  }
+
+  .turno__legend {
+    grid-area: legend;
+  }
+
+  .turno__mast,
+  .turno__lede,
+  .turno__controls,
+  .turno__legend {
+    justify-self: end;
+    inline-size: min(100%, 27rem);
+  }
+
+  .turno__device {
+    grid-area: device;
+    align-self: center;
+  }
+
+  .turno__notes {
+    grid-area: notes;
+    margin-block-start: 2.5rem;
+    padding-block-start: 1.75rem;
+    border-block-start: 1px solid rgb(14 21 37 / 0.1);
+  }
+
+  .turno__notes ol {
+    grid-template-columns: repeat(auto-fit, minmax(10.5rem, 1fr));
+    gap: 1.25rem;
+  }
+
+  .turno__notes li {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+}
+
+/* Short desktop viewports: keep the whole phone in view while the side column scrolls. */
+@media (min-width: 64rem) and (max-height: 50rem) {
+  .turno__device {
+    position: sticky;
+    inset-block-start: 1rem;
+    align-self: start;
+  }
+}
+
+@media (min-width: 80rem) {
+  .turno {
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    grid-template-rows: 1fr auto auto auto auto 1fr;
+    grid-template-areas:
+      '. device notes'
+      'mast device notes'
+      'lede device notes'
+      'ctrl device notes'
+      'legend device notes'
+      '. device notes';
+    padding-block-end: 1.5rem;
+  }
+
+  .turno__notes {
+    align-self: center;
+    justify-self: start;
+    inline-size: min(100%, 19rem);
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+
+  .turno__notes ol {
+    grid-template-columns: 1fr;
+    gap: 1.125rem;
+  }
+
+  .turno__notes li {
+    grid-template-columns: 1.875rem minmax(0, 1fr);
+    gap: 0.75rem;
+  }
+}
+
+/* Below 1024px the app fills the viewport and the demo controls move into a sheet. */
+@media (max-width: 63.999rem) {
+  .js body.demo-page--field-service-app main {
+    display: flex;
+    flex-direction: column;
+    block-size: max(100dvh, 38rem);
+  }
+
+  .turno {
+    display: flex;
+    flex-direction: column;
+    background: var(--t-base);
+  }
+
+  .js .turno {
+    flex: 1 1 auto;
+    min-block-size: 0;
+  }
+
+  .turno__mast {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    grid-template-areas: 'brand line button';
+    align-items: center;
+    column-gap: 0.625rem;
+    padding: 0.375rem 0.5rem 0.375rem 1rem;
+    border-block-end: 1px solid var(--t-line);
+    background: var(--t-surface);
+  }
+
+  .turno__eyebrow {
+    display: none;
+  }
+
+  .turno__brand {
+    grid-area: brand;
+    gap: 0.5rem;
+  }
+
+  .turno__logo svg {
+    inline-size: 1.75rem;
+    block-size: 1.75rem;
+    filter: none;
+  }
+
+  .turno__name {
+    font-size: 1.375rem;
+    letter-spacing: -0.03em;
+  }
+
+  .turno__mastline {
+    grid-area: line;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .turno__sheet-btn {
+    display: inline-flex;
+    grid-area: button;
+    align-items: center;
+    gap: 0.375rem;
+    min-block-size: 48px;
+    padding: 0 0.875rem;
+    border: 1.5px solid var(--t-line-2);
+    border-radius: 999px;
+    background: var(--t-surface);
+    color: var(--t-ink);
+    font-size: 0.875rem;
+    font-weight: 700;
+    white-space: nowrap;
+    cursor: pointer;
+  }
+
+  .turno__sheet-btn .t-ico {
+    inline-size: 1.125rem;
+    block-size: 1.125rem;
+  }
+
+  .turno__panel {
+    display: grid;
+    gap: 1rem;
+    padding: 1.25rem 1rem 2rem;
+  }
+
+  .js .turno__panel {
+    position: fixed;
+    inset: auto 0 0;
+    z-index: 60;
+    max-block-size: min(88dvh, 46rem);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: 0 1rem calc(1.5rem + env(safe-area-inset-bottom));
+    border-radius: 24px 24px 0 0;
+    background: var(--t-base);
+    box-shadow: 0 -24px 60px -20px rgb(14 21 37 / 0.45);
+    transform: translateY(100%);
+    visibility: hidden;
+    transition: transform 320ms var(--t-ease), visibility 0s linear 320ms;
+  }
+
+  .js .turno__panel[data-open] {
+    transform: none;
+    visibility: visible;
+    transition: transform 320ms var(--t-ease);
+  }
+
+  .js .turno__sheet-head {
+    position: sticky;
+    inset-block-start: 0;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-inline: -1rem;
+    padding: 1.125rem 0.5rem 0.75rem 1.25rem;
+    background: var(--t-base);
+  }
+
+  .js .turno__sheet-head::before {
+    content: '';
+    position: absolute;
+    inset-block-start: 0.5rem;
+    inset-inline-start: 50%;
+    inline-size: 2.5rem;
+    block-size: 4px;
+    border-radius: 2px;
+    background: var(--t-line-2);
+    transform: translateX(-50%);
+  }
+
+  .turno__sheet-head h2 {
+    margin: 0;
+    font-family: var(--t-display);
+    font-size: 1.25rem;
+    font-weight: 700;
+  }
+
+  .turno__sheet-head h2:focus {
+    outline: none;
+  }
+
+  .turno__close {
+    display: grid;
+    place-items: center;
+    inline-size: 48px;
+    block-size: 48px;
+    border: 0;
+    border-radius: 50%;
+    background: var(--t-muted-fill);
+    cursor: pointer;
+  }
+
+  .js .turno__scrim:not([hidden]) {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 55;
+    background: rgb(14 21 37 / 0.45);
+    animation: turno-fade 320ms var(--t-ease);
+  }
+
+  .js .turno__controls .turno__card-title {
+    display: none;
+  }
+
+  /* Inside the sheet nothing is centered against the status line, so it can collapse when empty. */
+  .turno__status:empty {
+    display: none;
+  }
+
+  .js .turno__controls { order: 1; }
+  .js .turno__legend { order: 2; }
+  .js .turno__lede { order: 3; font-size: 1rem; }
+  .js .turno__notes { order: 4; }
+
+  .turno__device {
+    display: flex;
+    flex: 1 1 auto;
+    min-block-size: 0;
+  }
+
+  html:not(.js) .turno__device {
+    block-size: 100dvh;
+    min-block-size: 38rem;
+  }
+
+  .t-phone {
+    flex: 1 1 auto;
+    inline-size: 100%;
+    block-size: auto;
+    padding: 0;
+    border-radius: 0;
+    background: none;
+    box-shadow: none;
+  }
+
+  .t-phone::before,
+  .t-phone::after,
+  .t-statusbar,
+  .t-home {
+    display: none;
+  }
+
+  .t-app {
+    border-radius: 0;
+    padding-block-start: env(safe-area-inset-top);
+  }
+}
+
+@media (min-width: 30rem) and (max-width: 63.999rem) {
+  .turno__mastline {
+    display: block;
+  }
+}
+
+@keyframes turno-fade {
+  from { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .turno *,
+  .turno *::before,
+  .turno *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+  }
+}

@@ -1,0 +1,367 @@
+/* Turno screens: photo, signature, notes, and the completed record. */
+
+/* Photo. */
+.turno .t-photo {
+  position: relative;
+  overflow: hidden;
+  border-radius: 14px;
+  background: var(--t-ink);
+}
+
+.turno .t-photo__canvas {
+  display: block;
+  inline-size: 100%;
+  block-size: auto;
+  aspect-ratio: 4 / 3;
+}
+
+.turno .t-photo figcaption {
+  padding: 0.5rem 0.75rem;
+  background: var(--t-ink);
+  color: #dfe5ef;
+  font-size: 0.8125rem;
+  font-weight: 700;
+}
+
+.turno .t-photo--flash::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: #fff;
+  opacity: 0;
+  pointer-events: none;
+  animation: t-flash 600ms ease-out;
+}
+
+@keyframes t-flash {
+  0% { opacity: 0.95; }
+  100% { opacity: 0; }
+}
+
+/* Signature. */
+.turno .t-sigpad {
+  position: relative;
+  block-size: 10.5rem;
+  border: 1.5px dashed var(--t-field);
+  border-radius: 14px;
+  background: var(--t-surface);
+}
+
+.turno .t-sigpad__canvas {
+  position: absolute;
+  inset: 0;
+  inline-size: 100%;
+  block-size: 100%;
+  border-radius: 14px;
+  color: var(--t-ink);
+  touch-action: none;
+  cursor: crosshair;
+}
+
+.turno .t-sigpad__hint {
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-start: 50%;
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  color: var(--t-ink-3);
+  font-size: 0.9375rem;
+  font-weight: 700;
+  transform: translate(-50%, -80%);
+  pointer-events: none;
+}
+
+.turno .t-sigpad__hint[hidden] {
+  display: none;
+}
+
+.turno .t-sigpad__clear {
+  position: absolute;
+  inset-block-start: 0.25rem;
+  inset-inline-end: 0.25rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  min-block-size: 48px;
+  padding: 0 0.75rem 0 0.5rem;
+  border: 0;
+  border-radius: 12px;
+  background: none;
+  color: var(--t-ink-2);
+  font-size: 0.875rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.turno .t-sigpad__clear .t-ico {
+  inline-size: 1rem;
+  block-size: 1rem;
+}
+
+.turno .t-sigpad__clear:hover {
+  background: var(--t-muted-fill);
+}
+
+.turno .t-sigpad__clear[aria-disabled='true'] {
+  visibility: hidden;
+}
+
+.turno .t-sigpad__line {
+  position: absolute;
+  inset-inline: 1.25rem;
+  inset-block-end: 2.5rem;
+  block-size: 1.5px;
+  background: var(--t-line-2);
+  pointer-events: none;
+}
+
+.turno .t-signed {
+  overflow: hidden;
+  border: 1px solid var(--t-line);
+  border-radius: 14px;
+  background: var(--t-surface);
+}
+
+.turno .t-signed__canvas {
+  display: block;
+  inline-size: 100%;
+  block-size: 7.5rem;
+  color: var(--t-ink);
+}
+
+.turno .t-signed figcaption {
+  padding: 0.5rem 0.75rem;
+  border-block-start: 1px solid var(--t-line);
+  color: var(--t-ink-2);
+  font-size: 0.8125rem;
+  font-weight: 700;
+}
+
+.turno .t-waived {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.75rem 0.875rem;
+  border-radius: 14px;
+  background: var(--t-muted-fill);
+  color: var(--t-ink-2);
+  font-size: 0.9375rem;
+  line-height: 1.45;
+}
+
+.turno .t-waived .t-ico {
+  margin-block-start: 0.1rem;
+}
+
+.turno .t-waiver {
+  display: grid;
+  gap: 0.625rem;
+  padding: 0.875rem;
+  border-radius: 14px;
+  background: var(--t-base);
+}
+
+.turno .t-waiver__title {
+  font-weight: 700;
+}
+
+.turno .t-radios {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.turno .t-radio {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-block-size: 52px;
+  padding: 0.625rem 0.875rem;
+  border: 1.5px solid var(--t-line-2);
+  border-radius: 14px;
+  background: var(--t-surface);
+  font-size: 0.9375rem;
+  line-height: 1.35;
+  text-align: start;
+  cursor: pointer;
+}
+
+.turno .t-radio[aria-checked='true'] {
+  border-color: var(--t-accent);
+  background: var(--t-blue-soft);
+  font-weight: 700;
+}
+
+.turno .t-radio__dot {
+  flex: none;
+  inline-size: 1.25rem;
+  block-size: 1.25rem;
+  border: 2px solid var(--t-field);
+  border-radius: 50%;
+  background: var(--t-surface);
+}
+
+.turno .t-radio[aria-checked='true'] .t-radio__dot {
+  border-color: var(--t-blue);
+  background: var(--t-blue);
+  box-shadow: inset 0 0 0 3.5px var(--t-surface);
+}
+
+/* Notes. */
+.turno .t-notes {
+  display: grid;
+  gap: 0.375rem;
+  margin-block-start: 0.5rem;
+}
+
+.turno .t-textarea {
+  inline-size: 100%;
+  min-block-size: 6rem;
+  margin-block-start: 0.25rem;
+  padding: 0.75rem 0.875rem;
+  border: 1.5px solid var(--t-field);
+  border-radius: 14px;
+  background: var(--t-surface);
+  color: var(--t-ink);
+  font: inherit;
+  line-height: 1.5;
+  resize: vertical;
+}
+
+.turno .t-textarea::placeholder {
+  color: var(--t-ink-3);
+}
+
+.turno .t-textarea:focus-visible {
+  border-color: var(--t-accent);
+}
+
+.turno .t-notes__meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  color: var(--t-ink-3);
+  font-size: 0.8125rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.turno .t-notes__meta [data-notes-saved] {
+  color: var(--t-green);
+  font-weight: 700;
+}
+
+/* Completed order. */
+.turno .t-done {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.875rem;
+  padding: 1rem;
+  border: 1px solid var(--t-green-line);
+  border-radius: 18px;
+  background: var(--t-green-soft);
+}
+
+.turno .t-done__icon {
+  display: grid;
+  flex: none;
+  place-items: center;
+  inline-size: 2.25rem;
+  block-size: 2.25rem;
+  border-radius: 50%;
+  background: var(--t-green);
+  color: #fff;
+}
+
+.turno .t-done__icon .t-ico {
+  stroke-width: 3;
+}
+
+.turno .t-done h3 {
+  font-family: var(--t-display);
+  font-size: 1.0625rem;
+  font-weight: 700;
+}
+
+.turno .t-done p {
+  margin-block-start: 0.125rem;
+  color: var(--t-ink-2);
+  font-size: 0.875rem;
+}
+
+.turno .t-record {
+  display: grid;
+  gap: 0.5rem;
+  padding: 1rem 1rem 0.5rem;
+  border: 1px solid var(--t-line);
+  border-radius: 18px;
+  background: var(--t-surface);
+}
+
+.turno .t-record__row {
+  display: grid;
+  grid-template-columns: 1.75rem minmax(0, 1fr);
+  gap: 0.75rem;
+  padding-block: 0.625rem;
+}
+
+.turno .t-record__row + .t-record__row {
+  border-block-start: 1px solid var(--t-line);
+}
+
+.turno .t-record__text {
+  display: grid;
+  gap: 0.125rem;
+}
+
+.turno .t-record__label {
+  font-size: 0.9375rem;
+  font-weight: 700;
+}
+
+.turno .t-record__value {
+  color: var(--t-ink-2);
+  font-size: 0.875rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.turno .t-record__media {
+  margin-block-start: 0.5rem;
+}
+
+.turno .t-record__media .t-photo__canvas {
+  max-inline-size: 15rem;
+  border-radius: 10px;
+}
+
+.turno .t-record__media .t-signed__canvas {
+  max-inline-size: 15rem;
+  block-size: 5.5rem;
+  border: 1px solid var(--t-line);
+  border-radius: 10px;
+}
+
+.turno .t-record__notes {
+  display: grid;
+  gap: 0.25rem;
+  padding-block: 0.75rem 0.5rem;
+  border-block-start: 1px solid var(--t-line);
+}
+
+.turno .t-record__notes h4 {
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+
+.turno .t-record__notes p {
+  color: var(--t-ink-2);
+  font-size: 0.9375rem;
+}
+
+/* Forced colors drop backgrounds, so the selected radio keeps a filled dot in system colors. */
+@media (forced-colors: active) {
+  .turno .t-radio[aria-checked='true'] .t-radio__dot {
+    forced-color-adjust: none;
+    border-color: Highlight;
+    background: Highlight;
+    box-shadow: inset 0 0 0 3.5px Canvas;
+  }
+}

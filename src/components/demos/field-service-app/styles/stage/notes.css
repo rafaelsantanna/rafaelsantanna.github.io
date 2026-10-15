@@ -1,0 +1,56 @@
+/* Turno demo stage: what to look for. */
+
+/* What to look for. */
+.turno__notes h2 {
+  margin: 0 0 0.875rem;
+  font-family: var(--t-display);
+  font-size: 1.0625rem;
+  font-weight: 700;
+}
+
+.turno__notes ol {
+  display: grid;
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.turno__notes li {
+  display: grid;
+  grid-template-columns: 1.875rem minmax(0, 1fr);
+  align-content: start;
+  gap: 0.75rem;
+}
+
+.turno__note-index {
+  display: grid;
+  place-items: center;
+  inline-size: 1.875rem;
+  block-size: 1.875rem;
+  border: 1.5px solid rgb(36 89 230 / 0.35);
+  border-radius: 50%;
+  background: var(--t-surface);
+  color: var(--t-blue-ink);
+  font-family: var(--t-display);
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+
+.turno__notes h3 {
+  margin: 0.25rem 0 0.125rem;
+  font-size: 0.9375rem;
+  font-weight: 700;
+}
+
+.turno__notes p {
+  margin: 0;
+  color: var(--t-ink-2);
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.turno__sheet-head,
+.turno__scrim {
+  display: none;
+}

@@ -1,52 +1,236 @@
 ---
-import { cases, concepts, copy, localize, withLocale, type Locale, type Service } from '@/data/content';
-import '@/styles/demos.css';
+import Icon from '@/components/ui/Icon.astro';
+import Exhibit from '@/components/home/Exhibit.astro';
+import { paletteStyle } from '@/components/ui/palette';
+import { copy, findProject, localize, projects, services, technologyName, withLocale, type DemoProject, type Locale, type Service } from '@/data/content';
+
 interface Props { locale: Locale; service: Service }
+
 const { locale, service } = Astro.props;
 const t = copy[locale];
-const evidence = service.evidence.map((slug) => cases.find((item) => item.slug === slug)).filter(Boolean);
+const pt = locale === 'pt';
+const position = services.findIndex((item) => item.slug === service.slug);
+const related = service.projects
+  .map((slug) => findProject(slug))
+  .filter((item): item is DemoProject => item !== undefined);
+const others = services.filter((item) => item.slug !== service.slug);
+const practiceId = pt ? 'na-pratica' : 'in-practice';
+const ui = pt
+  ? {
+      index: 'Serviço',
+      talk: 'Falar sobre este serviço',
+      practice: 'Ver na prática',
+      demos: 'Demonstrações deste serviço',
+      scope: 'Escopo do serviço',
+      practiceIndex: 'Na prática',
+      practiceTitle: related.length === 1 ? 'Uma demo para abrir e testar.' : 'Demos para abrir e testar.',
+      practiceLede: 'Estes projetos mostram o serviço funcionando. Abra no navegador, clique, filtre, preencha: tudo roda sem cadastro.',
+      note: 'São demonstrações autorais, criadas por mim com marcas e dados fictícios.',
+      noteMore: 'A experiência com clientes está no currículo.',
+      others: 'Outros serviços',
+      ctaTitle: 'Tem um caso parecido?',
+      ctaText: 'Conte o contexto, quem vai usar e o prazo. Estou disponível para contratos PJ remotos e projetos freelance.',
+    }
+  : {
+      index: 'Service',
+      talk: 'Talk about this service',
+      practice: 'See it in practice',
+      demos: 'Demonstrations of this service',
+      scope: 'Service scope',
+      practiceIndex: 'In practice',
+      practiceTitle: related.length === 1 ? 'A demo you can open and test.' : 'Demos you can open and test.',
+      practiceLede: 'These projects show the service working. Open them in your browser, click, filter, fill in forms: everything runs without signing up.',
+      note: 'They are demos I built myself, with fictional brands and data.',
+      noteMore: 'Client experience is in the CV.',
+      others: 'Other services',
+      ctaTitle: 'Have a similar case?',
+      ctaText: 'Tell me the context, who will use it, and the timeline. I’m available for remote contract (PJ) roles and freelance projects.',
+    };
 ---
 
-<article class="detail-page service-detail">
-  <header class="detail-hero detail-hero--service shell">
-    <a class="back-link" href={withLocale(locale, 'services')}><span aria-hidden="true">←</span>{t.backServices}</a>
-    <div class="detail-hero__heading">
-      <div><p class="eyebrow">{t.nav.services}</p><h1>{localize(service.title, locale)}</h1></div>
-    </div>
-    <p class="detail-hero__summary">{localize(service.summary, locale)}</p>
-    <div class="service-hero__routes">
-      <section>
-        <h2>{t.fit}</h2>
-        <ul>{service.idealFor[locale].map((item) => <li>{item}</li>)}</ul>
-      </section>
-      <section>
-        <h2>{t.deliverables}</h2>
-        <ul>{service.deliverables[locale].map((item) => <li>{item}</li>)}</ul>
-      </section>
+<article class="service">
+  <header class="service-hero shell">
+    <a class="back-link" href={withLocale(locale, 'services')}><Icon name="arrow-left" />{t.backServices}</a>
+    <div class="service-hero__grid">
+      <div class="service-hero__title">
+        <p class="section-index"><b>{service.index} / {String(services.length).padStart(2, '0')}</b>{ui.index}</p>
+        <h1>{localize(service.title, locale)}</h1>
+      </div>
+      <div class="service-hero__aside">
+        <p class="lede">{localize(service.summary, locale)}</p>
+        <div class="button-row">
+          <a class="button button--primary" href={withLocale(locale, 'contact')}>{ui.talk}<Icon name="arrow-right" /></a>
+          <a class="button button--secondary" href={`#${practiceId}`}>{ui.practice}<Icon name="arrow-down" /></a>
+        </div>
+        <div class="service-hero__demos">
+          <p class="service-hero__label">{ui.demos}</p>
+          <ul class="service-hero__chips">
+            {related.map((item) => (
+              <li>
+                <a class="chip-link" href={withLocale(locale, `work/${item.slug}`)} style={paletteStyle(item.palette)}>
+                  <span class="chip-link__swatch" aria-hidden="true"></span>{item.name}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
     </div>
   </header>
 
-  <section class="evidence-list shell">
-    <div class="section-heading section-heading--compact" data-reveal><h2>{service.slug === 'websites-landing-pages' ? (locale === 'pt' ? 'Trabalho entregue' : 'Delivered work') : t.evidence}</h2></div>
-    {evidence.map((item) => item && (
-      <a class="evidence-row" href={withLocale(locale, `work/${item.slug}`)} data-reveal>
-        <span>{item.title}</span><small>{localize(item.summary, locale)}</small><b aria-hidden="true">↗</b>
-      </a>
-    ))}
-  </section>
-
-  {service.slug === 'websites-landing-pages' && <section class="service-demos shell" aria-labelledby="service-demos-title">
-    <div class="section-heading section-heading--compact" data-reveal>
-      <p class="section-index">{locale === 'pt' ? 'Demonstrações autorais' : 'Authorial demonstrations'}</p>
-      <div><h2 id="service-demos-title">{locale === 'pt' ? 'Explore duas jornadas de página' : 'Explore two page journeys'}</h2><p>{locale === 'pt' ? 'Estas demos mostram possibilidades de estrutura e interação para segmentos diferentes. São projetos ilustrativos, separados do trabalho entregue acima.' : 'These demos show possible structures and interactions for two industries. They are illustrative projects, separate from the delivered work above.'}</p></div>
+  <section class="spec shell" aria-label={ui.scope}>
+    <div class="spec__col">
+      <h2 class="spec__title">{t.fit}</h2>
+      <ul class="spec__fit">
+        {service.idealFor[locale].map((item) => <li>{item}</li>)}
+      </ul>
     </div>
-    <div class="service-demos__links">{concepts.map((concept) => <a href={withLocale(locale, `work/landing-pages/${concept.slug}`)}><span><small>{localize(concept.disclaimer, locale)}</small><strong>{localize(concept.demoName, locale)}</strong><em>{localize(concept.demoTagline, locale)}</em></span><b aria-hidden="true">↗</b></a>)}</div>
-  </section>}
-
-  <section class="detail-tech shell" data-reveal>
-    <h2>{t.technologies}</h2>
-    <ul class="tag-list">{service.technologies.map((technology) => <li>{technology}</li>)}</ul>
+    <div class="spec__col">
+      <h2 class="spec__title">{t.deliverables}</h2>
+      <ol class="spec__steps">
+        {service.deliverables[locale].map((item, index) => (
+          <li><span class="spec__step" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>{item}</li>
+        ))}
+      </ol>
+    </div>
+    <div class="spec__col spec__col--tech">
+      <h2 class="spec__title">{t.technologies}</h2>
+      <ul class="tag-list">{service.technologies.map((item) => <li>{technologyName(item, locale)}</li>)}</ul>
+    </div>
   </section>
 
-  <div class="detail-actions shell"><a class="button button--signal" href={withLocale(locale, 'contact')}>{t.discuss}<span aria-hidden="true">↗</span></a></div>
+  <section class="practice section" id={practiceId} aria-labelledby="practice-title">
+    <div class="shell">
+      <header class="section-head" data-reveal>
+        <div class="section-head__title">
+          <p class="section-index">{ui.practiceIndex}</p>
+          <h2 id="practice-title">{ui.practiceTitle}</h2>
+        </div>
+        <div class="section-head__aside">
+          <p class="lede">{ui.practiceLede}</p>
+          <p class="note"><Icon name="info" /><span><strong>{ui.note}</strong> {ui.noteMore}</span></p>
+        </div>
+      </header>
+      <ol class="exhibits">
+        {related.map((project) => (
+          <li><Exhibit project={project} locale={locale} index={projects.indexOf(project)} /></li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <nav class="others shell" aria-labelledby="others-title">
+    <h2 id="others-title" class="others__title">{ui.others}</h2>
+    <ul class="others__list">
+      {others.map((item) => (
+        <li>
+          <a class="others__link" href={withLocale(locale, `services/${item.slug}`)}>
+            <span class="others__index" aria-hidden="true">{item.index}</span>
+            <span class="others__name">{localize(item.title, locale)}</span>
+            <Icon name="arrow-right" />
+          </a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+
+  <aside class="cta-band shell" aria-labelledby="service-cta-title">
+    <div>
+      <h2 id="service-cta-title">{ui.ctaTitle}</h2>
+      <p>{ui.ctaText}</p>
+    </div>
+    <a class="button button--primary" href={withLocale(locale, 'contact')}>{ui.talk}<Icon name="arrow-right" /></a>
+  </aside>
 </article>
+
+<style>
+  .service-hero { padding-block: clamp(1.25rem, 1rem + 1.5vw, 2.5rem) clamp(2.5rem, 2rem + 3vw, 4.5rem); }
+  .service-hero__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    align-items: end;
+    gap: var(--space-6) var(--space-8);
+    margin-block-start: clamp(1rem, 0.5rem + 1.5vw, 2rem);
+  }
+  .service-hero__title { display: grid; gap: var(--space-5); min-width: 0; }
+  .service-hero h1 {
+    max-width: 14ch;
+    font-size: clamp(2.5rem, 1.4rem + 3.8vw, 5rem);
+    font-weight: 700;
+    letter-spacing: -0.05em;
+    line-height: 0.98;
+  }
+  .service-hero__aside { display: grid; justify-items: start; gap: var(--space-5); min-width: 0; padding-block-end: 0.35rem; }
+  .service-hero__demos { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2) var(--space-3); padding-block-start: var(--space-4); border-block-start: 1px solid var(--line); width: 100%; }
+  .service-hero__label { color: var(--text-muted); font-family: var(--font-display); font-size: 0.8125rem; font-weight: 520; }
+  .service-hero__chips { display: flex; flex-wrap: wrap; gap: var(--space-2); list-style: none; }
+
+  .spec {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 0.9fr);
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-panel);
+    background: var(--surface-1);
+  }
+  .spec__col { display: grid; align-content: start; gap: var(--space-5); min-width: 0; padding: clamp(1.25rem, 1rem + 1.2vw, 2rem); }
+  .spec__col + .spec__col { border-inline-start: 1px solid var(--line); }
+  .spec__title { color: var(--text-muted); font-size: var(--step--1); font-weight: 560; letter-spacing: 0; line-height: 1.3; }
+  .spec__fit, .spec__steps { display: grid; gap: var(--space-3); list-style: none; }
+  .spec__fit li, .spec__steps li {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-3);
+    color: var(--text);
+    font-family: var(--font-display);
+    font-size: var(--step-1);
+    font-weight: 500;
+    letter-spacing: -0.015em;
+    line-height: 1.35;
+  }
+  .spec__fit li::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    flex: none;
+    border-radius: 1px;
+    background: var(--violet);
+    transform: translateY(-0.2em) rotate(45deg);
+  }
+  .spec__step { flex: none; color: var(--violet); font-family: var(--font-mono); font-size: 0.8125rem; font-variant-numeric: tabular-nums; }
+
+  .practice { padding-block-end: 0; }
+
+  .others { margin-block-start: var(--section-space); }
+  .others__title { margin-block-end: var(--space-5); color: var(--text-muted); font-size: var(--step--1); font-weight: 560; letter-spacing: 0; line-height: 1.3; }
+  .others__list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: var(--space-6); border-block-start: 1px solid var(--line); list-style: none; }
+  .others__link {
+    display: grid;
+    grid-template-columns: 2.5rem minmax(0, 1fr) auto;
+    align-items: center;
+    gap: var(--space-3);
+    min-height: 4.5rem;
+    padding-block: var(--space-4);
+    border-block-end: 1px solid var(--line);
+    color: var(--text);
+    text-decoration: none;
+  }
+  .others__index { color: var(--text-muted); font-family: var(--font-mono); font-size: 0.8125rem; font-variant-numeric: tabular-nums; transition: color var(--dur-fast) var(--ease); }
+  .others__name { font-family: var(--font-display); font-size: var(--step-2); font-weight: 600; letter-spacing: -0.03em; line-height: 1.2; }
+  .others__link :global(.icon) { color: var(--text-muted); transition: transform var(--dur) var(--ease), color var(--dur-fast) var(--ease); }
+  .others__link:hover .others__index,
+  .others__link:hover :global(.icon) { color: var(--violet); }
+  .others__link:hover :global(.icon) { transform: translateX(3px); }
+  .others__link:hover .others__name { text-decoration: underline; text-decoration-color: var(--violet-line); text-decoration-thickness: 1px; text-underline-offset: 0.25em; }
+
+  @media (max-width: 63.99em) {
+    .service-hero__grid { grid-template-columns: minmax(0, 1fr); align-items: start; }
+    .spec { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .spec__col + .spec__col--tech { grid-column: 1 / -1; border-block-start: 1px solid var(--line); border-inline-start: 0; }
+  }
+
+  @media (max-width: 47.99em) {
+    .spec, .others__list { grid-template-columns: minmax(0, 1fr); }
+    .spec__col + .spec__col { border-block-start: 1px solid var(--line); border-inline-start: 0; }
+    .service-hero__aside .button { flex: 1 1 14rem; }
+  }
+</style>

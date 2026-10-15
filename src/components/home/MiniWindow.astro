@@ -1,0 +1,31 @@
+---
+import Icon from '@/components/ui/Icon.astro';
+
+interface Props {
+  href: string;
+  /** Visible title in the window bar; it starts the link's accessible name. */
+  title: string;
+  /** Hidden continuation of the accessible name. */
+  label: string;
+  variant?: 'window' | 'phone';
+  class?: string;
+  style?: string;
+}
+
+const { href, title, label, variant = 'window', class: className, style } = Astro.props;
+---
+
+<div class:list={['desk-item', className]} style={style} data-desk-item>
+  <a class:list={['mini', `mini--${variant}`]} href={href} draggable="false">
+    <div class="mini__bar" data-desk-handle>
+      {variant === 'window'
+        ? <span class="mini__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+        : <span class="mini__time" aria-hidden="true">9:41</span>}
+      <span class="mini__title">{title}<span class="visually-hidden">{label}</span></span>
+      <span class="mini__go" aria-hidden="true"><Icon name="arrow-up-right" /></span>
+    </div>
+    <div class="mini__body" aria-hidden="true">
+      <slot />
+    </div>
+  </a>
+</div>

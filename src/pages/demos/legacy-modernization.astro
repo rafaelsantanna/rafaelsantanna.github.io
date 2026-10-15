@@ -1,0 +1,11 @@
+---
+import DemoLayout from '@/layouts/DemoLayout.astro';
+import LegacyModernizationDemo from '@/components/demos/legacy-modernization/LegacyModernizationDemo.astro';
+import { findProject } from '@/data/content';
+
+const project = findProject('legacy-modernization')!;
+---
+
+<DemoLayout locale="pt" project={project}>
+  <LegacyModernizationDemo locale="pt" project={project} />
+</DemoLayout>

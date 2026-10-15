@@ -1,0 +1,11 @@
+---
+import DemoLayout from '@/layouts/DemoLayout.astro';
+import FieldServiceAppDemo from '@/components/demos/field-service-app/FieldServiceAppDemo.astro';
+import { findProject } from '@/data/content';
+
+const project = findProject('field-service-app')!;
+---
+
+<DemoLayout locale="en" project={project}>
+  <FieldServiceAppDemo locale="en" project={project} />
+</DemoLayout>

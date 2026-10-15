@@ -1,54 +1,15 @@
-export type Locale = 'en' | 'pt';
+import type { DemoProject, Experience, Locale, LocalizedText, Service } from './types';
+import { concepts } from './concepts.ts';
+import { project as logisticsControl } from './projects/logistics-control.ts';
+import { project as legacyModernization } from './projects/legacy-modernization.ts';
+import { project as knowledgeAssistant } from './projects/knowledge-assistant.ts';
+import { project as onlineBooking } from './projects/online-booking.ts';
+import { project as fieldServiceApp } from './projects/field-service-app.ts';
+import { project as pousadaBoutique } from './projects/pousada-boutique.ts';
+import { project as climatizacaoLocal } from './projects/climatizacao-local.ts';
 
-export type LocalizedText = Record<Locale, string>;
-
-export interface CaseStudy {
-  slug: string;
-  title: string;
-  eyebrow: LocalizedText;
-  summary: LocalizedText;
-  role: LocalizedText;
-  period: LocalizedText;
-  context: LocalizedText;
-  challenge: LocalizedText;
-  solution: LocalizedText;
-  outcomes: Record<Locale, string[]>;
-  technologies: string[];
-  image: string;
-  imageWidth: number;
-  imageHeight: number;
-  imageAlt: LocalizedText;
-  externalUrl?: string;
-  externalLabel?: LocalizedText;
-  schemaType: 'SoftwareApplication' | 'CreativeWork';
-}
-
-export interface Service {
-  slug: string;
-  index: string;
-  title: LocalizedText;
-  summary: LocalizedText;
-  idealFor: Record<Locale, string[]>;
-  deliverables: Record<Locale, string[]>;
-  evidence: string[];
-  technologies: string[];
-}
-
-export interface Concept {
-  slug: string;
-  title: LocalizedText;
-  category: LocalizedText;
-  summary: LocalizedText;
-  disclaimer: LocalizedText;
-  demoName: LocalizedText;
-  demoTagline: LocalizedText;
-  sections: Record<Locale, Array<{ title: string; text: string }>>;
-  image: string;
-  imageWidth: number;
-  imageHeight: number;
-  imageAlt: LocalizedText;
-  theme: 'hospitality' | 'service';
-}
+export type { Concept, DemoProject, Experience, Locale, LocalizedText, ProjectKind, Service, TitledText } from './types';
+export { concepts };
 
 export const identity = {
   name: "Rafael Sant' Anna",
@@ -62,10 +23,23 @@ export const identity = {
   phoneE164: '351926979735',
   github: 'https://github.com/rafaelsantanna',
   linkedin: 'https://www.linkedin.com/in/devrafaelsantanna/',
+  linkedinHandle: '/in/devrafaelsantanna',
   edgeData: 'https://edgedata.com.br/',
   availability: {
-    en: 'Available immediately for remote PJ contracts and freelance projects, with full overlap with Brazilian business hours',
+    en: 'Available immediately for remote contractor (PJ) roles with Brazilian companies and for freelance projects, with full overlap with Brazilian business hours',
     pt: 'Disponível imediatamente para contratos PJ remotos e projetos freelance, com cobertura integral do horário comercial brasileiro',
+  },
+  availabilityShort: {
+    en: 'Available for remote contract (PJ) roles and freelance',
+    pt: 'Disponível para PJ remoto e freelance',
+  },
+  workingHours: {
+    en: 'Brazilian business hours',
+    pt: 'Horário comercial do Brasil',
+  },
+  cv: {
+    en: '/cv/rafael-sant-anna-cv-english.pdf',
+    pt: '/cv/rafael-sant-anna-cv.pdf',
   },
   summary: {
     en: "Rafael Sant' Anna is a senior software engineer based in Viseu, Portugal, with more than 10 years of experience building and modernizing B2B products, internal systems, and operational platforms.",
@@ -73,10 +47,11 @@ export const identity = {
   },
 };
 
-export const cases: CaseStudy[] = [
+export const experience: Experience[] = [
   {
     slug: 'edgedata',
-    title: 'EdgeData',
+    company: 'EdgeData',
+    title: { en: 'EdgeData', pt: 'EdgeData' },
     eyebrow: { en: 'Owned product / Network operations', pt: 'Produto próprio / Operações de rede' },
     summary: {
       en: 'An on-premise platform that centralizes infrastructure inventory, SSH and Telnet sessions, reusable commands, permissions, and operational history inside the customer network.',
@@ -109,20 +84,13 @@ export const cases: CaseStudy[] = [
       ],
     },
     technologies: ['.NET Core', 'REST APIs', 'SSH', 'Telnet', 'RBAC', 'Automation'],
-    image: '/images/work/edgedata-inventory-current.png',
-    imageWidth: 1504,
-    imageHeight: 760,
-    imageAlt: {
-      en: 'Real EdgeData interface with demonstration data showing equipment inventory, search, and actions for commands and sessions',
-      pt: 'Interface real do EdgeData com dados de demonstração, mostrando inventário de equipamentos, busca e ações para comandos e sessões',
-    },
     externalUrl: 'https://edgedata.com.br/',
     externalLabel: { en: 'Visit EdgeData', pt: 'Conhecer o EdgeData' },
-    schemaType: 'SoftwareApplication',
   },
   {
     slug: 'academic-operations',
-    title: 'Academic Operations Platform',
+    company: 'Affinity / Axians',
+    title: { en: 'Academic Operations Platform', pt: 'Plataforma de operações acadêmicas' },
     eyebrow: { en: 'Affinity / Axians', pt: 'Affinity / Axians' },
     summary: {
       en: 'Digital enrollment, academic administration, and assessment journeys built for complex rules, secure access, documents, and long multi-step flows.',
@@ -155,18 +123,11 @@ export const cases: CaseStudy[] = [
       ],
     },
     technologies: ['React 19', 'TypeScript', 'Zustand', 'Tailwind CSS', 'Laravel 11', 'PHP 8.4', 'RBAC'],
-    image: '/images/work/academic-operations-record.svg',
-    imageWidth: 1200,
-    imageHeight: 760,
-    imageAlt: {
-      en: 'Delivery record highlighting more than 200 improvements across a six-month academic platform project',
-      pt: 'Registro de entrega destacando mais de 200 melhorias em seis meses de projeto de plataforma acadêmica',
-    },
-    schemaType: 'CreativeWork',
   },
   {
     slug: 'corporate-learning',
-    title: 'Corporate Learning Ecosystems',
+    company: 'Revvo',
+    title: { en: 'Corporate Learning Ecosystems', pt: 'Ecossistemas de aprendizagem corporativa' },
     eyebrow: { en: 'Revvo', pt: 'Revvo' },
     summary: {
       en: 'LMS and LXP platforms, learning journeys, dashboards, enterprise integrations, and applied AI delivered across corporate and educational contexts.',
@@ -199,18 +160,11 @@ export const cases: CaseStudy[] = [
       ],
     },
     technologies: ['React', 'Vue.js', 'Laravel', 'Node.js', 'Moodle', 'SCORM', 'BI integrations', 'AI'],
-    image: '/images/work/corporate-learning-record.svg',
-    imageWidth: 1200,
-    imageHeight: 760,
-    imageAlt: {
-      en: 'Delivery record highlighting more than 15 corporate and educational LMS projects from 2019 to 2025',
-      pt: 'Registro de entrega destacando mais de 15 projetos LMS corporativos e educacionais entre 2019 e 2025',
-    },
-    schemaType: 'CreativeWork',
   },
   {
     slug: 'trinks',
-    title: 'Trinks',
+    company: 'Trinks',
+    title: { en: 'Trinks', pt: 'Trinks' },
     eyebrow: { en: 'Beauty business platform', pt: 'Plataforma para negócios de beleza' },
     summary: {
       en: 'Administrative interfaces, online booking flows, responsive pages, and back-office tools for salons, clinics, studios, networks, and franchises.',
@@ -241,17 +195,13 @@ export const cases: CaseStudy[] = [
       ],
     },
     technologies: ['AngularJS', 'Vue.js', 'JavaScript', 'HTML5', 'CSS3', 'ASP.NET'],
-    image: '/images/work/trinks.png',
-    imageWidth: 1349,
-    imageHeight: 616,
-    imageAlt: { en: 'Trinks business platform landing page', pt: 'Landing page da plataforma de negócios Trinks' },
     externalUrl: 'https://www.trinks.com/negocios/programa-para-salao-de-beleza',
     externalLabel: { en: 'Visit Trinks', pt: 'Conhecer a Trinks' },
-    schemaType: 'CreativeWork',
   },
   {
     slug: 'enterprise-operations',
-    title: 'Enterprise Operations at Scale',
+    company: 'aspecTI',
+    title: { en: 'Enterprise Operations at Scale', pt: 'Operações empresariais em escala' },
     eyebrow: { en: 'aspecTI / Grupo Profarma', pt: 'aspecTI / Grupo Profarma' },
     summary: {
       en: 'Operational platforms for service requests, dynamic workflows, field teams, time records, notifications, accounts, and maintenance across large organizations.',
@@ -284,14 +234,6 @@ export const cases: CaseStudy[] = [
       ],
     },
     technologies: ['ASP.NET MVC', 'ASP.NET Web API', 'C#', 'SQL Server', 'Entity Framework', 'Ionic', 'Vue.js'],
-    image: '/images/work/enterprise-operations-record.svg',
-    imageWidth: 1200,
-    imageHeight: 760,
-    imageAlt: {
-      en: 'Delivery record highlighting more than 10,000 platform users and retail maintenance across 226 stores',
-      pt: 'Registro de entrega destacando mais de 10.000 usuários da plataforma e manutenção em 226 lojas',
-    },
-    schemaType: 'CreativeWork',
   },
 ];
 
@@ -301,8 +243,8 @@ export const services: Service[] = [
     index: '01',
     title: { en: 'B2B SaaS and internal systems', pt: 'SaaS B2B e sistemas internos' },
     summary: {
-      en: 'Turn complex rules, permissions, approvals, and operational data into software teams can run every day.',
-      pt: 'Transforme regras complexas, permissões, aprovações e dados operacionais em software que equipes usam todos os dias.',
+      en: 'I turn rules, permissions, approvals, and operational data into software your team uses every day.',
+      pt: 'Transformo regras, permissões, aprovações e dados da operação em software que a equipe usa todo dia.',
     },
     idealFor: {
       en: ['New B2B products', 'Administrative portals', 'Operational workflows', 'Legacy process replacement'],
@@ -312,7 +254,7 @@ export const services: Service[] = [
       en: ['Product and technical discovery', 'Responsive frontend', 'APIs and integrations', 'Permissions and auditability'],
       pt: ['Descoberta de produto e técnica', 'Frontend responsivo', 'APIs e integrações', 'Permissões e rastreabilidade'],
     },
-    evidence: ['edgedata', 'academic-operations', 'enterprise-operations'],
+    projects: ['logistics-control', 'knowledge-assistant', 'field-service-app'],
     technologies: ['React', 'Vue.js', 'Laravel', 'Node.js', '.NET/C#', 'PostgreSQL'],
   },
   {
@@ -320,8 +262,8 @@ export const services: Service[] = [
     index: '02',
     title: { en: 'Websites and landing pages', pt: 'Sites e landing pages' },
     summary: {
-      en: 'Create clear, fast commercial pages that turn services, booking journeys, and business value into focused calls to action.',
-      pt: 'Crie páginas comerciais claras e rápidas que transformam serviços, jornadas de agendamento e valor de negócio em chamadas para ação objetivas.',
+      en: 'Fast, clear websites and landing pages that explain what the business does and lead customers to book, reserve, or ask for a quote.',
+      pt: 'Sites e landing pages rápidos e claros, que explicam o que o negócio faz e levam o cliente a agendar, reservar ou pedir orçamento.',
     },
     idealFor: {
       en: ['Local service businesses', 'Hospitality and booking journeys', 'New offers and campaigns', 'Businesses relying only on social media'],
@@ -331,7 +273,7 @@ export const services: Service[] = [
       en: ['Content and conversion structure', 'Responsive implementation', 'Contact and booking integrations', 'Performance and accessibility review'],
       pt: ['Estrutura de conteúdo e conversão', 'Implementação responsiva', 'Integrações de contato e agendamento', 'Revisão de performance e acessibilidade'],
     },
-    evidence: ['trinks'],
+    projects: ['online-booking', 'pousada-boutique', 'climatizacao-local'],
     technologies: ['Astro', 'React', 'TypeScript', 'Responsive UI', 'SEO'],
   },
   {
@@ -339,8 +281,8 @@ export const services: Service[] = [
     index: '03',
     title: { en: 'Frontend and back-office modernization', pt: 'Modernização de frontend e backoffice' },
     summary: {
-      en: 'Modernize dense interfaces and legacy platforms incrementally, without losing the business rules that keep operations running.',
-      pt: 'Modernize interfaces densas e plataformas legadas de forma incremental, sem perder as regras que mantêm a operação funcionando.',
+      en: 'I modernize dense interfaces and legacy systems step by step, without losing the rules that keep operations running.',
+      pt: 'Modernizo interfaces densas e sistemas legados aos poucos, sem perder as regras que mantêm a operação funcionando.',
     },
     idealFor: {
       en: ['Legacy AngularJS or jQuery applications', 'Complex back-office interfaces', 'Responsive remediation', 'Incremental migrations'],
@@ -350,7 +292,7 @@ export const services: Service[] = [
       en: ['Interface audit', 'Migration sequence', 'Reusable component foundation', 'Accessibility and performance hardening'],
       pt: ['Auditoria de interface', 'Sequência de migração', 'Base de componentes reutilizáveis', 'Acessibilidade e performance'],
     },
-    evidence: ['academic-operations', 'trinks', 'enterprise-operations'],
+    projects: ['legacy-modernization', 'logistics-control'],
     technologies: ['React', 'Vue.js', 'TypeScript', 'AngularJS', 'Tailwind CSS', 'ASP.NET'],
   },
   {
@@ -358,8 +300,8 @@ export const services: Service[] = [
     index: '04',
     title: { en: 'AI automation, RAG, and bots', pt: 'Automação com IA, RAG e bots' },
     summary: {
-      en: 'Apply generative AI where it reduces repetitive work, improves access to knowledge, or accelerates operational decisions.',
-      pt: 'Aplique IA generativa onde ela reduz trabalho repetitivo, melhora o acesso ao conhecimento ou acelera decisões operacionais.',
+      en: 'Generative AI where it actually helps: less repetitive work, knowledge that is easy to find, and faster decisions.',
+      pt: 'IA generativa onde ela ajuda de verdade: menos trabalho repetitivo, informação fácil de achar e decisões mais rápidas.',
     },
     idealFor: {
       en: ['Knowledge assistants', 'Workflow automation', 'Telegram and WhatsApp bots', 'Predictive operational analysis'],
@@ -369,7 +311,7 @@ export const services: Service[] = [
       en: ['Use-case validation', 'RAG and retrieval design', 'Human review paths', 'Observability and iteration plan'],
       pt: ['Validação do caso de uso', 'Design de RAG e recuperação', 'Fluxos de revisão humana', 'Plano de observabilidade e evolução'],
     },
-    evidence: ['corporate-learning'],
+    projects: ['knowledge-assistant'],
     technologies: ['RAG', 'Generative AI', 'Node.js', 'Python', 'Telegram', 'WhatsApp'],
   },
   {
@@ -377,8 +319,8 @@ export const services: Service[] = [
     index: '05',
     title: { en: 'Mobile applications and integrations', pt: 'Aplicações mobile e integrações' },
     summary: {
-      en: 'Connect field operations, logistics, customers, and back-office systems through focused mobile experiences.',
-      pt: 'Conecte operações de campo, logística, clientes e sistemas administrativos por meio de experiências mobile focadas.',
+      en: 'Apps for field teams, logistics, and customers, connected to the systems the company already runs.',
+      pt: 'Apps para equipes de campo, logística e clientes, ligados aos sistemas que a empresa já usa.',
     },
     idealFor: {
       en: ['Field teams', 'Fleet and logistics', 'Customer self-service', 'Operational data capture'],
@@ -388,77 +330,30 @@ export const services: Service[] = [
       en: ['React Native application', 'Backend APIs', 'Authentication and offline-aware flows', 'Operational integrations'],
       pt: ['Aplicação React Native', 'APIs de backend', 'Autenticação e fluxos conscientes de conexão', 'Integrações operacionais'],
     },
-    evidence: ['enterprise-operations'],
+    projects: ['field-service-app', 'online-booking'],
     technologies: ['React Native', 'Ionic', 'Node.js', 'REST APIs', 'SQL'],
   },
 ];
 
-export const concepts: Concept[] = [
-  {
-    slug: 'pousada-boutique',
-    title: { en: 'Casa Neblina', pt: 'Casa Neblina' },
-    category: { en: 'Hospitality / Direct booking', pt: 'Hospedagem / Reserva direta' },
-    summary: {
-      en: 'A conversion-focused bilingual experience for a small lodge that needs to present its atmosphere, stays, and reservation path beyond social media.',
-      pt: 'Uma experiência bilíngue focada em conversão para uma pequena pousada que precisa apresentar atmosfera, hospedagens e caminho de reserva além das redes sociais.',
-    },
-    disclaimer: {
-      en: "Authorial demonstration created by Rafael Sant' Anna for this portfolio. Illustrative brand.",
-      pt: "Demonstração autoral criada por Rafael Sant' Anna para este portfólio. Marca ilustrativa.",
-    },
-    demoName: { en: 'Casa Neblina', pt: 'Casa Neblina' },
-    demoTagline: { en: 'Let time find another rhythm.', pt: 'O tempo encontra outro ritmo.' },
-    sections: {
-      en: [
-        { title: 'The mountains need no itinerary.', text: 'Begin with a long breakfast, choose a path through the trees, or stay close. Casa Neblina imagines a welcoming retreat shaped around the pace of its landscape.' },
-        { title: 'Spaces to simply be.', text: 'A collection of imagined spaces for resting, reading, and watching the light change.' },
-        { title: 'Paths that begin slowly.', text: 'Forest, fresh air, and small discoveries. Here, the surrounding area is an invitation, with no invented distances or required itinerary.' },
-      ],
-      pt: [
-        { title: 'A serra não precisa de roteiro.', text: 'Comece pelo café demorado, escolha um caminho entre as árvores ou fique por perto. A Casa Neblina é uma ideia de hospedagem acolhedora, conectada ao ritmo da paisagem.' },
-        { title: 'Espaços para estar.', text: 'Uma seleção de ambientes imaginados para descansar, ler e aproveitar a mudança da luz.' },
-        { title: 'Caminhos que começam devagar.', text: 'Floresta, ar fresco e pequenas descobertas. Nesta proposta, a região aparece como convite: sem distâncias inventadas nem roteiro obrigatório.' },
-      ],
-    },
-    image: '/images/concepts/pousada-boutique-hero.png',
-    imageWidth: 1536,
-    imageHeight: 1024,
-    imageAlt: { en: 'Fictional mountain lodge surrounded by mist and native vegetation', pt: 'Pousada fictícia na serra, cercada por névoa e vegetação nativa' },
-    theme: 'hospitality',
-  },
-  {
-    slug: 'climatizacao-local',
-    title: { en: 'Clima Certa', pt: 'Clima Certa' },
-    category: { en: 'Local service / Quote journey', pt: 'Serviço local / Jornada de orçamento' },
-    summary: {
-      en: 'A direct commercial page for an HVAC business that needs to explain services, coverage, and the quote journey beyond a WhatsApp-only presence.',
-      pt: 'Uma página comercial direta para uma empresa de climatização que precisa explicar serviços, cobertura e jornada de orçamento além de uma presença apenas no WhatsApp.',
-    },
-    disclaimer: {
-      en: "Authorial demonstration created by Rafael Sant' Anna for this portfolio. Illustrative brand.",
-      pt: "Demonstração autoral criada por Rafael Sant' Anna para este portfólio. Marca ilustrativa.",
-    },
-    demoName: { en: 'Clima Certa', pt: 'Clima Certa' },
-    demoTagline: { en: 'Comfort starts with the right questions.', pt: 'Climatização começa com boas perguntas.' },
-    sections: {
-      en: [
-        { title: 'Installation', text: 'Consider how a space is used, its dimensions, and daily routine before discussing equipment and installation.' },
-        { title: 'Maintenance', text: 'Note what you have observed and when it happens to make an initial assessment easier.' },
-        { title: 'Service and repair', text: 'Share a model, approximate age, and behavior to start the conversation with context.' },
-      ],
-      pt: [
-        { title: 'Instalação', text: 'Considere o uso do espaço, suas dimensões e a rotina antes de conversar sobre equipamento e instalação.' },
-        { title: 'Manutenção', text: 'Organize o que observou no aparelho e quando isso acontece para facilitar uma avaliação inicial.' },
-        { title: 'Revisão e reparo', text: 'Compartilhe modelo, idade aproximada e comportamento para começar a conversa com contexto.' },
-      ],
-    },
-    image: '/images/concepts/climatizacao-local-hero.png',
-    imageWidth: 1799,
-    imageHeight: 874,
-    imageAlt: { en: 'Technician inspecting a modern air-conditioning unit in a bright interior', pt: 'Técnico inspecionando um aparelho de ar-condicionado moderno em ambiente iluminado' },
-    theme: 'service',
-  },
+/** Authorial demonstrations, in the order they are presented. */
+export const projects: DemoProject[] = [
+  logisticsControl,
+  legacyModernization,
+  knowledgeAssistant,
+  onlineBooking,
+  fieldServiceApp,
+  pousadaBoutique,
+  climatizacaoLocal,
 ];
+
+/** Each demo is captured in both languages; English previews live under /images/projects/en/. */
+export function previewImage(project: DemoProject, locale: Locale): string {
+  return locale === 'en' ? project.preview.image.replace('/images/projects/', '/images/projects/en/') : project.preview.image;
+}
+
+export function findProject(slug: string): DemoProject | undefined {
+  return projects.find((item) => item.slug === slug);
+}
 
 export const selectedWork = [
   {
@@ -467,7 +362,7 @@ export const selectedWork = [
       en: 'React Native application and Node.js backend for fleet, route, driver, field-operation, and administrative data.',
       pt: 'Aplicação React Native e backend Node.js para dados de frota, rotas, motoristas, operações de campo e usuários administrativos.',
     },
-    technologies: ['React Native', 'Node.js', 'REST APIs'],
+    technologies: { en: ['React Native', 'Node.js', 'REST APIs'], pt: ['React Native', 'Node.js', 'APIs REST'] },
   },
   {
     title: 'Avanutri',
@@ -475,7 +370,7 @@ export const selectedWork = [
       en: 'Web management screens and a mobile application for nutrition professionals and administrative workflows.',
       pt: 'Telas de gestão web e aplicação mobile para profissionais de nutrição e fluxos administrativos.',
     },
-    technologies: ['Web', 'Mobile', 'Administrative systems'],
+    technologies: { en: ['Web', 'Mobile', 'Administrative systems'], pt: ['Web', 'Mobile', 'Sistemas administrativos'] },
   },
 ];
 
@@ -494,20 +389,19 @@ export const copy = {
     switchLocale: 'Português',
     skip: 'Skip to content',
     nav: { work: 'Work', services: 'Services', about: 'About', cv: 'CV', agents: 'For agents', contact: 'Contact' },
-    heroTitle: 'I build the software behind complex operations.',
-    heroIntro: 'Senior software engineer with 10+ years building and modernizing B2B products, internal systems, and operational platforms.',
+    heroTitle: 'Systems, websites, and apps you can try right now.',
+    heroIntro: 'I’m a senior software engineer with 10+ years building B2B products, internal systems, websites, and apps. Every project in this portfolio is a demo that actually works.',
     discuss: 'Discuss a project',
-    seeWork: 'See selected work',
-    proofTitle: 'Evidence, not a logo wall.',
-    proofIntro: 'Three cases show the systems, constraints, responsibilities, and measurable outcomes behind the work.',
+    seeWork: 'See the projects',
     servicesTitle: 'Where I can help.',
-    servicesIntro: 'Focused engagements for building or modernizing the systems behind complex B2B operations.',
-    viewCase: 'Read case study',
+    servicesIntro: 'I build and modernize the systems behind complex B2B operations.',
+    viewProject: 'About the project',
+    openDemo: 'Open live demo',
     viewService: 'Explore service',
-    workTitle: 'Selected work',
-    workIntro: 'Products and platforms built for operations where permissions, integrations, workflows, and reliability matter.',
-    servicesPageTitle: 'Services built around real operational problems',
-    servicesPageIntro: 'Each offer is grounded in work I have already delivered for complex operations. My primary focus is B2B products, internal systems, and platform modernization.',
+    workTitle: 'Projects you can open',
+    workIntro: 'Working demonstrations, from operations consoles to landing pages, built with fictional brands and data to show how I design and engineer software.',
+    servicesPageTitle: 'Services built around real operations',
+    servicesPageIntro: 'Each service builds on more than ten years of delivery and comes with a working demonstration you can try. My primary focus is B2B products, internal systems, and platform modernization.',
     aboutTitle: 'Engineering that starts with the operation',
     aboutIntro: 'I’m a senior software engineer based in Viseu, Portugal, with more than 10 years of experience turning complex operations into maintainable B2B products and internal systems.',
     cvTitle: 'Curriculum vitae',
@@ -522,33 +416,33 @@ export const copy = {
     technologies: 'Technology',
     fit: 'Good fit for',
     deliverables: 'Typical delivery',
-    evidence: 'Related evidence',
+    evidence: 'Related projects',
+    experienceTitle: 'Experience',
     downloadCv: 'Download CV as PDF',
     email: 'Email me',
     whatsapp: 'Message me on WhatsApp',
     backWork: 'Back to work',
     backServices: 'Back to services',
-    footerLine: 'Senior engineering for complex operations.',
+    footerLine: 'Senior software engineering, from interface to business rule.',
   },
   pt: {
     localeName: 'PT',
     switchLocale: 'English',
     skip: 'Pular para o conteúdo',
     nav: { work: 'Projetos', services: 'Serviços', about: 'Sobre', cv: 'CV', agents: 'Para agentes', contact: 'Contato' },
-    heroTitle: 'Eu construo o software por trás de operações complexas.',
-    heroIntro: 'Engenheiro de software sênior com mais de 10 anos construindo e modernizando produtos B2B, sistemas internos e plataformas operacionais.',
+    heroTitle: 'Sistemas, sites e apps que você pode testar agora.',
+    heroIntro: 'Sou engenheiro de software sênior, com mais de 10 anos construindo produtos B2B, sistemas internos, sites e apps. Cada projeto deste portfólio é uma demo que funciona de verdade.',
     discuss: 'Conversar sobre um projeto',
-    seeWork: 'Ver projetos selecionados',
-    proofTitle: 'Evidências, não uma parede de logos.',
-    proofIntro: 'Três cases mostram sistemas, restrições, responsabilidades e resultados mensuráveis por trás do trabalho.',
+    seeWork: 'Ver os projetos',
     servicesTitle: 'Onde posso ajudar.',
-    servicesIntro: 'Projetos focados para construir ou modernizar os sistemas por trás de operações B2B complexas.',
-    viewCase: 'Ler o case',
+    servicesIntro: 'Construo e modernizo os sistemas que sustentam operações B2B complexas.',
+    viewProject: 'Sobre o projeto',
+    openDemo: 'Abrir a demo',
     viewService: 'Explorar serviço',
-    workTitle: 'Projetos selecionados',
-    workIntro: 'Produtos e plataformas construídos para operações em que permissões, integrações, workflows e confiabilidade importam.',
-    servicesPageTitle: 'Serviços construídos em torno de problemas operacionais reais',
-    servicesPageIntro: 'Cada oferta se apoia em trabalho que já entreguei para operações complexas. Meu foco principal é produtos B2B, sistemas internos e modernização de plataformas.',
+    workTitle: 'Projetos para abrir e usar',
+    workIntro: 'Demonstrações funcionais, de painéis operacionais a landing pages, construídas com marcas e dados fictícios para mostrar como eu projeto e desenvolvo software.',
+    servicesPageTitle: 'Serviços pensados a partir da operação real',
+    servicesPageIntro: 'Cada serviço se apoia em mais de dez anos de entregas e vem com uma demo funcional para você testar. Meu foco principal é produtos B2B, sistemas internos e modernização de plataformas.',
     aboutTitle: 'Engenharia que começa pela operação',
     aboutIntro: 'Sou engenheiro de software sênior, baseado em Viseu, Portugal, com mais de 10 anos de experiência transformando operações complexas em produtos B2B e sistemas internos sustentáveis.',
     cvTitle: 'Currículo profissional',
@@ -563,15 +457,30 @@ export const copy = {
     technologies: 'Tecnologias',
     fit: 'Ideal para',
     deliverables: 'Entrega típica',
-    evidence: 'Evidências relacionadas',
+    evidence: 'Projetos relacionados',
+    experienceTitle: 'Experiência',
     downloadCv: 'Baixar CV em PDF',
     email: 'Enviar email',
     whatsapp: 'Conversar comigo no WhatsApp',
     backWork: 'Voltar aos projetos',
     backServices: 'Voltar aos serviços',
-    footerLine: 'Engenharia sênior para operações complexas.',
+    footerLine: 'Engenharia de software sênior, da interface à regra de negócio.',
   },
 } as const;
+
+const portugueseTechnologyNames: Record<string, string> = {
+  'REST APIs': 'APIs REST',
+  Automation: 'Automação',
+  'BI integrations': 'Integrações de BI',
+  AI: 'IA',
+  'Generative AI': 'IA generativa',
+  'Responsive UI': 'UI responsiva',
+};
+
+/** Technology names are stored in English; a few generic terms read better translated on the Portuguese site. */
+export function technologyName(name: string, locale: Locale): string {
+  return locale === 'pt' ? portugueseTechnologyNames[name] ?? name : name;
+}
 
 export function localize<T extends LocalizedText>(value: T, locale: Locale): string {
   return value[locale];
@@ -579,7 +488,8 @@ export function localize<T extends LocalizedText>(value: T, locale: Locale): str
 
 export function withLocale(locale: Locale, path = ''): string {
   const normalized = path.replace(/^\/+|\/+$/g, '');
-  const prefix = locale === 'pt' ? '/pt' : '';
+  // Portuguese is the primary language at the root; English lives under /en/.
+  const prefix = locale === 'en' ? '/en' : '';
   return `${prefix}/${normalized}${normalized ? '/' : ''}`;
 }
 

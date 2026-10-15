@@ -1,101 +1,125 @@
 ---
-import { cases, concepts, copy, localize, selectedWork, services, withLocale, type Locale } from '@/data/content';
+import Icon from '@/components/ui/Icon.astro';
+import ProjectCard from '@/components/ui/ProjectCard.astro';
+import ServiceList from '@/components/ui/ServiceList.astro';
+import { copy, projects, withLocale, type Locale, type ProjectKind } from '@/data/content';
+
 interface Props { locale: Locale; type: 'work' | 'services' }
+
 const { locale, type } = Astro.props;
 const t = copy[locale];
----
+const pt = locale === 'pt';
 
-<section class:list={['page-hero', `page-hero--${type}`, 'shell']}>
-  <div class="listing-hero__copy">
-    <p class="section-index">{type === 'work' ? (locale === 'pt' ? 'Projetos' : 'Selected work') : (locale === 'pt' ? 'Serviços' : 'Services')}</p>
-    <h1>{type === 'work' ? t.workTitle : (locale === 'pt' ? 'Da ideia ao software.' : 'From idea to software.')}</h1>
-    <p>{type === 'work' ? t.workIntro : t.servicesPageIntro}</p>
-  </div>
-  {type === 'work' ? (
-    <figure class="listing-hero__preview">
-      <img src={cases[0].image} alt={localize(cases[0].imageAlt, locale)} width={cases[0].imageWidth} height={cases[0].imageHeight} />
-      <figcaption>{locale === 'pt' ? 'Projeto em destaque: EdgeData' : 'Featured project: EdgeData'}</figcaption>
-    </figure>
-  ) : (
-    <ul class="listing-hero__principles" aria-label={locale === 'pt' ? 'Princípios de entrega' : 'Delivery principles'}>
-      <li>{locale === 'pt' ? 'Problema real' : 'Real problem'}</li>
-      <li>{locale === 'pt' ? 'Entrega focada' : 'Focused delivery'}</li>
-      <li>{locale === 'pt' ? 'Evidência relacionada' : 'Related evidence'}</li>
-    </ul>
-  )}
-</section>
+const kinds: Array<{ value: 'all' | ProjectKind; label: string }> = pt
+  ? [{ value: 'all', label: 'Todos' }, { value: 'product', label: 'Sistemas' }, { value: 'ai', label: 'IA' }, { value: 'site', label: 'Sites' }, { value: 'mobile', label: 'Mobile' }]
+  : [{ value: 'all', label: 'All' }, { value: 'product', label: 'Systems' }, { value: 'ai', label: 'AI' }, { value: 'site', label: 'Websites' }, { value: 'mobile', label: 'Mobile' }];
+const countFor = (kind: string) => (kind === 'all' ? projects.length : projects.filter((item) => item.kind === kind).length);
+const ui = pt
+  ? {
+      workIndex: 'Projetos',
+      servicesIndex: 'Serviços',
+      note: 'Todos são demonstrações autorais, criadas por mim com marcas e dados fictícios.',
+      noteMore: 'Trabalhos de clientes não são exibidos; a experiência real está no currículo.',
+      filterLabel: 'Filtrar por tipo',
+      one: '{n} projeto',
+      other: '{n} projetos',
+      scope: '{count} em {label}',
+      listLabel: 'Projetos',
+      contactTitle: 'Não achou um exemplo parecido com o seu caso?',
+      contactText: 'Conte o que você precisa. A maioria dos projetos começa com uma conversa curta sobre a operação.',
+      contactAction: 'Falar com Rafael',
+    }
+  : {
+      workIndex: 'Work',
+      servicesIndex: 'Services',
+      note: 'Every project here is a demo I built myself, with a fictional brand and fictional data.',
+      noteMore: 'Client work is not shown; real experience is in the CV.',
+      filterLabel: 'Filter by type',
+      one: '{n} project',
+      other: '{n} projects',
+      scope: '{count} in {label}',
+      listLabel: 'Projects',
+      contactTitle: 'No example close to your case?',
+      contactText: 'Tell me what you need. Most projects start with a short conversation about the operation.',
+      contactAction: 'Talk to Rafael',
+    };
+---
 
 {type === 'work' ? (
   <>
-    <section class="case-index shell" aria-label={t.workTitle}>
-      {cases.map((item) => (
-        <article class="case-index__item" data-reveal>
-          <div class="case-index__image"><img src={item.image} alt={localize(item.imageAlt, locale)} width={item.imageWidth} height={item.imageHeight} loading="lazy" decoding="async" /></div>
-          <div class="case-index__copy">
-            <p class="eyebrow">{localize(item.eyebrow, locale)}</p>
-            <h2><a href={withLocale(locale, `work/${item.slug}`)}>{item.title}</a></h2>
-            <p>{localize(item.summary, locale)}</p>
-            <span class="text-link" aria-hidden="true">{t.viewCase}<span>→</span></span>
-          </div>
-        </article>
-      ))}
-    </section>
-    <section id="landing-pages" class="concept-index shell" aria-labelledby="landing-pages-title">
-      <div class="section-heading section-heading--compact" data-reveal>
-        <p class="section-index">{locale === 'pt' ? 'Demonstrações' : 'Demonstrations'}</p>
-        <div><h2 id="landing-pages-title">{locale === 'pt' ? 'Demonstrações navegáveis' : 'Navigable landing-page demos'}</h2><p>{locale === 'pt' ? 'Duas experiências completas para explorar jornadas comerciais de hospedagem e serviço local. As imagens são referências visuais, não capturas das interfaces.' : 'Two complete experiences showing commercial journeys for hospitality and local services. Images are visual references, not screenshots of the interfaces.'}</p></div>
+    <header class="page-head shell">
+      <p class="section-index">{ui.workIndex}</p>
+      <h1>{t.workTitle}</h1>
+      <p class="lede">{t.workIntro}</p>
+      <p class="note"><Icon name="info" /><span><strong>{ui.note}</strong> {ui.noteMore}</span></p>
+    </header>
+
+    <section class="work shell" aria-label={ui.listLabel} data-work data-count-one={ui.one} data-count-other={ui.other} data-scope={ui.scope}>
+      <div class="work__toolbar">
+        <div class="filters" role="group" aria-label={ui.filterLabel} hidden data-filters>
+          {kinds.map((kind) => (
+            <button class="filters__chip" type="button" aria-pressed={kind.value === 'all' ? 'true' : 'false'} data-filter={kind.value} data-label={kind.label}>
+              <span class="filters__check"><Icon name="check" /></span>{kind.label}<span class="filters__count" aria-hidden="true">{countFor(kind.value)}</span>
+            </button>
+          ))}
+        </div>
+        <p class="work__status" role="status" data-work-status>{ui.other.replace('{n}', String(projects.length))}</p>
       </div>
-      <div class="case-index">
-        {concepts.map((concept) => (
-          <article class="case-index__item" data-reveal>
-            <div class="case-index__image"><img src={concept.image.replace(/\.png$/, '.webp')} alt={localize(concept.imageAlt, locale)} width={concept.imageWidth} height={concept.imageHeight} loading="lazy" decoding="async" /></div>
-            <div class="case-index__copy">
-              <p class="eyebrow">{localize(concept.category, locale)}</p>
-              <h3><a href={withLocale(locale, `work/landing-pages/${concept.slug}`)}>{localize(concept.demoName, locale)}</a></h3>
-              <p>{localize(concept.demoTagline, locale)} {locale === 'pt' ? 'Uma página completa com navegação e uma jornada de planejamento local.' : 'A complete page with navigation and a local planning journey.'}</p>
-              <p class="small-meta">{localize(concept.disclaimer, locale)}</p>
-              <span class="text-link">{locale === 'pt' ? 'Explorar demonstração' : 'Explore the demo'}<span aria-hidden="true">→</span></span>
-            </div>
-          </article>
+      <ul class="work-grid">
+        {projects.map((project, index) => (
+          <li data-kind={project.kind}>
+            <ProjectCard project={project} locale={locale} number={index + 1} headingLevel="h2" loading={index < 2 ? 'eager' : 'lazy'} />
+          </li>
         ))}
-      </div>
-    </section>
-    <section class="selected-notes shell">
-      <div class="section-heading section-heading--compact" data-reveal>
-        <p class="section-index">{locale === 'pt' ? 'Experiência adicional' : 'Additional experience'}</p>
-        <h2>{locale === 'pt' ? 'Experiência profissional' : 'Professional experience'}</h2>
-      </div>
-      <p>{locale === 'pt' ? 'Estas experiências aparecem aqui de forma resumida. Veja a trajetória e as competências no currículo.' : 'These experiences are summarized here. Explore my career and skills in the CV.'} <a href={withLocale(locale, 'cv')}>{locale === 'pt' ? 'Consultar currículo' : 'View CV'} ↗</a></p>
-      <div class="selected-notes__list">
-        {selectedWork.map((item) => (
-          <article data-reveal>
-            <h3>{item.title}</h3>
-            <p>{localize(item.description, locale)}</p>
-            <p class="small-meta">{item.technologies.join(' · ')}</p>
-          </article>
-        ))}
-      </div>
+      </ul>
     </section>
   </>
 ) : (
-  <section class="service-index shell" aria-label={t.nav.services}>
-    {services.map((service) => (
-      <article class="service-index__item" data-reveal>
-        <div>
-          <h2><a href={withLocale(locale, `services/${service.slug}`)}>{localize(service.title, locale)}</a></h2>
-          <p>{localize(service.summary, locale)}</p>
-          <ul class="tag-list">{service.technologies.map((technology) => <li>{technology}</li>)}</ul>
-        </div>
-        <span class="service-index__link" aria-hidden="true">↗</span>
-      </article>
-    ))}
-  </section>
+  <>
+    <header class="page-head shell">
+      <p class="section-index">{ui.servicesIndex}</p>
+      <h1>{t.servicesPageTitle}</h1>
+      <p class="lede">{t.servicesPageIntro}</p>
+    </header>
+    <section class="shell" aria-label={t.nav.services}>
+      <ServiceList locale={locale} headingLevel="h2" detailed preview />
+    </section>
+  </>
 )}
 
-<section class="cta-field shell" data-reveal>
+<aside class="cta-band shell" aria-labelledby="listing-cta-title">
   <div>
-    <h2>{locale === 'pt' ? 'Qual operação precisa ficar mais clara?' : 'Which operation needs to become clearer?'}</h2>
-    <p>{locale === 'pt' ? 'Descreva o sistema, a restrição ou o fluxo que você precisa melhorar.' : 'Describe the system, constraint, or workflow you need to improve.'}</p>
+    <h2 id="listing-cta-title">{ui.contactTitle}</h2>
+    <p>{ui.contactText}</p>
   </div>
-  <a class="button button--signal" href={withLocale(locale, 'contact')}>{t.discuss}<span aria-hidden="true">↗</span></a>
-</section>
+  <a class="button button--primary" href={withLocale(locale, 'contact')}>{ui.contactAction}<Icon name="arrow-right" /></a>
+</aside>
+
+<script>
+  import { ALL, formatCount, matchesFilter } from '@/components/ui/work-filter';
+
+  document.querySelectorAll<HTMLElement>('[data-work]').forEach((root) => {
+    const group = root.querySelector<HTMLElement>('[data-filters]');
+    const status = root.querySelector<HTMLElement>('[data-work-status]');
+    const buttons = [...root.querySelectorAll<HTMLButtonElement>('[data-filter]')];
+    const items = [...root.querySelectorAll<HTMLElement>('[data-kind]')];
+    if (!group || !status) return;
+    const { countOne = '', countOther = '', scope = '' } = root.dataset;
+
+    const apply = (button: HTMLButtonElement) => {
+      const filter = button.dataset.filter ?? ALL;
+      buttons.forEach((candidate) => candidate.setAttribute('aria-pressed', String(candidate === button)));
+      let visible = 0;
+      items.forEach((item) => {
+        const show = matchesFilter(item.dataset.kind, filter);
+        item.hidden = !show;
+        if (show) visible += 1;
+      });
+      const count = formatCount(visible, countOne, countOther);
+      status.textContent = filter === ALL ? count : scope.replace('{count}', count).replace('{label}', button.dataset.label ?? '');
+    };
+
+    group.hidden = false;
+    buttons.forEach((button) => button.addEventListener('click', () => apply(button)));
+  });
+</script>

@@ -1,0 +1,55 @@
+---
+import Composer from './Composer.astro';
+import Icon from './Icon.astro';
+import type { Lang } from './lib/lang';
+import type { UiStrings } from './strings';
+
+interface Props { lang: Lang; t: UiStrings }
+
+const { lang, t } = Astro.props;
+const [titleBefore, titleMark, titleAfter] = t.emptyTitle;
+const handoffIndex = t.suggestions.length - 1;
+---
+
+<section class="ka-pane ka-pane--chat" id="ka-pane-chat" aria-labelledby="ka-chat-title" data-ka-pane="chat">
+  <h2 class="ka-sr" id="ka-chat-title">{t.chatTitle}</h2>
+  <div class="ka-thread" data-ka-thread>
+    <div class="ka-empty" data-ka-empty>
+      <p class="ka-empty__eyebrow">{t.emptyEyebrow}</p>
+      <h3 class="ka-empty__title">{titleBefore}<mark class="ka-highlight">{titleMark}</mark>{titleAfter}</h3>
+      <p class="ka-empty__text">{t.emptyText}</p>
+      <p class="ka-honesty ka-honesty--copy" aria-hidden="true"><Icon name="info" />{t.honesty}</p>
+      <p class="ka-empty__label" id="ka-suggestions-title">{t.suggestionsTitle}</p>
+      <ul class="ka-suggestions" aria-labelledby="ka-suggestions-title">
+        {t.suggestions.map((suggestion, index) => (
+          <li>
+            <button type="button" class:list={['ka-suggestion', { 'ka-suggestion--handoff': index === handoffIndex }]} data-ka-suggestion={suggestion.text}>
+              <span class="ka-suggestion__tag">{suggestion.tag}</span>
+              <span class="ka-suggestion__text">{suggestion.text}</span>
+              <Icon name="send" class="ka-suggestion__icon" />
+            </button>
+          </li>
+        ))}
+      </ul>
+      <ol class="ka-steps-intro">
+        {t.howItWorks.map((step) => <li>{step}</li>)}
+      </ol>
+    </div>
+    <ol class="ka-turns" data-ka-turns aria-label={t.chatTitle}></ol>
+    <div class="ka-next" data-ka-next hidden>
+      <p class="ka-next__label" id="ka-next-title">{t.nextTitle}</p>
+      <ul class="ka-next__list" aria-labelledby="ka-next-title">
+        {t.suggestions.map((suggestion, index) => (
+          <li>
+            <button type="button" class:list={['ka-next__chip', { 'ka-next__chip--handoff': index === handoffIndex }]} data-ka-suggestion={suggestion.text}>
+              {index === handoffIndex && <span class="ka-next__tag">{suggestion.tag}</span>}
+              <span>{suggestion.text}</span>
+            </button>
+          </li>
+        ))}
+      </ul>
+    </div>
+    <p class="ka-honesty ka-honesty--copy ka-honesty--thread" aria-hidden="true"><Icon name="info" />{t.honesty}</p>
+  </div>
+  <Composer lang={lang} t={t} />
+</section>

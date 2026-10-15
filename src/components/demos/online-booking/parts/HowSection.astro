@@ -1,0 +1,26 @@
+---
+import type { Locale } from '@/data/types';
+import { strings } from '../data/i18n';
+
+interface Props { locale: Locale }
+
+const t = strings[Astro.props.locale];
+---
+
+<section class="how" id="como-funciona" aria-labelledby="cp-how-title">
+  <div class="wrap">
+    <header class="section-head">
+      <p class="eyebrow">{t.how.eyebrow}</p>
+      <h2 id="cp-how-title">{t.how.title}</h2>
+    </header>
+    <ol class="how__steps" role="list">
+      {t.how.steps.map((step, index) => (
+        <li class="how__step">
+          <span class="how__num" aria-hidden="true">{index + 1}</span>
+          <h3>{step.title}</h3>
+          <p>{step.text}</p>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>

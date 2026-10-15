@@ -1,0 +1,363 @@
+/* Turno app shell: buttons, action bar, tab bar, toast, and modal. */
+
+/* Buttons. */
+.turno .t-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-block-size: 48px;
+  padding: 0.625rem 1.125rem;
+  border: 1.5px solid transparent;
+  border-radius: 14px;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.2;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 180ms var(--t-ease), border-color 180ms var(--t-ease), color 180ms var(--t-ease), transform 120ms var(--t-ease);
+}
+
+.turno .t-btn:active {
+  transform: scale(0.98);
+}
+
+.turno .t-btn--block {
+  inline-size: 100%;
+}
+
+.turno .t-btn--primary {
+  min-block-size: 54px;
+  background: var(--t-blue);
+  color: #fff;
+  box-shadow: 0 8px 18px -10px rgb(36 89 230 / 0.7);
+}
+
+.turno .t-btn--primary:hover {
+  background: var(--t-blue-ink);
+}
+
+.turno .t-btn--primary[aria-disabled='true'] {
+  background: #dce2ec;
+  color: var(--t-ink-2);
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+.turno .t-btn--secondary {
+  border-color: #b8c1cf;
+  background: var(--t-surface);
+  color: var(--t-blue-ink);
+}
+
+.turno .t-btn--secondary:hover {
+  border-color: var(--t-blue);
+  background: #f5f8ff;
+}
+
+.turno .t-btn--secondary[aria-disabled='true'],
+.turno .t-btn--ghost[aria-disabled='true'] {
+  border-color: var(--t-line);
+  background: var(--t-base);
+  color: var(--t-ink-3);
+  cursor: not-allowed;
+}
+
+.turno .t-btn--ghost {
+  padding-inline: 0.875rem;
+  background: none;
+  color: var(--t-ink-2);
+}
+
+.turno .t-btn--ghost:hover {
+  background: var(--t-muted-fill);
+}
+
+.turno .t-btn--danger {
+  border-color: var(--t-red-line);
+  background: var(--t-surface);
+  color: var(--t-red);
+}
+
+.turno .t-btn--danger:hover {
+  background: var(--t-red-soft);
+}
+
+.turno .t-linkbtn {
+  justify-self: start;
+  min-block-size: 48px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--t-blue-ink);
+  font-size: 0.9375rem;
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 0.25em;
+  cursor: pointer;
+}
+
+.turno .t-fine {
+  display: flex;
+  gap: 0.5rem;
+  color: var(--t-ink-3);
+  font-size: 0.8125rem;
+  line-height: 1.45;
+}
+
+.turno .t-fine .t-ico {
+  inline-size: 1rem;
+  block-size: 1rem;
+  margin-block-start: 0.1rem;
+}
+
+/* Bottom action bar of the work order screen. */
+.turno .t-actionbar {
+  position: sticky;
+  inset-block-end: 0;
+  z-index: 3;
+  display: grid;
+  gap: 0.5rem;
+  padding: 0.75rem var(--t-gutter) calc(0.75rem + env(safe-area-inset-bottom));
+  border-block-start: 1px solid var(--t-line);
+  background: var(--t-surface);
+  box-shadow: 0 -10px 28px -14px rgb(14 21 37 / 0.18);
+}
+
+.turno .t-actionbar--split {
+  grid-template-columns: 1fr 1fr;
+}
+
+.turno .t-actionbar__hint {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  color: var(--t-ink-2);
+  font-size: 0.875rem;
+  line-height: 1.4;
+}
+
+.turno .t-actionbar__hint .t-ico {
+  inline-size: 1.125rem;
+  block-size: 1.125rem;
+  margin-block-start: 0.05rem;
+  color: var(--t-ink-3);
+}
+
+.turno .t-actionbar__hint[data-ready='true'] {
+  color: var(--t-green);
+  font-weight: 700;
+}
+
+.turno .t-actionbar__hint[data-ready='true'] .t-ico {
+  color: var(--t-green);
+}
+
+.turno .t-actionbar__short {
+  display: none;
+}
+
+/* Where height is scarce, the bar shows how many items are missing. The full list stays in the button description. */
+@media (max-width: 63.999rem), (max-height: 50rem) {
+  .turno .t-actionbar__full--long {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .turno .t-actionbar__short {
+    display: inline;
+  }
+}
+
+/* Tab bar. */
+.turno .t-tabs {
+  display: grid;
+  flex: none;
+  grid-template-columns: repeat(3, minmax(0, 12rem));
+  justify-content: center;
+  gap: 0.25rem;
+  padding: 0.375rem 0.5rem calc(0.375rem + env(safe-area-inset-bottom));
+  border-block-start: 1px solid var(--t-line);
+  background: var(--t-surface);
+}
+
+.turno .t-app[data-screen='order'] .t-tabs {
+  display: none;
+}
+
+.turno .t-tab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.125rem;
+  min-block-size: 54px;
+  padding: 0.25rem;
+  border: 0;
+  border-radius: 14px;
+  background: none;
+  color: var(--t-ink-3);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.turno .t-tab__icon {
+  position: relative;
+  display: grid;
+  place-items: center;
+  inline-size: 3.5rem;
+  block-size: 1.875rem;
+  border-radius: 999px;
+  transition: background-color 180ms var(--t-ease);
+}
+
+.turno .t-tab[aria-current='page'] {
+  color: var(--t-blue-ink);
+}
+
+.turno .t-tab[aria-current='page'] .t-tab__icon {
+  background: var(--t-blue-soft);
+}
+
+.turno .t-tab:active .t-tab__icon {
+  background: var(--t-muted-fill);
+}
+
+.turno .t-badge {
+  position: absolute;
+  inset-block-start: -0.3rem;
+  inset-inline-end: 0.3rem;
+  display: grid;
+  place-items: center;
+  min-inline-size: 1.25rem;
+  block-size: 1.25rem;
+  padding-inline: 0.3rem;
+  border: 2px solid var(--t-surface);
+  border-radius: 999px;
+  background: var(--t-red);
+  color: #fff;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  animation: t-pop 320ms var(--t-ease);
+}
+
+.turno .t-badge[hidden] {
+  display: none;
+}
+
+@keyframes t-pop {
+  from { transform: scale(0.4); }
+}
+
+/* Toast. */
+.turno .t-toast {
+  position: absolute;
+  inset-inline: 1rem;
+  inset-block-end: calc(5.5rem + env(safe-area-inset-bottom));
+  z-index: 20;
+  margin: 0;
+  padding: 0.875rem 1rem;
+  border-radius: 14px;
+  background: var(--t-ink);
+  color: #fff;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  line-height: 1.4;
+  box-shadow: 0 16px 32px -16px rgb(14 21 37 / 0.6);
+  animation: t-toast-in 320ms var(--t-ease);
+}
+
+.turno .t-toast[hidden] {
+  display: none;
+}
+
+.turno .t-app[data-screen='order'] .t-toast {
+  inset-block-end: calc(9.5rem + env(safe-area-inset-bottom));
+}
+
+@media (min-width: 64rem) {
+  .turno .t-toast {
+    inset-block-end: 7rem;
+  }
+
+  .turno .t-app[data-screen='order'] .t-toast {
+    inset-block-end: 10.5rem;
+  }
+}
+
+@keyframes t-toast-in {
+  from { opacity: 0; transform: translateY(12px); }
+}
+
+/* Modal confirmation inside the phone. */
+.turno .t-modal {
+  position: absolute;
+  inset: 0;
+  z-index: 30;
+}
+
+.turno .t-modal__scrim {
+  position: absolute;
+  inset: 0;
+  background: rgb(14 21 37 / 0.5);
+  animation: turno-fade 320ms var(--t-ease);
+}
+
+.turno .t-modal__sheet {
+  position: absolute;
+  inset: auto 0 0;
+  display: grid;
+  gap: 0.75rem;
+  padding: 1.5rem var(--t-gutter) calc(1.75rem + env(safe-area-inset-bottom));
+  border-radius: 24px 24px 0 0;
+  background: var(--t-surface);
+  animation: t-sheet-in 320ms var(--t-ease);
+}
+
+.turno .t-modal__sheet h2 {
+  font-family: var(--t-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.turno .t-modal__sheet p {
+  color: var(--t-ink-2);
+}
+
+.turno .t-modal__actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.625rem;
+  margin-block-start: 0.5rem;
+}
+
+.turno .t-modal__actions .t-btn--danger {
+  border-color: var(--t-red);
+  background: var(--t-red);
+  color: #fff;
+}
+
+@keyframes t-sheet-in {
+  from { transform: translateY(100%); }
+}
+
+/* Forced colors drop the background that marks the current tab, so it gets an outline and an underline instead. */
+@media (forced-colors: active) {
+  .turno .t-tab[aria-current='page'] .t-tab__icon {
+    outline: 2px solid Highlight;
+    outline-offset: -2px;
+  }
+
+  .turno .t-tab[aria-current='page'] .t-tab__label {
+    text-decoration: underline 2px;
+    text-underline-offset: 0.2em;
+  }
+}

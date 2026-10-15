@@ -1,0 +1,45 @@
+---
+import type { Locale } from '@/data/types';
+import { strings } from '../data/i18n';
+import { icons } from '../lib/icons';
+
+interface Props { locale: Locale }
+
+const t = strings[Astro.props.locale];
+const a = t.agenda;
+---
+
+<section class="agenda" id="agenda-da-barbearia" aria-labelledby="cp-agenda-title">
+  <div class="wrap">
+    <header class="section-head section-head--split">
+      <div>
+        <p class="eyebrow">{a.eyebrow}</p>
+        <h2 id="cp-agenda-title">{a.title}</h2>
+      </div>
+      <p class="section-head__lede">{a.lede}</p>
+    </header>
+    <div class="board" data-agenda>
+      <p class="board__nojs">{a.nojs}</p>
+      <div class="board__bar">
+        <div class="board__nav">
+          <button type="button" class="icon-btn" data-agenda-prev aria-label={a.prev}><Fragment set:html={icons.chevronLeft} /></button>
+          <p class="board__date" data-agenda-date aria-live="polite"></p>
+          <button type="button" class="icon-btn" data-agenda-next aria-label={a.next}><Fragment set:html={icons.chevronRight} /></button>
+          <button type="button" class="chip-btn" data-agenda-today>{a.today}</button>
+          <button type="button" class="chip-btn chip-btn--own" data-agenda-mine hidden><Fragment set:html={icons.calendar} />{a.mine}</button>
+        </div>
+        <dl class="stats" aria-label={a.statsLabel} data-agenda-stats></dl>
+      </div>
+      <div class="board__scroll" role="region" tabindex="0" data-agenda-grid></div>
+      <div class="board__foot">
+        <ul class="legend" role="list">
+          <li><span class="legend__swatch legend__swatch--sample" aria-hidden="true"></span>{a.legendSample}</li>
+          <li><span class="legend__swatch legend__swatch--own" aria-hidden="true"></span>{a.legendYours}</li>
+          <li><span class="legend__swatch legend__swatch--pause" aria-hidden="true"></span>{a.legendPause}</li>
+        </ul>
+        <p class="board__hint">{a.scrollHint}</p>
+        <button type="button" class="text-btn" data-reset-demo><Fragment set:html={icons.reset} />{t.footer.reset}</button>
+      </div>
+    </div>
+  </div>
+</section>

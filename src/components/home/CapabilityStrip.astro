@@ -1,0 +1,99 @@
+---
+import Icon from '@/components/ui/Icon.astro';
+import { experience, findProject, projects, selectedWork, type Locale } from '@/data/content';
+
+interface Props { locale: Locale }
+
+const pt = Astro.props.locale === 'pt';
+
+type Source = 'demos' | { experience: string } | { project: string } | { selected: string };
+interface Item {
+  label: string;
+  /** Name as listed in content.ts, when the label is phrased differently. */
+  term?: string;
+  source: Source;
+}
+
+/** Every item names where it was used. The build fails if that source in content.ts does not list the term. */
+const items: Item[] = [
+  { label: 'React', source: { experience: 'academic-operations' } },
+  { label: 'TypeScript', source: 'demos' },
+  { label: 'Node.js', source: { experience: 'corporate-learning' } },
+  { label: 'Laravel', source: { experience: 'academic-operations' } },
+  { label: '.NET / C#', term: '.NET', source: { experience: 'edgedata' } },
+  { label: 'React Native', source: { selected: 'BWA Transportes' } },
+  { label: 'Vue.js', source: { experience: 'corporate-learning' } },
+  { label: 'AngularJS', source: { experience: 'trinks' } },
+  { label: 'SQL Server', source: { experience: 'enterprise-operations' } },
+  { label: pt ? 'APIs REST' : 'REST APIs', term: 'REST APIs', source: { experience: 'edgedata' } },
+  { label: 'RAG', term: 'BM25', source: { project: 'knowledge-assistant' } },
+  { label: pt ? 'IA generativa' : 'Generative AI', term: 'AI', source: { experience: 'corporate-learning' } },
+  { label: 'Tailwind CSS', source: { experience: 'academic-operations' } },
+  { label: 'Astro', source: 'demos' },
+  { label: pt ? 'Permissões (RBAC)' : 'Permissions (RBAC)', term: 'RBAC', source: { experience: 'edgedata' } },
+  { label: pt ? 'Acessibilidade (WAI-ARIA)' : 'Accessibility (WAI-ARIA)', term: 'WAI-ARIA', source: 'demos' },
+];
+
+const lists = (entries: readonly string[], term: string) => entries.some((entry) => entry === term || entry.startsWith(`${term} `));
+
+function whereUsed({ label, term = label, source }: Item): string {
+  const missing = () => new Error(`Capability strip: "${term}" is not listed by its source in content.ts.`);
+  if (source === 'demos') {
+    const count = projects.filter((project) => lists(project.stack, term)).length;
+    if (!count) throw missing();
+    return `${count} demos`;
+  }
+  if ('project' in source) {
+    const project = findProject(source.project);
+    if (!project || !lists(project.stack, term)) throw missing();
+    return project.name;
+  }
+  if ('experience' in source) {
+    const entry = experience.find((item) => item.slug === source.experience);
+    if (!entry || !lists(entry.technologies, term)) throw missing();
+    return entry.company;
+  }
+  const work = selectedWork.find((item) => item.title === source.selected);
+  if (!work || !lists(work.technologies.en, term)) throw missing();
+  return work.title;
+}
+
+const entries = items.map((item) => ({ label: item.label, where: whereUsed(item) }));
+const ui = pt
+  ? { label: 'Tecnologias e práticas, e onde foram usadas', pause: 'Pausar', play: 'Continuar', target: 'a faixa de tecnologias' }
+  : { label: 'Technologies and practices, and where they were used', pause: 'Pause', play: 'Resume', target: 'the technology strip' };
+---
+
+<div class="strip" data-strip>
+  <div class="strip__viewport">
+    <div class="strip__track">
+      <ul class="strip__list" aria-label={ui.label}>
+        {entries.map((entry) => (
+          <li><span class="strip__tech">{entry.label}</span><span class="strip__where"><span class="visually-hidden">: </span>{entry.where}</span></li>
+        ))}
+      </ul>
+      <ul class="strip__list strip__list--copy" aria-hidden="true">
+        {entries.map((entry) => <li><span class="strip__tech">{entry.label}</span><span class="strip__where">{entry.where}</span></li>)}
+      </ul>
+    </div>
+  </div>
+  <button class="strip__toggle" type="button" hidden data-strip-toggle data-label-pause={ui.pause} data-label-play={ui.play}>
+    <span class="strip__icon strip__icon--pause"><Icon name="pause" /></span>
+    <span class="strip__icon strip__icon--play"><Icon name="play" /></span>
+    <span class="strip__toggle-label"><span data-strip-label>{ui.pause}</span><span class="visually-hidden"> {ui.target}</span></span>
+  </button>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-strip]').forEach((strip) => {
+    const toggle = strip.querySelector<HTMLButtonElement>('[data-strip-toggle]');
+    const label = toggle?.querySelector<HTMLElement>('[data-strip-label]');
+    if (!toggle || !label) return;
+    toggle.hidden = false;
+    toggle.addEventListener('click', () => {
+      const paused = !strip.hasAttribute('data-paused');
+      strip.toggleAttribute('data-paused', paused);
+      label.textContent = (paused ? toggle.dataset.labelPlay : toggle.dataset.labelPause) ?? '';
+    });
+  });
+</script>

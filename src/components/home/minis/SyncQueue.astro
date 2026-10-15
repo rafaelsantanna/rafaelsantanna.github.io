@@ -1,0 +1,40 @@
+---
+import type { Locale } from '@/data/content';
+import { ordersFor } from '@/components/demos/field-service-app/content/seed';
+import { strings } from '@/components/demos/field-service-app/content/strings';
+import { checklistFor } from '@/components/demos/field-service-app/lib/checklist';
+import type { ItemId } from '@/components/demos/field-service-app/lib/types';
+
+interface Props { locale: Locale }
+
+const { locale } = Astro.props;
+const t = strings[locale];
+const order = ordersFor(locale).find((item) => item.id === '48217');
+if (!order) throw new Error('The Turno seed no longer has the order shown in the desk miniature.');
+
+// The seed already checked the distribution box; the splice was then recorded offline and waits in the queue.
+const done = new Set<ItemId>(['cto', 'splice']);
+const queued = 1;
+const items = checklistFor(order.type);
+const sentence = (text: string) => text.charAt(0).toUpperCase() + text.slice(1);
+const checks = items.slice(0, 3).map((item) => ({ text: sentence(t.items[item.id].short), done: done.has(item.id) }));
+const completed = items.filter((item) => done.has(item.id)).length;
+const share = `${((completed / items.length) * 100).toFixed(1)}%`;
+const pending = (queued === 1 ? t.common.pill.pending.one : t.common.pill.pending.other).replace('{n}', String(queued));
+---
+
+<div class="m-phone">
+  <p class="m-label">{t.common.os.replace('{id}', order.id)}</p>
+  <p class="m-title">{t.common.types[order.type]}</p>
+  <div class="m-progress">
+    <span>Checklist</span><b>{completed}/{items.length}</b>
+    <i style={`--p:${share}`}></i>
+  </div>
+  <ul class="m-checks">
+    {checks.map((check) => <li class:list={{ 'is-done': check.done }}>{check.text}</li>)}
+  </ul>
+  <p class="m-offline">
+    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4.5 12.5h7a3 3 0 0 0 .4-5.97A4.5 4.5 0 0 0 3.6 6.1 3.2 3.2 0 0 0 4.5 12.5ZM2.5 2.5l11 11" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" /></svg>
+    <span>{t.common.pill.offline} · {pending}</span>
+  </p>
+</div>

@@ -1,0 +1,11 @@
+---
+import DemoLayout from '@/layouts/DemoLayout.astro';
+import OnlineBookingDemo from '@/components/demos/online-booking/OnlineBookingDemo.astro';
+import { findProject } from '@/data/content';
+
+const project = findProject('online-booking')!;
+---
+
+<DemoLayout locale="en" project={project}>
+  <OnlineBookingDemo locale="en" project={project} />
+</DemoLayout>
