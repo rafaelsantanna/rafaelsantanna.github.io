@@ -66,8 +66,8 @@ for (const item of projects) {
       assert.ok(entry.title.trim() && entry.text.trim(), `Incomplete highlight or decision in ${item.slug}.${locale}`);
     }
     assert.match(item.disclaimer[locale], locale === 'pt'
-      ? /demonstração autoral.*Rafael Sant' Anna.*marca e dados fictícios/i
-      : /demo built by Rafael Sant' Anna.*brand and data are fictional/i, `Disclosure missing for ${item.slug}.${locale}`);
+      ? /demonstração autoral.*Rafael Sant' Anna.*portfólio/i
+      : /demo built by Rafael Sant' Anna.*portfolio/i, `Disclosure missing for ${item.slug}.${locale}`);
   }
   assert.equal(item.highlights.en.length, item.highlights.pt.length, `Highlights must match across locales for ${item.slug}`);
   assert.equal(item.decisions.en.length, item.decisions.pt.length, `Decisions must match across locales for ${item.slug}`);

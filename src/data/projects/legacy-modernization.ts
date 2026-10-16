@@ -52,8 +52,8 @@ export const project: DemoProject = {
   stack: ['TypeScript', 'Astro', 'CSS', 'WAI-ARIA', 'localStorage'],
   services: ['frontend-modernization', 'b2b-saas-internal-systems'],
   boundary: {
-    en: 'No order is created or sent: the simulated submission ends in the browser, and the draft lives only in this browser’s storage. Customers, products, prices, and rules are fictional and exist only on this page.',
-    pt: 'Nenhum pedido é criado ou enviado: o envio simulado termina no navegador, e o rascunho fica só no armazenamento deste navegador. Clientes, produtos, preços e regras são fictícios e existem apenas nesta página.',
+    en: 'No order is created or sent: the simulated submission ends in the browser, and the draft lives only in this browser’s storage. Customers, products, prices, and rules are sample data that exists only on this page.',
+    pt: 'Nenhum pedido é criado ou enviado: o envio simulado termina no navegador, e o rascunho fica só no armazenamento deste navegador. Clientes, produtos, preços e regras são dados de exemplo que existem apenas nesta página.',
   },
   disclaimer: demoDisclaimer,
   palette: { base: '#F5F7F4', ink: '#0F1F17', accent: '#047857' },

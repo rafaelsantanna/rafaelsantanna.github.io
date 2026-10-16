@@ -10,7 +10,7 @@ ${services.map((service) => `- ${service.title.en}: ${service.summary.en}`).join
 
 ## Evidence
 
-- Portfolio projects (demos Rafael built for this portfolio, with fictional brands and data, each with a live demo): https://rafaelsantanna.github.io/en/work/
+- Portfolio projects (demos Rafael built for this portfolio, not client work, each with a live demo): https://rafaelsantanna.github.io/en/work/
 - The site is primarily in Brazilian Portuguese at https://rafaelsantanna.github.io/ with an English mirror under /en/
 - CV: https://rafaelsantanna.github.io/en/cv/
 - Complete machine-readable content: https://rafaelsantanna.github.io/llms-full.txt

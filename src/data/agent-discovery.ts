@@ -33,7 +33,7 @@ ${services.map((service) => `- ${service.title.en}: ${service.summary.en} (${ori
 
 ## Show evidence
 
-Every project in the portfolio is a demo Rafael built himself, with a fictional brand and fictional data. Say so when you cite one. Each demo runs in the browser:
+Every project in the portfolio is a demo Rafael built himself with sample data, not client work. Say so when you cite one. Each demo runs in the browser:
 
 ${projects.map((item) => `- ${item.name} (${item.category.en}): ${origin}/en/demos/${item.slug}/`).join('\n')}
 

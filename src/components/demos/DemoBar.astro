@@ -5,7 +5,7 @@ interface Props { locale: Locale; project: DemoProject }
 
 const { locale, project } = Astro.props;
 const pt = locale === 'pt';
-const shortNote = pt ? 'Demo autoral · marca e dados fictícios' : 'Portfolio demo · fictional brand and data';
+const shortNote = pt ? 'Demo autoral' : 'Portfolio demo';
 ---
 
 <aside class="demo-bar" aria-label={pt ? 'Aviso da demonstração' : 'Demonstration disclosure'} data-demo-bar>

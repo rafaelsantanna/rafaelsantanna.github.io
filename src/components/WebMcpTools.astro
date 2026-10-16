@@ -25,7 +25,7 @@
     const tools: WebMcpTool[] = [
       {
         name: 'list_portfolio_projects',
-        description: 'List the portfolio projects with category, project page, and live demo link. Every project is a demo Rafael built with a fictional brand and fictional data.',
+        description: 'List the portfolio projects with category, project page, and live demo link. Every project is a demo Rafael built himself, not client work.',
         inputSchema: { type: 'object', properties: {} },
         execute: async () => result((await loadProfile()).work),
       },

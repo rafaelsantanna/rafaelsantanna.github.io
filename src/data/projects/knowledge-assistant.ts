@@ -8,8 +8,8 @@ export const project: DemoProject = {
   category: { en: 'Applied AI / Knowledge base', pt: 'IA aplicada / Base de conhecimento' },
   tagline: { en: 'Answers with the source beside them.', pt: 'Respostas com a fonte ao lado.' },
   summary: {
-    en: 'An internal knowledge assistant that retrieves relevant passages from fictional documents and assembles an answer that cites each source. Retrieval runs entirely in the browser.',
-    pt: 'Um assistente de conhecimento interno que busca trechos relevantes em documentos fictícios e monta a resposta citando cada fonte. A recuperação roda inteira no navegador.',
+    en: 'An internal knowledge assistant that retrieves relevant passages from sample documents and assembles an answer that cites each source. Retrieval runs entirely in the browser.',
+    pt: 'Um assistente de conhecimento interno que busca trechos relevantes em documentos de exemplo e monta a resposta citando cada fonte. A recuperação roda inteira no navegador.',
   },
   problem: {
     en: 'Policies, manuals, and procedures end up scattered across files nobody can find. AI assistants help, but they are only trustworthy when they show where each piece of information came from.',
@@ -52,8 +52,8 @@ export const project: DemoProject = {
   stack: ['TypeScript', 'BM25', 'Astro', 'CSS', 'WAI-ARIA'],
   services: ['ai-automation-rag', 'b2b-saas-internal-systems'],
   boundary: {
-    en: 'It does not use a language model or send questions to any server. Search, answer assembly, and the simulated handoff happen in your browser over 10 fictional documents, and ratings and the conversation stay in local storage only.',
-    pt: 'Não usa modelo de linguagem nem envia perguntas para servidores. A busca, a montagem da resposta e o encaminhamento simulado acontecem no seu navegador, sobre 10 documentos fictícios, e as avaliações e a conversa ficam só no armazenamento local.',
+    en: 'It does not use a language model or send questions to any server. Search, answer assembly, and the simulated handoff happen in your browser over 10 sample documents, and ratings and the conversation stay in local storage only.',
+    pt: 'Não usa modelo de linguagem nem envia perguntas para servidores. A busca, a montagem da resposta e o encaminhamento simulado acontecem no seu navegador, sobre 10 documentos de exemplo, e as avaliações e a conversa ficam só no armazenamento local.',
   },
   disclaimer: demoDisclaimer,
   palette: { base: '#121116', ink: '#EEEAE2', accent: '#F2C14E' },

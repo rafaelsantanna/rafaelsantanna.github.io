@@ -28,7 +28,7 @@ export const concepts: Concept[] = [
     image: '/images/concepts/pousada-boutique-hero.png',
     imageWidth: 1536,
     imageHeight: 1024,
-    imageAlt: { en: 'Fictional mountain lodge surrounded by mist and native vegetation', pt: 'Pousada fictícia na serra, cercada por névoa e vegetação nativa' },
+    imageAlt: { en: 'Mountain lodge surrounded by mist and native vegetation', pt: 'Pousada na serra, cercada por névoa e vegetação nativa' },
     theme: 'hospitality',
   },
   {

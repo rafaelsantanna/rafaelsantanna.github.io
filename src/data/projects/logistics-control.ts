@@ -8,8 +8,8 @@ export const project: DemoProject = {
   category: { en: 'B2B SaaS / Logistics operations', pt: 'SaaS B2B / Operação logística' },
   tagline: { en: "A control tower for the day's deliveries.", pt: 'Torre de controle para as entregas do dia.' },
   summary: {
-    en: 'An operations console to track deliveries, act on exceptions, and rebalance routes, with role-based permissions and fictional data generated in the browser.',
-    pt: 'Um painel operacional para acompanhar entregas, agir sobre exceções e redistribuir rotas, com permissões por perfil e dados fictícios gerados no navegador.',
+    en: 'An operations console to track deliveries, act on exceptions, and rebalance routes, with role-based permissions and sample data generated in the browser.',
+    pt: 'Um painel operacional para acompanhar entregas, agir sobre exceções e redistribuir rotas, com permissões por perfil e dados de exemplo gerados no navegador.',
   },
   problem: {
     en: 'Logistics teams often follow deliveries across spreadsheets, message groups, and separate systems. When something runs late, the information arrives late and each person sees a different part of the problem.',
@@ -52,14 +52,14 @@ export const project: DemoProject = {
   stack: ['TypeScript', 'Astro', 'CSS', 'SVG', 'WAI-ARIA'],
   services: ['b2b-saas-internal-systems', 'frontend-modernization'],
   boundary: {
-    en: 'It does not connect to any real system. The data is fictional and generated in your browser, the map is a schematic of an invented city, and nothing is sent anywhere: changes stay in this browser until you reset the demo.',
-    pt: 'Não se conecta a nenhum sistema real. Os dados são fictícios e gerados no seu navegador, o mapa é um esquema de uma cidade inventada e nada é enviado: as alterações ficam só neste navegador até você restaurar a demo.',
+    en: 'It does not connect to any real system. The data is sample data generated in your browser, the map is a schematic of an invented city, and nothing is sent anywhere: changes stay in this browser until you reset the demo.',
+    pt: 'Não se conecta a nenhum sistema real. Os dados são de exemplo e gerados no seu navegador, o mapa é um esquema de uma cidade inventada e nada é enviado: as alterações ficam só neste navegador até você restaurar a demo.',
   },
   disclaimer: demoDisclaimer,
   palette: { base: '#F2F1ED', ink: '#17181C', accent: '#F59E0B' },
   device: 'desktop',
   preview: previewFor('logistics-control', {
-    en: 'Trajeto operations console with daily indicators, route map, and delivery table filled with fictional data',
-    pt: 'Console operacional Trajeto com indicadores do dia, mapa de rotas e tabela de entregas preenchida com dados fictícios',
+    en: 'Trajeto operations console with daily indicators, route map, and delivery table filled with sample data',
+    pt: 'Console operacional Trajeto com indicadores do dia, mapa de rotas e tabela de entregas preenchida com dados de exemplo',
   }),
 };

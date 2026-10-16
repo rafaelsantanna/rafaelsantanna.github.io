@@ -52,8 +52,8 @@ export const project: DemoProject = {
   stack: ['TypeScript', 'Astro', 'CSS', 'HTML dialog', 'WAI-ARIA', 'iCalendar (.ics)', 'Web Storage'],
   services: ['websites-landing-pages', 'mobile-integrations'],
   boundary: {
-    en: "No time is reserved and no data is sent: the booking is saved only in the tester's browser. The barbershop, team, prices, clients, and schedule are fictional, and there is no payment, reminder, or barber login.",
-    pt: 'Nenhum horário é reservado e nenhum dado é enviado: o agendamento fica salvo só no navegador de quem testa. Barbearia, equipe, preços, clientes e agenda são fictícios, e não há pagamento, lembrete ou acesso para os barbeiros.',
+    en: "No time is reserved and no data is sent: the booking is saved only in the tester's browser. The barbershop, team, prices, clients, and schedule are sample data, and there is no payment, reminder, or barber login.",
+    pt: 'Nenhum horário é reservado e nenhum dado é enviado: o agendamento fica salvo só no navegador de quem testa. Barbearia, equipe, preços, clientes e agenda são dados de exemplo, e não há pagamento, lembrete ou acesso para os barbeiros.',
   },
   disclaimer: demoDisclaimer,
   palette: { base: '#13201B', ink: '#F2EADB', accent: '#C9A35B' },
