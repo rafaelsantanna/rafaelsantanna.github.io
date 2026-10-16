@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { concepts, experience, previewImage, projects, services } from '../src/data/content.ts';
+import { homeFaq } from '../src/data/faq.ts';
 
 const dist = resolve('dist');
 assert.ok(existsSync(dist), 'dist directory does not exist');
@@ -88,7 +89,7 @@ for (const file of pages) {
   }
 }
 
-for (const required of ['robots.txt', 'llms.txt', 'llms-full.txt', 'AGENTS.md', 'ai-index.json', 'sitemap.xml', 'sitemap-index.xml']) {
+for (const required of ['robots.txt', 'llms.txt', 'llms-full.txt', 'AGENTS.md', 'ai-index.json', 'sitemap.xml', 'sitemap-index.xml', '.well-known/agent-skills/index.json', '.well-known/agent-skills/rafael-santanna-portfolio/SKILL.md', '.well-known/ai-catalog.json', '.well-known/ard.json', '.well-known/api-catalog', '.well-known/poppy.json']) {
   assert.ok(existsSync(join(dist, required)), `Missing generated file: ${required}`);
 }
 
@@ -122,7 +123,11 @@ for (const locale of ['en', 'pt']) {
   const otherPrefix = locale === 'en' ? '' : '/en';
   const home = read(prefix, 'index.html');
   const work = read(prefix, 'work', 'index.html');
-  lacks(home, /"@type":"FAQPage"/, `${locale} home must not publish invisible FAQ schema`);
+  // FAQ schema is allowed only for questions and answers that are visible on the page.
+  assert.ok(home.includes('"@type":"FAQPage"'), `${locale} home must publish its FAQ schema`);
+  for (const item of homeFaq[locale]) {
+    assert.ok(home.includes(`<summary>${item.question}</summary>`) && home.includes(`<p>${item.answer}</p>`), `${locale} home FAQ schema must match a visible question: ${item.question}`);
+  }
   for (const item of projects) {
     const localPrefix = locale === 'en' ? '/en' : '';
     assert.ok(home.includes(`href="${localPrefix}/work/${item.slug}/"`) || home.includes(`href="${localPrefix}/demos/${item.slug}/"`), `${locale} home must link to ${item.slug}`);

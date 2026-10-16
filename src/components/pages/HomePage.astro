@@ -4,6 +4,7 @@ import CapabilityStrip from '@/components/home/CapabilityStrip.astro';
 import Showroom from '@/components/home/Showroom.astro';
 import ExperienceBand from '@/components/home/ExperienceBand.astro';
 import ContactClose from '@/components/home/ContactClose.astro';
+import HomeFaq from '@/components/home/HomeFaq.astro';
 import ServiceList from '@/components/ui/ServiceList.astro';
 import Icon from '@/components/ui/Icon.astro';
 import { copy, withLocale, type Locale } from '@/data/content';
@@ -37,4 +38,5 @@ const ids = pt ? { projects: 'projetos', contact: 'contato' } : { projects: 'pro
 </section>
 
 <ExperienceBand locale={locale} />
+<HomeFaq locale={locale} />
 <ContactClose locale={locale} id={ids.contact} />

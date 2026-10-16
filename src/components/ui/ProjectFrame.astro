@@ -5,14 +5,12 @@ interface Props {
   project: DemoProject;
   locale: Locale;
   loading?: 'lazy' | 'eager';
-  /** Use when the frame repeats information already given in text nearby. */
-  decorative?: boolean;
   /** Rendered width hint for the responsive image candidates. */
   sizes?: string;
   class?: string;
 }
 
-const { project, locale, loading = 'lazy', decorative = false, sizes = '(min-width: 64em) 55vw, 100vw', class: className } = Astro.props;
+const { project, locale, loading = 'lazy', sizes = '(min-width: 64em) 55vw, 100vw', class: className } = Astro.props;
 const { preview } = project;
 const image = previewImage(project, locale);
 const base = image.replace(/\.png$/, '');
@@ -30,7 +28,7 @@ const srcset = `${base}-800.webp 800w, ${base}-1200.webp 1200w, ${base}.webp ${p
       src={image}
       width={preview.width}
       height={preview.height}
-      alt={decorative ? '' : localize(preview.alt, locale)}
+      alt={localize(preview.alt, locale)}
       loading={loading}
       decoding="async"
     />

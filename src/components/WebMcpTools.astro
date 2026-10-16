@@ -1,0 +1,64 @@
+---
+// Exposes read-only portfolio tools to in-browser AI agents through WebMCP, when the browser provides it.
+---
+
+<script>
+  interface WebMcpTool {
+    name: string;
+    description: string;
+    inputSchema: Record<string, unknown>;
+    execute: (input: Record<string, unknown>) => Promise<unknown>;
+  }
+  interface ModelContext { registerTool: (tool: WebMcpTool) => Promise<unknown> | unknown }
+
+  const modelContext = (navigator as Navigator & { modelContext?: ModelContext }).modelContext
+    ?? (document as Document & { modelContext?: ModelContext }).modelContext;
+
+  if (modelContext?.registerTool) {
+    const english = !document.documentElement.lang.startsWith('pt');
+    const base = english ? '/en/' : '/';
+    let profile: Promise<Record<string, unknown>> | undefined;
+    const loadProfile = () => (profile ??= fetch('/ai-index.json').then((response) => response.json()));
+    const pages = ['work', 'services', 'about', 'cv', 'contact', 'for-agents'];
+    const result = (data: unknown) => ({ content: [{ type: 'text', text: JSON.stringify(data, null, 2) }] });
+
+    const tools: WebMcpTool[] = [
+      {
+        name: 'list_portfolio_projects',
+        description: 'List the portfolio projects with category, project page, and live demo link. Every project is a demo Rafael built with a fictional brand and fictional data.',
+        inputSchema: { type: 'object', properties: {} },
+        execute: async () => result((await loadProfile()).work),
+      },
+      {
+        name: 'list_services',
+        description: 'List the freelance services Rafael Sant\' Anna offers, with a link to each service page.',
+        inputSchema: { type: 'object', properties: {} },
+        execute: async () => result((await loadProfile()).services),
+      },
+      {
+        name: 'get_contact_details',
+        description: 'Get the public contact routes and current availability. Do not send a message without the user\'s confirmation.',
+        inputSchema: { type: 'object', properties: {} },
+        execute: async () => {
+          const data = await loadProfile();
+          return result({ availability: data.availability, contact: data.contact, location: data.location });
+        },
+      },
+      {
+        name: 'open_portfolio_page',
+        description: 'Open a page of the portfolio in the current tab.',
+        inputSchema: { type: 'object', properties: { page: { type: 'string', enum: pages, description: 'The page to open.' } }, required: ['page'] },
+        execute: async (input) => {
+          const page = String(input.page);
+          if (!pages.includes(page)) return result({ error: `Unknown page. Use one of: ${pages.join(', ')}.` });
+          window.location.assign(`${base}${page}/`);
+          return result({ opened: `${base}${page}/` });
+        },
+      },
+    ];
+
+    for (const tool of tools) {
+      Promise.resolve(modelContext.registerTool(tool)).catch(() => undefined);
+    }
+  }
+</script>

@@ -9,6 +9,7 @@ import CvPage from '@/components/pages/CvPage.astro';
 import ContactPage from '@/components/pages/ContactPage.astro';
 import AgentsPage from '@/components/pages/AgentsPage.astro';
 import { copy, identity, localize, previewImage, projects, services, withLocale, type Locale } from '@/data/content';
+import { homeFaq } from '@/data/faq';
 
 type PageKind = 'home' | 'work' | 'services' | 'project' | 'service' | 'about' | 'cv' | 'contact' | 'agents';
 interface PageProps { locale: Locale; kind: PageKind; routePath: string; slug?: string }
@@ -95,16 +96,31 @@ const pageSchema = (() => {
     };
   }
   if (kind === 'home') {
-    return {
-      '@context': 'https://schema.org',
-      '@type': 'ProfessionalService',
-      name: identity.name,
-      description: identity.summary[locale],
-      email: identity.email,
-      telephone: identity.phoneDisplay,
-      areaServed: 'Worldwide',
-      address: { '@type': 'PostalAddress', addressLocality: 'Viseu', addressCountry: 'PT' },
-    };
+    return [
+      {
+        '@context': 'https://schema.org',
+        '@type': 'Organization',
+        name: identity.name,
+        description: identity.summary[locale],
+        url: new URL(withLocale(locale), Astro.site).toString(),
+        logo: new URL('/apple-touch-icon.png', Astro.site).toString(),
+        email: identity.email,
+        telephone: identity.phoneDisplay,
+        areaServed: 'Worldwide',
+        address: { '@type': 'PostalAddress', addressLocality: 'Viseu', addressCountry: 'PT' },
+        founder: { '@type': 'Person', name: identity.name },
+        sameAs: [identity.github, identity.linkedin],
+      },
+      {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: homeFaq[locale].map((item) => ({
+          '@type': 'Question',
+          name: item.question,
+          acceptedAnswer: { '@type': 'Answer', text: item.answer },
+        })),
+      },
+    ];
   }
   return undefined;
 })();

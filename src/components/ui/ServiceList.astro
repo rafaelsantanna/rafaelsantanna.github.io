@@ -62,7 +62,7 @@ const rows = services.map((service) => ({
       <div class="services-preview__sticky">
         {rows.map(({ related }, index) => related[0] && (
           <div class="services-preview__item stage" style={paletteStyle(related[0].palette)} data-preview-index={index} data-active={index === 0 ? '' : undefined}>
-            <ProjectFrame project={related[0]} locale={locale} decorative sizes="(min-width: 64em) 26vw, 100vw" />
+            <ProjectFrame project={related[0]} locale={locale} sizes="(min-width: 64em) 26vw, 100vw" />
             <p class="services-preview__caption"><span>{pt ? 'Projeto relacionado' : 'Related project'}</span>{related[0].name}</p>
           </div>
         ))}

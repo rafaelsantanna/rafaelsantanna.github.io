@@ -1,0 +1,29 @@
+---
+import { homeFaq } from '@/data/faq';
+import type { Locale } from '@/data/content';
+
+interface Props { locale: Locale }
+
+const { locale } = Astro.props;
+const pt = locale === 'pt';
+const ui = pt
+  ? { index: 'Perguntas frequentes', title: 'Antes de conversar.' }
+  : { index: 'Common questions', title: 'Before we talk.' };
+---
+
+<section class="home-faq section" aria-labelledby="home-faq-title">
+  <div class="home-faq__inner shell">
+    <header class="home-faq__head" data-reveal>
+      <p class="section-index">{ui.index}</p>
+      <h2 id="home-faq-title">{ui.title}</h2>
+    </header>
+    <div class="home-faq__list">
+      {homeFaq[locale].map((item) => (
+        <details class="home-faq__item">
+          <summary>{item.question}</summary>
+          <p>{item.answer}</p>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>

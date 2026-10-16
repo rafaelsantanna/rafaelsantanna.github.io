@@ -16,6 +16,12 @@ ${services.map((service) => `- ${service.title.en}: ${service.summary.en}`).join
 - Complete machine-readable content: https://rafaelsantanna.github.io/llms-full.txt
 - EdgeData product: https://edgedata.com.br/
 
+## Discovery
+
+- Agent skill index: https://rafaelsantanna.github.io/.well-known/agent-skills/index.json
+- AI catalog (ARD): https://rafaelsantanna.github.io/.well-known/ard.json
+- Site pages register read-only WebMCP tools (list projects, list services, contact details, open a page) when the browser supports WebMCP
+
 ## Contact
 
 - Email: ${identity.email}
