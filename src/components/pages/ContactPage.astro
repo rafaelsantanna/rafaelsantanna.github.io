@@ -1,6 +1,6 @@
 ---
 import Icon from '@/components/ui/Icon.astro';
-import { copy, identity, type Locale } from '@/data/content';
+import { copy, identity, serviceArea, type Locale } from '@/data/content';
 
 interface Props { locale: Locale }
 
@@ -132,6 +132,7 @@ const routes = [
         <div>
           <h2 id="availability-title">{ui.availability}</h2>
           <p>{identity.availability[locale]}.</p>
+          <p>{serviceArea.text[locale]}.</p>
           <p class="contact__where">{ui.where}</p>
         </div>
       </aside>

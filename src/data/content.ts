@@ -26,24 +26,48 @@ export const identity = {
   linkedinHandle: '/in/devrafaelsantanna',
   edgeData: 'https://edgedata.com.br/',
   availability: {
-    en: 'Open to freelance projects, working remotely with full overlap with Brazilian business hours',
-    pt: 'Aberto a projetos freelance, trabalhando remotamente no horário comercial brasileiro',
+    en: 'Open to freelance projects, with hours that fit business days in Portugal and Brazil',
+    pt: 'Aberto a projetos freelance, com horários compatíveis com o expediente de Portugal e do Brasil',
   },
   availabilityShort: {
     en: 'Open to freelance projects',
     pt: 'Aberto a projetos freelance',
   },
   workingHours: {
-    en: 'Brazilian business hours',
-    pt: 'Horário comercial do Brasil',
+    en: 'Portugal and Brazil hours',
+    pt: 'Horário de Portugal e do Brasil',
   },
   cv: {
     en: '/cv/rafael-sant-anna-cv-english.pdf',
     pt: '/cv/rafael-sant-anna-cv.pdf',
   },
   summary: {
-    en: "Rafael Sant' Anna is a senior software engineer based in Viseu, Portugal, with more than 10 years of experience building and modernizing B2B products, internal systems, and operational platforms.",
-    pt: "Rafael Sant' Anna é um engenheiro de software sênior baseado em Viseu, Portugal, com mais de 10 anos de experiência construindo e modernizando produtos B2B, sistemas internos e plataformas operacionais.",
+    en: "Rafael Sant' Anna is a senior software engineer based in Viseu, Portugal, with more than 10 years of experience building and modernizing B2B products, internal systems, and operational platforms. He works remotely with businesses in Lisbon, across Portugal, and in Brazil.",
+    pt: "Rafael Sant' Anna é um engenheiro de software sênior baseado em Viseu, Portugal, com mais de 10 anos de experiência construindo e modernizando produtos B2B, sistemas internos e plataformas operacionais. Atende remotamente empresas em Lisboa, em todo Portugal e no Brasil.",
+  },
+};
+
+/** Where freelance work is offered: visible copy, page title suffix and schema.org areaServed. */
+export const serviceArea = {
+  text: {
+    en: 'I work remotely with businesses in Lisbon, across Portugal, and in Brazil',
+    pt: 'Atendo remotamente empresas em Lisboa, em todo Portugal e no Brasil',
+  },
+  titleSuffix: {
+    en: 'in Portugal and Brazil',
+    pt: 'em Portugal e no Brasil',
+  },
+  schema: {
+    en: [
+      { '@type': 'City', name: 'Lisbon', containedInPlace: { '@type': 'Country', name: 'Portugal' } },
+      { '@type': 'Country', name: 'Portugal' },
+      { '@type': 'Country', name: 'Brazil' },
+    ],
+    pt: [
+      { '@type': 'City', name: 'Lisboa', containedInPlace: { '@type': 'Country', name: 'Portugal' } },
+      { '@type': 'Country', name: 'Portugal' },
+      { '@type': 'Country', name: 'Brasil' },
+    ],
   },
 };
 
@@ -313,7 +337,7 @@ export const services: Service[] = [
   {
     slug: 'ai-automation-rag',
     index: '04',
-    title: { en: 'AI automation, RAG, and bots', pt: 'Automação com IA, RAG e bots' },
+    title: { en: 'Chatbots, AI automation, and RAG', pt: 'Chatbots, automação com IA e RAG' },
     summary: {
       en: 'Generative AI where it actually helps: less repetitive work, knowledge that is easy to find, and faster decisions.',
       pt: 'IA generativa onde ela ajuda de verdade: menos trabalho repetitivo, informação fácil de achar e decisões mais rápidas.',
@@ -405,8 +429,9 @@ export const copy = {
     switchLocale: 'Português',
     skip: 'Skip to content',
     nav: { work: 'Work', services: 'Services', about: 'About', cv: 'CV', agents: 'For agents', contact: 'Contact' },
+    homeTitle: 'Websites, systems, and chatbots for Portugal and Brazil',
     heroTitle: 'Systems, websites, and apps you can try right now.',
-    heroIntro: 'I’m a senior software engineer with 10+ years building B2B products, internal systems, websites, and apps. Every project in this portfolio is a demo that actually works.',
+    heroIntro: 'I’m a senior software engineer with 10+ years building B2B products, internal systems, websites, and apps for businesses in Portugal and Brazil. Every project in this portfolio is a demo that actually works.',
     discuss: 'Discuss a project',
     seeWork: 'See the projects',
     servicesTitle: 'Where I can help.',
@@ -417,7 +442,7 @@ export const copy = {
     workTitle: 'Projects you can open',
     workIntro: 'Working projects, from operations consoles to landing pages, built to show how I design and engineer software.',
     servicesPageTitle: 'Services built around real operations',
-    servicesPageIntro: 'Each service builds on more than ten years of delivery and comes with a working demonstration you can try. My primary focus is B2B products, internal systems, and platform modernization.',
+    servicesPageIntro: `Each service builds on more than ten years of delivery and comes with a working demonstration you can try. My primary focus is B2B products, internal systems, and platform modernization. ${serviceArea.text.en}.`,
     aboutTitle: 'Engineering that starts with the operation',
     aboutIntro: 'I’m a senior software engineer based in Viseu, Portugal, with more than 10 years of experience turning complex operations into maintainable B2B products and internal systems.',
     cvTitle: 'Curriculum vitae',
@@ -446,8 +471,9 @@ export const copy = {
     switchLocale: 'English',
     skip: 'Pular para o conteúdo',
     nav: { work: 'Projetos', services: 'Serviços', about: 'Sobre', cv: 'CV', agents: 'Para agentes', contact: 'Contato' },
+    homeTitle: 'Sites, sistemas e chatbots em Portugal e no Brasil',
     heroTitle: 'Sistemas, sites e apps que você pode testar agora.',
-    heroIntro: 'Sou engenheiro de software sênior, com mais de 10 anos construindo produtos B2B, sistemas internos, sites e apps. Cada projeto deste portfólio é uma demo que funciona de verdade.',
+    heroIntro: 'Sou engenheiro de software sênior, com mais de 10 anos construindo produtos B2B, sistemas internos, sites e apps para empresas em Portugal e no Brasil. Cada projeto deste portfólio é uma demo que funciona de verdade.',
     discuss: 'Conversar sobre um projeto',
     seeWork: 'Ver os projetos',
     servicesTitle: 'Onde posso ajudar.',
@@ -458,7 +484,7 @@ export const copy = {
     workTitle: 'Projetos para abrir e usar',
     workIntro: 'Projetos funcionando, de painéis operacionais a landing pages, criados para mostrar como eu projeto e desenvolvo software.',
     servicesPageTitle: 'Serviços pensados a partir da operação real',
-    servicesPageIntro: 'Cada serviço se apoia em mais de dez anos de entregas e vem com uma demo funcional para você testar. Meu foco principal é produtos B2B, sistemas internos e modernização de plataformas.',
+    servicesPageIntro: `Cada serviço se apoia em mais de dez anos de entregas e vem com uma demo funcional para você testar. Meu foco principal é produtos B2B, sistemas internos e modernização de plataformas. ${serviceArea.text.pt}.`,
     aboutTitle: 'Engenharia que começa pela operação',
     aboutIntro: 'Sou engenheiro de software sênior, baseado em Viseu, Portugal, com mais de 10 anos de experiência transformando operações complexas em produtos B2B e sistemas internos sustentáveis.',
     cvTitle: 'Currículo profissional',

@@ -33,7 +33,7 @@ const t = copy[locale];
 const path = routePath.replace(/^\/+|\/+$/g, '');
 const canonicalPath = withLocale(locale, path);
 const canonical = new URL(canonicalPath, Astro.site);
-const fullTitle = path ? `${title} | ${identity.name}` : `${identity.name} | ${identity.role[locale]}`;
+const fullTitle = path ? `${title} | ${identity.name}` : `${identity.name} | ${title}`;
 const imageUrl = new URL(image, Astro.site);
 const socialImageAlt = imageAlt ?? (locale === 'pt' ? `Prévia do portfólio de ${identity.name}` : `${identity.name} portfolio preview`);
 const structuredDescription = ['', 'services', 'about', 'cv', 'contact'].includes(path) ? identity.summary[locale] : description;

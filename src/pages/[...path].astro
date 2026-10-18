@@ -8,7 +8,7 @@ import AboutPage from '@/components/pages/AboutPage.astro';
 import CvPage from '@/components/pages/CvPage.astro';
 import ContactPage from '@/components/pages/ContactPage.astro';
 import AgentsPage from '@/components/pages/AgentsPage.astro';
-import { copy, identity, localize, previewImage, projects, services, withLocale, type Locale } from '@/data/content';
+import { copy, identity, localize, previewImage, projects, serviceArea, services, withLocale, type Locale } from '@/data/content';
 import { homeFaq } from '@/data/faq';
 
 type PageKind = 'home' | 'work' | 'services' | 'project' | 'service' | 'about' | 'cv' | 'contact' | 'agents';
@@ -56,9 +56,14 @@ const metadata = (() => {
       imageAlt: localize(projectItem.preview.alt, locale),
     };
   }
-  if (serviceItem) return { title: localize(serviceItem.title, locale), description: localize(serviceItem.summary, locale) };
+  if (serviceItem) {
+    return {
+      title: `${localize(serviceItem.title, locale)} ${serviceArea.titleSuffix[locale]}`,
+      description: `${localize(serviceItem.summary, locale)} ${serviceArea.text[locale]}.`,
+    };
+  }
   const map = {
-    home: { title: identity.role[locale], description: t.heroIntro },
+    home: { title: t.homeTitle, description: t.heroIntro },
     work: { title: t.workTitle, description: t.workIntro },
     services: { title: t.nav.services, description: t.servicesPageIntro },
     about: { title: t.nav.about, description: t.aboutIntro },
@@ -91,7 +96,7 @@ const pageSchema = (() => {
       name: localize(serviceItem.title, locale),
       description: localize(serviceItem.summary, locale),
       provider: { '@type': 'Person', name: identity.name },
-      areaServed: 'Worldwide',
+      areaServed: serviceArea.schema[locale],
       serviceType: localize(serviceItem.title, locale),
     };
   }
@@ -106,7 +111,7 @@ const pageSchema = (() => {
         logo: new URL('/apple-touch-icon.png', Astro.site).toString(),
         email: identity.email,
         telephone: identity.phoneDisplay,
-        areaServed: 'Worldwide',
+        areaServed: serviceArea.schema[locale],
         address: { '@type': 'PostalAddress', addressLocality: 'Viseu', addressCountry: 'PT' },
         founder: { '@type': 'Person', name: identity.name },
         sameAs: [identity.github, identity.linkedin],
