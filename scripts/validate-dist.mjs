@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
-import { join, resolve } from 'node:path';
+import { join, resolve, sep } from 'node:path';
 import { concepts, experience, previewImage, projects, services } from '../src/data/content.ts';
 import { homeFaq } from '../src/data/faq.ts';
 
@@ -30,7 +30,13 @@ const lacks = (text, pattern, message) => {
   assert.ok(!found, found ? `${message}: ${found[0].slice(0, 160)}` : message);
 };
 const files = walk(dist);
-const htmlFiles = files.filter((file) => file.endsWith('.html'));
+// The lead preview under /previa/ is a standalone sales tool copied from public/, not a portfolio page:
+// it is left out of the page count and the page checks, and must stay out of search results instead.
+const leadPreview = join(dist, 'previa') + sep;
+for (const name of ['index.html', 'gerar.html']) {
+  has(read('previa', name), /<meta name="robots" content="noindex, nofollow">/, `Lead preview ${name} must not be indexed`);
+}
+const htmlFiles = files.filter((file) => file.endsWith('.html') && !file.startsWith(leadPreview));
 const isRedirect = (html) => html.startsWith('<!doctype html><title>Redirecting to:');
 const redirects = htmlFiles.filter((file) => isRedirect(readFileSync(file, 'utf8')));
 const notFound = join(dist, '404.html');
