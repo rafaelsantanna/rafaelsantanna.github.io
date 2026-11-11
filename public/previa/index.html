@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Prévia do site</title>
+<meta name="description" content="Prévia demonstrativa de página, feita por Rafael Sant' Anna. Não é o site oficial da empresa.">
+<meta property="og:title" content="Prévia do seu novo site">
+<meta property="og:description" content="Uma amostra de como a sua página pode ficar, com pedido direto no WhatsApp.">
+<script>document.documentElement.dataset.nicho = (new URLSearchParams(location.search).get('t') || 'clima').replace(/[^a-z]/g, '');</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="previa.css">
+</head>
+<body>
+
+<svg width="0" height="0" hidden>
+  <symbol id="i-conversa" viewBox="0 0 24 24"><path d="M12 3.5a8.5 8.5 0 0 0-7.4 12.7L3.5 20.5l4.5-1.1A8.5 8.5 0 1 0 12 3.5Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
+  <symbol id="i-estrela" viewBox="0 0 24 24"><path d="m12 2.8 2.8 5.9 6.4.8-4.7 4.4 1.2 6.3L12 17.1l-5.7 3.1 1.2-6.3-4.7-4.4 6.4-.8Z" fill="currentColor"/></symbol>
+</svg>
+
+<aside class="aviso" aria-label="Aviso de prévia">
+  <p><strong data-t="aviso"></strong> Textos, serviços e imagens são de exemplo.</p>
+  <a class="aviso-acao" data-autor target="_blank" rel="noopener">Quero essa página</a>
+</aside>
+
+<header class="topo">
+  <a class="marca" href="#inicio" data-t="nome"></a>
+  <nav class="topo-nav" aria-label="Seções">
+    <a href="#servicos" data-t="navServicos"></a>
+    <a href="#como">Como funciona</a>
+    <a href="#duvidas">Dúvidas</a>
+  </nav>
+  <a class="botao" data-zap target="_blank" rel="noopener"><svg class="icone" aria-hidden="true"><use href="#i-conversa"/></svg>WhatsApp</a>
+</header>
+
+<main id="inicio">
+  <section class="abre">
+    <div class="abre-texto">
+      <h1 data-t="titulo"></h1>
+      <p class="abre-lead" data-t="lead"></p>
+      <p class="abre-nota" data-nota hidden><svg class="icone" aria-hidden="true"><use href="#i-estrela"/></svg><span></span></p>
+    </div>
+    <div class="objeto" id="pedido">
+      <div class="cena" aria-hidden="true"></div>
+      <form class="pedido" novalidate>
+        <div class="pedido-grupos"></div>
+        <div class="recado">
+          <p class="recado-rotulo">Sua mensagem</p>
+          <p class="recado-texto" aria-live="polite"></p>
+        </div>
+        <a class="botao botao-enviar" data-enviar target="_blank" rel="noopener"><svg class="icone" aria-hidden="true"><use href="#i-conversa"/></svg>Enviar no WhatsApp</a>
+      </form>
+    </div>
+  </section>
+
+  <section class="secao oferta" id="servicos">
+    <h2 data-t="ofertaTitulo"></h2>
+    <ul class="lista"></ul>
+    <p class="exemplo">Lista de exemplo. Na versão final entram os seus serviços, as suas fotos e os seus valores.</p>
+  </section>
+
+  <section class="secao passos" id="como">
+    <h2>Do primeiro oi ao combinado.</h2>
+    <ol></ol>
+  </section>
+
+  <section class="secao prova" hidden>
+    <p class="prova-frase"></p>
+    <p class="prova-obs">Na versão final, as avaliações mais recentes do seu perfil no Google aparecem aqui.</p>
+  </section>
+
+  <section class="secao duvidas" id="duvidas">
+    <h2>Dúvidas frequentes</h2>
+    <div class="duvidas-lista"></div>
+  </section>
+
+  <section class="secao fecho">
+    <h2 data-t="fechoTitulo"></h2>
+    <p data-t="fechoTexto"></p>
+    <a class="botao" data-zap target="_blank" rel="noopener"><svg class="icone" aria-hidden="true"><use href="#i-conversa"/></svg>Chamar no WhatsApp</a>
+  </section>
+</main>
+
+<footer class="rodape">
+  <p><strong data-t="nome"></strong><span data-t="local"></span></p>
+  <p>Prévia demonstrativa. Não é o site oficial.</p>
+</footer>
+
+<section class="autor" aria-label="Sobre esta prévia">
+  <h2>Esta prévia foi feita por Rafael Sant' Anna.</h2>
+  <p>Na versão final entram a sua marca, as suas fotos, os seus serviços e os seus valores, e o botão cai direto no seu WhatsApp. Fica pronta em 3 dias úteis.</p>
+  <a class="botao" data-autor target="_blank" rel="noopener"><svg class="icone" aria-hidden="true"><use href="#i-conversa"/></svg>Falar com o Rafael</a>
+</section>
+
+<a class="botao flutuante" data-zap target="_blank" rel="noopener"><svg class="icone" aria-hidden="true"><use href="#i-conversa"/></svg>Chamar no WhatsApp</a>
+
+<script src="nichos.js"></script>
+<script src="previa.js"></script>
+</body>
+</html>
