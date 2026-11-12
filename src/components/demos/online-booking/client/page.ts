@@ -29,6 +29,7 @@ export function createPage(root: HTMLElement, env: PageEnv, actions: PageActions
     when: qs(root, '[data-next-when]'),
     who: qs(root, '[data-next-who]'),
     take: qs<HTMLButtonElement>(root, '[data-next-take]'),
+    stub: qs(root, '[data-next-stub]'),
     banner: qs(root, '[data-booked]'),
     bannerText: qs(root, '[data-booked-text]'),
     rows: qsa(root, '.hours__row[data-weekdays]'),
@@ -67,6 +68,7 @@ export function createPage(root: HTMLElement, env: PageEnv, actions: PageActions
     el.who.hidden = !next;
     el.who.textContent = next ? fill(t.nextWith, { name: barber }) : '';
     el.take.hidden = !next;
+    el.stub.hidden = !next;
   }
 
   function render(): void {

@@ -1,7 +1,7 @@
 /* Turno app shell: banner, screens, headers, chips, and the sync pill. */
 
 .turno .t-app {
-  --t-gutter: max(1.25rem, calc((100% - 40rem) / 2));
+  --t-gutter: max(1.125rem, calc((100% - 40rem) / 2));
   color: var(--t-ink);
   font-size: 1rem;
 }
@@ -23,9 +23,10 @@
   list-style: none;
 }
 
-/* Connection banner. */
+/* Connection banner: a system-level strip under the status bar. */
 .turno .t-banner {
   position: relative;
+  z-index: 4;
   display: flex;
   flex: none;
   align-items: center;
@@ -35,7 +36,12 @@
   font-size: 0.875rem;
   font-weight: 700;
   line-height: 1.3;
-  animation: t-banner-in 320ms var(--t-ease);
+  animation: t-banner-in 360ms var(--t-ease);
+}
+
+.turno .t-banner .t-ico {
+  inline-size: 1.125rem;
+  block-size: 1.125rem;
 }
 
 .turno .t-banner[hidden] {
@@ -57,31 +63,31 @@
 }
 
 .turno .t-banner[data-tone='sending'] {
-  background: var(--t-blue-soft);
-  color: var(--t-blue-ink);
+  background: var(--t-blue);
+  color: #fff;
 }
 
 .turno .t-banner[data-tone='synced'] {
-  background: var(--t-green-soft);
-  color: var(--t-green);
+  background: var(--t-green-strong);
+  color: #fff;
 }
 
 .turno .t-banner__bar {
   position: absolute;
   inset: auto 0 0;
   block-size: 3px;
-  background: rgb(36 89 230 / 0.16);
+  background: rgb(255 255 255 / 0.25);
 }
 
 .turno .t-banner__bar span {
   display: block;
   block-size: 100%;
-  background: var(--t-blue);
+  background: #fff;
   transition: inline-size 320ms var(--t-ease);
 }
 
 @keyframes t-banner-in {
-  from { opacity: 0; transform: translateY(-6px); }
+  from { opacity: 0; transform: translateY(-100%); }
 }
 
 /* Screens. Each one is its own scroll container so screens can slide over each other. */
@@ -109,11 +115,12 @@
   overflow-y: auto;
   overscroll-behavior: contain;
   scrollbar-width: thin;
+  scrollbar-color: rgb(14 21 37 / 0.22) transparent;
 }
 
 .turno .t-screen--over {
   z-index: 2;
-  box-shadow: -16px 0 40px rgb(14 21 37 / 0.14);
+  box-shadow: -18px 0 40px rgb(14 21 37 / 0.16);
 }
 
 .turno .t-screen--under {
@@ -142,9 +149,10 @@
 }
 
 .turno .t-head--today {
+  position: static;
   display: grid;
-  gap: 0.125rem;
-  padding-block-start: 0.5rem;
+  gap: 0.25rem;
+  padding-block: 0.375rem 1rem;
 }
 
 .turno .t-head__top {
@@ -152,7 +160,14 @@
   align-items: center;
   justify-content: space-between;
   gap: 0.75rem;
-  min-block-size: 48px;
+  min-block-size: 44px;
+}
+
+.turno .t-head__title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
 }
 
 .turno .t-head__text {
@@ -169,10 +184,11 @@
 
 .turno .t-title {
   font-family: var(--t-display);
-  font-size: 1.625rem;
+  font-size: 1.875rem;
   font-weight: 700;
-  line-height: 1.15;
-  letter-spacing: -0.025em;
+  line-height: 1.12;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
 }
 
 .turno .t-title:focus:not(:focus-visible),
@@ -182,11 +198,11 @@
 
 .turno .t-head--bar {
   display: grid;
-  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
   align-items: center;
-  min-block-size: 3.5rem;
-  padding-block: 0.25rem;
-  padding-inline: calc(var(--t-gutter) - 0.75rem) var(--t-gutter);
+  min-block-size: 3.25rem;
+  padding-block: 0.125rem;
+  padding-inline: calc(var(--t-gutter) - 0.625rem) var(--t-gutter);
   border-block-end: 1px solid var(--t-line);
   background: var(--t-surface);
 }
@@ -198,6 +214,7 @@
   font-size: 1rem;
   font-weight: 600;
   font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
 }
 
 .turno .t-head__status {
@@ -208,23 +225,25 @@
   display: inline-flex;
   align-items: center;
   justify-self: start;
-  gap: 0.125rem;
-  min-block-size: 48px;
-  padding: 0 0.75rem 0 0.375rem;
+  gap: 0.0625rem;
+  min-block-size: 44px;
+  padding: 0 0.75rem 0 0.25rem;
   border: 0;
   border-radius: 12px;
   background: none;
   color: var(--t-blue-ink);
   font-weight: 700;
   cursor: pointer;
+  transition: background-color 160ms var(--t-ease);
 }
 
 .turno .t-back .t-ico {
   inline-size: 1.5rem;
   block-size: 1.5rem;
+  stroke-width: 2.4;
 }
 
-.turno .t-back:active {
+.turno .t-back:hover {
   background: var(--t-blue-soft);
 }
 
@@ -233,7 +252,7 @@
   flex: 1 0 auto;
   flex-direction: column;
   gap: 1rem;
-  padding: 0.25rem var(--t-gutter) 1.5rem;
+  padding: 0.25rem var(--t-gutter) 1.75rem;
 }
 
 .turno .t-section-head {
@@ -241,15 +260,15 @@
   align-items: baseline;
   justify-content: space-between;
   gap: 1rem;
-  margin-block-start: 0.5rem;
+  margin-block-start: 0.75rem;
 }
 
 .turno .t-section-head h3,
 .turno .t-subhead {
   font-family: var(--t-display);
-  font-size: 1.125rem;
-  font-weight: 600;
-  letter-spacing: -0.01em;
+  font-size: 1.1875rem;
+  font-weight: 650;
+  letter-spacing: -0.015em;
 }
 
 .turno .t-section-head span {
@@ -266,13 +285,18 @@
 }
 
 .turno .t-subhead span {
-  padding: 0.0625rem 0.5rem;
+  display: grid;
+  place-items: center;
+  min-inline-size: 1.5rem;
+  block-size: 1.5rem;
+  padding-inline: 0.4375rem;
   border-radius: 999px;
   background: var(--t-muted-fill);
   color: var(--t-ink-2);
   font-family: var(--t-body);
   font-size: 0.8125rem;
   font-weight: 700;
+  font-variant-numeric: tabular-nums;
 }
 
 /* Chips. Every chip pairs an icon with text, so color is never the only signal. */
@@ -280,19 +304,20 @@
   display: inline-flex;
   align-items: center;
   gap: 0.25rem;
-  padding: 0.1875rem 0.5rem 0.1875rem 0.375rem;
+  min-block-size: 1.625rem;
+  padding: 0.125rem 0.5625rem 0.125rem 0.4375rem;
   border: 1px solid transparent;
   border-radius: 999px;
   font-size: 0.8125rem;
   font-weight: 700;
-  line-height: 1.3;
+  line-height: 1.2;
   white-space: nowrap;
 }
 
 .turno .t-chip .t-ico {
   inline-size: 0.875rem;
   block-size: 0.875rem;
-  stroke-width: 2.4;
+  stroke-width: 2.5;
 }
 
 .turno .t-chip--scheduled,
@@ -321,7 +346,7 @@
 
 .turno .t-chip--priority-normal,
 .turno .t-chip--priority-low {
-  border-color: var(--t-line-2);
+  border-color: var(--t-line);
   color: var(--t-ink-2);
 }
 
@@ -339,14 +364,14 @@
   flex: none;
   align-items: center;
   gap: 0.375rem;
-  min-block-size: 48px;
+  min-block-size: 44px;
   padding: 0 0.875rem 0 0.75rem;
   border: 1px solid transparent;
   border-radius: 999px;
   font-size: 0.875rem;
   font-weight: 700;
   cursor: pointer;
-  transition: background-color 180ms var(--t-ease), transform 120ms var(--t-ease);
+  transition: background-color 220ms var(--t-ease), color 220ms var(--t-ease), transform 140ms var(--t-ease);
 }
 
 .turno .t-pill .t-ico {
@@ -355,19 +380,19 @@
 }
 
 .turno .t-pill:active {
-  transform: scale(0.97);
+  transform: scale(0.96);
 }
 
 .turno .t-pill--synced {
   border-color: var(--t-green-line);
-  background: var(--t-green-soft);
+  background: var(--t-surface);
   color: var(--t-green);
 }
 
 .turno .t-pill--sending {
-  border-color: #c9d8fb;
-  background: var(--t-blue-soft);
-  color: var(--t-blue-ink);
+  border-color: var(--t-blue);
+  background: var(--t-blue);
+  color: #fff;
 }
 
 .turno .t-pill--pending {
@@ -395,6 +420,30 @@
   background: var(--t-amber-bright);
   color: var(--t-ink);
   font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Initials avatar: profile in Settings, a small one beside the Today greeting. */
+.turno .t-avatar {
+  display: grid;
+  flex: none;
+  place-items: center;
+  inline-size: 3.5rem;
+  block-size: 3.5rem;
+  border-radius: 50%;
+  background: var(--t-blue);
+  color: #fff;
+  font-family: var(--t-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.turno .t-avatar--sm {
+  inline-size: 2.5rem;
+  block-size: 2.5rem;
+  font-size: 0.9375rem;
+  box-shadow: 0 0 0 3px var(--t-surface), 0 4px 10px -4px rgb(14 21 37 / 0.4);
 }
 
 /* Forced colors drop backgrounds, so the decorative progress bars get an outline and a system-colored fill. */

@@ -29,6 +29,8 @@ export function bindInteractions(root: HTMLElement, ctx: Ctx, deps: InteractionD
   let flashTimer = 0;
 
   const behavior = (): ScrollBehavior => (prefersReducedMotion() ? 'auto' : 'smooth');
+  // The citation, the answer text it backs and the matching source row light up together.
+  const linked = (passage: number | string | undefined) => `.ka-cite[data-passage="${passage}"], .ka-a__part[data-part="${passage}"], .ka-source[data-passage="${passage}"]`;
   const card = (passage: number) => evidenceView.querySelector<HTMLElement>(`.ka-ev[data-passage="${passage}"]`);
   const turnOf = (element: Element) => {
     const item = element.closest<HTMLElement>('[data-turn]');
@@ -37,7 +39,7 @@ export function bindInteractions(root: HTMLElement, ctx: Ctx, deps: InteractionD
 
   function link(turn: Turn, item: HTMLElement, passage: number, on: boolean): void {
     if (on) deps.setActive(turn.id);
-    item.querySelectorAll(`.ka-cite[data-passage="${passage}"]`).forEach((cite) => cite.classList.toggle('is-linked', on));
+    item.querySelectorAll(linked(passage)).forEach((element) => element.classList.toggle('is-linked', on));
     const target = card(passage);
     target?.classList.toggle('is-linked', on);
     if (on && target && !deps.tabs.isTabMode()) target.scrollIntoView({ block: 'nearest', behavior: behavior() });
@@ -132,8 +134,8 @@ export function bindInteractions(root: HTMLElement, ctx: Ctx, deps: InteractionD
     const target = (event.target as Element).closest<HTMLElement>('.ka-ev');
     const turn = deps.activeTurn();
     if (!target || !turn) return;
-    turnList.querySelectorAll(`[data-turn="${turn.id}"] .ka-cite[data-passage="${target.dataset.passage}"]`)
-      .forEach((cite) => cite.classList.toggle('is-linked', on));
+    turnList.querySelector(`[data-turn="${turn.id}"]`)?.querySelectorAll(linked(target.dataset.passage))
+      .forEach((element) => element.classList.toggle('is-linked', on));
   };
   evidenceView.addEventListener('pointerover', onCard(true));
   evidenceView.addEventListener('pointerout', onCard(false));

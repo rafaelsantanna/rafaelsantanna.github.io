@@ -56,7 +56,7 @@ export const project: DemoProject = {
     pt: 'Não usa modelo de linguagem nem envia perguntas para servidores. A busca, a montagem da resposta e o encaminhamento simulado acontecem no seu navegador, sobre 10 documentos de exemplo, e as avaliações e a conversa ficam só no armazenamento local.',
   },
   disclaimer: demoDisclaimer,
-  palette: { base: '#121116', ink: '#EEEAE2', accent: '#F2C14E' },
+  palette: { base: '#0F1317', ink: '#ECE5D6', accent: '#E6B450' },
   device: 'desktop',
   preview: previewFor('knowledge-assistant', {
     en: 'Bússola knowledge assistant answering a question with numbered citations and the retrieved passages beside it',

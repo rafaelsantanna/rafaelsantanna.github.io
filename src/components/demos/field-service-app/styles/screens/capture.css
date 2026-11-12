@@ -1,10 +1,83 @@
 /* Turno screens: photo, signature, notes, and the completed record. */
 
-/* Photo. */
+/* Photo: before the first capture the viewfinder itself is the shutter. */
+.turno .t-viewfinder {
+  position: relative;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 0.625rem;
+  inline-size: 100%;
+  min-block-size: 9.5rem;
+  border: 0;
+  border-radius: 16px;
+  background: #1a2233;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 160ms var(--t-ease), background-color 180ms var(--t-ease);
+}
+
+.turno .t-viewfinder:hover {
+  background: #202a3e;
+}
+
+.turno .t-viewfinder:active {
+  transform: scale(0.985);
+}
+
+/* Four corner brackets drawn with one gradient set, like a camera framing guide. */
+.turno .t-viewfinder__corners {
+  position: absolute;
+  inset: 0.875rem;
+  --c: rgb(255 255 255 / 0.55);
+  background:
+    linear-gradient(var(--c), var(--c)) top left / 1.25rem 2px,
+    linear-gradient(var(--c), var(--c)) top left / 2px 1.25rem,
+    linear-gradient(var(--c), var(--c)) top right / 1.25rem 2px,
+    linear-gradient(var(--c), var(--c)) top right / 2px 1.25rem,
+    linear-gradient(var(--c), var(--c)) bottom left / 1.25rem 2px,
+    linear-gradient(var(--c), var(--c)) bottom left / 2px 1.25rem,
+    linear-gradient(var(--c), var(--c)) bottom right / 1.25rem 2px,
+    linear-gradient(var(--c), var(--c)) bottom right / 2px 1.25rem;
+  background-repeat: no-repeat;
+  pointer-events: none;
+}
+
+.turno .t-viewfinder__shutter {
+  display: grid;
+  place-items: center;
+  inline-size: 3.5rem;
+  block-size: 3.5rem;
+  border-radius: 50%;
+  background: #fff;
+  color: var(--t-ink);
+  box-shadow: 0 0 0 4px #1a2233, 0 0 0 6px rgb(255 255 255 / 0.6);
+  transition: transform 200ms var(--t-spring);
+}
+
+.turno .t-viewfinder:hover .t-viewfinder__shutter {
+  transform: scale(1.06);
+}
+
+.turno .t-viewfinder:active .t-viewfinder__shutter {
+  transform: scale(0.9);
+}
+
+.turno .t-viewfinder__shutter .t-ico {
+  inline-size: 1.5rem;
+  block-size: 1.5rem;
+}
+
+.turno .t-viewfinder:focus-visible {
+  outline-offset: 3px;
+}
+
 .turno .t-photo {
   position: relative;
   overflow: hidden;
-  border-radius: 14px;
+  border-radius: 16px;
   background: var(--t-ink);
 }
 
@@ -16,11 +89,26 @@
 }
 
 .turno .t-photo figcaption {
-  padding: 0.5rem 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.5625rem 0.75rem;
   background: var(--t-ink);
-  color: #dfe5ef;
+  color: #e3e8f1;
   font-size: 0.8125rem;
   font-weight: 700;
+}
+
+.turno .t-photo figcaption .t-ico,
+.turno .t-signed figcaption .t-ico {
+  inline-size: 1rem;
+  block-size: 1rem;
+  stroke-width: 2.6;
+  color: #5fdc98;
+}
+
+.turno .t-photo--flash .t-photo__canvas {
+  animation: t-develop 700ms var(--t-ease);
 }
 
 .turno .t-photo--flash::after {
@@ -30,7 +118,7 @@
   background: #fff;
   opacity: 0;
   pointer-events: none;
-  animation: t-flash 600ms ease-out;
+  animation: t-flash 520ms ease-out;
 }
 
 @keyframes t-flash {
@@ -38,22 +126,33 @@
   100% { opacity: 0; }
 }
 
-/* Signature. */
+@keyframes t-develop {
+  from { transform: scale(1.06); }
+}
+
+/* Signature: a sheet of paper with a signing line, inked in pen blue. */
 .turno .t-sigpad {
   position: relative;
-  block-size: 10.5rem;
-  border: 1.5px dashed var(--t-field);
-  border-radius: 14px;
-  background: var(--t-surface);
+  block-size: 11rem;
+  border: 1.5px solid var(--t-line-2);
+  border-radius: 16px;
+  background: #fffefb;
+  box-shadow: inset 0 1px 3px rgb(14 21 37 / 0.06);
+  transition: border-color 180ms var(--t-ease);
+}
+
+.turno .t-sigpad:hover {
+  border-color: var(--t-field);
 }
 
 .turno .t-sigpad__canvas {
   position: absolute;
   inset: 0;
+  z-index: 1;
   inline-size: 100%;
   block-size: 100%;
-  border-radius: 14px;
-  color: var(--t-ink);
+  border-radius: 16px;
+  color: #1c3b9e;
   touch-action: none;
   cursor: crosshair;
 }
@@ -68,7 +167,7 @@
   color: var(--t-ink-3);
   font-size: 0.9375rem;
   font-weight: 700;
-  transform: translate(-50%, -80%);
+  transform: translate(-50%, -90%);
   pointer-events: none;
 }
 
@@ -80,10 +179,11 @@
   position: absolute;
   inset-block-start: 0.25rem;
   inset-inline-end: 0.25rem;
+  z-index: 2;
   display: inline-flex;
   align-items: center;
   gap: 0.25rem;
-  min-block-size: 48px;
+  min-block-size: 44px;
   padding: 0 0.75rem 0 0.5rem;
   border: 0;
   border-radius: 12px;
@@ -116,26 +216,44 @@
   pointer-events: none;
 }
 
+.turno .t-sigpad__x {
+  position: absolute;
+  inset-block-end: 0.375rem;
+  inset-inline-start: 0;
+  inline-size: 0.875rem;
+  block-size: 0.875rem;
+  color: var(--t-ink-3);
+  stroke-width: 2.6;
+}
+
 .turno .t-signed {
   overflow: hidden;
-  border: 1px solid var(--t-line);
-  border-radius: 14px;
-  background: var(--t-surface);
+  border: 1px solid var(--t-green-line);
+  border-radius: 16px;
+  background: #fffefb;
 }
 
 .turno .t-signed__canvas {
   display: block;
   inline-size: 100%;
   block-size: 7.5rem;
-  color: var(--t-ink);
+  color: #1c3b9e;
 }
 
 .turno .t-signed figcaption {
-  padding: 0.5rem 0.75rem;
-  border-block-start: 1px solid var(--t-line);
-  color: var(--t-ink-2);
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.5625rem 0.75rem;
+  border-block-start: 1px solid var(--t-green-line);
+  background: var(--t-green-soft);
+  color: var(--t-green);
   font-size: 0.8125rem;
   font-weight: 700;
+}
+
+.turno .t-signed figcaption .t-ico {
+  color: var(--t-green-fill);
 }
 
 .turno .t-waived {
@@ -157,7 +275,7 @@
   display: grid;
   gap: 0.625rem;
   padding: 0.875rem;
-  border-radius: 14px;
+  border-radius: 16px;
   background: var(--t-base);
 }
 
@@ -183,10 +301,11 @@
   line-height: 1.35;
   text-align: start;
   cursor: pointer;
+  transition: border-color 160ms var(--t-ease), background-color 160ms var(--t-ease);
 }
 
 .turno .t-radio[aria-checked='true'] {
-  border-color: var(--t-accent);
+  border-color: var(--t-blue);
   background: var(--t-blue-soft);
   font-weight: 700;
 }
@@ -198,6 +317,7 @@
   border: 2px solid var(--t-field);
   border-radius: 50%;
   background: var(--t-surface);
+  transition: box-shadow 200ms var(--t-spring), border-color 160ms var(--t-ease);
 }
 
 .turno .t-radio[aria-checked='true'] .t-radio__dot {
@@ -210,7 +330,7 @@
 .turno .t-notes {
   display: grid;
   gap: 0.375rem;
-  margin-block-start: 0.5rem;
+  margin-block-start: 0.75rem;
 }
 
 .turno .t-textarea {
@@ -225,6 +345,7 @@
   font: inherit;
   line-height: 1.5;
   resize: vertical;
+  transition: border-color 180ms var(--t-ease), box-shadow 180ms var(--t-ease);
 }
 
 .turno .t-textarea::placeholder {
@@ -232,7 +353,9 @@
 }
 
 .turno .t-textarea:focus-visible {
-  border-color: var(--t-accent);
+  border-color: var(--t-blue);
+  outline: none;
+  box-shadow: 0 0 0 4px rgb(47 107 255 / 0.18);
 }
 
 .turno .t-notes__meta {
@@ -249,56 +372,82 @@
   font-weight: 700;
 }
 
-/* Completed order. */
+/* Completed order: a seal of completion, then the record. */
 .turno .t-done {
-  display: flex;
-  align-items: flex-start;
-  gap: 0.875rem;
-  padding: 1rem;
-  border: 1px solid var(--t-green-line);
-  border-radius: 18px;
-  background: var(--t-green-soft);
+  display: grid;
+  justify-items: center;
+  gap: 0.625rem;
+  padding: 1.5rem 1.25rem 1.375rem;
+  border-radius: 24px;
+  background: var(--t-green-strong);
+  color: #fff;
+  text-align: center;
+  box-shadow: 0 20px 34px -24px rgb(15 122 61 / 0.9);
 }
 
 .turno .t-done__icon {
   display: grid;
-  flex: none;
   place-items: center;
-  inline-size: 2.25rem;
-  block-size: 2.25rem;
+  inline-size: 3.5rem;
+  block-size: 3.5rem;
   border-radius: 50%;
-  background: var(--t-green);
-  color: #fff;
+  background: #fff;
+  color: var(--t-green-strong);
+  box-shadow: 0 0 0 6px rgb(255 255 255 / 0.16);
 }
 
 .turno .t-done__icon .t-ico {
+  inline-size: 1.75rem;
+  block-size: 1.75rem;
   stroke-width: 3;
+}
+
+.turno .t-screen--fresh .t-done__icon,
+.turno .t-done:focus .t-done__icon {
+  animation: t-seal 620ms var(--t-spring);
+}
+
+.turno .t-screen--fresh .t-done__icon path,
+.turno .t-done:focus .t-done__icon path {
+  stroke-dasharray: 22;
+  animation: t-tick 420ms var(--t-ease) 200ms backwards;
+}
+
+@keyframes t-seal {
+  0% { transform: scale(0.4); opacity: 0; }
 }
 
 .turno .t-done h3 {
   font-family: var(--t-display);
-  font-size: 1.0625rem;
+  font-size: 1.3125rem;
   font-weight: 700;
+  letter-spacing: -0.02em;
 }
 
 .turno .t-done p {
-  margin-block-start: 0.125rem;
-  color: var(--t-ink-2);
+  margin-block-start: 0.25rem;
+  max-inline-size: 30ch;
+  color: #e6f7ed;
   font-size: 0.875rem;
+}
+
+.turno .t-done:focus-visible {
+  outline-color: var(--t-ink);
 }
 
 .turno .t-record {
   display: grid;
-  gap: 0.5rem;
+  gap: 0.25rem;
   padding: 1rem 1rem 0.5rem;
   border: 1px solid var(--t-line);
-  border-radius: 18px;
+  border-radius: 20px;
   background: var(--t-surface);
+  box-shadow: var(--t-shadow-card);
 }
 
 .turno .t-record__row {
   display: grid;
-  grid-template-columns: 1.75rem minmax(0, 1fr);
+  grid-template-columns: 1.875rem minmax(0, 1fr);
   gap: 0.75rem;
   padding-block: 0.625rem;
 }
@@ -329,14 +478,15 @@
 
 .turno .t-record__media .t-photo__canvas {
   max-inline-size: 15rem;
-  border-radius: 10px;
+  border-radius: 12px;
 }
 
 .turno .t-record__media .t-signed__canvas {
   max-inline-size: 15rem;
   block-size: 5.5rem;
   border: 1px solid var(--t-line);
-  border-radius: 10px;
+  border-radius: 12px;
+  background: #fffefb;
 }
 
 .turno .t-record__notes {

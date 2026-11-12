@@ -1,124 +1,141 @@
-/* Conversation: thread, empty state and questions. */
+/* Reading column: thread, first screen, suggestions and questions. */
 .ka-pane--chat {
   display: flex;
   flex-direction: column;
+  background: var(--ka-base);
 }
 
 .ka-thread {
+  display: flex;
   flex: 1 1 auto;
-  padding: 2rem var(--ka-gutter) 2.5rem;
+  flex-direction: column;
+  padding: 1.75rem var(--ka-gutter) 2rem;
 }
 .ka-thread > * {
-  max-width: 44rem;
+  width: 100%;
+  max-width: 42rem;
   margin-inline: auto;
 }
 
-/* Empty state */
-.ka-empty { padding-block: 0.5rem 1rem; }
-.ka-empty[hidden] { display: none; }
-.ka-empty__eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
+/* First screen: one invitation, the question box right below it. */
+.ka-empty { margin-block: auto; padding-block: 0.5rem 0.75rem; }
+.ka-empty__mark {
+  width: 2.25rem;
+  height: 2.25rem;
   color: var(--ka-soft);
-  font: 500 0.8125rem/1.3 var(--ka-font-ui);
 }
-.ka-empty__eyebrow::before {
-  content: '';
-  width: 1.5rem;
-  height: 2px;
-  border-radius: 2px;
-  background: var(--ka-yellow);
-}
+.ka-empty__mark .ka-mark__needle { animation: ka-needle-find 1400ms cubic-bezier(0.3, 1.5, 0.5, 1) 200ms both; }
 .ka-empty__title {
-  max-width: 18ch;
+  max-width: 21ch;
   margin-top: 0.9rem;
-  font: 600 clamp(1.9rem, 1.35rem + 2vw, 2.5rem)/1.08 var(--ka-font-ui);
-  letter-spacing: -0.035em;
+  font: 400 clamp(2.125rem, 1.5rem + 2.2vw, 2.875rem)/1.06 var(--ka-font-read);
+  letter-spacing: -0.022em;
   text-wrap: balance;
 }
+.ka-empty__title em {
+  color: var(--ka-gold);
+  font-style: italic;
+}
 .ka-empty__text {
-  max-width: 36rem;
-  margin-top: 0.85rem;
+  max-width: 34rem;
+  margin-top: 0.9rem;
   color: var(--ka-soft);
-  font-size: 1.0625rem;
+  font-size: 1rem;
   line-height: 1.6;
+  text-wrap: pretty;
 }
 .ka-empty__label {
-  margin-top: 1.6rem;
+  margin-top: 1.4rem;
   color: var(--ka-muted);
   font: 500 0.8125rem/1.3 var(--ka-font-ui);
 }
 
+/* Suggestions read like an index of questions, not a grid of cards. */
 .ka-suggestions {
-  display: grid;
-  gap: 0.6rem;
-  margin: 0.75rem 0 0;
+  margin: 0.6rem 0 0;
   padding: 0;
+  border-top: 1px solid var(--ka-line);
   list-style: none;
 }
+.ka-suggestions li { border-bottom: 1px solid var(--ka-line); }
 .ka-suggestion {
   position: relative;
   display: grid;
-  gap: 0.35rem;
+  grid-template-columns: 9.5rem minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 0.2rem 1rem;
   width: 100%;
-  height: 100%;
-  align-content: start;
-  padding: 0.85rem 3rem 0.9rem 1rem;
-  border: 1px solid var(--ka-line);
-  border-radius: var(--ka-radius);
-  background: var(--ka-raised);
+  min-height: 3rem;
+  padding: 0.7rem 0.75rem;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
   color: var(--ka-ink);
   text-align: left;
-  transition: border-color 180ms var(--ka-ease), background-color 180ms var(--ka-ease), transform 180ms var(--ka-ease);
+  transition: background-color 160ms var(--ka-ease);
 }
-.ka-suggestion:hover {
-  border-color: var(--ka-yellow-line);
-  background: var(--ka-raised-2);
-  transform: translateY(-1px);
+.ka-suggestion::before {
+  content: '';
+  position: absolute;
+  inset: 3px 0;
+  z-index: -1;
+  border-radius: var(--ka-radius-sm);
+  background: var(--ka-raised);
+  opacity: 0;
+  transition: opacity 160ms var(--ka-ease);
 }
+.ka-suggestion:hover::before { opacity: 1; }
+.ka-suggestion:focus-visible { outline-offset: -2px; border-radius: var(--ka-radius-sm); }
+.ka-suggestions li { position: relative; isolation: isolate; }
 .ka-suggestion__tag {
   color: var(--ka-muted);
-  font: 500 0.75rem/1.3 var(--ka-font-ui);
+  font: 500 0.75rem/1.35 var(--ka-font-ui);
 }
-.ka-suggestion__text { font-size: 1rem; line-height: 1.4; }
+.ka-suggestion__text {
+  font: 400 1.0625rem/1.4 var(--ka-font-read);
+  text-wrap: pretty;
+}
 .ka-suggestion__icon {
-  position: absolute;
-  top: 0.9rem;
-  right: 0.9rem;
-  width: 1.1rem;
-  height: 1.1rem;
+  align-self: center;
+  width: 1.05rem;
+  height: 1.05rem;
   color: var(--ka-muted);
-  transform: rotate(45deg);
-  transition: color 180ms var(--ka-ease);
+  transition: color 160ms var(--ka-ease), transform 220ms var(--ka-ease);
 }
-.ka-suggestion:hover .ka-suggestion__icon { color: var(--ka-yellow); }
-.ka-suggestion--handoff { border-style: dashed; border-color: var(--ka-line-strong); background: transparent; }
-.ka-suggestion--handoff .ka-suggestion__tag { color: var(--ka-yellow); }
+.ka-suggestion:hover .ka-suggestion__icon,
+.ka-suggestion:focus-visible .ka-suggestion__icon { color: var(--ka-gold); transform: translateX(3px); }
+.ka-suggestion--handoff .ka-suggestion__tag { color: var(--ka-clay); }
+.ka-suggestion--handoff .ka-suggestion__text { color: var(--ka-soft); font-style: italic; }
 
 .ka-steps-intro {
   display: grid;
-  gap: 0.75rem;
+  gap: 0.6rem;
   margin: 1.5rem 0 0;
-  padding: 1.1rem 0 0;
-  border-top: 1px solid var(--ka-line);
+  padding: 0;
   list-style: none;
   counter-reset: ka-step;
 }
 .ka-steps-intro li {
   display: flex;
   align-items: baseline;
-  gap: 0.65rem;
-  color: var(--ka-soft);
-  font-size: 0.875rem;
+  gap: 0.6rem;
+  color: var(--ka-muted);
+  font-size: 0.8125rem;
   line-height: 1.45;
   counter-increment: ka-step;
 }
 .ka-steps-intro li::before {
   content: counter(ka-step);
+  display: inline-grid;
   flex: none;
-  color: var(--ka-yellow);
-  font: 600 0.75rem/1 var(--ka-font-mono);
+  place-items: center;
+  width: 1.25rem;
+  height: 1.25rem;
+  border: 1px solid var(--ka-gold-line);
+  border-radius: 50%;
+  color: var(--ka-gold);
+  font: 600 0.6875rem/1 var(--ka-font-ui);
+  transform: translateY(-0.05rem);
 }
 
 /* Without JavaScript nothing can be asked, so only the description of the assistant stays. */
@@ -128,8 +145,8 @@ html:not(.js) .ka-suggestions { display: none; }
 /* Suggestions not asked yet, below the conversation. */
 .ka-next {
   display: grid;
-  gap: 0.6rem;
-  margin-top: 2.5rem;
+  gap: 0.65rem;
+  margin-top: 3rem;
   padding-top: 1.25rem;
   border-top: 1px solid var(--ka-line);
 }
@@ -149,36 +166,41 @@ html:not(.js) .ka-suggestions { display: none; }
   display: grid;
   gap: 0.15rem;
   min-height: 2.75rem;
-  padding: 0.55rem 0.9rem;
+  padding: 0.55rem 0.95rem;
   border: 1px solid var(--ka-line-strong);
   border-radius: var(--ka-radius-sm);
-  background: var(--ka-raised);
+  background: transparent;
   color: var(--ka-ink);
-  font: 500 0.875rem/1.35 var(--ka-font-text);
+  font: 400 0.9375rem/1.35 var(--ka-font-read);
   text-align: left;
-  transition: border-color 180ms var(--ka-ease), background-color 180ms var(--ka-ease);
+  transition: border-color 160ms var(--ka-ease), background-color 160ms var(--ka-ease);
 }
-.ka-next__chip:hover { border-color: var(--ka-yellow-line); background: var(--ka-raised-2); }
-.ka-next__chip--handoff { border-style: dashed; background: transparent; }
-.ka-next__tag { color: var(--ka-yellow); font: 500 0.75rem/1.3 var(--ka-font-ui); }
+.ka-next__chip:hover { border-color: var(--ka-gold-line); background: var(--ka-raised); }
+.ka-next__chip--handoff { border-style: dashed; font-style: italic; }
+.ka-next__tag { color: var(--ka-clay); font: 500 0.75rem/1.3 var(--ka-font-ui); font-style: normal; }
 
 /* On small phones the honesty line leaves the sticky composer and shows in the thread instead. */
 .ka-thread .ka-honesty--copy { display: none; }
 
 @media (max-width: 30rem) {
-  .js .ka-empty .ka-honesty--copy { display: flex; margin-top: 0.85rem; }
+  .js .ka-empty .ka-honesty--copy { display: flex; margin-top: 0.9rem; }
   .js .ka-turns:not(:empty) ~ .ka-honesty--thread { display: flex; margin-top: 2rem; }
 }
 
+@media (max-width: 39.99rem) {
+  .ka-thread { padding-top: 1.75rem; }
+  .ka-suggestion { grid-template-columns: minmax(0, 1fr) auto; padding-inline: 0.25rem; }
+  .ka-suggestion__tag { grid-column: 1 / -1; }
+  .ka-suggestion__icon { grid-row: 2; grid-column: 2; }
+}
+
 @media (min-width: 40rem) {
-  .ka-suggestions { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .ka-steps-intro { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.25rem; }
 }
 
 /* Turns */
 .ka-turns {
   display: grid;
-  gap: 2.5rem;
   margin: 0 auto;
   padding: 0;
   list-style: none;
@@ -186,51 +208,67 @@ html:not(.js) .ka-suggestions { display: none; }
 .ka-turns:empty { display: none; }
 .ka-turn {
   display: grid;
-  gap: 0.85rem;
+  gap: 1rem;
   scroll-margin-top: calc(var(--ka-tabs-h) + 1rem);
-  animation: ka-rise 320ms var(--ka-ease) both;
 }
-.ka-q { display: grid; gap: 0.3rem; }
+.ka-turn + .ka-turn { margin-top: 2.75rem; padding-top: 2.75rem; border-top: 1px solid var(--ka-line); }
+.ka-q { display: grid; gap: 0.35rem; }
 .ka-q__who {
   color: var(--ka-muted);
   font: 500 0.75rem/1.3 var(--ka-font-ui);
 }
 .ka-q__text {
-  font: 700 1.1875rem/1.4 var(--ka-font-text);
-  letter-spacing: -0.005em;
+  font: 400 clamp(1.5rem, 1.2rem + 1vw, 1.875rem)/1.2 var(--ka-font-read);
+  letter-spacing: -0.015em;
   white-space: pre-line;
   overflow-wrap: anywhere;
+  text-wrap: balance;
 }
+.ka-turn--pending,
+.ka-turn:last-child > .ka-a { animation: ka-rise 280ms var(--ka-ease) both; }
 
-/* Pending state, visible for as long as the pipeline actually runs. */
+/* Pending: the needle hunts for north for as long as the pipeline actually runs. */
 .ka-pending {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.6rem;
   color: var(--ka-soft);
+  font-size: 0.9375rem;
 }
-.ka-pending__dots { display: inline-flex; gap: 0.25rem; }
-.ka-pending__dots span {
-  width: 0.35rem;
-  height: 0.35rem;
-  border-radius: 50%;
-  background: var(--ka-yellow);
-  animation: ka-pulse 900ms ease-in-out infinite;
+.ka-skeleton { display: grid; gap: 0.6rem; margin-top: 0.25rem; }
+.ka-skeleton span {
+  height: 0.75rem;
+  border-radius: 999px;
+  background: var(--ka-raised-2);
+  animation: ka-breathe 1200ms ease-in-out infinite;
 }
-.ka-pending__dots span:nth-child(2) { animation-delay: 150ms; }
-.ka-pending__dots span:nth-child(3) { animation-delay: 300ms; }
+.ka-skeleton span:nth-child(2) { width: 88%; animation-delay: 120ms; }
+.ka-skeleton span:nth-child(3) { width: 62%; animation-delay: 240ms; }
+.ka-a--pending .ka-mark__needle { animation: ka-needle-spin 900ms linear infinite; }
 
 @keyframes ka-rise {
-  from { opacity: 0; transform: translateY(6px); }
+  from { opacity: 0; transform: translateY(8px); }
   to { opacity: 1; transform: none; }
 }
-@keyframes ka-pulse {
-  0%, 100% { opacity: 0.35; }
+@keyframes ka-breathe {
+  0%, 100% { opacity: 0.45; }
   50% { opacity: 1; }
+}
+@keyframes ka-needle-spin {
+  to { transform: rotate(360deg); }
+}
+/* Swings past north and settles: a found answer. */
+@keyframes ka-needle-find {
+  0% { transform: rotate(-150deg); }
+  100% { transform: rotate(0deg); }
+}
+/* Keeps searching and stops off north: nothing reliable to point at. */
+@keyframes ka-needle-lost {
+  0% { transform: rotate(-120deg); }
+  45% { transform: rotate(40deg); }
+  70% { transform: rotate(-10deg); }
+  100% { transform: rotate(28deg); }
 }
 
 @media (min-width: 64rem) and (min-height: 37.5rem) {
   .ka-pane--chat { display: grid; grid-template-rows: minmax(0, 1fr) auto; }
   .ka-thread { overflow-y: auto; overscroll-behavior: contain; }
-  .ka-turn { scroll-margin-top: 1.5rem; }
+  .ka-turn { scroll-margin-top: 1.75rem; }
 }

@@ -1,34 +1,40 @@
-/* Document reader: a paper sheet in a modal dialog. */
+/* Document reader: a paper sheet that slides in beside the conversation. */
 .ka-reader {
-  width: min(45rem, calc(100vw - 2rem));
+  --paper: #f3ede0;
+  --paper-ink: #1f1c17;
+  --paper-soft: #5b5447;
+  --paper-line: rgb(31 28 23 / 12%);
+
+  width: min(46rem, 100vw);
   max-width: none;
-  height: min(52rem, calc(100dvh - 2rem));
+  height: 100dvh;
   max-height: none;
-  margin: auto;
+  margin: 0 0 0 auto;
   padding: 0;
   border: 0;
-  border-radius: var(--ka-radius);
-  background: #f3eee3;
-  color: #201d18;
-  box-shadow: 0 40px 120px -30px rgb(0 0 0 / 80%);
+  background: var(--paper);
+  color: var(--paper-ink);
+  box-shadow: -30px 0 80px -30px rgb(0 0 0 / 85%);
 }
-.ka-reader::backdrop { background: rgb(9 8 12 / 72%); }
-.ka-reader[open] { animation: ka-reader-in 320ms var(--ka-ease) both; }
-
+.ka-reader::backdrop { background: rgb(6 9 12 / 68%); }
+.ka-reader[open] { animation: ka-reader-in 340ms var(--ka-ease) both; }
+.ka-reader[open]::backdrop { animation: ka-fade 260ms var(--ka-ease) both; }
+.ka-reader ::selection { background: #e6b450; color: #1a1305; }
 .ka-reader__sheet { display: flex; flex-direction: column; height: 100%; }
 .ka-reader__head {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
   gap: 1rem;
-  padding: 1.25rem 1.25rem 1rem 1.75rem;
-  border-bottom: 1px solid rgb(32 29 24 / 14%);
+  padding: 1.35rem 1.25rem 1.1rem 2.25rem;
+  border-bottom: 1px solid var(--paper-line);
 }
-.ka-reader__meta { color: #5f584c; font: 500 0.8125rem/1.4 var(--ka-font-ui); }
+.ka-reader__meta { color: var(--paper-soft); font: 500 0.8125rem/1.4 var(--ka-font-ui); }
 .ka-reader__title {
-  margin-top: 0.25rem;
-  font: 600 clamp(1.4rem, 1.1rem + 1.2vw, 1.85rem)/1.15 var(--ka-font-ui);
-  letter-spacing: -0.025em;
+  margin-top: 0.35rem;
+  font: 500 clamp(1.6rem, 1.3rem + 1.2vw, 2.125rem)/1.12 var(--ka-font-read);
+  letter-spacing: -0.02em;
+  text-wrap: balance;
 }
 .ka-reader__close {
   display: grid;
@@ -36,62 +42,79 @@
   place-items: center;
   width: 2.75rem;
   height: 2.75rem;
-  border: 1px solid rgb(32 29 24 / 18%);
+  border: 1px solid rgb(31 28 23 / 18%);
   border-radius: 50%;
   background: transparent;
-  color: #201d18;
+  color: var(--paper-ink);
+  transition: background-color 160ms var(--ka-ease), transform 200ms var(--ka-ease);
 }
-.ka-reader__close:hover { background: rgb(32 29 24 / 8%); }
+.ka-reader__close:hover { background: rgb(31 28 23 / 7%); transform: rotate(90deg); }
 .ka-reader .ka-reader__close:focus-visible,
-.ka-reader .ka-reader__target:focus-visible { outline: 2px solid #201d18; outline-offset: 3px; }
-
+.ka-reader .ka-reader__target:focus-visible { outline: 2px solid var(--paper-ink); outline-offset: 3px; }
 .ka-reader__body {
   flex: 1 1 auto;
   min-height: 0;
   overflow-y: auto;
-  padding: 1.5rem 1.75rem 3rem;
-  font: 1.125rem/1.75 var(--ka-font-read);
+  padding: 1.6rem 2.25rem 4rem;
+  font: 400 1.1875rem/1.72 var(--ka-font-read);
   overscroll-behavior: contain;
+  scrollbar-color: rgb(31 28 23 / 25%) transparent;
 }
-.ka-reader__body > * { max-width: 38rem; }
-.ka-reader__summary { color: #5f584c; font-style: italic; }
-.ka-reader__section { margin-top: 1.75rem; }
+.ka-reader__body > * { max-width: 36rem; }
+.ka-reader__summary { color: var(--paper-soft); font-size: 1.25rem; font-style: italic; line-height: 1.5; }
+.ka-reader__section { margin-top: 2rem; }
 .ka-reader__section h3 {
-  margin-bottom: 0.4rem;
-  font: 600 1.0625rem/1.35 var(--ka-font-ui);
-  letter-spacing: -0.01em;
+  margin-bottom: 0.5rem;
+  color: var(--paper-ink);
+  font: 600 0.9375rem/1.35 var(--ka-font-ui);
+  letter-spacing: -0.005em;
 }
-.ka-reader__section p + p { margin-top: 0.85rem; }
-
+.ka-reader__section p + p { margin-top: 0.9rem; }
 .ka-reader__target {
   position: relative;
-  margin-inline: -0.85rem;
-  padding: 0.75rem 0.85rem 0.85rem;
-  border-inline-start: 4px solid #c99412;
-  border-radius: 4px;
-  background: rgb(242 193 78 / 26%);
-  scroll-margin: 2rem;
+  margin-inline: -1rem;
+  padding: 0.85rem 1rem 0.95rem;
+  border-radius: 8px;
+  background: rgb(230 180 80 / 22%);
+  box-shadow: 0 0 0 1px rgb(185 138 44 / 35%);
+  scroll-margin: 3rem;
+}
+/* A brief ring draws the eye to the cited paragraph when the sheet opens. */
+.ka-reader__target::after {
+  content: '';
+  position: absolute;
+  inset: -5px;
+  border: 2px solid rgb(230 180 80 / 70%);
+  border-radius: 12px;
+  opacity: 0;
+  pointer-events: none;
+  animation: ka-ring 1600ms var(--ka-ease) 300ms both;
 }
 .ka-reader__target:focus { outline: none; }
 .ka-reader__flag {
-  display: block;
-  margin-bottom: 0.25rem;
-  color: #6b4f05;
-  font: 600 0.75rem/1.4 var(--ka-font-ui);
+  display: flex;
+  width: fit-content;
+  margin-bottom: 0.4rem;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  background: #1f1c17;
+  color: #f1c96f;
+  font: 600 0.72rem/1.4 var(--ka-font-ui);
 }
-.ka-reader .ka-mark-term { background: #f2c14e; color: #1b1608; }
+.ka-reader .ka-mark-term { background: rgb(185 138 44 / 32%); color: var(--paper-ink); }
 
 @keyframes ka-reader-in {
-  from { opacity: 0; transform: translateY(10px) scale(0.99); }
+  from { opacity: 0; transform: translateX(32px); }
   to { opacity: 1; transform: none; }
+}
+@keyframes ka-ring {
+  0% { opacity: 1; transform: scale(1.015); }
+  100% { opacity: 0; transform: none; }
 }
 
 @media (max-width: 40rem) {
-  .ka-reader {
-    width: 100vw;
-    height: 100dvh;
-    border-radius: 0;
-  }
-  .ka-reader__head { padding: 1rem 1rem 0.85rem 1.25rem; }
-  .ka-reader__body { padding: 1.25rem 1.25rem 2.5rem; font-size: 1.0625rem; }
+  .ka-reader { width: 100vw; }
+  .ka-reader__head { padding: 1rem 1rem 0.9rem 1.25rem; }
+  .ka-reader__body { padding: 1.25rem 1.25rem 2.5rem; font-size: 1.125rem; }
+  .ka-reader__target { margin-inline: -0.6rem; padding-inline: 0.6rem; }
 }

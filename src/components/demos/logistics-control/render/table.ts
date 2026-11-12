@@ -1,7 +1,7 @@
 import { fill, formatNumber } from '../lib/format';
 import { STATUSES, type Delivery, type Status } from '../lib/model';
 import { pageWindow, SORT_KEYS, type PageSlice, type Sort, type SortKey } from '../lib/query';
-import { driverName, etaCell, priorityFlag, statusBadge, windowLabel, zoneCell, type RenderContext } from './context';
+import { driverName, etaCell, priorityFlag, statusBadge, windowLabel, windowStrip, zoneCell, type RenderContext } from './context';
 import { cx, esc, icon } from './html';
 
 const NUMERIC: SortKey[] = ['window', 'eta', 'volumes'];
@@ -36,13 +36,13 @@ export function renderRows(items: Delivery[], selection: Set<string>, ctx: Rende
   return items
     .map((delivery) => {
       const selected = selection.has(delivery.id);
-      return `<tr class="${cx('lc-row', selected && 'is-selected', delivery.priority && 'is-priority')}" data-row="${delivery.id}">
+      return `<tr class="${cx('lc-row', `lc-row--${delivery.status}`, selected && 'is-selected', delivery.priority && 'is-priority')}" data-row="${delivery.id}">
         <td class="lc-col-select">${checkbox(`data-action="select" data-id="${delivery.id}" data-key="sel-${delivery.id}"`, fill(t.list.selectRow, { id: delivery.id }), selected ? 'on' : 'off')}</td>
         <th scope="row" class="lc-col-id"><span class="lc-idcell"><button type="button" class="lc-idlink" data-action="open" data-id="${delivery.id}" data-key="open-${delivery.id}" aria-label="${esc(fill(t.list.open, { id: delivery.id }))}">${esc(delivery.id)}</button>${delivery.priority ? priorityFlag(ctx) : ''}</span></th>
         <td class="lc-col-customer">${esc(delivery.customer)}</td>
         <td class="lc-col-zone">${zoneCell(delivery, ctx)}</td>
         <td class="lc-col-driver">${esc(driverName(delivery.driverId, ctx))}</td>
-        <td class="lc-num lc-col-window">${esc(windowLabel(delivery, ctx.clock))}</td>
+        <td class="lc-num lc-col-window"><span class="lc-wcell">${windowStrip(delivery, ctx.clock)}<span>${esc(windowLabel(delivery, ctx.clock))}</span></span></td>
         <td class="lc-num lc-col-eta">${etaCell(delivery, ctx)}</td>
         <td class="lc-num lc-col-volumes">${formatNumber(ctx.lang, delivery.volumes)}</td>
         <td class="lc-col-status">${statusBadge(delivery.status, ctx)}</td>
@@ -60,7 +60,7 @@ export function renderCards(items: Delivery[], selection: Set<string>, ctx: Rend
       const meta: [string, string][] = [
         [t.list.columns.zone, zoneCell(delivery, ctx)],
         [t.list.columns.driver, esc(driverName(delivery.driverId, ctx))],
-        [t.list.columns.window, esc(windowLabel(delivery, ctx.clock))],
+        [t.list.columns.window, `<span class="lc-wcell">${esc(windowLabel(delivery, ctx.clock))}${windowStrip(delivery, ctx.clock)}</span>`],
         [t.list.columns.eta, etaCell(delivery, ctx)],
       ];
       return `<li class="${cx('lc-dcard', selected && 'is-selected', delivery.priority && 'is-priority')}" data-row="${delivery.id}">

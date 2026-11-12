@@ -35,6 +35,8 @@ const pt = {
     liveReset: 'Demonstração reiniciada com o pedido de exemplo.',
     noscript: 'Sem JavaScript, as duas versões aparecem uma abaixo da outra, com o pedido de exemplo, e não calculam. Ative o JavaScript para comparar e usar.',
     footer: 'Nenhum pedido sai do seu navegador: clientes, produtos, preços e regras existem só nesta página.',
+    parityChip: { agree: 'Telas em paridade', differ: f('1 valor diferente', '{n} valores diferentes'), rules: '{met}/{total} regras', label: 'Ver o painel de paridade' },
+    taskbar: { start: 'Iniciar', task: 'Ventura ERP 3.2' },
   },
   legacy: {
     appTitle: 'Ventura ERP 3.2 - Filial 001',
@@ -242,6 +244,7 @@ const pt = {
     title: 'Duas telas, o mesmo resultado',
     lead: 'As duas telas chamam a mesma função de regras. Este painel compara o que cada uma mostra agora: a nova recalcula a cada mudança, e a legada só quando alguém clica em Calcular.',
     caption: 'O que cada tela mostra agora',
+    flow: { legacy: 'Tela de 2009', modern: 'Tela nova', fn: 'uma função, as duas telas' },
     columns: { value: 'Valor', legacy: 'Legado', modern: 'Moderno', check: 'Comparação' },
     rows: { subtotal: 'Subtotal', discount: 'Desconto aplicado', shipping: 'Frete', total: 'Total', payment: 'Pagamento', issues: 'Pendências', current: 'Totais em dia' },
     current: 'Sim',
@@ -318,6 +321,8 @@ const en: Strings = {
     liveReset: 'Demo reset to the example order.',
     noscript: 'Without JavaScript, both versions appear one below the other with the example order, and nothing is calculated. Turn on JavaScript to compare and use them.',
     footer: 'No order ever leaves your browser: customers, products, prices, and rules exist only on this page.',
+    parityChip: { agree: 'Screens in parity', differ: f('1 value differs', '{n} values differ'), rules: '{met}/{total} rules', label: 'Go to the parity panel' },
+    taskbar: { start: 'Start', task: 'Ventura ERP 3.2' },
   },
   legacy: {
     appTitle: 'Ventura ERP 3.2 - Branch 001',
@@ -525,6 +530,7 @@ const en: Strings = {
     title: 'Two screens, one result',
     lead: 'Both screens call the same rules function. This panel compares what each one shows right now: the new one recalculates on every change, the legacy one only when someone clicks Calculate.',
     caption: 'What each screen shows right now',
+    flow: { legacy: '2009 screen', modern: 'New screen', fn: 'one function, both screens' },
     columns: { value: 'Value', legacy: 'Legacy', modern: 'Modern', check: 'Check' },
     rows: { subtotal: 'Subtotal', discount: 'Discount applied', shipping: 'Shipping', total: 'Total', payment: 'Payment', issues: 'Things to fix', current: 'Totals up to date' },
     current: 'Yes',

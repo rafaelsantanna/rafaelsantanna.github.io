@@ -1,8 +1,37 @@
-/* Corte & Prosa: tokens and shared atoms. Every rule is scoped under .cp. */
+/* Corte & Prosa: tokens and shared atoms. Oxblood leather, bone paper, and brass.
+   Newsreader carries the voice, Atkinson the interface, condensed Archivo every figure (times, dates, prices). */
+
+@font-face {
+  font-family: 'CP Serif';
+  font-style: normal;
+  font-weight: 200 800;
+  font-display: swap;
+  src: url('/fonts/newsreader-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'CP Serif';
+  font-style: italic;
+  font-weight: 400 600;
+  font-display: swap;
+  src: url('/fonts/newsreader-italic-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'CP Figure';
+  font-style: normal;
+  font-weight: 100 900;
+  font-stretch: 62% 125%;
+  font-display: swap;
+  src: url('/fonts/archivo-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
 
 body.demo-page--online-booking {
-  background-color: #13201b;
-  color: #f2eadb;
+  background-color: #220e12;
+  color: #f3e8d8;
 }
 
 html:has(.cp .flow[open]) {
@@ -10,44 +39,56 @@ html:has(.cp .flow[open]) {
 }
 
 .cp {
-  --base: var(--brand-base, #13201b);
-  --ink: var(--brand-ink, #f2eadb);
-  --accent: var(--brand-accent, #c9a35b);
+  --base: var(--brand-base, #220e12);
+  --ink: var(--brand-ink, #f3e8d8);
+  --accent: var(--brand-accent, #d4a55e);
 
-  /* Surfaces derived from the palette */
-  --base-deep: color-mix(in oklab, var(--base) 84%, black);
-  --base-2: color-mix(in oklab, var(--base) 94%, var(--ink));
-  --base-3: color-mix(in oklab, var(--base) 88%, var(--ink));
+  /* Leather surfaces, lifted from the base toward the bone ink */
+  --base-deep: color-mix(in oklab, var(--base) 78%, black);
+  --base-2: color-mix(in oklab, var(--base) 93%, var(--ink));
+  --base-3: color-mix(in oklab, var(--base) 87%, var(--ink));
+  --base-4: color-mix(in oklab, var(--base) 80%, var(--ink));
+  --leather: color-mix(in oklab, var(--base) 74%, #93343a);
+  --leather-deep: color-mix(in oklab, var(--base) 86%, #93343a);
   --paper: var(--ink);
-  --paper-2: color-mix(in oklab, var(--ink) 93%, var(--base));
+  --paper-2: color-mix(in oklab, var(--ink) 94%, var(--base));
   --paper-3: color-mix(in oklab, var(--ink) 86%, var(--base));
-  --line: color-mix(in oklab, var(--ink) 13%, transparent);
-  --line-strong: color-mix(in oklab, var(--ink) 28%, transparent);
-  --paper-line: color-mix(in oklab, var(--base) 16%, transparent);
-  --accent-strong: color-mix(in oklab, var(--accent) 78%, var(--ink));
-  --accent-soft: color-mix(in oklab, var(--accent) 15%, transparent);
+  --line: color-mix(in oklab, var(--ink) 12%, transparent);
+  --line-strong: color-mix(in oklab, var(--ink) 26%, transparent);
+  --paper-line: color-mix(in oklab, var(--base) 15%, transparent);
+  --accent-strong: color-mix(in oklab, var(--accent) 80%, var(--ink));
+  --accent-deep: color-mix(in oklab, var(--accent) 70%, var(--base));
+  --accent-soft: color-mix(in oklab, var(--accent) 14%, transparent);
+  --accent-line: color-mix(in oklab, var(--accent) 50%, transparent);
   --accent-ink: var(--base);
 
   /* Text colors, checked for AA on their surfaces */
-  --ink-soft: #d8cfbe;
-  --ink-muted: #aba492;
+  --ink-soft: #ddcfbd;
+  --ink-muted: #b4a290;
   --paper-ink: var(--base);
-  --paper-soft: #3b4842;
-  --paper-muted: #56605a;
-  --brass-deep: #7a5c22;
-  --danger: #f2a793;
-  --focus: #e6c987;
+  --paper-soft: #4d3b37;
+  --paper-muted: #6b5850;
+  --brass-deep: #7d561b;
+  --danger: #f3a495;
+  --success: #9fd4a6;
+  --focus: #ecc98b;
 
-  --serif: Georgia, 'Times New Roman', serif;
+  --serif: 'CP Serif', Georgia, 'Times New Roman', serif;
   --sans: 'Atkinson Hyperlegible Next', system-ui, 'Segoe UI', sans-serif;
-  --display: 'Geologica', system-ui, 'Segoe UI', sans-serif;
+  --figure: 'CP Figure', 'Arial Narrow', system-ui, sans-serif;
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
   --gutter: clamp(1rem, 4vw, 3rem);
   --max: 76rem;
 
-  --grain-light: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .95 0 0 0 0 .92 0 0 0 0 .86 .13 0 0 0 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  --grain-dark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .2 0 0 0 0 .16 0 0 0 0 .08 .2 0 0 0 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  --stripes: repeating-linear-gradient(-45deg, var(--accent) 0 8px, var(--ink) 8px 16px, var(--base) 16px 24px);
+  /* Depth: a warm top highlight plus an offset, soft drop. */
+  --lift: inset 0 1px 0 color-mix(in oklab, var(--ink) 7%, transparent), 0 1px 2px rgb(0 0 0 / 30%), 0 10px 24px -14px rgb(0 0 0 / 70%);
+  --lift-high: inset 0 1px 0 color-mix(in oklab, var(--ink) 9%, transparent), 0 2px 4px rgb(0 0 0 / 28%), 0 22px 40px -18px rgb(0 0 0 / 80%);
+  --paper-lift: 0 1px 2px rgb(40 12 14 / 18%), 0 24px 50px -20px rgb(0 0 0 / 60%);
+
+  --grain-light: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .95 0 0 0 0 .9 0 0 0 0 .84 .07 0 0 0 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  --grain-dark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .25 0 0 0 0 .12 0 0 0 0 .08 .16 0 0 0 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  /* The barber pole: brass, bone, and oxblood. */
+  --stripes: repeating-linear-gradient(-45deg, var(--accent) 0 8px, var(--ink) 8px 16px, var(--leather) 16px 24px);
 
   background-color: var(--base);
   background-image: var(--grain-light);
@@ -55,12 +96,15 @@ html:has(.cp .flow[open]) {
   font-family: var(--sans);
   font-size: 1rem;
   line-height: 1.55;
+  caret-color: var(--accent);
+  accent-color: var(--accent);
+  scrollbar-color: color-mix(in oklab, var(--ink) 28%, transparent) transparent;
 }
 
+.cp ::selection { background: var(--accent); color: var(--base); }
 .cp [hidden] { display: none !important; }
-
 .cp h1, .cp h2, .cp h3, .cp h4 { font-weight: 400; }
-.cp a { color: inherit; }
+.cp a { color: inherit; text-underline-offset: 0.22em; }
 .cp .icon { width: 1.25rem; height: 1.25rem; flex: none; }
 
 .cp :focus-visible {
@@ -68,7 +112,7 @@ html:has(.cp .flow[open]) {
   outline-offset: 3px;
 }
 
-/* Light, paper-like surfaces flip the local tokens so shared atoms adapt. */
+/* Bone paper surfaces flip the local tokens so shared atoms adapt. */
 .cp .paper,
 .cp .hours,
 .cp .ticket,
@@ -77,11 +121,15 @@ html:has(.cp .flow[open]) {
 .cp .done__ticket {
   --line: var(--paper-line);
   --line-strong: color-mix(in oklab, var(--base) 30%, transparent);
-  --focus: var(--base);
+  --focus: var(--leather);
   background-color: var(--paper);
   background-image: var(--grain-dark);
   color: var(--paper-ink);
+  scrollbar-color: color-mix(in oklab, var(--base) 30%, transparent) transparent;
 }
+
+.cp .paper ::selection,
+.cp .summary ::selection { background: var(--base); color: var(--ink); }
 
 .cp .sr-only {
   position: absolute;
@@ -100,34 +148,14 @@ html:has(.cp .flow[open]) {
   margin-inline: auto;
 }
 
-.cp .eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.65rem;
-  margin-bottom: 1.1rem;
-  color: var(--accent);
-  font: 600 0.78rem/1.2 var(--display);
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-}
-
-.cp .eyebrow::before {
-  content: '';
-  width: 1.75rem;
-  height: 1px;
-  background: currentColor;
-}
-
-.cp .paper .eyebrow { color: var(--brass-deep); }
-
 .cp .section-head {
   max-width: 46rem;
-  margin-bottom: clamp(2.25rem, 5vw, 3.75rem);
+  margin-bottom: clamp(2.25rem, 5vw, 3.5rem);
 }
 
 .cp .section-head h2 {
-  font: 400 clamp(2.15rem, 1.35rem + 2.8vw, 3.75rem)/1.02 var(--serif);
-  letter-spacing: -0.02em;
+  font: 400 clamp(2.2rem, 1.35rem + 2.9vw, 3.9rem)/1 var(--serif);
+  letter-spacing: -0.025em;
   text-wrap: balance;
 }
 
@@ -136,6 +164,7 @@ html:has(.cp .flow[open]) {
   margin-top: 1.1rem;
   color: var(--ink-soft);
   font-size: 1.0625rem;
+  text-wrap: pretty;
 }
 
 .cp .paper .section-head__lede { color: var(--paper-soft); }
@@ -152,6 +181,7 @@ html:has(.cp .flow[open]) {
 
 /* Buttons */
 .cp .btn {
+  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -161,21 +191,28 @@ html:has(.cp .flow[open]) {
   border: 1px solid transparent;
   border-radius: 999px;
   font: 700 0.98rem/1.1 var(--sans);
-  letter-spacing: 0.01em;
+  letter-spacing: 0.005em;
   text-decoration: none;
   white-space: nowrap;
   cursor: pointer;
-  transition: background-color 180ms var(--ease), border-color 180ms var(--ease), color 180ms var(--ease), transform 180ms var(--ease);
+  transition: background-color 180ms var(--ease), border-color 180ms var(--ease), color 180ms var(--ease), box-shadow 180ms var(--ease), transform 120ms var(--ease);
 }
 
-.cp .btn .icon { width: 1.15rem; height: 1.15rem; }
-.cp .btn:active { transform: translateY(1px); }
-.cp .btn--primary { background: var(--accent); color: var(--accent-ink); }
+.cp .btn .icon { width: 1.15rem; height: 1.15rem; transition: transform 180ms var(--ease); }
+.cp .btn:active { transform: translateY(1px) scale(0.99); }
+
+.cp .btn--primary {
+  background: linear-gradient(180deg, color-mix(in oklab, var(--accent) 88%, var(--ink)), var(--accent));
+  box-shadow: inset 0 1px 0 color-mix(in oklab, var(--ink) 45%, transparent), inset 0 -1px 0 color-mix(in oklab, var(--accent-deep) 70%, transparent), 0 8px 20px -10px color-mix(in oklab, var(--accent) 70%, black);
+  color: var(--accent-ink);
+}
+
 .cp .btn--primary:hover { background: var(--accent-strong); }
+.cp .btn--primary:hover .icon:last-child { transform: translateX(2px); }
 .cp .btn--ghost { border-color: var(--line-strong); background: transparent; color: inherit; }
-.cp .btn--ghost:hover { border-color: currentColor; }
-.cp .btn--dark { background: var(--base); color: var(--ink); }
-.cp .btn--dark:hover { background: var(--base-3); }
+.cp .btn--ghost:hover { border-color: currentColor; background: color-mix(in oklab, currentColor 6%, transparent); }
+.cp .btn--dark { background: var(--base); box-shadow: inset 0 1px 0 color-mix(in oklab, var(--ink) 10%, transparent); color: var(--ink); }
+.cp .btn--dark:hover { background: var(--leather-deep); }
 .cp .btn--large { min-height: 3.5rem; padding: 0 1.75rem; font-size: 1.05rem; }
 .cp .btn--small { min-height: 2.75rem; padding: 0 1.1rem; font-size: 0.92rem; }
 
@@ -189,12 +226,13 @@ html:has(.cp .flow[open]) {
   border-radius: 50%;
   background: transparent;
   color: inherit;
+  cursor: pointer;
   transition: border-color 180ms var(--ease), background-color 180ms var(--ease);
 }
 
-.cp .icon-btn:hover { border-color: currentColor; }
+.cp .icon-btn:hover { border-color: currentColor; background: color-mix(in oklab, currentColor 6%, transparent); }
 .cp .icon-btn[aria-disabled='true'] { opacity: 0.38; cursor: not-allowed; }
-.cp .icon-btn[aria-disabled='true']:hover { border-color: var(--line-strong); }
+.cp .icon-btn[aria-disabled='true']:hover { border-color: var(--line-strong); background: transparent; }
 
 .cp .chip-btn {
   display: inline-flex;
@@ -208,6 +246,8 @@ html:has(.cp .flow[open]) {
   color: inherit;
   font: 700 0.9rem/1 var(--sans);
   white-space: nowrap;
+  cursor: pointer;
+  transition: border-color 180ms var(--ease), background-color 180ms var(--ease);
 }
 
 .cp .chip-btn .icon { width: 1.05rem; height: 1.05rem; }
@@ -228,6 +268,7 @@ html:has(.cp .flow[open]) {
   text-decoration: underline;
   text-decoration-color: color-mix(in oklab, currentColor 40%, transparent);
   text-underline-offset: 0.25em;
+  cursor: pointer;
 }
 
 .cp .text-btn:hover { text-decoration-color: currentColor; }
@@ -247,32 +288,38 @@ html:has(.cp .flow[open]) {
   display: grid;
   place-items: center;
   flex: none;
-  width: 2.5rem;
-  height: 2.5rem;
-  border: 1.5px solid var(--accent);
+  width: 2.6rem;
+  height: 2.6rem;
   border-radius: 50%;
-  box-shadow: inset 0 0 0 3px var(--base), inset 0 0 0 4px color-mix(in oklab, var(--accent) 45%, transparent);
+  background: var(--stripes);
+  box-shadow: 0 4px 10px -4px rgb(0 0 0 / 70%);
 }
 
 .cp .brand__mark span {
+  display: grid;
+  place-items: center;
+  width: calc(100% - 6px);
+  height: calc(100% - 6px);
+  border-radius: 50%;
+  background: var(--base);
   color: var(--accent);
-  font: italic 400 1.45rem/1 var(--serif);
-  transform: translate(0.02em, 0.04em);
+  font: italic 500 1.45rem/1 var(--serif);
 }
 
 .cp .brand__text { display: grid; }
-.cp .brand__word { font: 400 1.3rem/1 var(--serif); letter-spacing: -0.01em; white-space: nowrap; }
+.cp .brand__word { font: 500 1.35rem/1 var(--serif); letter-spacing: -0.015em; white-space: nowrap; }
 .cp .brand__word em { color: var(--accent); }
 
 .cp .brand__kind {
   margin-top: 0.3rem;
   color: var(--ink-muted);
-  font: 600 0.6rem/1 var(--display);
-  letter-spacing: 0.26em;
+  font: 600 0.62rem/1 var(--figure);
+  font-stretch: 112%;
+  letter-spacing: 0.28em;
   text-transform: uppercase;
 }
 
-/* Initials avatars: a striped ring around a tinted disc */
+/* Initials avatars: a barber-pole ring around a leather disc */
 .cp .avatar {
   --size: 3.5rem;
   position: relative;
@@ -282,7 +329,8 @@ html:has(.cp .flow[open]) {
   width: var(--size);
   height: var(--size);
   border-radius: 50%;
-  background: repeating-linear-gradient(135deg, var(--accent) 0 5px, var(--ink) 5px 10px, var(--base) 10px 15px);
+  background: repeating-linear-gradient(135deg, var(--accent) 0 5px, var(--ink) 5px 10px, var(--leather) 10px 15px);
+  box-shadow: 0 6px 14px -8px rgb(0 0 0 / 80%);
 }
 
 .cp .avatar::before {
@@ -290,22 +338,22 @@ html:has(.cp .flow[open]) {
   position: absolute;
   inset: var(--ring, 4px);
   border-radius: 50%;
-  background: var(--tone, var(--base-3));
+  background: radial-gradient(circle at 35% 30%, color-mix(in oklab, var(--tone, var(--base-3)) 80%, var(--ink)), var(--tone, var(--base-3)) 70%);
 }
 
 .cp .avatar > * {
   position: relative;
   color: var(--accent);
-  font: italic 400 calc(var(--size) * 0.38)/1 var(--serif);
-  letter-spacing: 0.02em;
+  font: italic 500 calc(var(--size) * 0.38)/1 var(--serif);
+  letter-spacing: 0.01em;
 }
 
-.cp .avatar--sm { --size: 2.25rem; --ring: 2px; background: var(--accent); }
-.cp .avatar--lg { --size: 5.25rem; --ring: 5px; }
-.cp .avatar[data-tone='davi'] { --tone: #24382f; }
-.cp .avatar[data-tone='caio'] { --tone: #3a2f1e; }
-.cp .avatar[data-tone='jonas'] { --tone: #1f3136; }
-.cp .avatar--any { background: transparent; border: 1.5px dashed var(--line-strong); }
+.cp .avatar--sm { --size: 2.25rem; --ring: 2px; }
+.cp .avatar--lg { --size: 5.5rem; --ring: 5px; }
+.cp .avatar[data-tone='davi'] { --tone: #45191d; }
+.cp .avatar[data-tone='caio'] { --tone: #3d2a16; }
+.cp .avatar[data-tone='jonas'] { --tone: #1f2c2c; }
+.cp .avatar--any { background: transparent; border: 1.5px dashed var(--accent-line); box-shadow: none; }
 .cp .avatar--any::before { display: none; }
 .cp .avatar--any .icon { width: 1.5rem; height: 1.5rem; color: var(--accent); }
 
@@ -315,26 +363,28 @@ html:has(.cp .flow[open]) {
   align-items: flex-start;
   gap: 0.6rem;
   padding: 0.85rem 1rem;
-  border: 1px solid var(--line-strong);
-  border-radius: 10px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
   background: color-mix(in oklab, var(--ink) 4%, transparent);
   color: var(--ink-soft);
-  font-size: 0.92rem;
+  font-size: 0.9rem;
   line-height: 1.45;
 }
 
 .cp .demo-note .icon { width: 1.15rem; height: 1.15rem; margin-top: 0.1rem; color: var(--accent); }
-.cp .demo-note--warn { border-color: color-mix(in oklab, var(--accent) 55%, transparent); background: var(--accent-soft); color: var(--ink); }
+.cp .demo-note--warn { border-color: var(--accent-line); background: var(--accent-soft); color: var(--ink); }
 
 @media (max-width: 52rem) {
   .cp .section-head--split { grid-template-columns: minmax(0, 1fr); }
 }
 
+/* Reduced motion: transitions settle at once; every keyframe animation is authored with its own
+   fade-only alternative next to it, so meaningful feedback stays visible without movement. */
 @media (prefers-reduced-motion: reduce) {
   .cp *, .cp *::before, .cp *::after {
-    animation-duration: 1ms !important;
-    animation-iteration-count: 1 !important;
     transition-duration: 1ms !important;
     scroll-behavior: auto !important;
   }
 }
+
+@keyframes cp-fade { from { opacity: 0; } }

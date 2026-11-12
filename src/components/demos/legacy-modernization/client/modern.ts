@@ -51,11 +51,13 @@ export function initModern(root: HTMLElement, store: Store, context: Context, au
     ctaBar: q<HTMLButtonElement>('[data-m-cta-bar]'),
     barTotal: q('[data-m-bar-total]'),
     barIssues: q('[data-m-bar-issues]'),
+    cards: Array.from(root.querySelectorAll<HTMLElement>('[data-m-card]')),
   };
   const items = createItemsTable(q('[data-m-rows]'), context);
   const visibility: Visibility = { customer: false, items: false, typingKey: '', typingDiscount: false };
   let view: View = 'edit';
   let attempted = false;
+  let lastTotal: number | null = null;
 
   const evaluate = (): Evaluation => {
     const { draft, role } = store.get();
@@ -129,6 +131,15 @@ export function initModern(root: HTMLElement, store: Store, context: Context, au
       <ul>${links.map((link) => `<li><button type="button" class="vt-link" data-focus-target="${esc(link.target)}">${esc(link.text)}</button></li>`).join('')}</ul>`;
   };
 
+  // A changed total settles into place, so the eye catches the new figure without a flashing color.
+  const bumpTotals = () => {
+    if (context.reducedMotion()) return;
+    const targets = [el.summaryBody.querySelector('.vt-sum__total dd'), el.barTotal];
+    for (const target of targets) {
+      target?.animate([{ opacity: 0.2, transform: 'translateY(0.4em)' }, { opacity: 1, transform: 'none' }], { duration: 320, easing: 'cubic-bezier(0.16, 1, 0.3, 1)' });
+    }
+  };
+
   const update = () => {
     const { draft, role } = store.get();
     const evaluation = evaluate();
@@ -151,14 +162,21 @@ export function initModern(root: HTMLElement, store: Store, context: Context, au
     el.discountHint.textContent = discountHint(evaluation, locale, t);
     el.discountPreview.textContent = discountPreview(evaluation, locale, t);
     el.limit.style.setProperty('--vt-value', limitPosition(evaluation.requestedDiscount ?? 0));
+    el.limit.classList.toggle('is-over', evaluation.issues.some((issue) => issue.rule === 'discount'));
     el.tiles.innerHTML = termsTiles(evaluation, locale, t);
 
     el.summaryBody.innerHTML = summaryBody(evaluation, view, locale, t);
     el.barTotal.textContent = money(evaluation.total, locale);
     const settled = view === 'done' ? m.summary.sent : view === 'review' ? m.summary.reviewed : m.summary.ready;
     el.barIssues.textContent = evaluation.issues.length ? count(evaluation.issues.length, m.summary.issues) : settled;
-    el.steps.innerHTML = stepsHtml(stepStates(evaluation, visibility, view), t, view !== 'done');
+    const states = stepStates(evaluation, visibility, view);
+    el.steps.innerHTML = stepsHtml(states, t, view !== 'done');
+    el.cards.forEach((card, index) => {
+      card.dataset.state = states[index];
+    });
     renderErrorSummary(evaluation);
+    if (lastTotal !== null && lastTotal !== evaluation.total) bumpTotals();
+    lastTotal = evaluation.total;
   };
 
   const setSummaryOpen = (open: boolean) => {
@@ -366,8 +384,9 @@ export function initModern(root: HTMLElement, store: Store, context: Context, au
         discarded: m.discarded,
       };
       const icon = status === 'unavailable' ? icons.unsaved : status === 'saved' || status === 'restored' ? icons.saved : icons.cloud;
-      el.saveText.innerHTML = `${icon}<span>${esc(text[status])}</span>`;
-      el.saveText.classList.toggle('is-warning', status === 'unavailable');
+      const mark = status === 'saving' ? '<span class="vt-m-save__spin" aria-hidden="true"></span>' : icon;
+      el.saveText.innerHTML = `${mark}<span>${esc(text[status])}</span>`;
+      el.saveText.dataset.state = status;
     },
   };
 }

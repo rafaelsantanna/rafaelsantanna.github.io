@@ -87,6 +87,8 @@ export function createChrome(root: HTMLElement, s: Strings, f: Formatters) {
     update(ctx: ViewContext, view: View) {
       last = { ctx, view };
       root.dataset.online = String(ctx.state.online);
+      // Drives the fiber line on the stage: lit while changes travel, dark while offline.
+      root.dataset.sync = !ctx.state.online ? 'offline' : unsyncedCount(ctx.state.events) > 0 ? 'sending' : 'idle';
       app.dataset.screen = view.screen;
       renderBanner(ctx);
       renderTabs(ctx, view);

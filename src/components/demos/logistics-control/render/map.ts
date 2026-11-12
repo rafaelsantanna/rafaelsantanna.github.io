@@ -19,7 +19,7 @@ function riverY(x: number): number {
 /** Static city layer: blocks, river, bridges, zone names and hubs. Rendered once. */
 export function renderMapBase(ctx: RenderContext): string {
   const blocks = cityBlocks()
-    .map((block) => `<rect class="${block.park ? 'lc-map__park' : 'lc-map__block'}" x="${block.x}" y="${block.y}" width="${block.w}" height="${block.h}" rx="3"/>`)
+    .map((block, index) => `<rect class="${block.park ? 'lc-map__park' : index % 3 === 0 ? 'lc-map__block lc-map__block--alt' : 'lc-map__block'}" x="${block.x}" y="${block.y}" width="${block.w}" height="${block.h}" rx="3"/>`)
     .join('');
   const river = pathData(spline(RIVER, false), false);
   const bridges = BRIDGES.map((bridge) => {
@@ -74,7 +74,7 @@ export function renderVehicles(routes: RouteGeometry[], stats: Map<string, Drive
         : attention === 'late'
           ? '<circle class="lc-vehicle__badge" cx="11.5" cy="-11.5" r="5.6"/>'
           : '';
-      return `<g class="lc-vehicle lc-vehicle--${attention}${selected === route.driverId ? ' is-selected' : ''}" data-driver="${route.driverId}" transform="${vehicleTransform(route, route.start)}"><circle class="lc-vehicle__halo" r="19"/><circle class="lc-vehicle__body" r="14.5"/><text class="lc-vehicle__label" y="4.2" text-anchor="middle">${esc(driver.initials)}</text>${badge}</g>`;
+      return `<g class="lc-vehicle lc-vehicle--${attention}${selected === route.driverId ? ' is-selected' : ''}" data-driver="${route.driverId}" transform="${vehicleTransform(route, route.start)}"><circle class="lc-vehicle__halo" r="19.5"/><circle class="lc-vehicle__ring" r="16.5"/><circle class="lc-vehicle__body" r="14"/><text class="lc-vehicle__label" y="4.2" text-anchor="middle">${esc(driver.initials)}</text>${badge}</g>`;
     })
     .join('');
 }

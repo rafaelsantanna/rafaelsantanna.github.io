@@ -47,17 +47,21 @@ function renderAnswerBody(turn: Turn, ctx: Ctx): HTMLElement[] {
   const answer = result.answer;
   if (!answer) return [];
 
+  // Each part keeps its sentences and citation together, so a linked citation can light up the exact text it backs.
   const text = h('p', { class: 'ka-a__text' });
   answer.parts.forEach((part, index) => {
     const passage = engine.passages[part.passageIndex];
     if (index > 0) text.append(' ');
-    text.append(`${part.sentences.join(' ')} `, h('button', {
-      type: 'button',
-      class: 'ka-cite',
-      'data-cite': part.citation,
-      'data-passage': part.passageIndex,
-      'aria-label': fill(t.citeLabel, { n: part.citation, doc: passage.docTitle, section: passage.sectionHeading }),
-    }, String(part.citation)));
+    text.append(h('span', { class: 'ka-a__part', 'data-part': part.passageIndex },
+      `${part.sentences.join(' ')} `,
+      h('button', {
+        type: 'button',
+        class: 'ka-cite',
+        'data-cite': part.citation,
+        'data-passage': part.passageIndex,
+        'aria-label': fill(t.citeLabel, { n: part.citation, doc: passage.docTitle, section: passage.sectionHeading }),
+      }, String(part.citation)),
+    ));
   });
 
   const sourcesId = `ka-sources-${turn.id}`;
@@ -72,7 +76,7 @@ function renderAnswerBody(turn: Turn, ctx: Ctx): HTMLElement[] {
           h('span', { class: 'ka-source__section' }, passage.sectionHeading),
         ),
         h('span', { class: 'ka-sr' }, `, ${t.evOpen}`),
-        ctx.icon('open'),
+        h('span', { class: 'ka-source__go', 'aria-hidden': 'true' }, ctx.icon('open')),
       ));
     })),
   );
@@ -130,10 +134,8 @@ export function renderPending(question: string, ctx: Ctx): HTMLLIElement {
     renderQuestion(question, ctx),
     h('div', { class: 'ka-a ka-a--pending' },
       renderWho(ctx),
-      h('p', { class: 'ka-pending' },
-        h('span', {}, fill(ctx.t.processing, { n: ctx.engine.passages.length })),
-        h('span', { class: 'ka-pending__dots', 'aria-hidden': 'true' }, h('span'), h('span'), h('span')),
-      ),
+      h('p', { class: 'ka-pending' }, fill(ctx.t.processing, { n: ctx.engine.passages.length })),
+      h('div', { class: 'ka-skeleton', 'aria-hidden': 'true' }, h('span'), h('span'), h('span')),
     ),
   );
 }

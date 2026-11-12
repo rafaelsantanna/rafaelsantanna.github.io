@@ -19,16 +19,21 @@ const { lang, corpus, t, passageCount } = Astro.props;
     <p class="ka-sources__hint" id="ka-sources-hint">{t.sourcesHint}</p>
     <ul class="ka-docs">
       {corpus.documents.map((doc) => (
-        <li class="ka-doc">
+        <li class="ka-doc" data-ka-doc-row={doc.id}>
           <button type="button" class="ka-doc__toggle" aria-pressed="false" data-ka-doc={doc.id}>
             <span class="ka-doc__check" aria-hidden="true"><Icon name="check" /></span>
             <span class="ka-doc__text">
               <span class="ka-doc__title">{doc.title}</span>
               <span class="ka-doc__summary">{doc.summary}</span>
-              <span class="ka-doc__meta">{doc.owner} · {fill(t.docSections, { n: doc.sections.length })} · <time datetime={doc.updated}>{formatMonth(doc.updated, lang)}</time></span>
+              <span class="ka-doc__meta">
+                <span class="ka-doc__owner">{doc.owner}</span>
+                <span>{fill(t.docSections, { n: doc.sections.length })}</span>
+                <time datetime={doc.updated}>{formatMonth(doc.updated, lang)}</time>
+              </span>
+              <span class="ka-doc__hits" data-ka-doc-hits hidden></span>
             </span>
           </button>
-          <button type="button" class="ka-doc__read" data-ka-read={doc.id} title={fill(t.docRead, { title: doc.title })}>
+          <button type="button" class="ka-doc__read" data-ka-read={doc.id} title={fill(t.docRead, { title: doc.title })} aria-label={fill(t.docRead, { title: doc.title })}>
             <Icon name="doc" />
           </button>
         </li>

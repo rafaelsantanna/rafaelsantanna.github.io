@@ -1,53 +1,74 @@
-/* Bússola: tokens, page shell, tabs and shared controls. Every rule is scoped under .ka. */
+/* Bússola: tokens, app shell, tabs and shared controls. Every rule is scoped under .ka. */
 body.demo-page--knowledge-assistant {
-  background: #121116;
-  color: #eeeae2;
+  background: #0f1317;
+  color: #ece5d6;
 }
 
 .ka {
   /* Brand foundation; the component overrides these three with project.palette. */
-  --ka-base: #121116;
-  --ka-ink: #eeeae2;
-  --ka-yellow: #f2c14e;
-  --ka-panel: #17161c;
-  --ka-raised: #1d1c23;
-  --ka-raised-2: #26252d;
-  --ka-line: rgb(238 234 226 / 9%);
-  --ka-line-strong: rgb(238 234 226 / 17%);
-  --ka-soft: #cdc8bd;
-  --ka-muted: #a39d92;
-  --ka-yellow-strong: #f7d27a;
-  --ka-yellow-tint: rgb(242 193 78 / 12%);
-  --ka-yellow-line: rgb(242 193 78 / 48%);
-  --ka-on-yellow: #1b1608;
+  --ka-base: #0f1317;
+  --ka-ink: #ece5d6;
+  --ka-gold: #e6b450;
+
+  /* Night chart room: blue-black surfaces, parchment ink, brass accent. */
+  --ka-shell: #0b0e11;
+  --ka-panel: #12171c;
+  --ka-raised: #171d24;
+  --ka-raised-2: #1e262e;
+  --ka-line: rgb(236 229 214 / 8%);
+  --ka-line-strong: rgb(236 229 214 / 15%);
+  --ka-line-hover: rgb(236 229 214 / 26%);
+  --ka-soft: #c8c1b3;
+  --ka-muted: #929ba3;
+  --ka-gold-strong: #f1c96f;
+  --ka-gold-deep: #b98a2c;
+  --ka-gold-tint: rgb(230 180 80 / 11%);
+  --ka-gold-wash: rgb(230 180 80 / 20%);
+  --ka-gold-line: rgb(230 180 80 / 45%);
+  --ka-on-gold: #1a1305;
+  --ka-sage: #93c4a2;
+  --ka-sage-tint: rgb(147 196 162 / 12%);
+  --ka-clay: #e59a7e;
+  --ka-clay-tint: rgb(229 154 126 / 12%);
+
   --ka-font-ui: 'Geologica', system-ui, 'Segoe UI', sans-serif;
-  --ka-font-text: 'Atkinson Hyperlegible Next', system-ui, 'Segoe UI', sans-serif;
-  --ka-font-read: Georgia, 'Times New Roman', serif;
+  --ka-font-read: 'Bussola Serif', 'Iowan Old Style', Georgia, serif;
   --ka-font-mono: ui-monospace, 'Cascadia Code', Consolas, monospace;
   --ka-ease: cubic-bezier(0.16, 1, 0.3, 1);
   --ka-radius: 14px;
-  --ka-radius-sm: 10px;
+  --ka-radius-sm: 9px;
   --ka-tabs-h: 3.25rem;
   --ka-gutter: 1rem;
+  --ka-shadow-lift: 0 1px 0 rgb(255 255 255 / 3%) inset, 0 10px 28px -14px rgb(0 0 0 / 70%);
 
   background: var(--ka-base);
   color: var(--ka-ink);
-  font-family: var(--ka-font-text);
+  font-family: var(--ka-font-ui);
   font-size: 1rem;
   line-height: 1.5;
+  scrollbar-color: var(--ka-line-strong) transparent;
 }
 
 .ka [hidden] { display: none !important; }
 
 .ka ::selection {
-  background: var(--ka-yellow);
-  color: var(--ka-on-yellow);
+  background: var(--ka-gold);
+  color: var(--ka-on-gold);
 }
 
 .ka :focus-visible {
-  outline: 2px solid var(--ka-yellow);
+  outline: 2px solid var(--ka-gold);
   outline-offset: 2px;
 }
+
+.ka ::-webkit-scrollbar { width: 10px; height: 10px; }
+.ka ::-webkit-scrollbar-thumb {
+  border: 3px solid transparent;
+  border-radius: 999px;
+  background: var(--ka-line-strong) padding-box;
+}
+.ka ::-webkit-scrollbar-thumb:hover { background-color: var(--ka-line-hover); }
+.ka ::-webkit-scrollbar-track { background: transparent; }
 
 .ka-sr {
   position: absolute;
@@ -67,12 +88,12 @@ body.demo-page--knowledge-assistant {
   height: 1.25rem;
 }
 
-.ka-highlight,
+/* Question terms found in a passage: a quiet brass wash, never a solid block. */
 .ka-mark-term {
-  padding: 0 0.14em;
-  border-radius: 0.22em;
-  background: var(--ka-yellow);
-  color: var(--ka-on-yellow);
+  padding: 0 0.08em;
+  border-radius: 0.2em;
+  background: var(--ka-gold-wash);
+  color: var(--ka-ink);
   -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
 }
@@ -84,27 +105,33 @@ body.demo-page--knowledge-assistant {
   justify-content: center;
   gap: 0.5rem;
   min-height: 2.5rem;
-  padding: 0.5rem 0.95rem;
+  padding: 0.5rem 1rem;
   border: 1px solid transparent;
   border-radius: var(--ka-radius-sm);
   font: 600 0.875rem/1.2 var(--ka-font-ui);
   letter-spacing: -0.005em;
   text-align: center;
-  transition: background-color 180ms var(--ka-ease), border-color 180ms var(--ka-ease), color 180ms var(--ka-ease);
+  transition: background-color 160ms var(--ka-ease), border-color 160ms var(--ka-ease), color 160ms var(--ka-ease), transform 160ms var(--ka-ease);
 }
 .ka-btn .ka-icon { width: 1.125rem; height: 1.125rem; }
-.ka-btn--primary { background: var(--ka-yellow); color: var(--ka-on-yellow); }
-.ka-btn--primary:hover { background: var(--ka-yellow-strong); }
+.ka-btn:active:not(:disabled, [aria-disabled='true']) { transform: translateY(1px); }
+.ka-btn--primary {
+  background: var(--ka-gold);
+  box-shadow: 0 1px 0 rgb(255 255 255 / 28%) inset, 0 6px 16px -8px rgb(230 180 80 / 55%);
+  color: var(--ka-on-gold);
+}
+.ka-btn--primary:hover { background: var(--ka-gold-strong); }
 .ka-btn--primary:focus-visible { outline-color: var(--ka-ink); }
 .ka-btn--primary[aria-disabled='true'] {
-  border-color: var(--ka-line-strong);
-  background: transparent;
-  color: var(--ka-soft);
+  border-color: rgb(147 196 162 / 40%);
+  background: var(--ka-sage-tint);
+  box-shadow: none;
+  color: var(--ka-sage);
   cursor: default;
 }
 .ka-btn--ghost { border-color: var(--ka-line-strong); background: transparent; color: var(--ka-ink); }
-.ka-btn--ghost:hover { border-color: rgb(238 234 226 / 30%); background: var(--ka-raised-2); }
-.ka-btn:disabled { opacity: 0.55; cursor: not-allowed; }
+.ka-btn--ghost:hover { border-color: var(--ka-line-hover); background: var(--ka-raised); }
+.ka-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
 .ka-link {
   display: inline-flex;
@@ -116,27 +143,43 @@ body.demo-page--knowledge-assistant {
   color: var(--ka-soft);
   font: 600 0.8125rem/1.3 var(--ka-font-ui);
   text-decoration: underline;
-  text-decoration-color: var(--ka-line-strong);
-  text-underline-offset: 0.22em;
+  text-decoration-color: var(--ka-line-hover);
+  text-underline-offset: 0.24em;
+  transition: color 160ms var(--ka-ease), text-decoration-color 160ms var(--ka-ease);
 }
-.ka-link:hover { color: var(--ka-ink); text-decoration-color: var(--ka-yellow); }
+.ka-link:hover { color: var(--ka-ink); text-decoration-color: var(--ka-gold); }
 
-/* App header */
+.ka kbd {
+  display: inline-grid;
+  place-items: center;
+  min-width: 1.35rem;
+  height: 1.35rem;
+  padding: 0 0.3rem;
+  border: 1px solid var(--ka-line-strong);
+  border-bottom-width: 2px;
+  border-radius: 5px;
+  background: var(--ka-raised-2);
+  color: var(--ka-soft);
+  font: 600 0.75rem/1 var(--ka-font-ui);
+}
+
+/* App bar */
 .ka-top {
   display: flex;
   align-items: center;
   gap: 0.75rem 1.25rem;
-  min-height: 4rem;
-  padding: 0.65rem var(--ka-gutter);
+  min-height: 3.75rem;
+  padding: 0.6rem var(--ka-gutter);
   border-bottom: 1px solid var(--ka-line);
-  background: var(--ka-base);
+  background: var(--ka-shell);
 }
-.ka-brand { display: flex; align-items: center; gap: 0.75rem; min-width: 0; }
-.ka-mark { flex: none; width: 2.25rem; height: 2.25rem; color: var(--ka-ink); }
-.ka-brand__text { min-width: 0; }
+.ka-brand { display: flex; align-items: center; gap: 0.7rem; min-width: 0; }
+.ka-mark { flex: none; width: 2.1rem; height: 2.1rem; color: var(--ka-ink); overflow: visible; }
+.ka-mark__needle { transform-box: view-box; transform-origin: 16px 16px; }
+.ka-brand__text { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 0.7rem; min-width: 0; }
 .ka-brand__name {
-  font: 650 1.3rem/1.1 var(--ka-font-ui);
-  letter-spacing: -0.025em;
+  font: 500 1.375rem/1.1 var(--ka-font-read);
+  letter-spacing: -0.01em;
 }
 .ka-brand__sub {
   color: var(--ka-muted);
@@ -145,27 +188,30 @@ body.demo-page--knowledge-assistant {
 .ka-top__note {
   display: none;
   align-items: center;
-  gap: 0.5rem;
   margin-inline-start: auto;
   font: 500 0.75rem/1 var(--ka-font-ui);
 }
-.ka-top__note > span {
+.ka-top__index {
   display: inline-flex;
   align-items: center;
-  gap: 0.45rem;
-  padding: 0.4rem 0.7rem;
+  gap: 0.5rem;
+  padding: 0.45rem 0.75rem;
   border: 1px solid var(--ka-line);
   border-radius: 999px;
+  background: var(--ka-panel);
   color: var(--ka-soft);
+  font-variant-numeric: tabular-nums;
 }
 .ka-top__index::before {
   content: '';
-  width: 0.45rem;
-  height: 0.45rem;
+  width: 0.4rem;
+  height: 0.4rem;
   border-radius: 50%;
-  background: var(--ka-yellow);
+  background: var(--ka-sage);
+  box-shadow: 0 0 0 3px var(--ka-sage-tint);
 }
-.ka-top__reset { flex: none; margin-inline-start: auto; }
+.ka-top__reset { flex: none; min-height: 2.25rem; margin-inline-start: auto; padding-inline: 0.8rem; font-weight: 500; color: var(--ka-soft); }
+.ka-top__reset:hover { color: var(--ka-ink); }
 html:not(.js) .ka-top__reset { display: none; }
 .ka-top__note + .ka-top__reset { margin-inline-start: 0; }
 
@@ -174,16 +220,17 @@ html:not(.js) .ka-top__reset { display: none; }
 /* Scrollers are positioned so visually hidden text inside them never overflows the page. */
 .ka-pane__scroll,
 .ka-thread { position: relative; }
-.ka-pane__head { padding: 1.25rem var(--ka-gutter) 0.85rem; }
+.ka-pane__head { padding: 1.25rem var(--ka-gutter) 0.75rem; }
 .ka-pane__title {
-  font: 600 1rem/1.25 var(--ka-font-ui);
-  letter-spacing: -0.01em;
+  font: 600 0.9375rem/1.25 var(--ka-font-ui);
+  letter-spacing: -0.005em;
 }
 .ka-pane__sub {
   margin-top: 0.2rem;
   color: var(--ka-muted);
   font-size: 0.8125rem;
   line-height: 1.45;
+  font-variant-numeric: tabular-nums;
 }
 
 /* Tabs exist only for narrow screens with JavaScript. */
@@ -199,12 +246,25 @@ html:not(.js) .ka-top__reset { display: none; }
   min-height: var(--ka-tabs-h);
   padding: 0 0.5rem;
   border: 0;
-  border-bottom: 2px solid transparent;
   background: none;
   color: var(--ka-muted);
-  font: 600 0.9375rem/1.2 var(--ka-font-ui);
+  font: 500 0.9375rem/1.2 var(--ka-font-ui);
+  transition: color 160ms var(--ka-ease);
 }
-.ka-tab[aria-selected='true'] { border-bottom-color: var(--ka-yellow); color: var(--ka-ink); }
+.ka-tab::after {
+  content: '';
+  position: absolute;
+  inset-inline: 22%;
+  bottom: -1px;
+  height: 2px;
+  border-radius: 2px 2px 0 0;
+  background: var(--ka-gold);
+  opacity: 0;
+  transform: scaleX(0.4);
+  transition: opacity 200ms var(--ka-ease), transform 260ms var(--ka-ease);
+}
+.ka-tab[aria-selected='true'] { color: var(--ka-ink); font-weight: 600; }
+.ka-tab[aria-selected='true']::after { opacity: 1; transform: none; }
 .ka-tab:focus-visible { outline-offset: -4px; }
 .ka-tab__badge {
   min-width: 1.4rem;
@@ -212,10 +272,11 @@ html:not(.js) .ka-top__reset { display: none; }
   border-radius: 999px;
   background: var(--ka-raised-2);
   color: var(--ka-soft);
-  font: 600 0.6875rem/1.2 var(--ka-font-mono);
+  font: 600 0.6875rem/1.2 var(--ka-font-ui);
+  font-variant-numeric: tabular-nums;
   text-align: center;
 }
-.ka-tab[aria-selected='true'] .ka-tab__badge { background: var(--ka-yellow); color: var(--ka-on-yellow); }
+.ka-tab[aria-selected='true'] .ka-tab__badge { background: var(--ka-gold); color: var(--ka-on-gold); }
 
 @media (min-width: 40rem) {
   .ka { --ka-gutter: 1.5rem; }
@@ -228,7 +289,7 @@ html:not(.js) .ka-top__reset { display: none; }
     z-index: 30;
     display: flex;
     border-bottom: 1px solid var(--ka-line);
-    background: var(--ka-base);
+    background: var(--ka-shell);
   }
   .js .ka[data-tab='chat'] .ka-pane:not(.ka-pane--chat),
   .js .ka[data-tab='evidence'] .ka-pane:not(.ka-pane--evidence),
@@ -236,7 +297,7 @@ html:not(.js) .ka-top__reset { display: none; }
   .ka-pane { border-bottom: 1px solid var(--ka-line); }
   .js .ka-pane { min-height: calc(100dvh - var(--ka-tabs-h)); border-bottom: 0; }
   .ka-pane--sources > *,
-  .ka-pane--evidence > * { max-width: 46rem; margin-inline: auto; }
+  .ka-pane--evidence > * { width: 100%; max-width: 46rem; margin-inline: auto; }
 }
 
 @media (max-width: 22.5rem) {
@@ -249,10 +310,14 @@ html:not(.js) .ka-top__reset { display: none; }
   .ka-top__reset { width: 2.75rem; padding: 0; }
 }
 
+@media (max-width: 47.99rem) {
+  .ka-brand__text { display: grid; gap: 0.1rem; }
+}
+
 @media (min-width: 64rem) {
   .ka-body {
     display: grid;
-    grid-template-columns: 15.5rem minmax(0, 1fr) 19.5rem;
+    grid-template-columns: 16.5rem minmax(0, 1fr) 21rem;
   }
   .ka-pane--sources { border-inline-end: 1px solid var(--ka-line); background: var(--ka-panel); }
   .ka-pane--evidence { border-inline-start: 1px solid var(--ka-line); background: var(--ka-panel); }
@@ -260,11 +325,11 @@ html:not(.js) .ka-top__reset { display: none; }
 }
 
 @media (min-width: 80rem) {
-  .ka-body { grid-template-columns: 18.5rem minmax(0, 1fr) 24rem; }
+  .ka-body { grid-template-columns: 18rem minmax(0, 1fr) 24.5rem; }
 }
 
 @media (min-width: 90rem) {
-  .ka-body { grid-template-columns: 19.5rem minmax(0, 1fr) 26rem; }
+  .ka-body { grid-template-columns: 19.5rem minmax(0, 1fr) 27rem; }
 }
 
 /* Wide and tall enough: the app fills the viewport and each pane scrolls on its own. */

@@ -2,18 +2,19 @@
 import { nowLabel } from '../lib/clock';
 import { fill, formatDate, formatNumber, plural } from '../lib/format';
 import { VIEWS, type Delivery } from '../lib/model';
-import { hasActiveFilters } from '../lib/query';
+import { hasActiveFilters, statusCounts } from '../lib/query';
 import type { RouteGeometry } from '../lib/routes';
 import { renderBulk } from '../render/bulk';
 import type { RenderContext } from '../render/context';
 import { renderDrawer } from '../render/drawer';
 import { esc } from '../render/html';
 import { renderDriverCards } from '../render/drivers';
-import { renderKpis } from '../render/kpis';
+import { renderKpis, renderMix } from '../render/kpis';
 import { renderDriverChips, renderRoutes, renderVehicles } from '../render/map';
 import { OVERVIEW_QUEUE_LIMIT, renderKindChips, renderQueue } from '../render/queue';
 import { pageCheckState, renderCards, renderHead, renderPagination, renderRange, renderRows, renderStatusChips } from '../render/table';
 import type { App } from './app';
+import { bump, enter } from './flip';
 
 type SetRegion = (name: string, html: string) => boolean;
 
@@ -47,7 +48,11 @@ export function renderApp(app: App) {
     dateElement.textContent = date.charAt(0).toUpperCase() + date.slice(1);
   }
   const navCount = root.querySelector('[data-nav-count="exceptions"]');
-  if (navCount) navCount.textContent = formatNumber(t.lang, derived.queue.length);
+  const queueCount = formatNumber(t.lang, derived.queue.length);
+  if (navCount && navCount.textContent !== queueCount) {
+    navCount.textContent = queueCount;
+    bump(navCount);
+  }
 
   const ctx = app.context();
   switch (ui.view) {
@@ -69,7 +74,14 @@ export function renderApp(app: App) {
 function renderOverview(app: App, set: SetRegion, ctx: RenderContext, routes: RouteGeometry[]) {
   const { t, derived } = app;
   const { filters } = app.store.get().ui;
-  set('kpis', renderKpis(derived.kpis, ctx));
+  const previous = new Map([...app.regions.get('kpis')?.querySelectorAll<HTMLElement>('[data-kpi-value]') ?? []].map((element) => [element.dataset.kpiValue, element.textContent]));
+  if (set('kpis', renderKpis(derived.kpis, ctx))) {
+    app.regions.get('kpis')?.querySelectorAll<HTMLElement>('[data-kpi-value]').forEach((element) => {
+      const before = previous.get(element.dataset.kpiValue);
+      if (before !== undefined && before !== element.textContent) bump(element);
+    });
+  }
+  set('mix', renderMix(statusCounts(app.store.get().deliveries), ctx));
   set('routes', renderRoutes(routes, derived.stats, filters.driver));
   if (set('vehicles', renderVehicles(routes, derived.stats, ctx, filters.driver))) app.motion.setRoutes(routes);
   set('driver-chips', renderDriverChips(derived.stats, ctx, filters.driver));
@@ -81,6 +93,8 @@ function renderOverview(app: App, set: SetRegion, ctx: RenderContext, routes: Ro
 type ListLayout = 'table' | 'cards';
 
 let renderedLayout: ListLayout | null = null;
+/** IDs and layout of the rows on screen; a different set plays the entrance. */
+let renderedRows = '';
 
 /** The deliveries layout on screen, as chosen by the container query in list.css (--lc-list). */
 function listLayout(app: App): ListLayout {
@@ -121,6 +135,11 @@ function renderDeliveries(app: App, set: SetRegion, ctx: RenderContext) {
     set('rows', renderRows(slice.items, selection, ctx));
   } else {
     set('cards', renderCards(slice.items, selection, ctx));
+  }
+  const rows = `${renderedLayout}:${slice.items.map((delivery) => delivery.id).join()}`;
+  if (rows !== renderedRows) {
+    renderedRows = rows;
+    enter(regions.get(renderedLayout === 'table' ? 'rows' : 'cards')?.children ?? []);
   }
   set('pagination', renderPagination(slice, ctx));
   root.querySelectorAll<HTMLInputElement>('input[data-action="select-page"]').forEach((input) => { input.indeterminate = input.dataset.state === 'mixed'; });

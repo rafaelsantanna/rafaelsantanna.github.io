@@ -40,6 +40,33 @@ export function windowLabel(delivery: Pick<Delivery, 'windowStart' | 'windowEnd'
   return `${timeOf(clock, delivery.windowStart)}–${timeOf(clock, delivery.windowEnd)}`;
 }
 
+/** Hours drawn by the window strip, as minutes of the day. */
+const STRIP_FROM = 8 * 60 + 30;
+const STRIP_TO = 19 * 60 + 30;
+const STRIP_TICKS = [10, 12, 14, 16, 18];
+
+function stripPct(clock: OperationClock, relative: number): string {
+  const minute = clock.anchor + relative;
+  const share = (minute - STRIP_FROM) / (STRIP_TO - STRIP_FROM);
+  return `${(Math.min(1, Math.max(0, share)) * 100).toFixed(2)}%`;
+}
+
+/**
+ * The delivery window on the day's axis, with the operation clock and the projected or actual arrival.
+ * Decorative: the same facts are always written next to it.
+ */
+export function windowStrip(delivery: Delivery, clock: OperationClock, large = false): string {
+  const arrival = delivery.deliveredAt ?? delivery.eta;
+  const over = arrival !== null && arrival > delivery.windowEnd;
+  const mark = arrival === null
+    ? ''
+    : `<span class="${cx('lc-wstrip__eta', delivery.deliveredAt !== null && 'is-done', over && 'is-over')}" style="--x:${stripPct(clock, arrival)}"></span>`;
+  const ticks = large
+    ? `<span class="lc-wstrip__ticks">${STRIP_TICKS.map((hour) => `<span style="--x:${stripPct(clock, hour * 60 - clock.anchor)}">${String(hour).padStart(2, '0')}</span>`).join('')}</span>`
+    : '';
+  return `<span class="${cx('lc-wstrip', `lc-wstrip--${delivery.status}`, large && 'lc-wstrip--lg')}" aria-hidden="true"><span class="lc-wstrip__track"><span class="lc-wstrip__win" style="--a:${stripPct(clock, delivery.windowStart)};--b:${stripPct(clock, delivery.windowEnd)}"></span><span class="lc-wstrip__now" style="--x:${stripPct(clock, clock.now)}"></span>${mark}</span>${ticks}</span>`;
+}
+
 /** Projected time for open deliveries, delivery time for completed ones. */
 export function etaCell(delivery: Delivery, ctx: RenderContext): string {
   if (delivery.deliveredAt !== null) return `<span class="lc-muted">${esc(fill(ctx.t.list.deliveredAt, { time: timeOf(ctx.clock, delivery.deliveredAt) }))}</span>`;

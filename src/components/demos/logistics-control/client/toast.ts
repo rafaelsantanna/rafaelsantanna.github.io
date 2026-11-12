@@ -40,12 +40,14 @@ export function createToasts(root: HTMLElement, labels: Labels, topDialog: () =>
     if (!current) return;
     current.started = Date.now();
     current.timer = window.setTimeout(dismiss, current.remaining);
+    current.element.classList.remove('is-paused');
   }
 
   function pause() {
     if (!current) return;
     window.clearTimeout(current.timer);
     current.remaining = Math.max(1500, current.remaining - (Date.now() - current.started));
+    current.element.classList.add('is-paused');
   }
 
   function show(options: ToastOptions) {
@@ -55,7 +57,7 @@ export function createToasts(root: HTMLElement, labels: Labels, topDialog: () =>
     const element = document.createElement('div');
     element.className = `lc-toast lc-toast--${options.tone ?? 'success'}`;
     const iconName = options.tone === 'warning' ? 'lock' : options.tone === 'info' ? 'check' : 'delivered';
-    element.innerHTML = `${icon(iconName, 'lc-icon lc-toast__icon')}<p class="lc-toast__text">${esc(options.message)}</p>${options.undo ? `<button type="button" class="lc-toast__undo" data-toast-undo>${esc(labels.undo)}</button>` : ''}<button type="button" class="lc-iconbtn lc-iconbtn--sm lc-toast__close" data-toast-close aria-label="${esc(labels.dismiss)}">${icon('close')}</button>`;
+    element.innerHTML = `${icon(iconName, 'lc-icon lc-toast__icon')}<p class="lc-toast__text">${esc(options.message)}</p>${options.undo ? `<button type="button" class="lc-toast__undo" data-toast-undo>${esc(labels.undo)}</button>` : ''}<button type="button" class="lc-iconbtn lc-iconbtn--sm lc-toast__close" data-toast-close aria-label="${esc(labels.dismiss)}">${icon('close')}</button><span class="lc-toast__timer" aria-hidden="true"></span>`;
     element.addEventListener('pointerenter', pause);
     element.addEventListener('pointerleave', schedule);
     element.addEventListener('focusin', pause);
@@ -70,6 +72,8 @@ export function createToasts(root: HTMLElement, labels: Labels, topDialog: () =>
     });
     target.append(element);
     current = { element, options, remaining: options.undo ? DURATION : SHORT_DURATION, started: Date.now(), timer: 0 };
+    // The bar under the toast shows how long Undo stays available; it pauses with the timer.
+    element.style.setProperty('--lc-toast-ms', `${current.remaining}ms`);
     schedule();
   }
 

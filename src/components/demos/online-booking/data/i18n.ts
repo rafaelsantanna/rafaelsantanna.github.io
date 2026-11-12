@@ -20,6 +20,7 @@ const ptClient = {
   todayTag: 'Hoje',
   tomorrowTag: 'Amanhã',
   whenAt: '{day}, às {time}',
+  timeRange: '{start} às {end}',
   openNow: 'Aberto agora, fecha às {time}',
   closedNow: 'Fechado agora, abre {when} às {time}',
   nextWith: 'com {name}',
@@ -93,6 +94,9 @@ const ptClient = {
     when: 'Esperamos você {day}, às {time}, com {barber}.',
     code: 'Código',
     date: 'Dia e horário',
+    barber: 'Profissional',
+    time: 'Horário',
+    stamp: 'Confirmado',
     services: 'Serviços',
     duration: 'Duração',
     total: 'Total',
@@ -156,6 +160,7 @@ const enClient: ClientStrings = {
   todayTag: 'Today',
   tomorrowTag: 'Tomorrow',
   whenAt: '{day} at {time}',
+  timeRange: '{start} to {end}',
   openNow: 'Open now, closes at {time}',
   closedNow: 'Closed now, opens {when} at {time}',
   nextWith: 'with {name}',
@@ -229,6 +234,9 @@ const enClient: ClientStrings = {
     when: 'See you {day} at {time} with {barber}.',
     code: 'Code',
     date: 'Day and time',
+    barber: 'Barber',
+    time: 'Time',
+    stamp: 'Confirmed',
     services: 'Services',
     duration: 'Duration',
     total: 'Total',
@@ -286,7 +294,6 @@ const pt = {
   ctaShort: 'Agendar',
   booked: { label: 'Seu horário', details: 'Ver detalhes', agenda: 'Ver na agenda' },
   hero: {
-    eyebrow: 'Barbearia de bairro, agenda online',
     title: 'Cadeira reservada,',
     accent: 'prosa garantida.',
     lede: 'Corte, barba e acabamento com hora marcada de verdade. Você escolhe o serviço, o barbeiro e o horário que cabe no seu dia, sem esperar ninguém responder mensagem.',
@@ -297,7 +304,6 @@ const pt = {
     nextTake: 'Quero esse horário',
   },
   services: {
-    eyebrow: 'Serviços',
     title: 'O cardápio da casa',
     lede: 'A duração de cada serviço é o que a agenda usa para calcular os horários livres.',
     book: 'Agendar',
@@ -306,7 +312,6 @@ const pt = {
     price: 'Preço',
   },
   team: {
-    eyebrow: 'Equipe',
     title: 'Três cadeiras, cada uma em boas mãos.',
     lede: 'Escolha pelo nome ou deixe a agenda chamar o primeiro livre. Cada barbeiro tem os seus dias e a sua pausa para o almoço.',
     days: 'Atende',
@@ -315,7 +320,6 @@ const pt = {
     dayInitials: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'],
   },
   how: {
-    eyebrow: 'Como funciona',
     title: 'Três passos e a cadeira é sua.',
     steps: [
       { title: 'Escolha os serviços', text: 'Junte corte, barba ou acabamento. A agenda soma a duração e o valor na hora.' },
@@ -324,7 +328,6 @@ const pt = {
     ],
   },
   book: {
-    eyebrow: 'Agendar',
     title: 'Horário marcado é horário respeitado.',
     text: 'Escolha o serviço e veja na hora os horários livres de cada barbeiro nos próximos 14 dias.',
     hoursTitle: 'Horário de funcionamento',
@@ -338,7 +341,6 @@ const pt = {
   },
   demoNote: 'Demonstração: nenhum horário é reservado de verdade e seus dados ficam só neste navegador.',
   agenda: {
-    eyebrow: 'Do outro lado do balcão',
     title: 'Agenda da barbearia',
     lede: 'É assim que a equipe vê o dia: uma coluna por barbeiro, os atendimentos de exemplo em tom neutro e o seu horário em destaque. Os números saem dos mesmos dados que calculam os horários livres.',
     nojs: 'A agenda é montada no seu navegador a partir da data de hoje. Ative o JavaScript para ver.',
@@ -411,7 +413,6 @@ const en: Strings = {
   ctaShort: 'Book',
   booked: { label: 'Your booking', details: 'See details', agenda: 'See on schedule' },
   hero: {
-    eyebrow: 'Neighborhood barbershop, online booking',
     title: 'Your chair, booked.',
     accent: 'Good talk, guaranteed.',
     lede: 'Haircuts, beards, and finishing touches with a time that is really yours. Pick the service, the barber, and a time that fits your day, without waiting for anyone to answer a message.',
@@ -422,7 +423,6 @@ const en: Strings = {
     nextTake: 'I want this time',
   },
   services: {
-    eyebrow: 'Services',
     title: 'The house menu',
     lede: 'The length of each service is what the schedule uses to calculate free times.',
     book: 'Book',
@@ -431,7 +431,6 @@ const en: Strings = {
     price: 'Price',
   },
   team: {
-    eyebrow: 'Team',
     title: 'Three chairs, three trusted pairs of hands.',
     lede: 'Choose by name or let the schedule call the first one free. Each barber has their own days and their own lunch break.',
     days: 'Works',
@@ -440,7 +439,6 @@ const en: Strings = {
     dayInitials: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
   },
   how: {
-    eyebrow: 'How it works',
     title: 'Three steps and the chair is yours.',
     steps: [
       { title: 'Pick your services', text: 'Combine a haircut, a beard, or a finishing touch. The schedule adds up time and price instantly.' },
@@ -449,7 +447,6 @@ const en: Strings = {
     ],
   },
   book: {
-    eyebrow: 'Book',
     title: 'A booked time is a respected time.',
     text: "Pick the service and instantly see each barber's free times for the next 14 days.",
     hoursTitle: 'Opening hours',
@@ -463,7 +460,6 @@ const en: Strings = {
   },
   demoNote: 'Demo: no time is actually reserved and your details stay in this browser only.',
   agenda: {
-    eyebrow: 'The other side of the counter',
     title: 'The shop schedule',
     lede: 'This is how the team sees the day: one column per barber, sample appointments in a neutral tone, and yours highlighted. The numbers come from the same data that calculates free times.',
     nojs: "The schedule is built in your browser from today's date. Turn on JavaScript to see it.",

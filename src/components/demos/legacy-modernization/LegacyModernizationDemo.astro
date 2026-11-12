@@ -26,6 +26,7 @@ const facts: Array<[number, string]> = [
   [1, p.facts.modules],
 ];
 const modes = ['legacy', 'compare', 'modern'] as const;
+const metRules = RULE_IDS.filter((id) => evaluation.rules[id] === 'met').length;
 const config = { locale, t };
 ---
 
@@ -36,14 +37,13 @@ const config = { locale, t };
     <div class="vt-wrap">
       <p class="vt-brand"><Fragment set:html={logo} /><span class="vt-brand__name">Ventura</span><span class="vt-brand__dot" aria-hidden="true">·</span><span>{p.module}</span><span class="vt-brand__line">{p.brandLine}</span></p>
       <div class="vt-hero__grid">
-        <div class="vt-hero__copy">
-          <p class="vt-eyebrow">{p.eyebrow}</p>
-          <h1>{p.title}</h1>
+        <h1>{p.title}</h1>
+        <div class="vt-hero__side">
           <p class="vt-hero__lead">{p.lead}</p>
+          <dl class="vt-facts">
+            {facts.map(([value, label]) => <div><dt>{label}</dt><dd>{value}</dd></div>)}
+          </dl>
         </div>
-        <dl class="vt-facts">
-          {facts.map(([value, label]) => <div><dt>{label}</dt><dd>{value}</dd></div>)}
-        </dl>
       </div>
     </div>
   </header>
@@ -66,6 +66,12 @@ const config = { locale, t };
         </div>
         <span class="vt-control__hint" data-role-hint>{fill(p.roleHint, { limit: percent(DISCOUNT_LIMIT.seller, locale) })}</span>
       </div>
+      <a class="vt-pchip" href="#vt-parity-title" data-parity-chip>
+        <span class="vt-pchip__lamp" aria-hidden="true"></span>
+        <span class="vt-pchip__text" data-parity-chip-text>{p.parityChip.agree}</span>
+        <span class="vt-pchip__rules" data-parity-chip-rules>{fill(p.parityChip.rules, { met: metRules, total: RULE_IDS.length })}</span>
+        <span class="vt-sr-only">{p.parityChip.label}</span>
+      </a>
       <button type="button" class="vt-btn vt-btn--quiet vt-controls__reset" data-reset><Fragment set:html={icons.reset} /><span>{p.reset}</span></button>
     </div>
   </div>
@@ -83,6 +89,11 @@ const config = { locale, t };
           <p class="vt-stage__scroll-hint">{p.scrollHint}</p>
           <div class="vt-stage__scroll" data-legacy-frame data-region-label={p.scrollRegion}>
             <LegacyScreen locale={locale} t={t} draft={draft} calc={evaluation} role="seller" />
+          </div>
+          <div class="vt-taskbar" aria-hidden="true">
+            <span class="vt-taskbar__start"><svg viewBox="0 0 16 16" width="16" height="16" focusable="false"><rect x="1.5" y="1.5" width="13" height="13" fill="#008080" stroke="#000"/><path d="M4 4.5 8 12l4-7.5" fill="none" stroke="#FFFF00" stroke-width="2"/></svg><b>{p.taskbar.start}</b></span>
+            <span class="vt-taskbar__task">{p.taskbar.task}</span>
+            <span class="vt-taskbar__clock" data-taskbar-clock></span>
           </div>
         </div>
         <div class="vt-stage__pane vt-stage__pane--modern" data-pane="modern">

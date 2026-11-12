@@ -1,56 +1,130 @@
-/* Turno demo stage: what to look for. */
+/* Turno demo stage: what to try. Steps sit on a rail and tick off as the visitor does them. */
 
-/* What to look for. */
+.turno__notes-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-block-end: 0.875rem;
+}
+
 .turno__notes h2 {
-  margin: 0 0 0.875rem;
+  margin: 0;
   font-family: var(--t-display);
   font-size: 1.0625rem;
   font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.turno__notes-count {
+  color: var(--t-ink-3);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
 }
 
 .turno__notes ol {
   display: grid;
-  gap: 1rem;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
 .turno__notes li {
+  position: relative;
   display: grid;
-  grid-template-columns: 1.875rem minmax(0, 1fr);
-  align-content: start;
-  gap: 0.75rem;
+  grid-template-columns: 1.75rem minmax(0, 1fr);
+  gap: 0.875rem;
+  padding-block-end: 0.75rem;
+}
+
+/* The rail between two steps. */
+.turno__notes li:not(:last-child)::before {
+  content: '';
+  position: absolute;
+  inset-block: 1.875rem 0.125rem;
+  inset-inline-start: calc(0.875rem - 1px);
+  inline-size: 2px;
+  border-radius: 1px;
+  background: var(--t-line-2);
+}
+
+.turno__notes li[data-done]:not(:last-child)::before {
+  background: var(--t-green-line);
 }
 
 .turno__note-index {
+  position: relative;
   display: grid;
   place-items: center;
-  inline-size: 1.875rem;
-  block-size: 1.875rem;
-  border: 1.5px solid rgb(36 89 230 / 0.35);
+  inline-size: 1.75rem;
+  block-size: 1.75rem;
+  border: 1.5px solid var(--t-line-2);
   border-radius: 50%;
   background: var(--t-surface);
-  color: var(--t-blue-ink);
+  color: var(--t-ink-2);
   font-family: var(--t-display);
-  font-size: 0.875rem;
+  font-size: 0.8125rem;
   font-weight: 700;
+  transition: background-color 240ms var(--t-ease), border-color 240ms var(--t-ease);
+}
+
+.turno__note-index .t-ico {
+  position: absolute;
+  inline-size: 0.9375rem;
+  block-size: 0.9375rem;
+  stroke-width: 3;
+  color: #fff;
+  opacity: 0;
+  transform: scale(0.4);
+  transition: opacity 200ms var(--t-ease), transform 360ms var(--t-spring);
+}
+
+.turno__notes li[data-done] .turno__note-index {
+  border-color: var(--t-green-fill);
+  background: var(--t-green-fill);
+}
+
+.turno__notes li[data-done] .turno__note-num {
+  opacity: 0;
+}
+
+.turno__notes li[data-done] .turno__note-index .t-ico {
+  opacity: 1;
+  transform: none;
 }
 
 .turno__notes h3 {
-  margin: 0.25rem 0 0.125rem;
+  margin: 0.125rem 0 0.125rem;
   font-size: 0.9375rem;
   font-weight: 700;
+  line-height: 1.35;
+}
+
+.turno__notes li[data-done] h3 {
+  color: var(--t-green);
 }
 
 .turno__notes p {
   margin: 0;
   color: var(--t-ink-2);
-  font-size: 0.875rem;
-  line-height: 1.5;
+  font-size: 0.84375rem;
+  line-height: 1.42;
 }
 
 .turno__sheet-head,
 .turno__scrim {
   display: none;
+}
+
+@media (forced-colors: active) {
+  .turno__notes li[data-done] .turno__note-index {
+    forced-color-adjust: none;
+    border-color: Highlight;
+    background: Highlight;
+  }
+
+  .turno__notes li[data-done] .turno__note-index .t-ico {
+    color: HighlightText;
+  }
 }

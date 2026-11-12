@@ -12,6 +12,7 @@ import { esc } from '../render/html';
 import { renderDriverPicker, renderIssuePicker } from '../render/pickers';
 import type { App } from './app';
 import { byKey } from './dom';
+import { whileSettling } from './flip';
 import { read, remove, STORAGE_KEYS, write } from './persist';
 
 export function announce(app: App, message: string) {
@@ -102,7 +103,11 @@ export function runMutation(app: App, mutation: Mutation, trigger?: HTMLElement 
   const triggerKey = trigger?.closest<HTMLElement>('[data-key]')?.dataset.key;
   const ids = new Set(mutation.ids);
   const delivered = SKIPS_DELIVERED.includes(mutation.type) ? deliveries.filter((delivery) => ids.has(delivery.id) && delivery.status === 'delivered').length : 0;
-  const result = app.store.commit(mutation, { now: app.clock.now, role: ui.role });
+  let result!: ReturnType<App['store']['commit']>;
+  const commit = () => { result = app.store.commit(mutation, { now: app.clock.now, role: ui.role }); };
+  // Resolving or rescheduling settles an exception: the queue shows it leaving as done.
+  if (mutation.type === 'resolve' || mutation.type === 'reschedule') whileSettling(mutation.ids, commit);
+  else commit();
   if (!result.after.length) {
     if (delivered) app.toasts.show({ message: mutation.type === 'reassign' ? app.t.toast.nothingToReassign : app.t.toast.nothingToPrioritize, tone: 'info' });
     return;

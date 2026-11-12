@@ -1,4 +1,5 @@
 ---
+import CompassMark from './CompassMark.astro';
 import Composer from './Composer.astro';
 import Icon from './Icon.astro';
 import type { Lang } from './lib/lang';
@@ -15,8 +16,8 @@ const handoffIndex = t.suggestions.length - 1;
   <h2 class="ka-sr" id="ka-chat-title">{t.chatTitle}</h2>
   <div class="ka-thread" data-ka-thread>
     <div class="ka-empty" data-ka-empty>
-      <p class="ka-empty__eyebrow">{t.emptyEyebrow}</p>
-      <h3 class="ka-empty__title">{titleBefore}<mark class="ka-highlight">{titleMark}</mark>{titleAfter}</h3>
+      <CompassMark class="ka-empty__mark" />
+      <h3 class="ka-empty__title">{titleBefore}<em>{titleMark}</em>{titleAfter}</h3>
       <p class="ka-empty__text">{t.emptyText}</p>
       <p class="ka-honesty ka-honesty--copy" aria-hidden="true"><Icon name="info" />{t.honesty}</p>
       <p class="ka-empty__label" id="ka-suggestions-title">{t.suggestionsTitle}</p>
@@ -26,7 +27,7 @@ const handoffIndex = t.suggestions.length - 1;
             <button type="button" class:list={['ka-suggestion', { 'ka-suggestion--handoff': index === handoffIndex }]} data-ka-suggestion={suggestion.text}>
               <span class="ka-suggestion__tag">{suggestion.tag}</span>
               <span class="ka-suggestion__text">{suggestion.text}</span>
-              <Icon name="send" class="ka-suggestion__icon" />
+              <Icon name="arrow" class="ka-suggestion__icon" />
             </button>
           </li>
         ))}

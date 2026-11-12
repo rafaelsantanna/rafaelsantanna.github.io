@@ -7,13 +7,13 @@ import { derive } from './lib/derive';
 import { fill, formatNumber, plural } from './lib/format';
 import { generateDay } from './lib/generate';
 import { MAP } from './lib/geometry';
-import { createLookup, SORT_KEYS } from './lib/query';
+import { createLookup, SORT_KEYS, statusCounts } from './lib/query';
 import { buildRoutes } from './lib/routes';
 import { DEFAULT_UI } from './lib/store';
 import { SUPERVISOR_HINT_ID, type RenderContext } from './render/context';
 import { renderDriverCards } from './render/drivers';
 import { icon, iconSprite } from './render/html';
-import { renderKpis } from './render/kpis';
+import { renderKpis, renderMix } from './render/kpis';
 import { renderDriverChips, renderMapBase, renderRoutes, renderVehicles } from './render/map';
 import { OVERVIEW_QUEUE_LIMIT, renderKindChips, renderQueue } from './render/queue';
 import { pageCheckState, renderCards, renderHead, renderPagination, renderRange, renderRows, renderStatusChips } from './render/table';
@@ -148,7 +148,10 @@ const lead = fill(t.overview.lead, { total: day.deliveries.length, zones: day.zo
             <button type="button" class="lc-btn lc-js-only" data-action="kpi" data-status="late"><Fragment set:html={icon('late')} /><span>{t.overview.seeLate}</span></button>
           </div>
 
-          <ul class="lc-kpis" aria-label={t.overview.kpis} data-region="kpis" set:html={renderKpis(view.kpis, ctx)} />
+          <div class="lc-pulse">
+            <ul class="lc-kpis" aria-label={t.overview.kpis} data-region="kpis" set:html={renderKpis(view.kpis, ctx)} />
+            <div class="lc-mix" data-region="mix" set:html={renderMix(statusCounts(day.deliveries), ctx)} />
+          </div>
 
           <div class="lc-overview-grid">
             <section class="lc-panel lc-mappanel" aria-labelledby="lc-map-title">
@@ -173,7 +176,7 @@ const lead = fill(t.overview.lead, { total: day.deliveries.length, zones: day.zo
               </div>
               <ul class="lc-legend" aria-label={t.map.legend}>
                 <li><svg viewBox="0 0 16 16" aria-hidden="true"><circle class="lc-legend__vehicle" cx="8" cy="8" r="6" /></svg>{t.map.legendVehicle}</li>
-                <li><svg viewBox="0 0 16 16" aria-hidden="true"><circle class="lc-legend__late" cx="8" cy="8" r="4.5" /></svg>{t.map.legendLate}</li>
+                <li><svg viewBox="0 0 16 16" aria-hidden="true"><circle class="lc-legend__late" cx="8" cy="8" r="5.5" /></svg>{t.map.legendLate}</li>
                 <li><svg viewBox="0 0 16 16" aria-hidden="true"><path class="lc-legend__issue" d="M8 2.5 13.5 12.5H2.5Z" /></svg>{t.map.legendIssue}</li>
                 <li><svg viewBox="0 0 16 16" aria-hidden="true"><rect class="lc-legend__hub" x="2" y="2" width="12" height="12" rx="3" /></svg>{t.map.legendHub}</li>
               </ul>
@@ -189,7 +192,7 @@ const lead = fill(t.overview.lead, { total: day.deliveries.length, zones: day.zo
                 </div>
                 <a class="lc-btn lc-btn--quiet lc-btn--sm" href="#lc-exceptions" data-view-link="exceptions" data-region="queue-all">{fill(t.queue.seeAll, { n: view.queue.length })}</a>
               </div>
-              <ol class="lc-queue" data-region="queue-overview" set:html={renderQueue(view.queue.slice(0, OVERVIEW_QUEUE_LIMIT), ctx, 'ov', t.queue.empty)} />
+              <ol class="lc-queue" data-flip data-region="queue-overview" set:html={renderQueue(view.queue.slice(0, OVERVIEW_QUEUE_LIMIT), ctx, 'ov', t.queue.empty)} />
             </section>
           </div>
         </section>
@@ -286,7 +289,7 @@ const lead = fill(t.overview.lead, { total: day.deliveries.length, zones: day.zo
             </div>
           </div>
           <div class="lc-chips lc-js-only" role="group" aria-label={t.queue.filterLabel} data-region="kind-chips" set:html={renderKindChips(view.queue, '', ctx)} />
-          <ol class="lc-queue lc-queue--grid" data-region="queue-full" set:html={renderQueue(view.queueFiltered, ctx, 'ex', t.queue.empty)} />
+          <ol class="lc-queue lc-queue--grid" data-flip data-region="queue-full" set:html={renderQueue(view.queueFiltered, ctx, 'ex', t.queue.empty)} />
         </section>
       </div>
     </div>
@@ -305,7 +308,20 @@ const lead = fill(t.overview.lead, { total: day.deliveries.length, zones: day.zo
       <kbd class="lc-kbd">Esc</kbd>
     </div>
     <div class="lc-palette__list" id="lc-palette-list" role="listbox" aria-label={t.palette.label} data-region="palette-list"></div>
-    <p class="lc-palette__hint"><span aria-hidden="true">{t.palette.hint}</span><span class="lc-sr" aria-live="polite" data-lc-palette-live></span></p>
+    <div class="lc-palette__foot">
+      <span class="lc-palette__brand" aria-hidden="true">
+        <svg class="lc-brand__mark" viewBox="0 0 32 32" focusable="false"><rect width="32" height="32" rx="8" /><path d="M7.5 22.5c3.2-8.6 8.6-1.8 12.6-9.4" /><circle cx="22.6" cy="11.4" r="2.8" /></svg>
+        {t.brand.product}
+      </span>
+      <p class="lc-palette__hint">
+        <span class="lc-palette__keys" aria-hidden="true">
+          <span><kbd class="lc-kbd"><Fragment set:html={icon('up')} /></kbd><kbd class="lc-kbd"><Fragment set:html={icon('down')} /></kbd>{t.palette.keyMove}</span>
+          <span><kbd class="lc-kbd"><Fragment set:html={icon('enter')} /></kbd>{t.palette.keyOpen}</span>
+          <span><kbd class="lc-kbd">Esc</kbd>{t.palette.keyClose}</span>
+        </span>
+        <span class="lc-sr" aria-live="polite" data-lc-palette-live></span>
+      </p>
+    </div>
   </dialog>
 
   <dialog class="lc-modal lc-keys" data-dialog="shortcuts" aria-labelledby="lc-keys-title">

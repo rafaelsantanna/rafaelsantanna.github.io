@@ -1,22 +1,21 @@
-/* Turno demo stage: desktop stage and the compact layout with the controls sheet. */
+/* Turno demo stage: desktop launch stage and the compact layout with the controls sheet. */
 
-/* Desktop: a presentation stage with the phone as the product shot. */
+/* Desktop: a launch section with the phone as the product shot. */
 @media (min-width: 64rem) {
   .turno {
     display: grid;
     grid-template-columns: minmax(0, 1fr) auto;
-    grid-template-rows: 1fr auto auto auto auto 1fr auto;
+    grid-template-rows: 1fr auto auto auto auto 1fr;
     grid-template-areas:
       '. device'
       'mast device'
       'lede device'
-      'ctrl device'
-      'legend device'
-      '. device'
-      'notes notes';
-    column-gap: clamp(2.5rem, 5vw, 4.5rem);
-    min-block-size: calc(100dvh - 3rem);
-    padding: 1.5rem clamp(1.5rem, 4vw, 3.5rem) 2rem;
+      'console device'
+      'notes device'
+      '. device';
+    column-gap: clamp(2rem, 4vw, 4.5rem);
+    min-block-size: calc(100dvh - 2.75rem);
+    padding: 1.75rem clamp(1.5rem, 4vw, 3.5rem);
   }
 
   .turno__panel {
@@ -25,27 +24,28 @@
 
   .turno__mast {
     grid-area: mast;
-    margin-block-end: 1rem;
   }
 
   .turno__lede {
     grid-area: lede;
-    margin-block-end: 1.25rem;
+    margin-block: 1.25rem 1.75rem;
   }
 
-  .turno__controls {
-    grid-area: ctrl;
-    margin-block-end: 0.75rem;
+  .turno__console {
+    grid-area: console;
+    display: grid;
+    gap: 0.875rem;
   }
 
-  .turno__legend {
-    grid-area: legend;
+  .turno__notes {
+    grid-area: notes;
+    margin-block-start: 2rem;
   }
 
   .turno__mast,
   .turno__lede,
-  .turno__controls,
-  .turno__legend {
+  .turno__console,
+  .turno__notes {
     justify-self: end;
     inline-size: min(100%, 27rem);
   }
@@ -54,27 +54,10 @@
     grid-area: device;
     align-self: center;
   }
-
-  .turno__notes {
-    grid-area: notes;
-    margin-block-start: 2.5rem;
-    padding-block-start: 1.75rem;
-    border-block-start: 1px solid rgb(14 21 37 / 0.1);
-  }
-
-  .turno__notes ol {
-    grid-template-columns: repeat(auto-fit, minmax(10.5rem, 1fr));
-    gap: 1.25rem;
-  }
-
-  .turno__notes li {
-    grid-template-columns: 1fr;
-    gap: 0.5rem;
-  }
 }
 
 /* Short desktop viewports: keep the whole phone in view while the side column scrolls. */
-@media (min-width: 64rem) and (max-height: 50rem) {
+@media (min-width: 64rem) and (max-height: 50rem), (min-width: 64rem) and (max-width: 79.999rem) {
   .turno__device {
     position: sticky;
     inset-block-start: 1rem;
@@ -82,37 +65,43 @@
   }
 }
 
+/* Wide screens: story on the left, the phone in the middle, the demo console on the right. */
 @media (min-width: 80rem) {
   .turno {
     grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
-    grid-template-rows: 1fr auto auto auto auto 1fr;
+    grid-template-rows: 1fr auto auto auto 1fr;
     grid-template-areas:
-      '. device notes'
-      'mast device notes'
-      'lede device notes'
-      'ctrl device notes'
-      'legend device notes'
-      '. device notes';
-    padding-block-end: 1.5rem;
+      '. device .'
+      'mast device console'
+      'lede device console'
+      'notes device console'
+      '. device .';
+  }
+
+  .turno__lede {
+    margin-block: 1rem 0;
+    font-size: 0.9375rem;
   }
 
   .turno__notes {
+    margin-block-start: 1.5rem;
+  }
+
+  .turno__console {
     align-self: center;
     justify-self: start;
-    inline-size: min(100%, 19rem);
-    margin: 0;
-    padding: 0;
-    border: 0;
+    inline-size: min(100%, 23.5rem);
+  }
+}
+
+@media (min-width: 64rem) and (max-height: 50rem) {
+  .turno__tagline {
+    margin-block-start: 0.875rem;
+    font-size: 1.5rem;
   }
 
-  .turno__notes ol {
-    grid-template-columns: 1fr;
-    gap: 1.125rem;
-  }
-
-  .turno__notes li {
-    grid-template-columns: 1.875rem minmax(0, 1fr);
-    gap: 0.75rem;
+  .turno__meta {
+    display: none;
   }
 }
 
@@ -141,12 +130,13 @@
     grid-template-areas: 'brand line button';
     align-items: center;
     column-gap: 0.625rem;
-    padding: 0.375rem 0.5rem 0.375rem 1rem;
+    padding: 0.25rem 0.5rem 0.25rem 1rem;
     border-block-end: 1px solid var(--t-line);
     background: var(--t-surface);
   }
 
-  .turno__eyebrow {
+  .turno__tagline,
+  .turno__meta {
     display: none;
   }
 
@@ -178,16 +168,21 @@
     grid-area: button;
     align-items: center;
     gap: 0.375rem;
-    min-block-size: 48px;
+    min-block-size: 44px;
     padding: 0 0.875rem;
-    border: 1.5px solid var(--t-line-2);
+    border: 0;
     border-radius: 999px;
-    background: var(--t-surface);
-    color: var(--t-ink);
+    background: var(--t-ink);
+    color: #fff;
     font-size: 0.875rem;
     font-weight: 700;
     white-space: nowrap;
     cursor: pointer;
+    transition: transform 160ms var(--t-ease);
+  }
+
+  .turno__sheet-btn:active {
+    transform: scale(0.96);
   }
 
   .turno__sheet-btn .t-ico {
@@ -201,6 +196,11 @@
     padding: 1.25rem 1rem 2rem;
   }
 
+  .turno__console {
+    display: grid;
+    gap: 0.75rem;
+  }
+
   .js .turno__panel {
     position: fixed;
     inset: auto 0 0;
@@ -209,18 +209,18 @@
     overflow-y: auto;
     overscroll-behavior: contain;
     padding: 0 1rem calc(1.5rem + env(safe-area-inset-bottom));
-    border-radius: 24px 24px 0 0;
+    border-radius: 28px 28px 0 0;
     background: var(--t-base);
     box-shadow: 0 -24px 60px -20px rgb(14 21 37 / 0.45);
     transform: translateY(100%);
     visibility: hidden;
-    transition: transform 320ms var(--t-ease), visibility 0s linear 320ms;
+    transition: transform 360ms var(--t-ease), visibility 0s linear 360ms;
   }
 
   .js .turno__panel[data-open] {
     transform: none;
     visibility: visible;
-    transition: transform 320ms var(--t-ease);
+    transition: transform 360ms var(--t-ease);
   }
 
   .js .turno__sheet-head {
@@ -231,7 +231,7 @@
     align-items: center;
     justify-content: space-between;
     margin-inline: -1rem;
-    padding: 1.125rem 0.5rem 0.75rem 1.25rem;
+    padding: 1.25rem 0.5rem 0.75rem 1.25rem;
     background: var(--t-base);
   }
 
@@ -241,8 +241,8 @@
     inset-block-start: 0.5rem;
     inset-inline-start: 50%;
     inline-size: 2.5rem;
-    block-size: 4px;
-    border-radius: 2px;
+    block-size: 5px;
+    border-radius: 3px;
     background: var(--t-line-2);
     transform: translateX(-50%);
   }
@@ -252,6 +252,7 @@
     font-family: var(--t-display);
     font-size: 1.25rem;
     font-weight: 700;
+    letter-spacing: -0.015em;
   }
 
   .turno__sheet-head h2:focus {
@@ -261,8 +262,8 @@
   .turno__close {
     display: grid;
     place-items: center;
-    inline-size: 48px;
-    block-size: 48px;
+    inline-size: 44px;
+    block-size: 44px;
     border: 0;
     border-radius: 50%;
     background: var(--t-muted-fill);
@@ -287,10 +288,9 @@
     display: none;
   }
 
-  .js .turno__controls { order: 1; }
-  .js .turno__legend { order: 2; }
-  .js .turno__lede { order: 3; font-size: 1rem; }
-  .js .turno__notes { order: 4; }
+  .js .turno__console { order: 1; }
+  .js .turno__lede { order: 2; }
+  .js .turno__notes { order: 3; }
 
   .turno__device {
     display: flex;
@@ -343,5 +343,9 @@
     animation-duration: 1ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 1ms !important;
+  }
+
+  .turno[data-sync='sending'] .turno__pulse {
+    opacity: 0;
   }
 }

@@ -2,11 +2,12 @@
 import DemoBar from '@/components/demos/DemoBar.astro';
 import type { DemoProject, Locale } from '@/data/content';
 import { ordersFor, seedFor } from './content/seed';
+import { stageCopy } from './content/stage';
 import { strings } from './content/strings';
 import { WORKDAY_START } from './lib/clock';
 import { countByStatus } from './lib/queue';
 import { buildSeedState } from './lib/state';
-import { createFormatters } from './lib/text';
+import { createFormatters, fill } from './lib/text';
 import { eventStatusIcons } from './views/common';
 import { icon } from './views/icons';
 import { legendOrder, legendStrip } from './views/legend';
@@ -29,6 +30,9 @@ interface Props { locale: Locale; project: DemoProject }
 
 const { locale, project } = Astro.props;
 const s = strings[locale];
+const copy = stageCopy[locale];
+// Each note beside the phone ticks off when the visitor does it (see client/tour).
+const tourSteps = ['offline', 'order', 'error', 'online', 'reload'];
 const orders = ordersFor(locale);
 const seed = seedFor(locale);
 const state = buildSeedState(orders, seed, Date.now());
@@ -40,11 +44,16 @@ const palette = `--t-base: ${project.palette.base}; --t-ink: ${project.palette.i
 ---
 
 <DemoBar locale={locale} project={project} />
-<div class="turno" style={palette} data-turno data-online="true">
+<div class="turno" style={palette} data-turno data-online="true" data-sync="idle">
   <script type="application/json" data-turno-config set:html={config} />
 
+  <svg class="turno__fiber" viewBox="0 0 1440 900" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+    <path class="turno__strand turno__strand--thin" d="M760 300C930 290 960 70 1180 62S1400 80 1480 54" />
+    <path class="turno__strand" d="M760 690C930 700 960 862 1190 858S1400 820 1480 828" />
+    <path class="turno__pulse" d="M760 690C930 700 960 862 1190 858S1400 820 1480 828" pathLength="1000" />
+  </svg>
+
   <header class="turno__mast" data-panel-inert>
-    <p class="turno__eyebrow">{s.stage.eyebrow}</p>
     <div class="turno__brand">
       <span class="turno__logo" aria-hidden="true">
         <svg viewBox="0 0 40 40" width="40" height="40" focusable="false">
@@ -57,6 +66,8 @@ const palette = `--t-base: ${project.palette.base}; --t-ink: ${project.palette.i
       <h1 class="turno__name">{project.name}</h1>
     </div>
     <p class="turno__mastline">{s.stage.mastLine}</p>
+    <p class="turno__tagline">{copy.tagline}</p>
+    <p class="turno__meta">{s.stage.eyebrow}</p>
     <button type="button" class="turno__sheet-btn" data-panel-open aria-expanded="false" aria-controls="turno-panel">
       <Fragment set:html={icon('sliders')} />
       <span>{s.stage.openControls}</span>
@@ -73,53 +84,59 @@ const palette = `--t-base: ${project.palette.base}; --t-ink: ${project.palette.i
 
     <p class="turno__lede">{s.stage.lede}</p>
 
-    <section class="turno__card turno__controls" aria-labelledby="turno-controls-title" data-needs-js>
-      <h2 class="turno__card-title" id="turno-controls-title">{s.stage.controlsTitle}</h2>
-      <div class="turno__switch-row">
-        <div class="turno__switch-text">
-          <span class="turno__switch-label" id="turno-conn-label">{s.stage.connection}</span>
-          <span class="turno__switch-hint" id="turno-conn-hint">{s.stage.connectionHint}</span>
+    <div class="turno__console">
+      <section class="turno__card turno__controls" aria-labelledby="turno-controls-title" data-needs-js>
+        <h2 class="turno__card-title" id="turno-controls-title">{s.stage.controlsTitle}</h2>
+        <div class="turno__switch-row">
+          <span class="turno__switch-icon" aria-hidden="true"><Fragment set:html={icon('signal')} /></span>
+          <div class="turno__switch-text">
+            <span class="turno__switch-label" id="turno-conn-label">{s.stage.connection}</span>
+            <span class="turno__switch-hint" id="turno-conn-hint">{s.stage.connectionHint}</span>
+          </div>
+          <button type="button" role="switch" aria-checked="true" aria-labelledby="turno-conn-label" aria-describedby="turno-conn-hint" class="turno__switch" data-control="connection">
+            <span class="turno__switch-state" data-conn-text aria-hidden="true">{s.stage.online}</span>
+            <span class="turno__switch-track" aria-hidden="true"><span class="turno__switch-thumb"></span></span>
+          </button>
         </div>
-        <button type="button" role="switch" aria-checked="true" aria-labelledby="turno-conn-label" aria-describedby="turno-conn-hint" class="turno__switch" data-control="connection">
-          <span class="turno__switch-state" data-conn-text aria-hidden="true">{s.stage.online}</span>
-          <span class="turno__switch-track" aria-hidden="true"><span class="turno__switch-thumb"></span></span>
-        </button>
-      </div>
-      <div class="turno__buttons">
-        <button type="button" class="turno__btn turno__btn--primary" data-control="sync"><Fragment set:html={icon('sync')} />{s.stage.syncNow}</button>
-        <button type="button" class="turno__btn" data-control="reset"><Fragment set:html={icon('reset')} />{s.stage.reset}</button>
-      </div>
-      <p class="turno__status" data-control-status></p>
-      <p class="turno__local"><Fragment set:html={icon('lock')} /><span>{s.stage.localOnly}</span></p>
-    </section>
+        <div class="turno__buttons">
+          <button type="button" class="turno__btn turno__btn--primary" data-control="sync"><Fragment set:html={icon('sync')} />{s.stage.syncNow}</button>
+          <button type="button" class="turno__btn" data-control="reset"><Fragment set:html={icon('reset')} />{s.stage.reset}</button>
+        </div>
+        <p class="turno__status" data-control-status></p>
+        <p class="turno__local"><Fragment set:html={icon('lock')} /><span>{s.stage.localOnly}</span></p>
+      </section>
 
-    <section class="turno__card turno__legend" aria-labelledby="turno-legend-title" data-needs-js>
-      <div class="turno__legend-head">
-        <h2 class="turno__card-title" id="turno-legend-title">{s.stage.legendTitle}</h2>
-        <span class="turno__live"><span class="turno__live-dot" aria-hidden="true"></span>{s.stage.legendLive}</span>
-      </div>
-      <p class="turno__strip-label" aria-hidden="true">{s.stage.legendNext}</p>
-      <div class="turno__strip" aria-hidden="true" data-legend-strip set:html={legendStrip(s, state.events)} />
-      <ul class="turno__legend-list">
-        {legendOrder.map((status) => (
-          <li data-status={status}>
-            <span class="turno__legend-icon" set:html={icon(eventStatusIcons[status])} />
-            <span class="turno__legend-label">{s.stage.legend[status]}</span>
-            <span class="turno__legend-count" data-legend-count={status}>{counts[status]}</span>
-          </li>
-        ))}
-      </ul>
-      <p class="turno__legend-note">{s.stage.legendNote}</p>
-    </section>
+      <section class="turno__card turno__legend" aria-labelledby="turno-legend-title" data-needs-js>
+        <div class="turno__legend-head">
+          <h2 class="turno__card-title" id="turno-legend-title">{s.stage.legendTitle}</h2>
+          <span class="turno__live"><span class="turno__live-dot" aria-hidden="true"></span>{s.stage.legendLive}</span>
+        </div>
+        <p class="turno__strip-label" aria-hidden="true">{s.stage.legendNext}</p>
+        <div class="turno__strip" aria-hidden="true" data-legend-strip set:html={legendStrip(s, state.events)} />
+        <ul class="turno__legend-list">
+          {legendOrder.map((status) => (
+            <li data-status={status}>
+              <span class="turno__legend-icon" set:html={icon(eventStatusIcons[status])} />
+              <span class="turno__legend-label">{s.stage.legend[status]}</span>
+              <span class="turno__legend-count" data-legend-count={status}>{counts[status]}</span>
+            </li>
+          ))}
+        </ul>
+        <p class="turno__legend-note">{s.stage.legendNote}</p>
+      </section>
+    </div>
 
-    <section class="turno__notes" aria-labelledby="turno-notes-title">
-      <h2 id="turno-notes-title">{s.stage.notesTitle}</h2>
+    <section class="turno__notes" aria-labelledby="turno-notes-title" data-tour data-tour-template={copy.tryProgress} data-tour-done={copy.tryDone}>
+      <div class="turno__notes-head">
+        <h2 id="turno-notes-title">{s.stage.notesTitle}</h2>
+        <span class="turno__notes-count" data-tour-count data-needs-js>{fill(copy.tryProgress, { done: 0, total: s.stage.notes.length })}</span>
+      </div>
       <ol>
         {s.stage.notes.map((note, index) => (
-          <li>
-            <span class="turno__note-index" aria-hidden="true">{index + 1}</span>
+          <li data-tour-step={tourSteps[index]}>
+            <span class="turno__note-index" aria-hidden="true"><span class="turno__note-num">{index + 1}</span><Fragment set:html={icon('check')} /></span>
             <div>
-              <h3>{note.title}</h3>
+              <h3>{note.title}<span class="t-sr" data-tour-sr></span></h3>
               <p>{note.text}</p>
             </div>
           </li>

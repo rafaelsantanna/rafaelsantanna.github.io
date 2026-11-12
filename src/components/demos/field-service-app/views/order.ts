@@ -1,4 +1,4 @@
-import { checklistFor, checklistProgress, missingRequired } from '../lib/checklist';
+import { checklistFor, checklistProgress, isItemDone, missingRequired } from '../lib/checklist';
 import { unsyncedForOrder } from '../lib/queue';
 import { esc, fill, plural } from '../lib/text';
 import type { OrderInfo, OrderProgress } from '../lib/types';
@@ -62,7 +62,7 @@ function hero(ctx: ViewContext, info: OrderInfo): string {
   const km = ctx.f.decimal(info.distanceKm);
   const fact = (label: string, value: string) => `<div><dt>${esc(label)}</dt><dd>${value}</dd></div>`;
   return `<div class="t-hero">
-    <p class="t-hero__type">${icon(typeIcons[info.type])}${esc(ctx.s.common.types[info.type])}</p>
+    <p class="t-hero__type"><span class="t-hero__type-icon">${icon(typeIcons[info.type])}</span>${esc(ctx.s.common.types[info.type])}</p>
     <h2 class="t-title" id="t-screen-title" tabindex="-1">${esc(info.customer)}</h2>
     <dl class="t-facts">
       ${fact(ctx.s.order.facts.window, esc(windowLabel(ctx, info)))}
@@ -76,8 +76,11 @@ function hero(ctx: ViewContext, info: OrderInfo): string {
     <figcaption><span>${esc(ctx.s.order.mapLabel)}</span><span>${esc(fill(ctx.s.order.mapMeta, { km, min: info.etaMin }))}</span></figcaption>
   </figure>
   <div class="t-dispatch">
-    <p class="t-dispatch__title">${icon('note')}${esc(ctx.s.order.dispatch)}</p>
-    <p>${esc(info.note)}</p>
+    <span class="t-dispatch__avatar" aria-hidden="true">${icon('note')}</span>
+    <div class="t-dispatch__bubble">
+      <p class="t-dispatch__title">${esc(ctx.s.order.dispatch)}</p>
+      <p>${esc(info.note)}</p>
+    </div>
   </div>`;
 }
 
@@ -110,7 +113,10 @@ function notesSection(ctx: ViewContext, progress: OrderProgress): string {
 
 function inProgressBody(ctx: ViewContext, info: OrderInfo, progress: OrderProgress, ui: OrderUi): string {
   const bar = progressText(ctx, info, progress);
-  const items = checklistFor(info.type).map((item) => renderChecklistItem(ctx, info, progress, ui, item)).join('');
+  const checklist = checklistFor(info.type);
+  const items = checklist.map((item) => renderChecklistItem(ctx, info, progress, ui, item)).join('');
+  // One segment per item, in checklist order, so the bar mirrors exactly which steps are done.
+  const segments = checklist.map((item) => `<span data-seg="${item.id}" data-done="${isItemDone(progress, item.id)}"></span>`).join('');
   const started = progress.startedAt ? `<p class="t-started">${icon('activity')}<span>${esc(fill(ctx.s.order.startedAt, { time: ctx.f.time(progress.startedAt) }))}</span></p>` : '';
   return `${started}
   <section class="t-checklist" aria-labelledby="t-checklist-title">
@@ -118,7 +124,7 @@ function inProgressBody(ctx: ViewContext, info: OrderInfo, progress: OrderProgre
       <h3 id="t-checklist-title" tabindex="-1" data-key="checklist-title">${esc(ctx.s.order.checklistTitle)}</h3>
       <p data-progress-text>${esc(bar.text)}</p>
     </div>
-    <div class="t-progress" aria-hidden="true"><span data-progress-bar style="inline-size: ${Math.round(bar.ratio * 100)}%"></span></div>
+    <div class="t-progress" aria-hidden="true">${segments}</div>
     <ol class="t-items">${items}</ol>
   </section>
   ${notesSection(ctx, progress)}`;

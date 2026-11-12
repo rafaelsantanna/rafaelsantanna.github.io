@@ -1,7 +1,7 @@
 // Wires the shared store to both screens, the page controls, autosave and the parity panel.
 import type { Locale } from '@/data/types';
 import { exampleDraft } from '../draft.ts';
-import { fill, percent } from '../format.ts';
+import { clock, fill, percent } from '../format.ts';
 import { DISCOUNT_LIMIT, type Role } from '../rules.ts';
 import type { Strings } from '../strings.ts';
 import { clearDraft, createAutosave, loadDraft, type SaveStatus } from './autosave.ts';
@@ -38,7 +38,8 @@ export function boot(): void {
   modern = initModern(must(root, '[data-modern]'), store, context, autosave);
   if (saved) modern.showSaveStatus('restored', saved.savedAt);
   else modern.showSaveStatus('example');
-  initParity(must(root, '[data-parity]'), store, legacy, context);
+  initParity(must(root, '[data-parity]'), must(root, '[data-parity-chip]'), store, legacy, context);
+  must(root, '[data-taskbar-clock]').textContent = clock(new Date(), locale);
   const stage = initStage(root, context);
 
   const roleHint = must(root, '[data-role-hint]');

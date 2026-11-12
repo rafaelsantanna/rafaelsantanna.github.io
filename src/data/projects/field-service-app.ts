@@ -56,7 +56,7 @@ export const project: DemoProject = {
     pt: 'É um protótipo web que simula o app. A conexão, o servidor e as falhas de envio são simulados, o mapa é ilustrativo, a câmera gera a própria imagem e os dados ficam apenas neste navegador. Nada é enviado.',
   },
   disclaimer: demoDisclaimer,
-  palette: { base: '#F7F8FA', ink: '#0E1525', accent: '#2F6BFF' },
+  palette: { base: '#F2F4F8', ink: '#0E1525', accent: '#2F6BFF' },
   device: 'mobile',
   preview: previewFor('field-service-app', {
     en: 'Turno field technician app in a phone frame showing a work order checklist and the offline sync queue',

@@ -3,6 +3,7 @@ import { bookingCode, bookingId } from '../lib/booking';
 import { STEP_IDS, applyCombo, comboFor, emptyDraft, firstOpenStep, reconcile, stepDone, toggleService, totals, type Draft, type FlowContext, type StepId } from '../lib/flow';
 import { fill } from '../lib/format';
 import { buildIcs } from '../lib/ics';
+import { clockLabel } from '../lib/time';
 import { createDialog } from './dialog';
 import { capitalize, h, reducedMotion } from './dom';
 import { bindDetails } from './flow-details';
@@ -97,8 +98,11 @@ export function createFlow(dialog: HTMLDialogElement, env: Omit<FlowEnv, 'contex
   }
 
   function show(index: number, focus = true): void {
+    const target = Math.max(0, Math.min(index, STEP_IDS.length - 1));
+    // The step slides in from the side it comes from.
+    dialog.dataset.dir = mode === 'steps' && target < state.step ? 'back' : 'forward';
     mode = 'steps';
-    state.step = Math.max(0, Math.min(index, STEP_IDS.length - 1));
+    state.step = target;
     notify('');
     showSections();
     buildStep();
@@ -194,6 +198,7 @@ export function createFlow(dialog: HTMLDialogElement, env: Omit<FlowEnv, 'contex
     mode = 'done';
     const clock = schedule.now();
     const firstName = booking.name.split(/\s+/)[0];
+    const barber = schedule.barber(booking.barberId);
     el.done.replaceChildren(
       donePanel(
         {
@@ -201,9 +206,16 @@ export function createFlow(dialog: HTMLDialogElement, env: Omit<FlowEnv, 'contex
           when: fill(t.done.when, {
             day: words.relativeDay(booking.day, clock),
             time: fmt.hour(booking.start),
-            barber: schedule.barber(booking.barberId)?.name ?? '',
+            barber: barber?.name ?? '',
           }),
           code: booking.code,
+          weekday: words.dayTag(booking.day, clock) ?? fmt.weekdayShort(booking.day),
+          dayNumber: fmt.dayNumber(booking.day),
+          month: fmt.monthShort(booking.day),
+          time: clockLabel(booking.start),
+          barber: barber?.name ?? '',
+          barberId: booking.barberId,
+          barberInitials: barber?.initials ?? '',
           services: schedule.serviceNames(booking.serviceIds),
           date: capitalize(fill(t.whenAt, { day: fmt.dayLong(booking.day), time: fmt.hour(booking.start) })),
           duration: fmt.duration(booking.duration),

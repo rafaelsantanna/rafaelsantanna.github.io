@@ -4,7 +4,7 @@ import { localizedBarbers, localizedServices } from '../data/catalog';
 import { strings } from '../data/i18n';
 import { NOTE_MAX } from '../lib/flow';
 import { createFormat, fill } from '../lib/format';
-import { icons } from '../lib/icons';
+import { icons, serviceIcon } from '../lib/icons';
 import BarberAvatar from './BarberAvatar.astro';
 
 interface Props { locale: Locale }
@@ -16,6 +16,8 @@ const fmt = createFormat(t.intl, t.client.format);
 const services = localizedServices(locale);
 const barbers = localizedBarbers(locale);
 const stepIds = ['services', 'barber', 'day', 'time', 'details', 'review'];
+// Monday first, the way a shop week reads.
+const week = [1, 2, 3, 4, 5, 6, 0];
 ---
 
 <dialog class="flow" aria-labelledby="cp-flow-title" data-flow>
@@ -56,7 +58,7 @@ const stepIds = ['services', 'barber', 'day', 'time', 'details', 'review'];
         {services.map((service) => (
           <li>
             <button type="button" class="svc" aria-pressed="false" data-service={service.id} aria-labelledby={`cp-svc-${service.id}-name cp-svc-${service.id}-meta`} aria-describedby={`cp-svc-${service.id}-desc cp-svc-${service.id}-note`}>
-              <span class="svc__check" aria-hidden="true"><Fragment set:html={icons.check} /></span>
+              <span class="svc__icon" aria-hidden="true"><span class="svc__glyph"><Fragment set:html={serviceIcon(service.id)} /></span><span class="svc__tick"><Fragment set:html={icons.check} /></span></span>
               <span class="svc__text">
                 <span class="svc__name" id={`cp-svc-${service.id}-name`}>{service.name}</span>
                 <span class="svc__desc" id={`cp-svc-${service.id}-desc`}>{service.description}</span>
@@ -64,7 +66,7 @@ const stepIds = ['services', 'barber', 'day', 'time', 'details', 'review'];
               </span>
               <span class="svc__meta" id={`cp-svc-${service.id}-meta`}>
                 <span class="svc__price">{fmt.price(service.price)}</span>
-                <span class="svc__time">{fmt.minutes(service.duration)}</span>
+                <span class="svc__time"><Fragment set:html={icons.clock} />{fmt.minutes(service.duration)}</span>
               </span>
             </button>
           </li>
@@ -92,6 +94,9 @@ const stepIds = ['services', 'barber', 'day', 'time', 'details', 'review'];
             <span class="pick__text">
               <span class="pick__name" id={`cp-pick-${barber.id}-name`}>{barber.name}</span>
               <span class="pick__meta" id={`cp-pick-${barber.id}-meta`}>{barber.specialty}. {barber.daysLabel}.</span>
+              <span class="pick__week" aria-hidden="true">
+                {week.map((day) => <span class:list={['pick__day', { 'is-on': barber.days.includes(day) }]}>{t.team.dayInitials[day]}</span>)}
+              </span>
             </span>
             <span class="pick__radio" aria-hidden="true"></span>
           </button>
@@ -166,7 +171,13 @@ const stepIds = ['services', 'barber', 'day', 'time', 'details', 'review'];
       <Fragment set:html={icons.chevronUp} />
     </button>
     <div class="summary__body" id="cp-summary-body">
-      <h3 class="summary__title" id="cp-summary-title">{f.summary.title}</h3>
+      <div class="summary__head">
+        <span class="summary__mark" aria-hidden="true">&amp;</span>
+        <div>
+          <p class="summary__shop" aria-hidden="true">Corte <em>&amp;</em> Prosa</p>
+          <h3 class="summary__title" id="cp-summary-title">{f.summary.title}</h3>
+        </div>
+      </div>
       <dl class="summary__list">
         <div><dt>{f.summary.services}</dt><dd data-sum="services"></dd></div>
         <div><dt>{f.summary.barber}</dt><dd data-sum="barber"></dd></div>
@@ -184,7 +195,7 @@ const stepIds = ['services', 'barber', 'day', 'time', 'details', 'review'];
 
   <div class="flow__actions" data-flow-actions>
     <p class="flow__error" role="alert" data-flow-error></p>
-    <button type="button" class="btn btn--ghost" data-flow-back><Fragment set:html={icons.chevronLeft} />{f.back}</button>
+    <button type="button" class="btn btn--ghost flow__back" data-flow-back><Fragment set:html={icons.chevronLeft} /><span class="flow__back-label">{f.back}</span></button>
     <button type="button" class="btn btn--primary" data-flow-next><span data-label-next>{f.next}</span><span data-label-confirm hidden><span class="flow__long">{f.confirm}</span><span class="flow__short">{f.confirmShort}</span></span><Fragment set:html={icons.arrow} /></button>
   </div>
 

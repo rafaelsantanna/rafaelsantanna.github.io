@@ -1,4 +1,4 @@
-/* Shared controls: buttons, keys, status badges, chips and panels. */
+/* Shared controls: buttons, keys, status badges, chips, checkboxes and panels. */
 .demo-logistics-control {
   /* Buttons */
   .lc-btn {
@@ -10,39 +10,53 @@
     min-height: var(--lc-control);
     padding: 0 12px;
     border: 1px solid var(--lc-line-2);
-    border-radius: 9px;
+    border-radius: var(--lc-radius-sm);
     background: var(--lc-panel);
+    box-shadow: var(--lc-shadow-xs);
     color: var(--lc-ink);
     font-size: 13px;
     font-weight: 600;
     line-height: 1.2;
     text-decoration: none;
     white-space: nowrap;
-    transition: background-color 160ms var(--lc-ease), border-color 160ms var(--lc-ease), color 160ms var(--lc-ease);
+    transition: background-color 160ms var(--lc-ease), border-color 160ms var(--lc-ease), color 160ms var(--lc-ease), transform 120ms var(--lc-ease);
 
-    &:hover { background: var(--lc-sunken); }
-    &:active { transform: translateY(1px); }
+    &:hover { border-color: var(--lc-line-3); background: var(--lc-panel-2); }
+    &:active { transform: scale(0.97); }
     &[aria-disabled='true'] { opacity: 0.45; cursor: default; }
-    &[aria-disabled='true']:hover { background: var(--lc-panel); }
+    &[aria-disabled='true']:hover { border-color: var(--lc-line-2); background: var(--lc-panel); }
+    &[aria-disabled='true']:active { transform: none; }
   }
 
   .lc-btn--primary {
     border-color: transparent;
     background: var(--lc-accent);
+    box-shadow: inset 0 -1px 0 rgb(23 24 28 / 14%), var(--lc-shadow-xs);
     color: var(--lc-on-accent);
 
-    &:hover { background: var(--lc-accent-hover); }
+    &:hover { border-color: transparent; background: var(--lc-accent-hover); }
   }
 
-  .lc-btn--ghost { background: transparent; }
+  /* Softer primary for actions that repeat down a list. */
+  .lc-btn--soft {
+    border-color: transparent;
+    background: var(--lc-accent-soft);
+    box-shadow: none;
+    color: var(--lc-accent-text);
+
+    &:hover { border-color: transparent; background: var(--lc-accent-soft-2); }
+  }
+
+  .lc-btn--ghost { background: transparent; box-shadow: none; }
 
   .lc-btn--quiet {
     border-color: transparent;
     background: transparent;
+    box-shadow: none;
     color: var(--lc-ink-2);
 
-    &:hover { background: color-mix(in srgb, var(--lc-ink) 6%, transparent); color: var(--lc-ink); }
-    &[aria-disabled='true']:hover { background: transparent; }
+    &:hover { border-color: transparent; background: var(--lc-hover); color: var(--lc-ink); }
+    &[aria-disabled='true']:hover { border-color: transparent; background: transparent; }
   }
 
   .lc-btn--sm {
@@ -54,12 +68,15 @@
   /* Locked, not inactive: the dashed border and lock icon say so, and the label stays readable. */
   .lc-btn.is-restricted {
     border-style: dashed;
+    border-color: var(--lc-line-3);
     background: transparent;
+    box-shadow: none;
     color: var(--lc-ink-3);
     opacity: 1;
     cursor: not-allowed;
 
     &:hover { background: transparent; }
+    &:active { transform: none; }
   }
 
   /* Action icon kept for layouts that hide the label (see the bulk bar); hidden while the label shows. */
@@ -73,12 +90,12 @@
     height: var(--lc-control);
     padding: 0;
     border: 1px solid transparent;
-    border-radius: 9px;
+    border-radius: var(--lc-radius-sm);
     background: transparent;
     color: var(--lc-ink-2);
-    transition: background-color 160ms var(--lc-ease);
+    transition: background-color 160ms var(--lc-ease), color 160ms var(--lc-ease);
 
-    &:hover { background: color-mix(in srgb, var(--lc-ink) 7%, transparent); color: var(--lc-ink); }
+    &:hover { background: var(--lc-hover); color: var(--lc-ink); }
     & .lc-icon { width: 18px; height: 18px; }
   }
 
@@ -109,30 +126,39 @@
     font-family: var(--lc-font-mono);
     font-size: 13px;
     font-weight: 600;
-    letter-spacing: -0.01em;
+    letter-spacing: 0.01em;
     text-decoration: underline;
     text-decoration-color: transparent;
-    text-underline-offset: 3px;
+    text-decoration-thickness: 1.5px;
+    text-underline-offset: 4px;
+    transition: text-decoration-color 160ms var(--lc-ease), color 160ms var(--lc-ease);
 
-    &:hover { text-decoration-color: currentColor; }
+    &:hover { color: var(--lc-ink); text-decoration-color: var(--lc-accent); }
   }
 
   .lc-kbd {
-    display: inline-block;
-    min-width: 20px;
-    padding: 1px 6px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    min-width: 22px;
+    height: 22px;
+    padding: 0 6px;
     border: 1px solid var(--lc-line-2);
-    border-bottom-width: 2px;
     border-radius: 6px;
-    background: var(--lc-panel-2);
+    background: var(--lc-panel);
+    box-shadow: inset 0 -1px 0 var(--lc-line-2);
     color: var(--lc-ink-2);
-    font-family: var(--lc-font-mono);
+    font-family: var(--lc-font-ui);
     font-size: 11.5px;
-    line-height: 1.5;
+    font-weight: 600;
+    line-height: 1;
     text-align: center;
+
+    & .lc-icon { width: 12px; height: 12px; }
   }
 
-  /* Status badge */
+  /* Status badge: icon shape plus color, never color alone. */
   .lc-status {
     display: inline-flex;
     align-items: center;
@@ -181,23 +207,28 @@
     display: inline-flex;
     align-items: center;
     gap: 7px;
-    min-height: max(32px, var(--lc-control));
+    min-height: max(34px, var(--lc-control));
     padding: 0 6px 0 11px;
     border: 1px solid var(--lc-line-2);
     border-radius: 999px;
     background: var(--lc-panel);
+    box-shadow: var(--lc-shadow-xs);
     color: var(--lc-ink-2);
     font-size: 13px;
-    font-weight: 560;
+    font-weight: 600;
     white-space: nowrap;
-    transition: background-color 160ms var(--lc-ease), border-color 160ms var(--lc-ease);
+    transition: background-color 180ms var(--lc-ease), border-color 180ms var(--lc-ease), color 180ms var(--lc-ease), transform 120ms var(--lc-ease);
 
-    &:hover { border-color: color-mix(in srgb, var(--lc-ink) 34%, transparent); }
+    &:hover { border-color: var(--lc-line-3); color: var(--lc-ink); }
+    &:active { transform: scale(0.97); }
     & .lc-chip__icon { width: 15px; height: 15px; }
 
     &[aria-pressed='true'] {
       border-color: currentColor;
-      font-weight: 650;
+      box-shadow: none;
+      font-weight: 600;
+
+      & .lc-chip__icon { animation: lc-check-pop 240ms var(--lc-ease); }
     }
   }
 
@@ -205,11 +236,12 @@
     min-width: 24px;
     padding: 1px 7px;
     border-radius: 999px;
-    background: color-mix(in srgb, var(--lc-ink) 7%, transparent);
+    background: var(--lc-sunken);
     color: var(--lc-ink-2);
     font-size: 12px;
     font-weight: 600;
     text-align: center;
+    transition: background-color 180ms var(--lc-ease), color 180ms var(--lc-ease);
   }
 
   .lc-chip--all, .lc-chip--route, .lc-chip--late, .lc-chip--issue, .lc-chip--delivered, .lc-chip--awaiting { padding-left: 11px; }
@@ -227,12 +259,53 @@
   .lc-chip--all[aria-pressed='true'] .lc-chip__count { background: color-mix(in srgb, var(--lc-on-invert) 16%, transparent); color: var(--lc-on-invert); }
   .lc-chip[aria-pressed='true'] .lc-chip__count { background: color-mix(in srgb, currentColor 14%, transparent); color: inherit; }
 
+  /* Checkbox, drawn from the palette; :indeterminate covers the partial page selection. */
+  .lc-check {
+    position: relative;
+    display: inline-grid;
+    place-items: center;
+    flex: 0 0 auto;
+    width: 18px;
+    height: 18px;
+    margin: 0;
+    border: 1.5px solid var(--lc-line-3);
+    border-radius: 5px;
+    background: var(--lc-panel);
+    appearance: none;
+    cursor: pointer;
+    vertical-align: middle;
+    transition: background-color 140ms var(--lc-ease), border-color 140ms var(--lc-ease);
+
+    &::after {
+      content: '';
+      width: 10px;
+      height: 10px;
+      background: var(--lc-on-check);
+      clip-path: polygon(14% 44%, 0 59%, 39% 96%, 100% 22%, 85% 8%, 38% 66%);
+      opacity: 0;
+      transform: scale(0.5);
+      transition: opacity 140ms var(--lc-ease), transform 200ms var(--lc-ease);
+    }
+
+    &:hover { border-color: var(--lc-ink-3); }
+
+    &:checked, &:indeterminate {
+      border-color: var(--lc-check);
+      background: var(--lc-check);
+
+      &::after { opacity: 1; transform: none; }
+    }
+
+    &:indeterminate::after { height: 2px; clip-path: none; border-radius: 1px; }
+  }
+
   /* Panels */
   .lc-panel {
     min-width: 0;
     border: 1px solid var(--lc-line);
     border-radius: var(--lc-radius);
     background: var(--lc-panel);
+    box-shadow: var(--lc-shadow-sm);
   }
 
   .lc-panel__head {
@@ -244,6 +317,9 @@
   }
 
   .lc-panel__title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
     font-family: var(--lc-font-display);
     font-size: 15.5px;
     font-weight: 620;
@@ -257,7 +333,7 @@
   }
 }
 
-/* Forced colors drop backgrounds, so pressed chips use the system highlight. */
+/* Forced colors drop backgrounds, so pressed chips use the system highlight and checkboxes stay native. */
 @media (forced-colors: active) {
   .demo-logistics-control .lc-chip[aria-pressed='true'] {
     forced-color-adjust: none;
@@ -268,4 +344,11 @@
     & .lc-chip__icon { color: inherit; }
     & .lc-chip__count { background: Canvas; color: CanvasText; }
   }
+
+  .demo-logistics-control .lc-check { appearance: auto; }
+  .demo-logistics-control .lc-check::after { display: none; }
+}
+
+@keyframes lc-check-pop {
+  from { transform: scale(0.4); opacity: 0; }
 }

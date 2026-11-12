@@ -19,7 +19,7 @@ export function mapSvg(orderId: string, label: string): string {
     <path class="t-map__road t-map__road--main" d="M0 34H340M0 88H340M70 0V128M150 0V128M230 0V128M300 0V128"/>
     <path class="t-map__road" d="M0 61H70M150 61H230M230 14H340M300 61H340M110 0V34M110 88V128M190 88V128M265 34V88"/>
     <path class="t-map__route-casing" d="${route.path}"/>
-    <path class="t-map__route" d="${route.path}"/>
+    <path class="t-map__route" d="${route.path}" pathLength="1"/>
     <circle class="t-map__me-halo" cx="${sx}" cy="${sy}" r="12"/>
     <circle class="t-map__me" cx="${sx}" cy="${sy}" r="6.5"/>
     <path class="t-map__pin" d="M${ex} ${ey + 1}c-1.6-3.2-8-8.6-8-14a8 8 0 0 1 16 0c0 5.4-6.4 10.8-8 14Z"/>

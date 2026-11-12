@@ -64,9 +64,13 @@ export function errorHtml(message: string): string {
   return message ? `${icons.alertCircle}<span>${esc(message)}</span>` : '';
 }
 
+const initials = (name: string) => name.split(' ').slice(0, 2).map((word) => word[0]).join('');
+const categoryDot = (product: Product) => `<span class="vt-cat vt-cat--${product.category}" aria-hidden="true"></span>`;
+
 export function customerOptions(list: Customer[], terms: string[], locale: Locale): string {
   return list.map((customer) => `
     <li class="vt-opt" role="option" id="vt-m-co-${esc(customer.id)}" data-value="${esc(customer.id)}" aria-selected="false">
+      <span class="vt-opt__avatar vt-region--${customer.region}" aria-hidden="true">${esc(initials(customer.name))}</span>
       <span class="vt-opt__main">
         <span class="vt-opt__name">${highlight(customer.name, terms)}</span>
         <span class="vt-opt__meta"><span class="vt-mono">${highlight(customer.id, terms)}</span> · ${highlight(`${customer.city}/${customer.state}`, terms)} · ${esc(regions[customer.region][locale])}</span>
@@ -82,7 +86,7 @@ export function productOptions(list: Product[], terms: string[], locale: Locale,
     <li class="vt-opt${out ? ' is-out' : ''}" role="option" id="vt-m-po-${esc(product.sku)}" data-value="${esc(product.sku)}" aria-selected="false"${out ? ' aria-disabled="true"' : ''}>
       <span class="vt-opt__main">
         <span class="vt-opt__name">${highlight(product.name[locale], terms)}</span>
-        <span class="vt-opt__meta"><span class="vt-mono">${highlight(product.sku, terms)}</span> · ${esc(units[product.unit].name[locale])} · ${highlight(categories[product.category].name[locale], terms)}</span>
+        <span class="vt-opt__meta"><span class="vt-mono">${highlight(product.sku, terms)}</span> · ${esc(units[product.unit].name[locale])} · ${categoryDot(product)}${highlight(categories[product.category].name[locale], terms)}</span>
       </span>
       <span class="vt-opt__side">
         <span class="vt-opt__price">${money(product.price, locale)}</span>
@@ -104,7 +108,7 @@ export function customerCard(evaluation: Evaluation, locale: Locale, t: Strings)
   ];
   return `
     <div class="vt-m-customer__card">
-      <span class="vt-m-customer__avatar" aria-hidden="true">${esc(customer.name.split(' ').slice(0, 2).map((word) => word[0]).join(''))}</span>
+      <span class="vt-m-customer__avatar vt-region--${customer.region}" aria-hidden="true">${esc(initials(customer.name))}</span>
       <div class="vt-m-customer__body">
         <p class="vt-m-customer__name">${esc(customer.name)}</p>
         <dl class="vt-m-customer__facts">${facts.map(([label, value, mono]) => `<div><dt>${esc(label)}</dt><dd${mono ? ' class="vt-mono"' : ''}>${esc(value)}</dd></div>`).join('')}</dl>
@@ -137,7 +141,7 @@ function itemRow(line: LineResult, raw: string, visibility: Visibility, locale: 
     <tr class="vt-line${message ? ' is-invalid' : ''}" role="row" data-line="${esc(line.key)}">
       <th class="vt-line__product" role="rowheader" scope="row">
         <span class="vt-line__name">${esc(name)}</span>
-        <span class="vt-line__meta"><span class="vt-mono">${esc(line.product.sku)}</span> · ${esc(units[line.product.unit].name[locale])} · ${esc(line.product.stock ? fill(i.stock, { n: line.product.stock }) : i.outOfStock)}</span>
+        <span class="vt-line__meta">${categoryDot(line.product)}<span class="vt-mono">${esc(line.product.sku)}</span> · ${esc(units[line.product.unit].name[locale])} · ${esc(line.product.stock ? fill(i.stock, { n: line.product.stock }) : i.outOfStock)}</span>
         <span class="vt-field-error vt-line__error" id="${lineErrorId(line.key)}" data-line-error${message ? '' : ' hidden'}>${errorHtml(message)}</span>
       </th>
       <td class="vt-line__price" role="cell"><span class="vt-line__label">${esc(i.columns.price)}</span>${money(line.product.price, locale)}</td>
@@ -223,6 +227,21 @@ export function issueLinks(evaluation: Evaluation, locale: Locale, t: Strings): 
   });
 }
 
+/** Progress toward free shipping, for regions that have a threshold. */
+function freeShipping(evaluation: Evaluation, locale: Locale, t: Strings): string {
+  const shipping = evaluation.shipping;
+  if (!shipping || shipping.freeFrom === null) return '';
+  const terms = t.modern.terms;
+  const reached = shipping.missingForFree === null;
+  const ratio = Math.max(0, Math.min(1, evaluation.goods / shipping.freeFrom));
+  const text = reached ? terms.freeApplied : fill(terms.missingFree, { missing: money(shipping.missingForFree ?? 0, locale) });
+  return `
+    <div class="vt-sum__free${reached ? ' is-reached' : ''}">
+      <p>${icons.truck}<span>${esc(text)}</span></p>
+      <span class="vt-sum__free-track" aria-hidden="true"><span style="transform:scaleX(${ratio.toFixed(3)})"></span></span>
+    </div>`;
+}
+
 export function summaryBody(evaluation: Evaluation, view: View, locale: Locale, t: Strings): string {
   const s = t.modern.summary;
   const i = t.modern.items;
@@ -251,6 +270,7 @@ export function summaryBody(evaluation: Evaluation, view: View, locale: Locale, 
       <div><dt>${esc(shippingLabel)}</dt><dd>${shippingValue}</dd></div>
       <div class="vt-sum__total"><dt>${esc(s.total)}</dt><dd>${money(evaluation.total, locale)}</dd></div>
     </dl>
+    ${freeShipping(evaluation, locale, t)}
     <p class="vt-sum__payment"><span>${esc(s.payment)}</span><strong>${customer ? esc(paymentTerms[customer.paymentTerm].name[locale]) : esc(s.pending)}</strong></p>
     ${status}`;
 }

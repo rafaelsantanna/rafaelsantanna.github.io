@@ -3,7 +3,7 @@ import type { Locale } from '@/data/types';
 import { localizedServices } from '../data/catalog';
 import { strings } from '../data/i18n';
 import { createFormat, fill } from '../lib/format';
-import { icons } from '../lib/icons';
+import { icons, serviceIcon } from '../lib/icons';
 
 interface Props { locale: Locale }
 
@@ -16,16 +16,13 @@ const services = localizedServices(locale);
 <section class="services paper" id="servicos" aria-labelledby="cp-services-title">
   <div class="wrap">
     <header class="section-head section-head--split">
-      <div>
-        <p class="eyebrow">{t.services.eyebrow}</p>
-        <h2 id="cp-services-title">{t.services.title}</h2>
-      </div>
+      <h2 id="cp-services-title">{t.services.title}</h2>
       <p class="section-head__lede">{t.services.lede}</p>
     </header>
     <ul class="menu" role="list">
-      {services.map((service, index) => (
+      {services.map((service) => (
         <li class="menu__item">
-          <span class="menu__num" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+          <span class="menu__icon" aria-hidden="true"><Fragment set:html={serviceIcon(service.id)} /></span>
           <div class="menu__body">
             <h3 class="menu__name">{service.name}</h3>
             <p class="menu__desc">{service.description}</p>

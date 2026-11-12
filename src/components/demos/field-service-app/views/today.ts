@@ -51,28 +51,34 @@ function summary(ctx: ViewContext): string {
     : upcoming
       ? fill(ctx.s.today.next, { time: upcoming.start, customer: upcoming.customer, place: upcoming.neighborhood })
       : ctx.s.today.allDone;
+  const target = active ?? upcoming;
+  // The next job is one tap away; once the day is done the line is plain text.
+  const next = target
+    ? `<button type="button" class="t-summary__next" data-action="open-order" data-order="${target.id}" data-key="summary-next" data-tone="${active ? 'active' : 'next'}"><span class="t-summary__next-icon" aria-hidden="true">${icon(active ? 'activity' : 'pin')}</span><span class="t-summary__next-text">${esc(nextText)}</span>${icon('chevronRight', 't-summary__next-chev')}</button>`
+    : `<p class="t-summary__next" data-tone="done"><span class="t-summary__next-icon" aria-hidden="true">${icon('check')}</span><span class="t-summary__next-text">${esc(nextText)}</span></p>`;
   return `<div class="t-summary">
     <p class="t-summary__count"><span class="t-summary__big">${esc(fill(ctx.s.today.summaryCount, { done, total: statuses.length }))}</span> <span class="t-summary__label">${esc(ctx.s.today.summaryLabel)}</span></p>
     <div class="t-summary__bar" aria-hidden="true">${segments}</div>
     <ul class="t-summary__legend">${legend}</ul>
-    <p class="t-summary__next">${icon(active ? 'activity' : upcoming ? 'pin' : 'check')}<span>${esc(nextText)}</span></p>
+    ${next}
   </div>`;
 }
 
 function orderCard(ctx: ViewContext, order: OrderInfo): string {
   const status = ctx.state.orders[order.id].status;
   const pending = orderPendingText(ctx, order.id);
-  return `<li><button type="button" class="t-order t-order--${status}" data-action="open-order" data-order="${order.id}" data-key="order-${order.id}">
+  return `<li class="t-orders__item" data-status="${status}"><button type="button" class="t-order t-order--${status}" data-action="open-order" data-order="${order.id}" data-key="order-${order.id}">
     <span class="t-order__time" aria-hidden="true"><span class="t-order__start">${order.start}</span><span class="t-order__end">${order.end}</span></span>
-    <span class="t-order__body">
+    <span class="t-order__node" aria-hidden="true">${status === 'done' ? icon('check') : ''}</span>
+    <span class="t-order__card">
       <span class="t-sr">${esc(windowLabel(ctx, order))}, </span>
-      <span class="t-order__type">${icon(typeIcons[order.type])}${esc(ctx.s.common.types[order.type])}</span>
+      <span class="t-order__type"><span class="t-order__type-icon">${icon(typeIcons[order.type])}</span>${esc(ctx.s.common.types[order.type])}</span>
       <span class="t-order__customer">${esc(order.customer)}</span>
       <span class="t-order__place">${esc(order.neighborhood)} · ${esc(orderLabel(ctx, order.id))}</span>
       <span class="t-order__chips">${orderStatusChip(ctx, status)}${priorityChip(ctx, order.priority)}</span>
       <span class="t-order__pending" data-order-pending="${order.id}"${pending ? '' : ' hidden'}>${icon('queue')}<span data-order-pending-text>${esc(pending)}</span></span>
+      <span class="t-order__chev">${icon('chevronRight')}</span>
     </span>
-    <span class="t-order__chev">${icon('chevronRight')}</span>
   </button></li>`;
 }
 
@@ -85,7 +91,10 @@ function header(ctx: ViewContext): string {
       <p class="t-overline">${esc(overline)}</p>
       <button type="button" class="t-pill t-pill--${pill.tone}" data-action="tab" data-tab="queue" data-pill data-key="pill">${pill.html}</button>
     </div>
-    <h2 class="t-title" id="t-screen-title" tabindex="-1">${esc(greeting(ctx))}</h2>
+    <div class="t-head__title-row">
+      <h2 class="t-title" id="t-screen-title" tabindex="-1">${esc(greeting(ctx))}</h2>
+      <span class="t-avatar t-avatar--sm" aria-hidden="true">${esc(ctx.s.technician.initials)}</span>
+    </div>
   </header>`;
 }
 

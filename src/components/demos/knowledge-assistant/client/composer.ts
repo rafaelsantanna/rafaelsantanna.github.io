@@ -1,6 +1,6 @@
 import type { Ctx } from './context';
 
-/** Question box: Enter sends, Shift+Enter adds a line, empty questions get a gentle hint. */
+/** Question box: Enter sends, Shift+Enter adds a line, "/" focuses it, empty questions get a gentle hint. */
 export function createComposer(root: HTMLElement, ctx: Ctx, onSubmit: (question: string) => void, announce: (message: string) => void) {
   const { t } = ctx;
   const input = root.querySelector<HTMLTextAreaElement>('[data-ka-input]');
@@ -19,7 +19,7 @@ export function createComposer(root: HTMLElement, ctx: Ctx, onSubmit: (question:
   function setWarning(on: boolean): void {
     if (!hint) return;
     hint.textContent = on ? t.hintEmpty : t.hint;
-    hint.parentElement?.classList.toggle('is-warning', on);
+    hint.classList.toggle('is-warning', on);
   }
 
   function trySubmit(): void {
@@ -46,6 +46,14 @@ export function createComposer(root: HTMLElement, ctx: Ctx, onSubmit: (question:
     trySubmit();
   });
   send?.addEventListener('click', trySubmit);
+  // "/" jumps to the question box from anywhere outside a text field or open dialog.
+  document.addEventListener('keydown', (event) => {
+    if (event.key !== '/' || event.ctrlKey || event.metaKey || event.altKey || event.defaultPrevented || !input || input.disabled) return;
+    const target = event.target as HTMLElement | null;
+    if (target?.closest('input, textarea, select, [contenteditable], dialog[open]') || root.querySelector('dialog[open]')) return;
+    event.preventDefault();
+    input.focus();
+  });
   updateCount();
 
   return {

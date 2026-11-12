@@ -17,32 +17,40 @@ const rules = rulesHtml(evaluation, locale, t);
 <section class="vt-parity" aria-labelledby="vt-parity-title" data-parity>
   <div class="vt-wrap">
     <div class="vt-parity__intro">
-      <p class="vt-eyebrow">{p.eyebrow}</p>
-      <h2 id="vt-parity-title">{p.title}</h2>
-      <p class="vt-parity__lead">{p.lead}</p>
-      <p class="vt-code" aria-hidden="true"><code><span class="vt-code__kw">evaluateOrder</span>(order, role)</code><span class="vt-code__note">rules.ts</span></p>
+      <div class="vt-parity__copy">
+        <h2 id="vt-parity-title">{p.title}</h2>
+        <p class="vt-parity__lead">{p.lead}</p>
+      </div>
+      <div class="vt-flow" aria-hidden="true" data-flow>
+        <span class="vt-flow__node vt-flow__node--legacy">{p.flow.legacy}</span>
+        <span class="vt-flow__wire"><span class="vt-flow__pulse"></span></span>
+        <span class="vt-flow__fn"><code><b>evaluateOrder</b>(order, role)</code><span>rules.ts · {p.flow.fn}</span></span>
+        <span class="vt-flow__wire vt-flow__wire--in"><span class="vt-flow__pulse"></span></span>
+        <span class="vt-flow__node vt-flow__node--modern">{p.flow.modern}</span>
+      </div>
     </div>
     <div class="vt-parity__grid">
-      <div class="vt-panel">
+      <div class="vt-panel vt-panel--board">
         <p class:list={['vt-parity__verdict', { 'is-different': !parity.agree }]} data-parity-verdict set:html={parity.verdict} />
         <table class="vt-parity__table" role="table">
           <caption class="vt-sr-only">{p.caption}</caption>
           <thead role="rowgroup">
             <tr role="row">
               <th scope="col" role="columnheader">{p.columns.value}</th>
-              <th scope="col" role="columnheader">{p.columns.legacy}</th>
-              <th scope="col" role="columnheader">{p.columns.modern}</th>
-              <th scope="col" role="columnheader">{p.columns.check}</th>
+              <th scope="col" role="columnheader" class="vt-parity__legacy">{p.columns.legacy}</th>
+              <th scope="col" role="columnheader" class="vt-parity__check"><span class="vt-sr-only">{p.columns.check}</span></th>
+              <th scope="col" role="columnheader" class="vt-parity__modern">{p.columns.modern}</th>
             </tr>
           </thead>
           <tbody role="rowgroup" data-parity-rows set:html={parity.rows} />
         </table>
       </div>
-      <div class="vt-panel">
+      <div class="vt-panel vt-panel--rules">
         <div class="vt-panel__head">
           <h3>{p.rulesTitle}</h3>
           <p class="vt-panel__count" data-rules-count>{rules.count}</p>
         </div>
+        <span class="vt-segbar" aria-hidden="true" data-rules-bar set:html={rules.bar} />
         <ol class="vt-rules" data-rules-list set:html={rules.list} />
       </div>
     </div>

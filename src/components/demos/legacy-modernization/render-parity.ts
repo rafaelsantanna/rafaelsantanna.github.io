@@ -50,7 +50,7 @@ function rows(legacy: LegacyReading, modern: Evaluation, locale: Locale, t: Stri
   ];
 }
 
-export function parityHtml(legacy: LegacyReading, modern: Evaluation, locale: Locale, t: Strings): { rows: string; verdict: string; agree: boolean } {
+export function parityHtml(legacy: LegacyReading, modern: Evaluation, locale: Locale, t: Strings): { rows: string; verdict: string; agree: boolean; differences: number } {
   const p = t.parity;
   const list = rows(legacy, modern, locale, t);
   const differences = list.filter((row) => !row.equal).length;
@@ -58,15 +58,15 @@ export function parityHtml(legacy: LegacyReading, modern: Evaluation, locale: Lo
   const body = list.map((row) => `
     <tr class="${row.equal ? 'is-equal' : 'is-different'}" role="row">
       <th scope="row" role="rowheader">${esc(row.label)}</th>
-      <td role="cell" data-label="${esc(p.columns.legacy)}">${esc(row.legacy)}</td>
-      <td role="cell" data-label="${esc(p.columns.modern)}">${esc(row.modern)}</td>
-      <td role="cell" class="vt-parity__check"><span class="vt-parity__mark">${row.equal ? icons.check : icons.cross}<span>${esc(row.equal ? p.equal : p.different)}</span></span></td>
+      <td role="cell" class="vt-parity__legacy" data-label="${esc(p.columns.legacy)}"><span class="vt-parity__value">${esc(row.legacy)}</span></td>
+      <td role="cell" class="vt-parity__check"><span class="vt-parity__node" aria-hidden="true">${row.equal ? icons.check : icons.x}</span><span class="vt-sr-only">${esc(row.equal ? p.equal : p.different)}</span></td>
+      <td role="cell" class="vt-parity__modern" data-label="${esc(p.columns.modern)}"><span class="vt-parity__value">${esc(row.modern)}</span></td>
     </tr>`).join('');
   const issueText = modern.issues.length ? count(modern.issues.length, p.agreeIssues) : p.agreeClean;
   const verdict = !differences
     ? `${icons.checkCircle}<span>${esc(fill(p.agree, { total: money(modern.total, locale), issues: issueText }))}</span>`
     : `${icons.alert}<span>${esc(legacy.stale ? p.stale : count(differences, p.disagree))}</span>`;
-  return { rows: body, verdict, agree: differences === 0 };
+  return { rows: body, verdict, agree: differences === 0, differences };
 }
 
 function ruleDetail(id: RuleId, evaluation: Evaluation, locale: Locale, t: Strings): string {
@@ -107,18 +107,20 @@ function ruleDetail(id: RuleId, evaluation: Evaluation, locale: Locale, t: Strin
   }
 }
 
-export function rulesHtml(evaluation: Evaluation, locale: Locale, t: Strings): { list: string; count: string } {
+export function rulesHtml(evaluation: Evaluation, locale: Locale, t: Strings): { list: string; count: string; bar: string; met: number } {
   const p = t.parity;
-  const glyph: Record<RuleStatus, string> = { met: icons.check, unmet: icons.cross, waiting: icons.waiting };
+  const glyph: Record<RuleStatus, string> = { met: icons.check, unmet: icons.x, waiting: '' };
   const list = RULE_IDS.map((id) => {
     const status = evaluation.rules[id];
     const name = fill(p.rules[id], { min: money(MINIMUM_ORDER, locale) });
     return `
-      <li class="vt-rule is-${status}">
-        <span class="vt-rule__status">${glyph[status]}<span>${esc(p.status[status])}</span></span>
+      <li class="vt-rule is-${status}" data-rule="${id}">
+        <span class="vt-rule__lamp" aria-hidden="true">${glyph[status]}</span>
+        <span class="vt-rule__status">${esc(p.status[status])}</span>
         <span class="vt-rule__body"><span class="vt-rule__name">${esc(name)}</span><span class="vt-rule__detail">${esc(ruleDetail(id, evaluation, locale, t))}</span></span>
       </li>`;
   }).join('');
   const met = RULE_IDS.filter((id) => evaluation.rules[id] === 'met').length;
-  return { list, count: fill(p.rulesCount, { met, total: RULE_IDS.length }) };
+  const bar = RULE_IDS.map((id) => `<span class="is-${evaluation.rules[id]}"></span>`).join('');
+  return { list, count: fill(p.rulesCount, { met, total: RULE_IDS.length }), bar, met };
 }

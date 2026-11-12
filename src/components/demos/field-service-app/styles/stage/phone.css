@@ -1,18 +1,19 @@
 /* Turno demo stage: the phone frame and its status bar. */
 
-/* The phone frame. */
+/* The phone frame: a dark titanium band with a thin highlight, lit from the top left. */
 .t-phone {
   position: relative;
   inline-size: calc(390px + 24px);
   block-size: calc(var(--t-screen-h) + 24px);
   padding: 12px;
-  border-radius: 60px;
-  background: linear-gradient(150deg, #2b3243, #0b0f19 55%, #1a2030);
+  border-radius: 62px;
+  background: linear-gradient(155deg, #3a4254 0%, #151a26 38%, #0b0e16 70%, #262d3d 100%);
   box-shadow:
-    inset 0 0 0 1.5px #3d465b,
-    inset 0 0 0 6px #0b0f19,
-    0 50px 90px -40px rgb(14 21 37 / 0.55),
-    0 24px 40px -24px rgb(14 21 37 / 0.35);
+    inset 0 0 0 1px rgb(255 255 255 / 0.14),
+    inset 0 0 0 5px #0a0d14,
+    0 2px 4px rgb(14 21 37 / 0.1),
+    0 30px 60px -24px rgb(14 21 37 / 0.45),
+    0 70px 110px -60px rgb(36 59 120 / 0.45);
 }
 
 .t-phone::before,
@@ -21,19 +22,19 @@
   position: absolute;
   inline-size: 4px;
   border-radius: 2px;
-  background: #1b2130;
+  background: linear-gradient(90deg, #2a3142, #11151f);
 }
 
 .t-phone::before {
   inset-inline-start: -3px;
   inset-block-start: 150px;
-  block-size: 64px;
-  box-shadow: 0 84px 0 #1b2130;
+  block-size: 62px;
+  box-shadow: 0 82px 0 #1b2130;
 }
 
 .t-phone::after {
   inset-inline-end: -3px;
-  inset-block-start: 190px;
+  inset-block-start: 196px;
   block-size: 96px;
 }
 
@@ -44,24 +45,45 @@
   inline-size: 100%;
   block-size: 100%;
   overflow: hidden;
-  border-radius: 48px;
+  border-radius: 50px;
   background: var(--t-base);
   isolation: isolate;
 }
 
 .t-statusbar {
   position: relative;
+  z-index: 5;
   display: flex;
   flex: none;
   align-items: center;
   justify-content: space-between;
-  block-size: 52px;
-  padding: 6px 30px 0 34px;
+  block-size: 54px;
+  padding: 8px 32px 0 40px;
   background: var(--t-base);
   font-family: var(--t-display);
   font-size: 16px;
   font-weight: 600;
   font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+  transition: background-color 320ms var(--t-ease), color 320ms var(--t-ease);
+}
+
+/* While offline the status bar joins the dark connection banner below it, like a system-level state. */
+.turno[data-online='false'] .t-statusbar {
+  background: var(--t-ink);
+  color: #fff;
+}
+
+.turno[data-online='false'] .t-battery {
+  border-color: rgb(255 255 255 / 0.5);
+}
+
+.turno[data-online='false'] .t-battery::after {
+  background: rgb(255 255 255 / 0.5);
+}
+
+.turno[data-online='false'] .t-battery span {
+  background: #fff;
 }
 
 .t-statusbar__island {
@@ -71,7 +93,7 @@
   inline-size: 122px;
   block-size: 35px;
   border-radius: 20px;
-  background: #05070c;
+  background: #04060a;
   transform: translateX(-50%);
 }
 
@@ -106,7 +128,7 @@
 }
 
 .t-statusbar__off {
-  opacity: 0.35;
+  opacity: 0.4;
 }
 
 .t-battery {
@@ -115,7 +137,7 @@
   inline-size: 25px;
   block-size: 12px;
   padding: 2px;
-  border: 1.5px solid rgb(14 21 37 / 0.45);
+  border: 1.5px solid rgb(14 21 37 / 0.4);
   border-radius: 4px;
 }
 
@@ -127,7 +149,7 @@
   inline-size: 2px;
   block-size: 4px;
   border-radius: 0 1px 1px 0;
-  background: rgb(14 21 37 / 0.45);
+  background: rgb(14 21 37 / 0.4);
 }
 
 .t-battery span {

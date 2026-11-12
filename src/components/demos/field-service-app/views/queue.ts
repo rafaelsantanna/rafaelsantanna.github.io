@@ -79,9 +79,12 @@ export function syncCard(ctx: ViewContext): string {
   const ratio = ctx.drain.total ? ctx.drain.done / ctx.drain.total : pending ? 0 : 1;
   const last = lastSyncedAt(ctx.state.events);
   return `<div class="t-syncard" data-tone="${tone}">
-    <p class="t-syncard__state">${icon(iconName, tone === 'sending' ? 't-spin' : '')}<span>${esc(text)}</span></p>
+    <span class="t-syncard__icon" aria-hidden="true">${icon(iconName, tone === 'sending' ? 't-spin' : '')}</span>
+    <div class="t-syncard__text">
+      <p class="t-syncard__state">${esc(text)}</p>
+      ${last ? `<p class="t-syncard__meta">${esc(fill(ctx.s.queue.lastSync, { time: ctx.f.time(last) }))}</p>` : ''}
+    </div>
     <div class="t-syncard__bar" aria-hidden="true"><span style="inline-size: ${Math.round(ratio * 100)}%"></span></div>
-    ${last ? `<p class="t-syncard__meta">${esc(fill(ctx.s.queue.lastSync, { time: ctx.f.time(last) }))}</p>` : ''}
   </div>`;
 }
 

@@ -10,7 +10,7 @@ import { esc, icon } from '../render/html';
 
 export interface Command { id: string; label: string; keywords: string; iconName: string; hint?: string; run: () => void }
 
-interface Option { id: string; label: string; meta: string; iconName: string; run: () => void }
+interface Option { id: string; label: string; meta: string; iconName: string; run: () => void; code?: string; tone?: string; key?: string }
 
 const MAX_DELIVERIES = 6;
 
@@ -31,7 +31,7 @@ export function createPalette(input: HTMLInputElement, list: HTMLElement, live: 
       .map((command) => ({ command, value: score(query, command.label, [command.keywords]) }))
       .filter((entry) => entry.value > 0)
       .sort((a, b) => b.value - a.value)
-      .map(({ command }) => ({ id: command.id, label: command.label, meta: command.hint ?? '', iconName: command.iconName, run: command.run }));
+      .map(({ command }) => ({ id: command.id, label: command.label, meta: '', key: command.hint, iconName: command.iconName, run: command.run }));
     const trimmed = query.trim();
     // Deliveries match literally (ID or customer); typo tolerance only kicks in when nothing matches
     // literally, commands included, so a command search such as "late" does not bring in customers whose
@@ -47,16 +47,21 @@ export function createPalette(input: HTMLInputElement, list: HTMLElement, live: 
       .slice(0, MAX_DELIVERIES)
       .map(({ delivery }) => ({
         id: `delivery-${delivery.id}`,
-        label: `${delivery.id} · ${delivery.customer}`,
+        code: delivery.id,
+        label: delivery.customer,
         meta: deps.describe(delivery),
-        iconName: 'deliveries',
+        iconName: delivery.status,
+        tone: delivery.status,
         run: () => deps.openDelivery(delivery.id),
       }));
     return { commands, deliveries };
   }
 
   function optionHtml(option: Option, index: number): string {
-    return `<div class="lc-option" role="option" id="lc-opt-${index}" data-index="${index}" aria-selected="${index === active}">${icon(option.iconName, 'lc-icon lc-option__icon')}<span class="lc-option__label">${esc(option.label)}</span>${option.meta ? `<span class="lc-option__meta">${esc(option.meta)}</span>` : ''}</div>`;
+    const code = option.code ? `<span class="lc-option__code">${esc(option.code)}</span>` : '';
+    const meta = option.meta ? `<span class="lc-option__meta">${esc(option.meta)}</span>` : '';
+    const key = option.key ? `<kbd class="lc-kbd lc-option__key">${esc(option.key)}</kbd>` : '';
+    return `<div class="lc-option${option.tone ? ` lc-option--${option.tone}` : ''}" role="option" id="lc-opt-${index}" data-index="${index}" aria-selected="${index === active}"><span class="lc-option__tile">${icon(option.iconName, 'lc-icon lc-option__icon')}</span>${code} <span class="lc-option__label">${esc(option.label)}</span> ${meta}${key}<span class="lc-option__enter" aria-hidden="true">${icon('enter')}</span></div>`;
   }
 
   function render() {

@@ -1,59 +1,65 @@
-/* Turno demo stage: tokens, resets, and the product mast. Every rule is scoped to .turno. */
+/* Turno demo stage: tokens, resets, the product mast, and the fiber line behind the phone. Every rule is scoped to .turno. */
 
 body.demo-page--field-service-app {
-  background: #e7ecf3;
+  background: #eaedf2;
   color: #0e1525;
 }
 
 .turno {
-  --t-base: #f7f8fa;
+  --t-base: #f2f4f8;
   --t-ink: #0e1525;
   --t-accent: #2f6bff;
   --t-surface: #ffffff;
-  --t-ink-2: #3d4659;
-  --t-ink-3: #5b6478;
-  --t-line: #e1e5ec;
-  --t-line-2: #c3cad6;
-  --t-field: #7d869a;
+  --t-ink-2: #3a4357;
+  --t-ink-3: #576074;
+  --t-line: #e3e7ee;
+  --t-line-2: #c6cdd9;
+  --t-field: #7a8398;
   --t-blue: #2459e6;
   --t-blue-ink: #1f4fcc;
-  --t-blue-soft: #e8efff;
-  --t-green: #0f6b37;
-  --t-green-soft: #e3f4ea;
-  --t-green-line: #b9dfc8;
+  --t-blue-soft: #e9efff;
+  --t-blue-line: #c4d4fb;
+  --t-green: #0d6b37;
+  --t-green-fill: #15924b;
+  --t-green-strong: #0f7a3d;
+  --t-green-soft: #e2f4e9;
+  --t-green-line: #b5dec6;
   --t-red: #b42318;
   --t-red-soft: #fdecea;
   --t-red-line: #f0b9b3;
   --t-amber: #7a4f00;
-  --t-amber-soft: #fff3d1;
-  --t-amber-line: #efd48a;
+  --t-amber-soft: #fff4d6;
+  --t-amber-line: #ecd28c;
   --t-amber-bright: #ffb020;
-  --t-muted-fill: #edf0f5;
-  --t-stage: #e7ecf3;
+  --t-muted-fill: #eceff4;
+  --t-stage: #eaedf2;
   --t-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --t-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
   --t-display: 'Geologica', system-ui, 'Segoe UI', sans-serif;
   --t-body: 'Atkinson Hyperlegible Next', system-ui, 'Segoe UI', sans-serif;
   --t-mono: ui-monospace, 'Cascadia Code', Consolas, monospace;
-  --t-screen-h: clamp(640px, calc(100dvh - 9rem), 844px);
+  --t-screen-h: clamp(640px, calc(100dvh - 8.5rem), 844px);
+  --t-shadow-card: 0 1px 2px rgb(14 21 37 / 0.05), 0 6px 18px -10px rgb(14 21 37 / 0.16);
 
   position: relative;
+  isolation: isolate;
   color: var(--t-ink);
   font-family: var(--t-body);
   font-size: 1rem;
   line-height: 1.5;
-  background-color: var(--t-stage);
-  background-image:
-    radial-gradient(ellipse 55% 65% at 50% 48%, rgb(255 255 255 / 0.7), rgb(255 255 255 / 0) 72%),
-    linear-gradient(rgb(14 21 37 / 0.045) 1px, transparent 1px),
-    linear-gradient(90deg, rgb(14 21 37 / 0.045) 1px, transparent 1px);
-  background-size: 100% 100%, 32px 32px, 32px 32px;
-  background-position: center, -1px -1px, -1px -1px;
+  background: var(--t-stage);
+  caret-color: var(--t-accent);
 }
 
 .turno *,
 .turno *::before,
 .turno *::after {
   box-sizing: border-box;
+}
+
+.turno ::selection {
+  background: rgb(47 107 255 / 0.22);
+  color: var(--t-ink);
 }
 
 .turno .t-sr {
@@ -91,30 +97,71 @@ html:not(.js) .turno .turno__sheet-btn {
   display: none;
 }
 
+/* The fiber line: two strands crossing behind the phone. Light travels along them while changes are being sent. */
+.turno__fiber {
+  display: none;
+}
+
+/* Only the three-column stage has room for it: the strands leave the phone toward the console, never under text. */
+@media (min-width: 80rem) {
+  .turno__fiber {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    display: block;
+    inline-size: 100%;
+    block-size: 100%;
+    overflow: visible;
+    pointer-events: none;
+  }
+}
+
+.turno__strand,
+.turno__pulse {
+  fill: none;
+  vector-effect: non-scaling-stroke;
+  stroke-linecap: round;
+}
+
+.turno__strand {
+  stroke: #c3cfe6;
+  stroke-width: 2;
+  transition: stroke 400ms var(--t-ease);
+}
+
+.turno__strand--thin {
+  stroke: #d3dbea;
+  stroke-width: 1.25;
+}
+
+.turno__pulse {
+  stroke: var(--t-accent);
+  stroke-width: 2.5;
+  stroke-dasharray: 90 910;
+  stroke-dashoffset: 1000;
+  opacity: 0;
+  transition: opacity 400ms var(--t-ease);
+}
+
+.turno[data-sync='sending'] .turno__pulse {
+  opacity: 1;
+  animation: turno-fiber 1.6s linear infinite;
+}
+
+.turno[data-sync='offline'] .turno__strand {
+  stroke: #d0d4dc;
+  stroke-dasharray: 2 9;
+}
+
+@keyframes turno-fiber {
+  to { stroke-dashoffset: 0; }
+}
+
 /* Mast: product name and context. */
-.turno__eyebrow {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  margin: 0 0 0.75rem;
-  color: var(--t-blue-ink);
-  font-size: 0.9375rem;
-  font-weight: 700;
-}
-
-.turno__eyebrow::before {
-  content: '';
-  inline-size: 0.5rem;
-  block-size: 0.5rem;
-  border-radius: 50%;
-  background: var(--t-accent);
-  box-shadow: 0 0 0 4px rgb(47 107 255 / 0.16);
-}
-
 .turno__brand {
   display: flex;
   align-items: center;
-  gap: 0.875rem;
+  gap: 0.75rem;
 }
 
 .turno__logo {
@@ -123,18 +170,18 @@ html:not(.js) .turno .turno__sheet-btn {
 }
 
 .turno__logo svg {
-  inline-size: 2.875rem;
-  block-size: 2.875rem;
-  filter: drop-shadow(0 8px 14px rgb(47 107 255 / 0.28));
+  inline-size: 3rem;
+  block-size: 3rem;
+  filter: drop-shadow(0 6px 10px rgb(36 89 230 / 0.28));
 }
 
 .turno__name {
   margin: 0;
   font-family: var(--t-display);
-  font-size: clamp(2.75rem, 4vw, 3.75rem);
+  font-size: 3.25rem;
   font-weight: 800;
-  line-height: 0.95;
-  letter-spacing: -0.045em;
+  line-height: 1;
+  letter-spacing: -0.04em;
 }
 
 .turno__mastline {
@@ -145,13 +192,42 @@ html:not(.js) .turno .turno__sheet-btn {
   font-weight: 700;
 }
 
+.turno__tagline {
+  margin: 1.125rem 0 0;
+  max-inline-size: 24ch;
+  font-family: var(--t-display);
+  font-size: 1.625rem;
+  font-weight: 600;
+  line-height: 1.18;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+}
+
+.turno__meta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0.75rem 0 0;
+  color: var(--t-ink-3);
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+
+.turno__meta::before {
+  content: '';
+  inline-size: 0.5rem;
+  block-size: 0.5rem;
+  border-radius: 50%;
+  background: var(--t-green-fill);
+}
+
 .turno__sheet-btn {
   display: none;
 }
 
 .turno__lede {
   margin: 0;
-  max-inline-size: 32rem;
+  max-inline-size: 34rem;
   color: var(--t-ink-2);
   font-size: 1rem;
   line-height: 1.55;

@@ -2,7 +2,7 @@ import { canReportIssue, canRun } from '../lib/actions';
 import { timeOf } from '../lib/clock';
 import { fill, formatNumber } from '../lib/format';
 import type { Delivery, LogEntry } from '../lib/model';
-import { actionButton, driverName, statusBadge, windowLabel, zoneName, type RenderContext } from './context';
+import { actionButton, driverName, statusBadge, windowLabel, windowStrip, zoneName, type RenderContext } from './context';
 import { cx, esc, icon } from './html';
 
 const EVENT_ICONS: Record<LogEntry['kind'], string> = {
@@ -93,6 +93,7 @@ export function renderDrawer(delivery: Delivery, ctx: RenderContext): string {
   return `<header class="lc-drawer__head">
       <div class="lc-drawer__title"><h2 class="lc-drawer__id" id="lc-drawer-title" tabindex="-1">${esc(id)}</h2>${statusBadge(delivery.status, ctx)}</div>
       <p class="lc-drawer__customer">${esc(delivery.customer)}</p>
+      ${windowStrip(delivery, clock, true)}
       <button type="button" class="lc-iconbtn lc-drawer__close" data-action="close-dialog" aria-label="${esc(t.drawer.close)}">${icon('close')}</button>
     </header>
     <div class="lc-drawer__body">

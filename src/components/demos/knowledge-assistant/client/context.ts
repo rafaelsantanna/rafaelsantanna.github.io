@@ -16,7 +16,7 @@ export interface Ctx {
   t: UiStrings;
   engine: Engine;
   docs: Map<string, KbDocument>;
-  decimal: (value: number) => string;
+  decimal: (value: number, digits?: number) => string;
   ms: (value: number) => string;
   icon: (name: IconName) => SVGElement;
   mark: () => SVGElement;
@@ -36,7 +36,7 @@ export function createCtx(root: HTMLElement, data: ClientData, engine: Engine): 
     t: data.strings,
     engine,
     docs: new Map(data.corpus.documents.map((doc) => [doc.id, doc])),
-    decimal: (value) => formatDecimal(value, data.lang),
+    decimal: (value, digits) => formatDecimal(value, data.lang, digits),
     ms: (value) => formatMs(value, data.lang),
     icon: (name) => clone(template?.content.querySelector(`[data-icon="${name}"]`)),
     mark: () => {

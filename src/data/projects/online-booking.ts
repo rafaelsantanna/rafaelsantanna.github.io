@@ -56,7 +56,7 @@ export const project: DemoProject = {
     pt: 'Nenhum horário é reservado e nenhum dado é enviado: o agendamento fica salvo só no navegador de quem testa. Barbearia, equipe, preços, clientes e agenda são dados de exemplo, e não há pagamento, lembrete ou acesso para os barbeiros.',
   },
   disclaimer: demoDisclaimer,
-  palette: { base: '#13201B', ink: '#F2EADB', accent: '#C9A35B' },
+  palette: { base: '#220E12', ink: '#F3E8D8', accent: '#D4A55E' },
   device: 'desktop',
   preview: previewFor('online-booking', {
     en: 'Corte & Prosa barbershop website with its serif headline, the book now button, and a card showing the next free slot',

@@ -1,4 +1,4 @@
-/* App frame: sidebar, top bar and views. */
+/* App frame: graphite sidebar, top bar and views. */
 .demo-logistics-control {
   position: relative;
   min-height: 100dvh;
@@ -9,6 +9,9 @@
   line-height: 1.45;
   font-variant-numeric: tabular-nums;
   -webkit-font-smoothing: antialiased;
+  caret-color: var(--lc-accent);
+
+  & ::selection { background: var(--lc-accent-soft-2); color: var(--lc-ink); }
 
   & :focus-visible {
     outline: 2px solid var(--lc-focus);
@@ -19,6 +22,8 @@
     font: inherit;
     color: inherit;
   }
+
+  & * { scrollbar-color: var(--lc-line-3) transparent; }
 
   .lc-sr {
     position: absolute !important;
@@ -46,15 +51,14 @@
   }
 
   .lc-muted { color: var(--lc-ink-3); }
-  .lc-overdue { color: var(--lc-late); font-weight: 650; }
+  .lc-overdue { color: var(--lc-late); font-weight: 600; }
 
-  /* Layout */
-  /* The gradient continues the sidebar column below the sticky sidebar. */
+  /* Layout. The gradient continues the sidebar column below the sticky sidebar. */
   .lc-app {
     display: grid;
     grid-template-columns: var(--lc-side-w) minmax(0, 1fr);
     min-height: 100dvh;
-    background: linear-gradient(to right, var(--lc-side) calc(var(--lc-side-w) - 1px), var(--lc-line) calc(var(--lc-side-w) - 1px) var(--lc-side-w), transparent var(--lc-side-w));
+    background: linear-gradient(to right, var(--lc-shell) var(--lc-side-w), transparent var(--lc-side-w));
   }
 
   .lc-main {
@@ -70,8 +74,10 @@
     display: flex;
     flex-direction: column;
     height: 100dvh;
-    background: var(--lc-side);
-    border-right: 1px solid var(--lc-line);
+    background: var(--lc-shell);
+    color: var(--lc-shell-ink);
+
+    & :focus-visible { outline-color: var(--lc-accent); }
   }
 
   .lc-side__bar {
@@ -79,7 +85,7 @@
     align-items: center;
     gap: 4px;
     min-height: var(--lc-top-h);
-    padding: 0 16px 0 18px;
+    padding: 0 14px 0 18px;
   }
 
   .lc-brand {
@@ -93,9 +99,9 @@
     width: 28px;
     height: 28px;
 
-    & rect { fill: var(--lc-invert); }
-    & path { fill: none; stroke: var(--lc-accent); stroke-width: 2.6; stroke-linecap: round; }
-    & circle { fill: var(--lc-accent); }
+    & rect { fill: var(--lc-accent); }
+    & path { fill: none; stroke: #17181c; stroke-width: 2.6; stroke-linecap: round; }
+    & circle { fill: #17181c; }
   }
 
   .lc-brand__name {
@@ -106,20 +112,37 @@
     line-height: 1;
   }
 
+  .lc-side .lc-iconbtn {
+    color: var(--lc-shell-ink-2);
+
+    &:hover { background: var(--lc-shell-hover); color: var(--lc-shell-ink); }
+  }
+
   /* The bottom padding keeps the footer visible while the demo bar pushes the sticky sidebar down. */
   .lc-side__panel {
     display: flex;
     flex: 1;
     flex-direction: column;
     min-height: 0;
-    padding: 8px 12px 60px;
+    padding: 6px 12px 60px;
   }
 
   .lc-side__workspace {
-    margin: 4px 8px 10px;
-    color: var(--lc-ink-3);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 8px 10px 12px;
+    color: var(--lc-shell-ink-2);
     font-size: 12px;
-    font-weight: 600;
+    font-weight: 500;
+
+    &::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--lc-accent);
+    }
   }
 
   .lc-nav ul {
@@ -131,25 +154,27 @@
   }
 
   .lc-nav__link {
+    position: relative;
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 11px;
     min-height: 38px;
     padding: 0 10px;
     border-radius: 9px;
-    color: var(--lc-ink-2);
-    font-weight: 560;
+    color: var(--lc-shell-ink-2);
+    font-weight: 500;
     text-decoration: none;
     transition: background-color 160ms var(--lc-ease), color 160ms var(--lc-ease);
 
-    &:hover { background: color-mix(in srgb, var(--lc-ink) 6%, transparent); color: var(--lc-ink); }
+    & .lc-icon { width: 17px; height: 17px; transition: color 160ms var(--lc-ease); }
+    &:hover { background: var(--lc-shell-hover); color: var(--lc-shell-ink); }
 
     &[aria-current='page'] {
-      background: var(--lc-panel);
-      color: var(--lc-ink);
-      box-shadow: 0 0 0 1px var(--lc-line), 0 1px 2px rgb(23 24 28 / 6%);
+      background: var(--lc-shell-active);
+      color: var(--lc-shell-ink);
+      font-weight: 600;
 
-      & .lc-icon { color: var(--lc-accent-text); }
+      & .lc-icon { color: var(--lc-accent); }
     }
   }
 
@@ -159,7 +184,7 @@
     min-width: 26px;
     padding: 1px 7px;
     border-radius: 999px;
-    color: var(--lc-ink-3);
+    color: var(--lc-shell-ink-2);
     font-size: 12px;
     font-weight: 600;
     text-align: center;
@@ -174,12 +199,13 @@
     display: grid;
     gap: 10px;
     margin-top: auto;
-    padding: 14px 8px 0;
-    border-top: 1px solid var(--lc-line);
+    padding: 14px 4px 0;
+    border-top: 1px solid var(--lc-shell-line);
   }
 
   .lc-side__note {
-    color: var(--lc-ink-3);
+    padding: 0 6px;
+    color: var(--lc-shell-ink-2);
     font-size: 12px;
     line-height: 1.45;
   }
@@ -187,10 +213,21 @@
   .lc-side__actions {
     display: grid;
     gap: 2px;
-    margin: 0 -8px;
 
-    & .lc-btn { justify-content: flex-start; width: 100%; }
-    & .lc-kbd { margin-left: auto; }
+    & .lc-btn {
+      justify-content: flex-start;
+      width: 100%;
+      color: var(--lc-shell-ink-2);
+
+      &:hover { background: var(--lc-shell-hover); color: var(--lc-shell-ink); }
+    }
+
+    & .lc-kbd {
+      margin-left: auto;
+      border-color: var(--lc-shell-line);
+      background: var(--lc-shell-2);
+      color: var(--lc-shell-ink-2);
+    }
   }
 
   /* Top bar */
@@ -211,7 +248,7 @@
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 4px 12px;
+    gap: 4px 10px;
     color: var(--lc-ink-2);
     font-size: 13px;
   }
@@ -221,10 +258,19 @@
   .lc-top__clock {
     display: inline-flex;
     align-items: center;
-    gap: 5px;
+    gap: 6px;
+    min-height: 26px;
+    padding: 0 9px 0 8px;
+    border-radius: 999px;
+    background: var(--lc-invert);
+    color: var(--lc-on-invert);
+    font-family: var(--lc-font-display);
+    font-size: 13px;
+    font-weight: 600;
     font-variant-numeric: tabular-nums;
+    letter-spacing: 0.01em;
 
-    & .lc-icon { width: 14px; height: 14px; color: var(--lc-ink-3); }
+    & .lc-icon { width: 14px; height: 14px; color: var(--lc-accent); }
   }
 
   /* "Simulated time" badge: a toggletip that explains why the clock is fixed, for touch users too. */
@@ -240,14 +286,15 @@
     display: inline-flex;
     align-items: center;
     gap: 4px;
-    min-height: 24px;
-    padding: 0 6px 0 8px;
-    border: 1px dashed var(--lc-line-2);
+    min-height: 26px;
+    padding: 0 6px 0 9px;
+    border: 1px dashed var(--lc-line-3);
     border-radius: 999px;
     background: transparent;
     color: var(--lc-ink-3);
-    font-size: 11.5px;
+    font-size: 12px;
     font-weight: 600;
+    transition: color 160ms var(--lc-ease), border-color 160ms var(--lc-ease);
 
     & .lc-icon { width: 14px; height: 14px; }
     &:hover, &[aria-expanded='true'] { border-style: solid; color: var(--lc-ink); }
@@ -264,10 +311,11 @@
     border: 1px solid var(--lc-line-2);
     border-radius: 10px;
     background: var(--lc-panel);
-    box-shadow: var(--lc-shadow);
+    box-shadow: var(--lc-shadow-md);
     color: var(--lc-ink);
     font-size: 13px;
     line-height: 1.45;
+    animation: lc-pop-in 180ms var(--lc-ease);
 
     &[hidden] { display: none; }
   }
@@ -278,18 +326,20 @@
     gap: 10px;
     flex: 1 1 260px;
     max-width: 420px;
-    height: 36px;
+    height: 38px;
     margin-left: auto;
-    padding: 0 8px 0 12px;
+    padding: 0 6px 0 12px;
     border: 1px solid var(--lc-line-2);
-    border-radius: 9px;
+    border-radius: 10px;
     background: var(--lc-panel);
+    box-shadow: var(--lc-shadow-xs);
     color: var(--lc-ink-3);
     text-align: left;
     cursor: text;
-    transition: border-color 160ms var(--lc-ease);
+    transition: border-color 160ms var(--lc-ease), box-shadow 160ms var(--lc-ease);
 
-    &:hover { border-color: color-mix(in srgb, var(--lc-ink) 32%, transparent); }
+    &:hover { border-color: var(--lc-line-3); box-shadow: var(--lc-shadow-sm); }
+    & > .lc-icon { color: var(--lc-ink-3); }
   }
 
   .lc-search__text {
@@ -302,10 +352,11 @@
   .lc-top__tools {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
   }
 
   .lc-role {
+    position: relative;
     display: inline-flex;
     padding: 3px;
     border: 1px solid var(--lc-line-2);
@@ -322,16 +373,18 @@
     color: var(--lc-ink-3);
     font-size: 13px;
     font-weight: 600;
+    transition: background-color 180ms var(--lc-ease), color 180ms var(--lc-ease);
 
     &[aria-pressed='true'] {
       background: var(--lc-invert);
       color: var(--lc-on-invert);
+      box-shadow: var(--lc-shadow-xs);
     }
 
-    &:not([aria-pressed='true']):hover { color: var(--lc-ink); }
+    &:not([aria-pressed='true']):hover { color: var(--lc-ink); background: var(--lc-hover); }
   }
 
-  .lc-user { display: inline-flex; }
+  .lc-user { display: inline-flex; margin-left: 4px; }
 
   .lc-avatar {
     display: inline-grid;
@@ -343,7 +396,7 @@
     background: var(--lc-invert);
     color: var(--lc-on-invert);
     font-size: 10px;
-    font-weight: 700;
+    font-weight: 600;
     letter-spacing: 0.02em;
   }
 
@@ -353,11 +406,12 @@
     background: var(--lc-accent);
     color: var(--lc-on-accent);
     font-size: 11.5px;
+    box-shadow: 0 0 0 2px var(--lc-bg), 0 0 0 3px var(--lc-line-2);
   }
 
   .lc-avatar--lg {
-    width: 38px;
-    height: 38px;
+    width: 40px;
+    height: 40px;
     font-size: 13px;
   }
 
@@ -365,7 +419,7 @@
   .lc-theme-icon--sun { display: none; }
 
   /* Views */
-  .lc-views { padding: 24px var(--lc-pad) 64px; }
+  .lc-views { padding: 26px var(--lc-pad) 72px; }
 
   .lc-view {
     display: grid;
@@ -382,20 +436,23 @@
     align-items: flex-end;
     justify-content: space-between;
     gap: 12px 24px;
+    margin-bottom: 2px;
   }
 
   .lc-view__title {
     font-family: var(--lc-font-display);
-    font-size: 26px;
+    font-size: 28px;
     font-weight: 650;
-    letter-spacing: -0.025em;
-    line-height: 1.15;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    text-wrap: balance;
   }
 
   .lc-view__lead {
-    margin-top: 4px;
+    margin-top: 6px;
     color: var(--lc-ink-3);
     font-size: 14.5px;
+    text-wrap: pretty;
   }
 
   .lc-noscript {
@@ -411,12 +468,16 @@
 :root[data-lc-theme='dark'] .demo-logistics-control {
   .lc-theme-icon--sun { display: inline-flex; }
   .lc-theme-icon--moon { display: none; }
+  .lc-app { background: linear-gradient(to right, var(--lc-shell) calc(var(--lc-side-w) - 1px), var(--lc-line) calc(var(--lc-side-w) - 1px) var(--lc-side-w), transparent var(--lc-side-w)); }
 }
 
 /* Without JavaScript every view is visible and interactive-only controls are hidden. */
 :root:not(.js) .demo-logistics-control :is(.lc-js-only, .lc-xcard__actions, .lc-driver__go, .lc-col-select, .lc-hit, .lc-kpi__go, .lc-sort__icon) { display: none !important; }
 :root.js .demo-logistics-control .lc-view:not(.is-active) { display: none; }
 :root.js .demo-logistics-control .lc-view + .lc-view { margin-top: 0; }
+
+/* A view that becomes active settles in from slightly below. */
+:root.js .demo-logistics-control .lc-view.is-active { animation: lc-view-in 260ms var(--lc-ease); }
 
 @media (min-width: 1024px) {
   .demo-logistics-control .lc-mobile-only { display: none !important; }
@@ -430,8 +491,6 @@
 
     .lc-side {
       height: auto;
-      border-right: 0;
-      border-bottom: 1px solid var(--lc-line);
     }
 
     .lc-side__bar {
@@ -465,8 +524,8 @@
     .lc-top__tools { flex: 1 1 260px; }
     .lc-top__tools .lc-role { flex: 1; }
     .lc-role__option { flex: 1; }
-    .lc-views { padding-top: 16px; }
-    .lc-view__title { font-size: 23px; }
+    .lc-views { padding-top: 18px; }
+    .lc-view__title { font-size: 24px; }
   }
 
   :root.js .demo-logistics-control {
@@ -479,12 +538,16 @@
       max-height: calc(100dvh - 56px);
       overflow-y: auto;
       padding: 8px 12px 18px;
-      background: var(--lc-side);
-      border-bottom: 1px solid var(--lc-line-2);
-      box-shadow: 0 18px 30px rgb(23 24 28 / 14%);
+      background: var(--lc-shell);
+      border-top: 1px solid var(--lc-shell-line);
+      box-shadow: 0 24px 40px -8px rgb(23 24 28 / 35%);
     }
 
-    .lc-side.is-open .lc-side__panel { display: flex; }
+    .lc-side.is-open .lc-side__panel {
+      display: flex;
+      animation: lc-menu-in 220ms var(--lc-ease);
+    }
+
     .lc-side__foot { margin-top: 14px; }
   }
 }
@@ -509,8 +572,20 @@
   .demo-logistics-control .lc-nav__link[aria-current='page'] {
     padding-inline-start: 6px;
     border-inline-start: 4px solid currentColor;
-    font-weight: 700;
+    font-weight: 600;
   }
+}
+
+@keyframes lc-view-in {
+  from { opacity: 0; transform: translateY(6px); }
+}
+
+@keyframes lc-menu-in {
+  from { opacity: 0; transform: translateY(-6px); }
+}
+
+@keyframes lc-pop-in {
+  from { opacity: 0; transform: translateY(-4px) scale(0.98); }
 }
 
 @media (prefers-reduced-motion: reduce) {

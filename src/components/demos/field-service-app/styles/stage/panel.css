@@ -1,36 +1,63 @@
-/* Turno demo stage: control cards in the demo panel. */
+/* Turno demo stage: the demo console cards (connection, sync, reset). */
 
-/* Cards in the demo panel. */
 .turno__card {
-  padding: 1rem 1.125rem 1.125rem;
-  border: 1px solid rgb(14 21 37 / 0.08);
-  border-radius: 18px;
+  padding: 1.125rem 1.25rem 1.25rem;
+  border: 1px solid rgb(14 21 37 / 0.07);
+  border-radius: 22px;
   background: var(--t-surface);
-  box-shadow: 0 1px 2px rgb(14 21 37 / 0.04), 0 12px 32px -20px rgb(14 21 37 / 0.25);
+  box-shadow: 0 1px 2px rgb(14 21 37 / 0.04), 0 18px 40px -26px rgb(14 21 37 / 0.3);
+}
+
+.turno__controls {
+  container-type: inline-size;
 }
 
 .turno__card-title {
   margin: 0;
   font-family: var(--t-display);
-  font-size: 1.0625rem;
+  font-size: 1rem;
   font-weight: 700;
   letter-spacing: -0.01em;
 }
 
+/* Connection is the one control that changes everything, so it gets the largest row. */
 .turno__switch-row {
-  display: flex;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  margin-block: 0.75rem;
-  padding: 0.5rem 0.5rem 0.5rem 0.875rem;
-  border-radius: 14px;
-  background: var(--t-base);
+  gap: 0.75rem;
+  margin-block: 0.875rem 0.75rem;
+  padding: 0.625rem 0.375rem 0.625rem 0.625rem;
+  border-radius: 16px;
+  background: var(--t-blue-soft);
+  transition: background-color 320ms var(--t-ease);
+}
+
+.turno[data-online='false'] .turno__switch-row {
+  background: var(--t-ink);
+  color: #fff;
+}
+
+.turno__switch-icon {
+  display: grid;
+  place-items: center;
+  inline-size: 2.5rem;
+  block-size: 2.5rem;
+  border-radius: 12px;
+  background: var(--t-blue);
+  color: #fff;
+  transition: background-color 320ms var(--t-ease), color 320ms var(--t-ease);
+}
+
+.turno[data-online='false'] .turno__switch-icon {
+  background: rgb(255 255 255 / 0.12);
+  color: var(--t-amber-bright);
 }
 
 .turno__switch-text {
   display: grid;
-  gap: 0.125rem;
+  gap: 0.0625rem;
+  min-inline-size: 0;
 }
 
 .turno__switch-label {
@@ -38,18 +65,22 @@
 }
 
 .turno__switch-hint {
-  color: var(--t-ink-3);
-  font-size: 0.875rem;
+  color: var(--t-ink-2);
+  font-size: 0.8125rem;
   line-height: 1.35;
+}
+
+.turno[data-online='false'] .turno__switch-hint {
+  color: #c9d1e0;
 }
 
 .turno__switch {
   display: inline-flex;
   flex: none;
   align-items: center;
-  gap: 0.625rem;
+  gap: 0.5rem;
   min-block-size: 48px;
-  padding: 0 0.25rem 0 0.5rem;
+  padding: 0 0.25rem 0 0.375rem;
   border: 0;
   border-radius: 999px;
   background: none;
@@ -57,7 +88,8 @@
 }
 
 .turno__switch-state {
-  min-inline-size: 3.6em;
+  min-inline-size: 3.4em;
+  font-size: 0.875rem;
   font-weight: 700;
   text-align: end;
   color: var(--t-blue-ink);
@@ -69,7 +101,7 @@
   block-size: 2rem;
   border-radius: 999px;
   background: var(--t-blue);
-  transition: background-color 180ms var(--t-ease);
+  transition: background-color 220ms var(--t-ease);
 }
 
 .turno__switch-thumb {
@@ -82,11 +114,11 @@
   background: #fff;
   box-shadow: 0 2px 6px rgb(14 21 37 / 0.3);
   transform: translateX(20px);
-  transition: transform 180ms var(--t-ease);
+  transition: transform 260ms var(--t-spring);
 }
 
 .turno__switch[aria-checked='false'] .turno__switch-track {
-  background: var(--t-ink-3);
+  background: #5d6679;
 }
 
 .turno__switch[aria-checked='false'] .turno__switch-thumb {
@@ -94,12 +126,12 @@
 }
 
 .turno__switch[aria-checked='false'] .turno__switch-state {
-  color: var(--t-ink);
+  color: #fff;
 }
 
 .turno__buttons {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr));
   gap: 0.5rem;
 }
 
@@ -108,9 +140,9 @@
   align-items: center;
   justify-content: center;
   gap: 0.375rem;
-  min-block-size: 48px;
+  min-block-size: 46px;
   padding: 0.5rem 0.75rem;
-  border: 1.5px solid var(--t-line-2);
+  border: 1px solid var(--t-line-2);
   border-radius: 14px;
   background: var(--t-surface);
   color: var(--t-ink);
@@ -119,7 +151,12 @@
   white-space: nowrap;
   line-height: 1.2;
   cursor: pointer;
-  transition: background-color 180ms var(--t-ease), border-color 180ms var(--t-ease), transform 120ms var(--t-ease);
+  transition: background-color 180ms var(--t-ease), border-color 180ms var(--t-ease), transform 140ms var(--t-ease);
+}
+
+.turno__btn .t-ico {
+  inline-size: 1.125rem;
+  block-size: 1.125rem;
 }
 
 .turno__btn:hover {
@@ -128,18 +165,18 @@
 }
 
 .turno__btn:active {
-  transform: scale(0.98);
+  transform: scale(0.97);
 }
 
 .turno__btn--primary {
-  border-color: var(--t-blue);
-  background: var(--t-blue);
+  border-color: var(--t-ink);
+  background: var(--t-ink);
   color: #fff;
 }
 
 .turno__btn--primary:hover {
-  border-color: var(--t-blue-ink);
-  background: var(--t-blue-ink);
+  border-color: #222c42;
+  background: #222c42;
 }
 
 /* Two lines stay reserved, so a message appearing or clearing never shifts the stage around the phone. */
@@ -154,7 +191,9 @@
 .turno__local {
   display: flex;
   gap: 0.5rem;
-  margin: 0.75rem 0 0;
+  margin: 0.25rem 0 0;
+  padding-block-start: 0.75rem;
+  border-block-start: 1px solid var(--t-line);
   color: var(--t-ink-3);
   font-size: 0.8125rem;
   line-height: 1.45;
@@ -164,6 +203,13 @@
   inline-size: 1rem;
   block-size: 1rem;
   margin-block-start: 0.1rem;
+}
+
+/* In a narrow console the switch position alone shows the state; the label stays in the accessible name. */
+@container (max-width: 20rem) {
+  .turno__switch-state {
+    display: none;
+  }
 }
 
 /* Forced colors drop backgrounds, so the switch is redrawn with system colors. */

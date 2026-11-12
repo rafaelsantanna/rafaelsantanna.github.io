@@ -1,4 +1,5 @@
 /** Small DOM helpers: region updates that keep keyboard focus, and focus utilities. */
+import { play, snapshot } from './flip';
 
 export const FOCUSABLE = 'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
@@ -37,9 +38,12 @@ export function createRegions(root: HTMLElement) {
       if (!element || cache.get(name) === html) return false;
       const hadFocus = element.contains(document.activeElement);
       const key = hadFocus ? activeKey() : undefined;
+      // Regions marked data-flip animate their items between the old and the new markup.
+      const before = element instanceof HTMLElement && element.hasAttribute('data-flip') ? snapshot(element) : null;
       element.innerHTML = html;
       cache.set(name, html);
       if (hadFocus) (byKey(element, key) ?? fallback?.())?.focus({ preventScroll: true });
+      if (before) play(element as HTMLElement, before);
       return true;
     },
     forget(name: string) {

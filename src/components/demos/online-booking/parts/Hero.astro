@@ -12,7 +12,6 @@ const t = strings[Astro.props.locale];
 <section class="hero" id="topo" aria-labelledby="cp-hero-title">
   <div class="wrap hero__grid">
     <div class="hero__copy">
-      <p class="eyebrow">{t.hero.eyebrow}</p>
       <h1 id="cp-hero-title" class="hero__title">{t.hero.title} <em>{t.hero.accent}</em></h1>
       <p class="hero__lede">{t.hero.lede}</p>
       <div class="hero__actions">
@@ -27,16 +26,21 @@ const t = strings[Astro.props.locale];
     <div class="hero__visual">
       <div class="hero__art" aria-hidden="true">
         <div class="arch">
+          <span class="arch__pole"><span></span></span>
           <span class="arch__amp arch__amp--shadow">&amp;</span>
           <span class="arch__amp">&amp;</span>
           <ScissorsArt class="arch__scissors" />
         </div>
       </div>
       <div class="ticket" data-next-slot>
-        <p class="ticket__label">{t.hero.nextLabel}</p>
-        <p class="ticket__when" data-next-when>{t.hero.nextFallback}</p>
-        <p class="ticket__who" data-next-who hidden></p>
-        <button type="button" class="btn btn--dark btn--small ticket__take" data-next-take hidden>{t.hero.nextTake}</button>
+        <div class="ticket__main">
+          <p class="ticket__label">{t.hero.nextLabel}</p>
+          <p class="ticket__when" data-next-when>{t.hero.nextFallback}</p>
+          <p class="ticket__who" data-next-who hidden></p>
+        </div>
+        <div class="ticket__stub" data-next-stub>
+          <button type="button" class="btn btn--dark btn--small ticket__take" data-next-take hidden>{t.hero.nextTake} <Fragment set:html={icons.arrow} /></button>
+        </div>
       </div>
     </div>
   </div>

@@ -6,6 +6,9 @@ import type { ExceptionItem } from '../lib/query';
 import { actionButton, driverName, priorityFlag, windowLabel, zoneName, type RenderContext } from './context';
 import { esc, icon } from './html';
 
+/** Exceptions open longer than this are marked in the queue. */
+const STALE_MINUTES = 120;
+
 function card(item: ExceptionItem, ctx: RenderContext, scope: string): string {
   const { t } = ctx;
   const { delivery, kind } = item;
@@ -13,7 +16,7 @@ function card(item: ExceptionItem, ctx: RenderContext, scope: string): string {
   const primary = actionButton({
     label: isLate ? t.queue.reschedule : t.queue.resolve,
     iconName: isLate ? 'calendar' : 'check',
-    variant: 'primary',
+    variant: 'soft',
     attrs: `data-action="${isLate ? 'reschedule' : 'resolve'}" data-id="${delivery.id}" data-key="${scope}-main-${delivery.id}"`,
   });
   const priority = actionButton({
@@ -24,8 +27,9 @@ function card(item: ExceptionItem, ctx: RenderContext, scope: string): string {
     attrs: `data-action="priority" data-value="${delivery.priority ? 'off' : 'on'}" data-id="${delivery.id}" data-key="${scope}-prio-${delivery.id}"`,
   });
   const meta = [zoneName(delivery.zoneId, ctx), driverName(delivery.driverId, ctx), windowLabel(delivery, ctx.clock)].map(esc).join(' · ');
-  return `<li class="lc-xcard lc-xcard--${isLate ? 'late' : 'issue'}${delivery.priority ? ' is-priority' : ''}">
-    <div class="lc-xcard__head"><span class="lc-kind lc-kind--${isLate ? 'late' : 'issue'}">${icon(isLate ? 'late' : 'issue')}<span>${esc(t.exceptionKind[kind])}</span></span><span class="lc-xcard__age" title="${esc(fill(t.queue.since, { time: timeOf(ctx.clock, item.openedAt) }))}">${esc(fill(t.queue.age, { t: formatDuration(item.age, t.duration) }))}</span></div>
+  return `<li class="lc-xcard lc-xcard--${isLate ? 'late' : 'issue'}${delivery.priority ? ' is-priority' : ''}" data-flip-id="${delivery.id}">
+    <span class="lc-xcard__glyph" aria-hidden="true">${icon(isLate ? 'late' : 'issue')}</span>
+    <div class="lc-xcard__head"><span class="lc-kind lc-kind--${isLate ? 'late' : 'issue'}"><span>${esc(t.exceptionKind[kind])}</span></span><span class="lc-xcard__age${item.age >= STALE_MINUTES ? ' is-stale' : ''}" title="${esc(fill(t.queue.since, { time: timeOf(ctx.clock, item.openedAt) }))}">${esc(fill(t.queue.age, { t: formatDuration(item.age, t.duration) }))}</span></div>
     <p class="lc-xcard__title"><button type="button" class="lc-idlink" data-action="open" data-id="${delivery.id}" data-key="${scope}-open-${delivery.id}"><span class="lc-sr">${esc(t.queue.details)}: </span>${esc(delivery.id)}</button>${delivery.priority ? priorityFlag(ctx) : ''}<span class="lc-xcard__customer">${esc(delivery.customer)}</span></p>
     <p class="lc-xcard__meta">${meta}</p>
     <div class="lc-xcard__actions">${primary}${priority}</div>
@@ -48,6 +52,6 @@ export function renderKindChips(items: ExceptionItem[], active: ExceptionKind | 
 }
 
 export function renderQueue(items: ExceptionItem[], ctx: RenderContext, scope: 'ov' | 'ex', emptyText: string): string {
-  if (!items.length) return `<li class="lc-empty-inline">${icon('delivered')}<span>${esc(emptyText)}</span></li>`;
+  if (!items.length) return `<li class="lc-empty-inline" data-flip-id="empty"><svg class="lc-empty-inline__art" viewBox="0 0 64 40" aria-hidden="true" focusable="false"><path class="lc-empty-inline__road" d="M4 32c10-2 12-16 24-16s14 10 22 8"/><circle class="lc-empty-inline__ok" cx="52" cy="22" r="9"/><path class="lc-empty-inline__tick" d="m48 22 3 3 5-6"/></svg><span>${esc(emptyText)}</span></li>`;
   return items.map((item) => card(item, ctx, scope)).join('');
 }

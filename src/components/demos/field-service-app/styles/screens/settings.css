@@ -1,28 +1,14 @@
-/* Turno screens: settings. */
+/* Turno screens: settings, as native grouped lists. */
 
-/* Settings. */
 .turno .t-profile {
   display: flex;
   align-items: center;
   gap: 1rem;
   padding: 1rem;
   border: 1px solid var(--t-line);
-  border-radius: 18px;
+  border-radius: 20px;
   background: var(--t-surface);
-}
-
-.turno .t-avatar {
-  display: grid;
-  flex: none;
-  place-items: center;
-  inline-size: 3.5rem;
-  block-size: 3.5rem;
-  border-radius: 50%;
-  background: var(--t-ink);
-  color: #fff;
-  font-family: var(--t-display);
-  font-size: 1.25rem;
-  font-weight: 700;
+  box-shadow: var(--t-shadow-card);
 }
 
 .turno .t-profile__text {
@@ -35,26 +21,36 @@
 .turno .t-profile__name {
   color: var(--t-ink);
   font-family: var(--t-display);
-  font-size: 1.125rem;
+  font-size: 1.1875rem;
   font-weight: 600;
+  letter-spacing: -0.015em;
 }
 
 .turno .t-rows {
   overflow: hidden;
   border: 1px solid var(--t-line);
-  border-radius: 18px;
+  border-radius: 20px;
   background: var(--t-surface);
+  box-shadow: var(--t-shadow-card);
 }
 
 .turno .t-rows div {
+  position: relative;
   display: flex;
+  align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  padding: 0.875rem 1rem;
+  min-block-size: 3.25rem;
+  padding: 0.75rem 1rem;
 }
 
-.turno .t-rows div + div {
-  border-block-start: 1px solid var(--t-line);
+.turno .t-rows div + div::before {
+  content: '';
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline: 1rem 0;
+  block-size: 1px;
+  background: var(--t-line);
 }
 
 .turno .t-rows dt {
@@ -70,5 +66,5 @@
 .turno .t-danger {
   display: grid;
   gap: 0.5rem;
-  margin-block-start: 0.5rem;
+  margin-block-start: 0.75rem;
 }

@@ -32,6 +32,7 @@ export function mountKnowledgeAssistant(root: HTMLElement): void {
   const evidenceEmpty = root.querySelector<HTMLElement>('[data-ka-evidence-empty]');
   const status = root.querySelector<HTMLElement>('[data-ka-status]');
   const build = root.querySelector<HTMLElement>('[data-ka-build]');
+  const evidenceScroll = root.querySelector<HTMLElement>('[data-ka-evidence-scroll]');
   if (!thread || !empty || !turnList || !evidenceView || !evidenceEmpty || !status) return;
 
   let settings: SearchSettings = { ...DEFAULT_SETTINGS };
@@ -108,9 +109,33 @@ export function mountKnowledgeAssistant(root: HTMLElement): void {
       item.querySelector('[data-show-evidence]')?.setAttribute('aria-pressed', String(isActive));
     }
     evidenceView.replaceChildren(...(turn ? renderEvidence(turn, ctx) : []));
+    // A different question starts its evidence from the top, with the confidence gauge in view.
+    if (evidenceScroll) evidenceScroll.scrollTop = 0;
+    markSourceHits(turn);
     evidenceView.hidden = !turn;
     evidenceEmpty.hidden = Boolean(turn);
     updateBadges();
+  }
+
+  // The library shows which documents fed the selected answer.
+  function markSourceHits(turn: Turn | null): void {
+    const cited = new Set(turn?.result.answer?.parts.map((part) => engine.passages[part.passageIndex].docId) ?? []);
+    const counts = new Map<string, number>();
+    for (const hit of turn?.result.hits ?? []) {
+      const docId = engine.passages[hit.index].docId;
+      counts.set(docId, (counts.get(docId) ?? 0) + 1);
+    }
+    for (const row of root.querySelectorAll<HTMLElement>('[data-ka-doc-row]')) {
+      const docId = row.dataset.kaDocRow ?? '';
+      const count = counts.get(docId) ?? 0;
+      const label = row.querySelector<HTMLElement>('[data-ka-doc-hits]');
+      row.classList.toggle('is-hit', count > 0);
+      row.classList.toggle('is-cited', cited.has(docId));
+      if (label) {
+        label.hidden = count === 0;
+        label.textContent = count > 0 ? plural(t.passagesCount, count) : '';
+      }
+    }
   }
 
   function scrollIntoView(element: Element, block: ScrollLogicalPosition = 'start'): void {

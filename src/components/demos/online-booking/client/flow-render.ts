@@ -52,6 +52,15 @@ export function createFlowRenderer(el: FlowElements, env: FlowEnv) {
     return schedule.barber(draft.barber)?.name ?? null;
   }
 
+  /** The barber line of the summary, with the assigned barber's monogram once there is one. */
+  function barberValue(draft: Draft): Node | string | null {
+    const text = barberText(draft);
+    const id = draft.barber === 'any' ? assignedBarber(draft) : draft.barber;
+    const barber = id ? schedule.barber(id) : undefined;
+    if (text === null || !barber) return text;
+    return h('span', { class: 'summary__barber' }, h('span', { class: 'avatar avatar--sm', 'data-tone': barber.id, 'aria-hidden': 'true' }, h('span', {}, barber.initials)), text);
+  }
+
   function progress({ draft, step }: FlowState): void {
     el.progress.forEach((button, index) => {
       const current = index === step;
@@ -68,9 +77,15 @@ export function createFlowRenderer(el: FlowElements, env: FlowEnv) {
     el.count.textContent = `${fill(t.stepOf, { n: step + 1, total: STEP_IDS.length })} · ${config.flow.steps[step]}`;
   }
 
+  /** Replaces a summary value; a value that actually changed is flagged so the ticket can acknowledge it. */
   function setValue(node: HTMLElement, value: string | Node | null): void {
+    const before = node.textContent;
     node.replaceChildren(value ?? t.pending);
     node.classList.toggle('is-pending', value === null);
+    if (value === null || node.textContent === before) return;
+    node.classList.remove('is-fresh');
+    void node.offsetWidth;
+    node.classList.add('is-fresh');
   }
 
   function summary({ draft }: FlowState): void {
@@ -82,9 +97,9 @@ export function createFlowRenderer(el: FlowElements, env: FlowEnv) {
         ? h('ul', { class: 'summary__services', role: 'list' }, ...chosen.map((service) => h('li', {}, h('span', {}, service.name), h('span', {}, fmt.price(service.price)))))
         : null,
     );
-    setValue(el.sum.barber, barberText(draft));
+    setValue(el.sum.barber, barberValue(draft));
     setValue(el.sum.day, draft.day ? capitalize(fmt.dayLong(draft.day)) : null);
-    setValue(el.sum.time, draft.start !== null ? clockLabel(draft.start) : null);
+    setValue(el.sum.time, draft.start !== null ? fill(t.timeRange, { start: clockLabel(draft.start), end: clockLabel(draft.start + duration) }) : null);
     setValue(el.sum.duration, chosen.length ? fmt.duration(duration) : null);
     setValue(el.sum.total, chosen.length ? fmt.price(price) : null);
     el.compact.textContent = chosen.length ? `${fmt.duration(duration)} · ${fmt.price(price)}` : t.pending;
@@ -129,8 +144,9 @@ export function createFlowRenderer(el: FlowElements, env: FlowEnv) {
     const { duration } = totalsOf(draft);
     const chosenName = draft.barber && draft.barber !== 'any' ? schedule.barber(draft.barber)?.firstName ?? '' : '';
     dayReasons.clear();
-    const options: DayOption[] = schedule.window(clock).map((day) => {
-      const state = schedule.dayState(day, draft.barber, duration, false, clock);
+    const states = schedule.window(clock).map((day) => ({ day, state: schedule.dayState(day, draft.barber, duration, false, clock) }));
+    const best = Math.max(1, ...states.map(({ state }) => (state.kind === 'open' ? state.free : 0)));
+    const options: DayOption[] = states.map(({ day, state }) => {
       const dayName = capitalize(fmt.dayLong(day));
       const reasons = {
         closed: t.closedReasons[schedule.frame(day).weekday],
@@ -153,10 +169,13 @@ export function createFlowRenderer(el: FlowElements, env: FlowEnv) {
         disabled: !open,
         checked: draft.day === day,
         today: day === clock.day,
+        load: state.kind === 'open' ? state.free / best : null,
       };
     });
     el.days.replaceChildren(...dayRadios(options));
     syncRoving(el.days);
+    // On phones the days are a horizontal strip; keep the chosen one in view.
+    el.days.querySelector('[aria-checked="true"]')?.scrollIntoView({ block: 'nearest', inline: 'nearest' });
     el.dayReason.textContent = '';
   }
 
@@ -183,6 +202,7 @@ export function createFlowRenderer(el: FlowElements, env: FlowEnv) {
       if (!items.length || items.every((slot) => slot.status === 'past')) return;
       periods.push({
         id: `cp-period-${index}`,
+        index,
         title,
         count: fmt.count(t.freeShort, items.filter((slot) => slot.status === 'free').length),
         slots: items.map((slot) => ({

@@ -15,6 +15,7 @@ import { confirmInApp, createControlsSheet } from './overlays';
 import { drawPhoto } from './photo';
 import { Store } from './store';
 import { createSync } from './sync';
+import { createTour } from './tour';
 
 interface Config {
   locale: Locale;
@@ -45,6 +46,7 @@ export function mountTurno(root: HTMLElement): void {
   const reducedMotion = () => motion.matches;
   const nav = createNavigator(host, reducedMotion);
   const chrome = createChrome(root, s, f);
+  const tour = createTour(root);
   let toastTimer: number | undefined;
   let announceTimer: number | undefined;
   let statusTimer: number | undefined;
@@ -105,6 +107,7 @@ export function mountTurno(root: HTMLElement): void {
     announce,
     toast,
     reducedMotion,
+    measureError: () => tour.mark('error'),
   });
 
   function screenHtml(view: View): string {
@@ -137,6 +140,8 @@ export function mountTurno(root: HTMLElement): void {
   function navigate(view: View, direction: Direction, focus: string | null) {
     store.setView(view);
     const screen = nav.show(screenHtml(view), direction, view.screen === 'order' ? `order-${view.orderId}` : view.screen);
+    // Entrance details (like the route drawing on the map) play when a screen is opened, not when it re-renders.
+    screen.classList.add('t-screen--fresh');
     mountScreen(screen);
     refreshChrome();
     if (focus === 'title') screen.querySelector<HTMLElement>('#t-screen-title')?.focus({ preventScroll: true });
@@ -201,6 +206,8 @@ export function mountTurno(root: HTMLElement): void {
 
   function setConnection(online: boolean) {
     store.setOnline(online);
+    if (!online) tour.mark('offline');
+    else if (tour.has('offline')) tour.mark('online');
     if (!online) {
       sync.pause();
       chrome.clearFlash();
@@ -317,6 +324,7 @@ export function mountTurno(root: HTMLElement): void {
   });
 
   store.subscribe((change) => {
+    if (change.orders && !change.reset && store.state.view.screen === 'order') tour.mark('order');
     refreshChrome();
     if (change.queue || change.connection) patchCurrent();
     if (store.state.online) sync.kick();

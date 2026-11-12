@@ -8,18 +8,23 @@
   gap: 0.5rem;
   min-block-size: 48px;
   padding: 0.625rem 1.125rem;
-  border: 1.5px solid transparent;
+  border: 1px solid transparent;
   border-radius: 14px;
   font-size: 1rem;
   font-weight: 700;
   line-height: 1.2;
   text-align: center;
   cursor: pointer;
-  transition: background-color 180ms var(--t-ease), border-color 180ms var(--t-ease), color 180ms var(--t-ease), transform 120ms var(--t-ease);
+  transition: background-color 180ms var(--t-ease), border-color 180ms var(--t-ease), color 180ms var(--t-ease), box-shadow 180ms var(--t-ease), transform 140ms var(--t-ease);
+}
+
+.turno .t-btn .t-ico {
+  inline-size: 1.25rem;
+  block-size: 1.25rem;
 }
 
 .turno .t-btn:active {
-  transform: scale(0.98);
+  transform: scale(0.97);
 }
 
 .turno .t-btn--block {
@@ -28,9 +33,11 @@
 
 .turno .t-btn--primary {
   min-block-size: 54px;
+  border-radius: 16px;
   background: var(--t-blue);
   color: #fff;
-  box-shadow: 0 8px 18px -10px rgb(36 89 230 / 0.7);
+  font-size: 1.0625rem;
+  box-shadow: 0 1px 0 rgb(255 255 255 / 0.2) inset, 0 10px 20px -12px rgb(36 89 230 / 0.8);
 }
 
 .turno .t-btn--primary:hover {
@@ -38,21 +45,35 @@
 }
 
 .turno .t-btn--primary[aria-disabled='true'] {
-  background: #dce2ec;
-  color: var(--t-ink-2);
+  background: var(--t-muted-fill);
+  color: var(--t-ink-3);
   box-shadow: none;
   cursor: not-allowed;
 }
 
+.turno .t-btn--primary[aria-disabled='true']:active {
+  transform: none;
+}
+
+/* The moment the last required item is done, the finish button lights up once. */
+.turno .t-btn--ready {
+  animation: t-ready 620ms var(--t-spring);
+}
+
+@keyframes t-ready {
+  0% { transform: scale(0.94); }
+  60% { transform: scale(1.03); }
+}
+
 .turno .t-btn--secondary {
-  border-color: #b8c1cf;
+  border-color: var(--t-line-2);
   background: var(--t-surface);
   color: var(--t-blue-ink);
 }
 
 .turno .t-btn--secondary:hover {
   border-color: var(--t-blue);
-  background: #f5f8ff;
+  background: #f6f8ff;
 }
 
 .turno .t-btn--secondary[aria-disabled='true'],
@@ -84,8 +105,9 @@
 }
 
 .turno .t-linkbtn {
+  align-self: start;
   justify-self: start;
-  min-block-size: 48px;
+  min-block-size: 44px;
   padding: 0;
   border: 0;
   background: none;
@@ -118,11 +140,11 @@
   inset-block-end: 0;
   z-index: 3;
   display: grid;
-  gap: 0.5rem;
-  padding: 0.75rem var(--t-gutter) calc(0.75rem + env(safe-area-inset-bottom));
+  gap: 0.625rem;
+  padding: 0.75rem var(--t-gutter) calc(0.875rem + env(safe-area-inset-bottom));
   border-block-start: 1px solid var(--t-line);
   background: var(--t-surface);
-  box-shadow: 0 -10px 28px -14px rgb(14 21 37 / 0.18);
+  box-shadow: 0 -12px 28px -18px rgb(14 21 37 / 0.22);
 }
 
 .turno .t-actionbar--split {
@@ -135,6 +157,7 @@
   gap: 0.5rem;
   color: var(--t-ink-2);
   font-size: 0.875rem;
+  font-weight: 700;
   line-height: 1.4;
 }
 
@@ -147,11 +170,10 @@
 
 .turno .t-actionbar__hint[data-ready='true'] {
   color: var(--t-green);
-  font-weight: 700;
 }
 
 .turno .t-actionbar__hint[data-ready='true'] .t-ico {
-  color: var(--t-green);
+  color: var(--t-green-fill);
 }
 
 .turno .t-actionbar__short {
@@ -181,7 +203,7 @@
   grid-template-columns: repeat(3, minmax(0, 12rem));
   justify-content: center;
   gap: 0.25rem;
-  padding: 0.375rem 0.5rem calc(0.375rem + env(safe-area-inset-bottom));
+  padding: 0.375rem 0.5rem calc(0.25rem + env(safe-area-inset-bottom));
   border-block-start: 1px solid var(--t-line);
   background: var(--t-surface);
 }
@@ -195,15 +217,16 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 0.125rem;
+  gap: 0.1875rem;
   min-block-size: 54px;
   padding: 0.25rem;
   border: 0;
   border-radius: 14px;
   background: none;
   color: var(--t-ink-3);
-  font-size: 0.8125rem;
+  font-size: 0.75rem;
   font-weight: 700;
+  letter-spacing: 0.01em;
   cursor: pointer;
 }
 
@@ -214,7 +237,11 @@
   inline-size: 3.5rem;
   block-size: 1.875rem;
   border-radius: 999px;
-  transition: background-color 180ms var(--t-ease);
+  transition: background-color 220ms var(--t-ease), color 220ms var(--t-ease);
+}
+
+.turno .t-tab__icon .t-ico {
+  transition: transform 260ms var(--t-spring);
 }
 
 .turno .t-tab[aria-current='page'] {
@@ -225,14 +252,19 @@
   background: var(--t-blue-soft);
 }
 
+.turno .t-tab[aria-current='page'] .t-tab__icon .t-ico {
+  stroke-width: 2.3;
+  transform: scale(1.06);
+}
+
 .turno .t-tab:active .t-tab__icon {
   background: var(--t-muted-fill);
 }
 
 .turno .t-badge {
   position: absolute;
-  inset-block-start: -0.3rem;
-  inset-inline-end: 0.3rem;
+  inset-block-start: -0.3125rem;
+  inset-inline-end: 0.25rem;
   display: grid;
   place-items: center;
   min-inline-size: 1.25rem;
@@ -246,7 +278,7 @@
   font-weight: 700;
   line-height: 1;
   font-variant-numeric: tabular-nums;
-  animation: t-pop 320ms var(--t-ease);
+  animation: t-pop 360ms var(--t-spring);
 }
 
 .turno .t-badge[hidden] {
@@ -257,22 +289,22 @@
   from { transform: scale(0.4); }
 }
 
-/* Toast. */
+/* Toast: a floating capsule above the tab bar. */
 .turno .t-toast {
   position: absolute;
-  inset-inline: 1rem;
+  inset-inline: 0.875rem;
   inset-block-end: calc(5.5rem + env(safe-area-inset-bottom));
   z-index: 20;
   margin: 0;
-  padding: 0.875rem 1rem;
-  border-radius: 14px;
+  padding: 0.875rem 1.125rem;
+  border-radius: 18px;
   background: var(--t-ink);
   color: #fff;
   font-size: 0.9375rem;
   font-weight: 700;
   line-height: 1.4;
-  box-shadow: 0 16px 32px -16px rgb(14 21 37 / 0.6);
-  animation: t-toast-in 320ms var(--t-ease);
+  box-shadow: 0 18px 36px -16px rgb(14 21 37 / 0.6);
+  animation: t-toast-in 420ms var(--t-spring);
 }
 
 .turno .t-toast[hidden] {
@@ -294,10 +326,10 @@
 }
 
 @keyframes t-toast-in {
-  from { opacity: 0; transform: translateY(12px); }
+  from { opacity: 0; transform: translateY(16px) scale(0.96); }
 }
 
-/* Modal confirmation inside the phone. */
+/* Modal confirmation inside the phone: a bottom sheet with a grabber. */
 .turno .t-modal {
   position: absolute;
   inset: 0;
@@ -316,16 +348,30 @@
   inset: auto 0 0;
   display: grid;
   gap: 0.75rem;
-  padding: 1.5rem var(--t-gutter) calc(1.75rem + env(safe-area-inset-bottom));
-  border-radius: 24px 24px 0 0;
+  padding: 1.75rem var(--t-gutter) calc(1.75rem + env(safe-area-inset-bottom));
+  border-radius: 28px 28px 0 0;
   background: var(--t-surface);
-  animation: t-sheet-in 320ms var(--t-ease);
+  box-shadow: 0 -20px 40px -20px rgb(14 21 37 / 0.4);
+  animation: t-sheet-in 380ms var(--t-ease);
+}
+
+.turno .t-modal__sheet::before {
+  content: '';
+  position: absolute;
+  inset-block-start: 0.5rem;
+  inset-inline-start: 50%;
+  inline-size: 2.5rem;
+  block-size: 5px;
+  border-radius: 3px;
+  background: var(--t-line-2);
+  transform: translateX(-50%);
 }
 
 .turno .t-modal__sheet h2 {
   font-family: var(--t-display);
-  font-size: 1.25rem;
+  font-size: 1.375rem;
   font-weight: 700;
+  letter-spacing: -0.02em;
 }
 
 .turno .t-modal__sheet p {

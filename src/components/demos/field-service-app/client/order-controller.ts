@@ -17,6 +17,8 @@ interface Deps {
   announce(text: string): void;
   toast(text: string): void;
   reducedMotion(): boolean;
+  /** A reading was rejected by validation. */
+  measureError(): void;
 }
 
 /** Interactions of the work order screen. In-place edits patch the DOM so focus and typing are never interrupted. */
@@ -92,9 +94,17 @@ export function createOrderController(deps: Deps) {
     screen.querySelectorAll<HTMLElement>('[data-item]').forEach((row) => {
       const id = row.dataset.item as ItemId;
       const itemStateValue = itemState(progress, state, id);
+      // Only a fresh completion animates; a full re-render shows done items at rest.
+      row.classList.toggle('t-item--justdone', itemStateValue === 'done' && (row.dataset.state !== 'done' || row.classList.contains('t-item--justdone')));
       row.dataset.state = itemStateValue;
+      const segment = screen.querySelector<HTMLElement>(`[data-seg="${id}"]`);
+      if (segment) segment.dataset.done = String(itemStateValue === 'done');
       const mark = row.querySelector<HTMLElement>('[data-mark]');
-      if (mark) mark.innerHTML = markHtml(itemStateValue);
+      // Redraw the mark only when its state changes, so a running completion animation is never restarted.
+      if (mark && mark.dataset.markState !== itemStateValue) {
+        mark.dataset.markState = itemStateValue;
+        mark.innerHTML = markHtml(itemStateValue);
+      }
       if (id === 'cto' || id === 'splice' || id === 'wifi') {
         row.querySelector('[role="checkbox"]')?.setAttribute('aria-checked', String(itemStateValue === 'done'));
         const status = row.querySelector<HTMLElement>('[data-item-status]');
@@ -109,10 +119,11 @@ export function createOrderController(deps: Deps) {
     const bar = progressText(ctx, info, progress);
     const progressLabel = screen.querySelector<HTMLElement>('[data-progress-text]');
     if (progressLabel) progressLabel.textContent = bar.text;
-    screen.querySelector<HTMLElement>('[data-progress-bar]')?.style.setProperty('inline-size', `${Math.round(bar.ratio * 100)}%`);
     const hint = completeHint(ctx, info, progress);
     const hintRow = screen.querySelector<HTMLElement>('[data-complete-hint]');
     if (hintRow) {
+      // The finish button lights up once, at the moment the last required item is done.
+      if (hint.ready && hintRow.dataset.ready === 'false') screen.querySelector('[data-action="complete"]')?.classList.add('t-btn--ready');
       hintRow.dataset.ready = String(hint.ready);
       const html = completeHintContent(hint);
       if (hintRow.innerHTML !== html) hintRow.innerHTML = html;
@@ -147,6 +158,7 @@ export function createOrderController(deps: Deps) {
     if (result.error !== null) {
       state.errors[item] = result.error;
       patch(screen, orderId);
+      deps.measureError();
       return;
     }
     delete state.errors[item];

@@ -12,6 +12,8 @@ export interface DayOption {
   disabled: boolean;
   checked: boolean;
   today: boolean;
+  /** Share of free times against the best day in the window, from 0 to 1; null when closed or full. */
+  load: number | null;
 }
 
 export function dayRadios(options: DayOption[]): HTMLElement[] {
@@ -31,6 +33,7 @@ export function dayRadios(options: DayOption[]): HTMLElement[] {
       h('span', { class: 'day__number' }, option.number),
       h('span', { class: 'day__month' }, option.month),
       h('span', { class: 'day__status' }, option.status),
+      h('span', { class: 'day__meter', 'aria-hidden': 'true', style: option.load === null ? null : `--load: ${Math.max(0.12, option.load).toFixed(2)}` }),
     ),
   );
 }
@@ -46,18 +49,28 @@ export interface SlotOption {
 
 export interface Period {
   id: string;
+  /** 0 morning, 1 afternoon, 2 evening. */
+  index: number;
   title: string;
   count: string;
   slots: SlotOption[];
 }
+
+const periodIcons = [icons.sunrise, icons.sun, icons.moon];
 
 export function periodBlocks(periods: Period[], emptyText: string): HTMLElement[] {
   return periods.map((period) => {
     const free = period.slots.some((slot) => !slot.disabled);
     return h(
       'section',
-      { class: 'period', 'aria-labelledby': period.id },
-      h('h4', { class: 'period__title', id: period.id }, period.title, h('span', { class: 'period__count' }, period.count)),
+      { class: free ? 'period' : 'period is-empty', 'aria-labelledby': period.id },
+      h(
+        'h4',
+        { class: 'period__title', id: period.id },
+        h('span', { class: 'period__icon', 'aria-hidden': 'true' }, markup(periodIcons[period.index] ?? icons.sun)),
+        period.title,
+        h('span', { class: 'period__count' }, period.count),
+      ),
       h(
         'div',
         { class: 'slots', role: 'radiogroup', 'aria-labelledby': period.id },
@@ -107,32 +120,70 @@ export interface DoneData {
   when: string;
   code: string;
   date: string;
+  weekday: string;
+  dayNumber: string;
+  month: string;
+  time: string;
+  barber: string;
+  barberId: string;
+  barberInitials: string;
   services: string;
   duration: string;
   total: string;
 }
 
-/** Confirmation panel. All visitor-provided text goes through text nodes. */
+/** Confirmation panel: the booking as a stamped ticket. All visitor-provided text goes through text nodes. */
 export function donePanel(data: DoneData, t: ClientStrings['done']): HTMLElement {
   return h(
     'div',
     { class: 'done' },
-    h('span', { class: 'done__seal', 'aria-hidden': 'true' }, markup(icons.check)),
     h('h3', { class: 'done__title', id: 'cp-done-title', tabindex: '-1' }, data.title),
     h('p', { class: 'done__when' }, data.when),
     h(
       'div',
       { class: 'done__ticket' },
       h(
-        'dl',
-        {},
-        h('div', { class: 'done__wide' }, h('dt', {}, t.date), h('dd', {}, data.date)),
-        h('div', {}, h('dt', {}, t.services), h('dd', {}, data.services)),
-        h('div', {}, h('dt', {}, t.duration), h('dd', {}, data.duration)),
-        h('div', {}, h('dt', {}, t.total), h('dd', {}, data.total)),
-        h('div', { class: 'done__code' }, h('dt', {}, t.code), h('dd', {}, data.code)),
+        'span',
+        { class: 'done__stamp', 'aria-hidden': 'true' },
+        h('span', { class: 'done__stamp-ring' }, markup(icons.check), h('span', { class: 'done__stamp-word' }, t.stamp)),
       ),
-      h('p', { class: 'done__pay' }, t.pay),
+      h(
+        'div',
+        { class: 'done__main' },
+        h(
+          'div',
+          { class: 'done__leaf', 'aria-hidden': 'true' },
+          h('span', { class: 'done__leaf-top' }, data.weekday),
+          h('span', { class: 'done__leaf-day' }, data.dayNumber),
+          h('span', { class: 'done__leaf-month' }, data.month),
+          h('span', { class: 'done__leaf-time' }, data.time),
+        ),
+        h(
+          'dl',
+          { class: 'done__facts' },
+          h('div', { class: 'done__wide' }, h('dt', {}, t.date), h('dd', {}, data.date)),
+          h(
+            'div',
+            { class: 'done__wide' },
+            h('dt', {}, t.barber),
+            h(
+              'dd',
+              { class: 'done__barber' },
+              h('span', { class: 'avatar avatar--sm', 'data-tone': data.barberId, 'aria-hidden': 'true' }, h('span', {}, data.barberInitials)),
+              data.barber,
+            ),
+          ),
+          h('div', { class: 'done__wide' }, h('dt', {}, t.services), h('dd', {}, data.services)),
+          h('div', {}, h('dt', {}, t.duration), h('dd', { class: 'done__figure' }, data.duration)),
+          h('div', {}, h('dt', {}, t.total), h('dd', { class: 'done__figure' }, data.total)),
+        ),
+      ),
+      h(
+        'div',
+        { class: 'done__stub' },
+        h('dl', { class: 'done__code' }, h('div', {}, h('dt', {}, t.code), h('dd', {}, data.code))),
+        h('p', { class: 'done__pay' }, t.pay),
+      ),
     ),
     h(
       'div',
@@ -166,6 +217,7 @@ export function cancelledPanel(t: ClientStrings['done'], closeText: string): HTM
   return h(
     'div',
     { class: 'done done--cancelled' },
+    h('span', { class: 'done__void', 'aria-hidden': 'true' }, markup(icons.close)),
     h('h3', { class: 'done__title', id: 'cp-done-title', tabindex: '-1' }, t.cancelledTitle),
     h('p', { class: 'done__when' }, t.cancelled),
     h(

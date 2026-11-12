@@ -55,7 +55,7 @@ function optionalTag(ctx: ViewContext, item: ChecklistItem): string {
 
 function itemHead(ctx: ViewContext, item: ChecklistItem, state: ItemState): string {
   return `<div class="t-item__row">
-    <span class="t-item__mark" data-mark aria-hidden="true">${markHtml(state)}</span>
+    <span class="t-item__mark" data-mark data-mark-state="${state}" aria-hidden="true">${markHtml(state)}</span>
     <h4 class="t-item__label" id="t-label-${item.id}">${esc(ctx.s.items[item.id].label)}</h4>
     ${optionalTag(ctx, item)}
   </div>`;
@@ -64,7 +64,7 @@ function itemHead(ctx: ViewContext, item: ChecklistItem, state: ItemState): stri
 function checkItem(ctx: ViewContext, info: OrderInfo, progress: OrderProgress, item: ChecklistItem & { id: CheckItemId }, state: ItemState): string {
   const done = state === 'done';
   return `<button type="button" role="checkbox" aria-checked="${done}" class="t-item__toggle" data-action="check" data-item-id="${item.id}" data-key="item-${item.id}" aria-describedby="t-help-${item.id}">
-      <span class="t-item__mark" data-mark aria-hidden="true">${markHtml(state)}</span>
+      <span class="t-item__mark" data-mark data-mark-state="${state}" aria-hidden="true">${markHtml(state)}</span>
       <span class="t-item__label">${esc(ctx.s.items[item.id].label)}</span>
       ${optionalTag(ctx, item)}
     </button>
@@ -92,17 +92,25 @@ function measureItem(ctx: ViewContext, info: OrderInfo, progress: OrderProgress,
 
 function photoItem(ctx: ViewContext, info: OrderInfo, progress: OrderProgress, state: ItemState, item: ChecklistItem): string {
   const photo = progress.photo;
-  const figure = photo
-    ? `<figure class="t-photo" data-photo-frame>
-        <canvas class="t-photo__canvas" width="640" height="480" role="img" aria-label="${esc(fill(ctx.s.photo.alt, { id: info.id, time: ctx.f.time(photo.at) }))}" data-photo data-variant="${photo.variant}" data-at="${photo.at}" data-order="${info.id}"></canvas>
-        <figcaption>${esc(fill(ctx.s.photo.taken, { time: ctx.f.time(photo.at) }))}</figcaption>
-      </figure>`
-    : '';
-  return `${itemHead(ctx, item, state)}
-    <p class="t-item__help">${esc(itemHelp(ctx, info, 'photo'))}</p>
-    ${figure}
+  const head = `${itemHead(ctx, item, state)}
+    <p class="t-item__help">${esc(itemHelp(ctx, info, 'photo'))}</p>`;
+  if (!photo) {
+    // Before the first capture the whole viewfinder is the shutter, a large target for a gloved thumb.
+    return `${head}
+    <button type="button" class="t-viewfinder" data-action="photo" data-key="photo">
+      <span class="t-viewfinder__corners" aria-hidden="true"></span>
+      <span class="t-viewfinder__shutter" aria-hidden="true">${icon('camera')}</span>
+      <span class="t-viewfinder__label">${esc(ctx.s.photo.take)}</span>
+    </button>
+    <p class="t-item__fine">${esc(ctx.s.photo.simulated)}</p>`;
+  }
+  return `${head}
+    <figure class="t-photo" data-photo-frame>
+      <canvas class="t-photo__canvas" width="640" height="480" role="img" aria-label="${esc(fill(ctx.s.photo.alt, { id: info.id, time: ctx.f.time(photo.at) }))}" data-photo data-variant="${photo.variant}" data-at="${photo.at}" data-order="${info.id}"></canvas>
+      <figcaption>${icon('check')}${esc(fill(ctx.s.photo.taken, { time: ctx.f.time(photo.at) }))}</figcaption>
+    </figure>
     <div class="t-item__actions">
-      <button type="button" class="t-btn t-btn--secondary" data-action="photo" data-key="photo">${icon('camera')}${esc(photo ? ctx.s.photo.retake : ctx.s.photo.take)}</button>
+      <button type="button" class="t-btn t-btn--secondary" data-action="photo" data-key="photo">${icon('camera')}${esc(ctx.s.photo.retake)}</button>
     </div>
     <p class="t-item__fine">${esc(ctx.s.photo.simulated)}</p>`;
 }
@@ -133,7 +141,7 @@ function signatureItem(ctx: ViewContext, info: OrderInfo, progress: OrderProgres
     return `${head}
       <figure class="t-signed">
         <canvas class="t-signed__canvas" role="img" aria-label="${esc(fill(ctx.s.signature.image, { id: info.id }))}" data-signature-view></canvas>
-        <figcaption>${esc(fill(ctx.s.signature.signed, { time: ctx.f.time(progress.signature.at) }))}</figcaption>
+        <figcaption>${icon('check')}${esc(fill(ctx.s.signature.signed, { time: ctx.f.time(progress.signature.at) }))}</figcaption>
       </figure>
       <div class="t-item__actions"><button type="button" class="t-btn t-btn--ghost" data-action="sig-redo" data-key="sig-redo">${icon('reset')}${esc(ctx.s.signature.redo)}</button></div>`;
   }
@@ -148,7 +156,7 @@ function signatureItem(ctx: ViewContext, info: OrderInfo, progress: OrderProgres
     <div class="t-sigpad" data-sigpad-frame>
       <canvas class="t-sigpad__canvas" role="img" aria-label="${esc(ctx.s.signature.pad)}" data-sigpad></canvas>
       <span class="t-sigpad__hint" aria-hidden="true" data-sig-hint>${icon('pen')}${esc(ctx.s.signature.placeholder)}</span>
-      <span class="t-sigpad__line" aria-hidden="true"></span>
+      <span class="t-sigpad__line" aria-hidden="true">${icon('close', 't-sigpad__x')}</span>
       <button type="button" class="t-sigpad__clear" data-action="sig-clear" data-key="sig-clear" aria-disabled="true">${icon('close')}${esc(ctx.s.signature.clear)}</button>
     </div>
     <button type="button" class="t-btn t-btn--secondary t-btn--block" data-action="sig-confirm" data-key="sig-confirm" aria-disabled="true" aria-describedby="t-sig-msg">${icon('check')}${esc(ctx.s.signature.confirm)}</button>

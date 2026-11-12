@@ -56,7 +56,13 @@ export function createItemsTable(body: HTMLElement, context: Context): ItemsTabl
       if (message) input.setAttribute('aria-invalid', 'true');
       else input.removeAttribute('aria-invalid');
       row.classList.toggle('is-invalid', Boolean(message));
-      total.innerHTML = lineTotalHtml(line, context.locale, context.t);
+      const html = lineTotalHtml(line, context.locale, context.t);
+      if (total.innerHTML !== html) {
+        total.innerHTML = html;
+        total.classList.remove('is-bump');
+        void total.offsetWidth;
+        total.classList.add('is-bump');
+      }
       const qty = line.quantity ?? 0;
       row.querySelector('[data-step="-1"]')?.setAttribute('aria-disabled', String(qty <= 1));
       row.querySelector('[data-step="1"]')?.setAttribute('aria-disabled', String(qty >= line.product.stock));
@@ -71,7 +77,14 @@ export function createItemsTable(body: HTMLElement, context: Context): ItemsTabl
         return;
       }
       const memo = capture();
+      const previous = new Set(renderedKeys === null ? [] : renderedKeys.split('|'));
       body.innerHTML = itemRows(evaluation, draft, visibility, context.locale, context.t);
+      // Only lines that just arrived slide in; the first render and redraws keep still.
+      if (renderedKeys !== null) {
+        for (const line of evaluation.lines) {
+          if (!previous.has(line.key)) body.querySelector(`[data-line="${line.key}"]`)?.classList.add('is-new');
+        }
+      }
       renderedKeys = keys;
       restore(memo);
     },

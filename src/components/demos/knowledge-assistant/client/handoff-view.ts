@@ -27,8 +27,13 @@ export function renderHandoff(turn: Turn, ctx: Ctx): HTMLDivElement {
   );
 
   return h('div', { class: 'ka-handoff' },
-    h('p', { class: 'ka-handoff__title' }, t.handoffTitle),
-    h('p', { class: 'ka-handoff__ask' }, fill(t.handoffAsk, { team })),
+    h('div', { class: 'ka-handoff__head' },
+      h('span', { class: 'ka-handoff__icon', 'aria-hidden': 'true' }, ctx.icon('handoff')),
+      h('div', {},
+        h('p', { class: 'ka-handoff__title' }, t.handoffTitle),
+        h('p', { class: 'ka-handoff__ask' }, fill(t.handoffAsk, { team })),
+      ),
+    ),
     h('div', { class: 'ka-handoff__summary' },
       h('p', { class: 'ka-handoff__summary-title' }, t.handoffSummary),
       h('dl', {},

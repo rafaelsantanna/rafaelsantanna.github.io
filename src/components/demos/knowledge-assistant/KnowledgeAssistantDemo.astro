@@ -11,6 +11,7 @@ import { corpusFor } from './corpus';
 import { icons, type IconName } from './icons';
 import { chunkCorpus } from './lib/passages';
 import { fill, uiStrings } from './strings';
+import './styles/fonts.css';
 import './styles/base.css';
 import './styles/sources.css';
 import './styles/chat.css';
@@ -25,7 +26,7 @@ const { locale, project } = Astro.props;
 const corpus = corpusFor(locale);
 const t = uiStrings[locale];
 const passageCount = chunkCorpus(corpus).length;
-const brandStyle = `--ka-base: ${project.palette.base}; --ka-ink: ${project.palette.ink}; --ka-yellow: ${project.palette.accent};`;
+const brandStyle = `--ka-base: ${project.palette.base}; --ka-ink: ${project.palette.ink}; --ka-gold: ${project.palette.accent};`;
 // Escape "<" so document text can never close the script element.
 const clientData = JSON.stringify({ lang: locale, corpus, strings: t }).replace(/</g, '\\u003c');
 const tabs = [
@@ -66,7 +67,7 @@ const tabs = [
   <div class="ka-body">
     <SourcesPane lang={locale} corpus={corpus} t={t} passageCount={passageCount} />
     <ChatPane lang={locale} t={t} />
-    <EvidencePane t={t} />
+    <EvidencePane t={t} corpus={corpus} />
   </div>
 
   <p class="ka-sr" role="status" aria-live="polite" data-ka-status></p>

@@ -49,6 +49,8 @@ const PATHS: Record<string, string> = {
   pin: '<path d="M10 17.5s5.5-5 5.5-9.3a5.5 5.5 0 0 0-11 0c0 4.3 5.5 9.3 5.5 9.3z"/><circle cx="10" cy="8.2" r="1.9"/>',
   hub: '<path d="M3 16.5V8l7-4.5L17 8v8.5"/><path d="M7 16.5v-5h6v5"/>',
   down: '<path d="m5.5 8 4.5 4.5L14.5 8"/>',
+  up: '<path d="m5.5 12 4.5-4.5 4.5 4.5"/>',
+  enter: '<path d="M15.5 4.5v5a2.5 2.5 0 0 1-2.5 2.5H4.5"/><path d="m8 8.5-3.5 3.5L8 15.5"/>',
   info: '<circle cx="10" cy="10" r="6.8"/><path d="M10 9.2v4.3M10 6.6v.1"/>',
 };
 

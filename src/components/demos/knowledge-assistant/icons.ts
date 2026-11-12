@@ -13,6 +13,7 @@ export const icons = {
   check: '<path d="m5 12.5 4.5 4.5L19 7.5"/>',
   chevron: '<path d="m9.5 6 6 6-6 6"/>',
   search: '<circle cx="11" cy="11" r="6"/><path d="m15.5 15.5 4.5 4.5"/>',
+  arrow: '<path d="M5 12h13"/><path d="m13 6.5 5.5 5.5-5.5 5.5"/>',
 } as const;
 
 export type IconName = keyof typeof icons;
