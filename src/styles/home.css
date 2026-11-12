@@ -125,14 +125,15 @@
 .showroom__disclosure .icon { margin-block-start: 0.15em; color: var(--violet); }
 .landing-pair__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(1rem, 0.5rem + 1.5vw, 1.75rem); list-style: none; }
 .landing-pair__grid .landing-card { height: 100%; }
+@media (max-width: 63.99em) {
+  .landing-pair__grid { grid-template-columns: minmax(0, 1fr); }
+}
 
 /* With an odd number of landing pages, the first one leads the grid across the full row, laid out horizontally on wide screens. */
 @media (min-width: 48em) {
   .landing-pair__grid > li:first-child:nth-last-child(odd) { grid-column: 1 / -1; }
 }
 @media (min-width: 64em) {
-  .landing-pair__grid > li:first-child:nth-last-child(odd) .landing-card { --phone-width: clamp(9rem, 4rem + 11vw, 14rem); }
-  .landing-pair__grid > li:first-child:nth-last-child(odd) .landing-card__title { font-size: var(--step-4); }
 }
 
 /* Services */
@@ -364,7 +365,6 @@
   .strip__toggle-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
   .contact-close__routes { grid-template-columns: minmax(0, 1fr); }
   .service-row { grid-template-columns: minmax(0, 1fr); }
-  .landing-pair__grid { grid-template-columns: minmax(0, 1fr); }
   .figures { grid-template-columns: minmax(0, 1fr); }
 }
 

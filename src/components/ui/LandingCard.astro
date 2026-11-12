@@ -1,5 +1,6 @@
 ---
 import Icon from '@/components/ui/Icon.astro';
+import ProjectFrame from '@/components/ui/ProjectFrame.astro';
 import { paletteStyle } from '@/components/ui/palette';
 import { localize, withLocale, type DemoProject, type Locale } from '@/data/content';
 import { brl, niches, offer } from '@/data/small-business';
@@ -11,9 +12,11 @@ interface Props {
   target?: 'niche' | 'project';
   headingLevel?: 'h2' | 'h3' | 'h4';
   loading?: 'lazy' | 'eager';
+  /** Lead card across a full row: the desktop page sits behind the phone, so the wide stage shows both sizes. */
+  featured?: boolean;
 }
 
-const { project, locale, target = 'niche', headingLevel = 'h3', loading = 'lazy' } = Astro.props;
+const { project, locale, target = 'niche', headingLevel = 'h3', loading = 'lazy', featured = false } = Astro.props;
 const Heading = headingLevel;
 const pt = locale === 'pt';
 const niche = niches.find((item) => item.demo === project.slug);
@@ -24,8 +27,13 @@ const tryOut = niche ? localize(niche.tryOut, locale) : project.highlights[local
 const price = niche?.price ?? offer.price;
 ---
 
-<article class="landing-card" style={paletteStyle(project.palette)} aria-labelledby={`landing-${project.slug}`}>
+<article class:list={['landing-card', { 'landing-card--featured': featured }]} style={paletteStyle(project.palette)} aria-labelledby={`landing-${project.slug}`}>
   <div class="landing-card__stage">
+    {featured && (
+      <div class="landing-card__desktop" aria-hidden="true">
+        <ProjectFrame project={project} locale={locale} loading={loading} sizes="(min-width: 64em) 40vw, 100vw" />
+      </div>
+    )}
     <div class="phone">
       <div class="phone__screen">
         <img

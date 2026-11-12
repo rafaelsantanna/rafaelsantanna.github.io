@@ -72,7 +72,7 @@ const ui = pt
         </div>
       </header>
       <ul class="landing-grid landing-grid--lead">
-        {models.map((project) => <li data-reveal><LandingCard project={project} locale={locale} /></li>)}
+        {models.map((project, index) => <li data-reveal><LandingCard project={project} locale={locale} featured={index === 0 && models.length % 2 === 1} /></li>)}
       </ul>
     </div>
   </section>

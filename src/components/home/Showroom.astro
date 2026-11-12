@@ -48,8 +48,8 @@ const ui = pt
       </header>
       <p class="showroom__disclosure"><Icon name="info" /><span>{ui.disclosure}</span></p>
       <ul class="landing-pair__grid">
-        {landingPages.map((project) => (
-          <li data-reveal><LandingCard project={project} locale={locale} /></li>
+        {landingPages.map((project, index) => (
+          <li data-reveal><LandingCard project={project} locale={locale} featured={index === 0 && landingPages.length % 2 === 1} /></li>
         ))}
       </ul>
     </section>
