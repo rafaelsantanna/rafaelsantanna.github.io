@@ -1,0 +1,135 @@
+---
+import Icon from '@/components/ui/Icon.astro';
+import ProjectFrame from '@/components/ui/ProjectFrame.astro';
+import NicheCard from '@/components/sites/NicheCard.astro';
+import OfferBox from '@/components/sites/OfferBox.astro';
+import SitesFaq from '@/components/sites/SitesFaq.astro';
+import { findProject, identity, localize, withLocale, type Locale } from '@/data/content';
+import { nicheFaq, niches, sitesCopy, whatsappLink, type Niche } from '@/data/small-business';
+
+interface Props { locale: Locale; niche: Niche }
+
+const { locale, niche } = Astro.props;
+const pt = locale === 'pt';
+const c = sitesCopy[locale];
+const project = findProject(niche.demo);
+if (!project) throw new Error(`Unknown demo for niche ${niche.slug}: ${niche.demo}`);
+const whatsapp = whatsappLink(identity.phoneE164, locale, niche);
+const demoHref = withLocale(locale, `demos/${project.slug}`);
+const others = niches.filter((item) => item.slug !== niche.slug);
+const ui = pt
+  ? {
+      back: 'Sites para pequenos negócios',
+      openDemo: 'Abrir o modelo funcionando',
+      order: 'Quero o meu',
+      demoNote: `O modelo usa a marca de exemplo ${project.name}. No seu entram o seu nome, os seus serviços, as suas fotos e o seu WhatsApp.`,
+      whyIndex: 'Por que vale a pena',
+      includesIndex: 'O que entra na página',
+      includesTitle: 'Tudo o que o cliente pergunta, respondido antes.',
+      searchesLabel: 'Esta página também responde a quem procura:',
+      howIndex: 'Como funciona',
+      othersTitle: 'Outros segmentos',
+      closeTitle: 'Quer a sua no ar ainda esta semana?',
+      closeText: 'Me chama no WhatsApp com o nome do negócio e a cidade. A mensagem já vai com o seu ramo.',
+    }
+  : {
+      back: 'Websites for small businesses',
+      openDemo: 'Open the working model',
+      order: 'I want mine',
+      demoNote: `The model uses the sample brand ${project.name}. Yours gets your name, your services, your photos, and your WhatsApp.`,
+      whyIndex: 'Why it is worth it',
+      includesIndex: 'What goes on the page',
+      includesTitle: 'Everything customers ask, answered up front.',
+      searchesLabel: 'This page also answers people looking for:',
+      howIndex: 'How it works',
+      othersTitle: 'Other segments',
+      closeTitle: 'Want yours live this week?',
+      closeText: 'Message me on WhatsApp with your business name and city. The message already mentions your field.',
+    };
+---
+
+<article class="sites niche">
+  <header class="niche-hero shell">
+    <a class="back-link" href={withLocale(locale, 'sites')}><Icon name="arrow-left" />{ui.back}</a>
+    <div class="niche-hero__grid">
+      <div class="niche-hero__copy">
+        <p class="eyebrow">{localize(niche.label, locale)}</p>
+        <h1>{localize(niche.title, locale)}</h1>
+        <p class="lede">{localize(niche.lede, locale)}</p>
+        <div class="button-row">
+          <a class="button button--primary" href={demoHref} data-icon="up-right">{ui.openDemo}<Icon name="arrow-up-right" /></a>
+          <a class="button button--secondary" href={whatsapp} rel="noopener">{ui.order}<Icon name="message" /></a>
+        </div>
+      </div>
+      <figure class="niche-hero__demo">
+        <a href={demoHref} tabindex="-1"><ProjectFrame project={project} locale={locale} loading="eager" sizes="(min-width: 64em) 50vw, 100vw" /></a>
+        <figcaption>{ui.demoNote}</figcaption>
+      </figure>
+    </div>
+  </header>
+
+  <section class="section" aria-labelledby="niche-why-title">
+    <div class="shell">
+      <p class="section-index" id="niche-why-title">{ui.whyIndex}</p>
+      <ul class="niche-reasons">
+        {niche.reasons[locale].map((reason) => (
+          <li data-reveal><h2>{reason.title}</h2><p>{reason.text}</p></li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section niche-includes" aria-labelledby="niche-includes-title">
+    <div class="shell niche-includes__inner">
+      <div data-reveal>
+        <p class="section-index">{ui.includesIndex}</p>
+        <h2 id="niche-includes-title">{ui.includesTitle}</h2>
+        <ul class="niche-includes__list">
+          {niche.includes[locale].map((item) => <li><Icon name="check" />{item}</li>)}
+        </ul>
+        <p class="niche-includes__searches">{ui.searchesLabel} {niche.searches[locale].join(', ')}.</p>
+      </div>
+      <OfferBox locale={locale} price={niche.price} />
+    </div>
+  </section>
+
+  <section class="section sites-how" aria-labelledby="niche-how-title">
+    <div class="shell sites-how__inner">
+      <header class="sites-how__head" data-reveal>
+        <p class="section-index">{ui.howIndex}</p>
+        <h2 id="niche-how-title">{c.howTitle}</h2>
+      </header>
+      <ol class="sites-steps">
+        {c.steps.map((step, index) => (
+          <li data-reveal>
+            <span class="sites-steps__number" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+            <h3>{step.title}</h3>
+            <p>{step.text}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <SitesFaq locale={locale} items={nicheFaq(niche, locale)} id="niche-faq" />
+
+  <section class="section" aria-labelledby="niche-others-title">
+    <div class="shell">
+      <h2 id="niche-others-title" class="niche-others__title">{ui.othersTitle}</h2>
+      <ul class="niche-grid niche-grid--compact">
+        {others.map((item) => <li><NicheCard niche={item} locale={locale} /></li>)}
+      </ul>
+    </div>
+  </section>
+
+  <section class="sites-close section" aria-labelledby="niche-close-title">
+    <div class="shell sites-close__inner" data-reveal>
+      <h2 id="niche-close-title">{ui.closeTitle}</h2>
+      <p class="lede">{ui.closeText}</p>
+      <div class="button-row">
+        <a class="button button--primary" href={whatsapp} rel="noopener">{ui.order}<Icon name="message" /></a>
+        <a class="button button--secondary" href={withLocale(locale, 'sites')}>{ui.back}<Icon name="arrow-right" /></a>
+      </div>
+    </div>
+  </section>
+</article>

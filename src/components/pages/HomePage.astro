@@ -14,12 +14,12 @@ interface Props { locale: Locale }
 const { locale } = Astro.props;
 const t = copy[locale];
 const pt = locale === 'pt';
-const ids = pt ? { projects: 'projetos', contact: 'contato' } : { projects: 'projects', contact: 'contact' };
+const ids = pt ? { projects: 'projetos', systems: 'sistemas', contact: 'contato' } : { projects: 'projects', systems: 'systems', contact: 'contact' };
 ---
 
-<DeskHero locale={locale} projectsId={ids.projects} contactId={ids.contact} />
+<DeskHero locale={locale} systemsId={ids.systems} />
 <CapabilityStrip locale={locale} />
-<Showroom locale={locale} id={ids.projects} />
+<Showroom locale={locale} id={ids.projects} systemsId={ids.systems} />
 
 <section class="home-services section" aria-labelledby="home-services-title">
   <div class="shell">

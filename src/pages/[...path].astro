@@ -8,10 +8,13 @@ import AboutPage from '@/components/pages/AboutPage.astro';
 import CvPage from '@/components/pages/CvPage.astro';
 import ContactPage from '@/components/pages/ContactPage.astro';
 import AgentsPage from '@/components/pages/AgentsPage.astro';
+import SitesPage from '@/components/pages/SitesPage.astro';
+import NichePage from '@/components/pages/NichePage.astro';
 import { copy, identity, localize, previewImage, projects, serviceArea, services, withLocale, type Locale } from '@/data/content';
-import { homeFaq } from '@/data/faq';
+import { homeFaq, type FaqItem } from '@/data/faq';
+import { brl, findNiche, nicheFaq, niches, offer, sitesCopy } from '@/data/small-business';
 
-type PageKind = 'home' | 'work' | 'services' | 'project' | 'service' | 'about' | 'cv' | 'contact' | 'agents';
+type PageKind = 'home' | 'sites' | 'niche' | 'work' | 'services' | 'project' | 'service' | 'about' | 'cv' | 'contact' | 'agents';
 interface PageProps { locale: Locale; kind: PageKind; routePath: string; slug?: string }
 
 export function getStaticPaths() {
@@ -20,6 +23,7 @@ export function getStaticPaths() {
     const prefix = locale === 'en' ? 'en/' : '';
     pages.push({ path: locale === 'en' ? 'en' : undefined, props: { locale, kind: 'home', routePath: '' } });
     for (const [routePath, kind] of [
+      ['sites', 'sites'],
       ['work', 'work'],
       ['services', 'services'],
       ['about', 'about'],
@@ -31,6 +35,9 @@ export function getStaticPaths() {
     }
     for (const item of projects) {
       pages.push({ path: `${prefix}work/${item.slug}`, props: { locale, kind: 'project', routePath: `work/${item.slug}`, slug: item.slug } });
+    }
+    for (const niche of niches) {
+      pages.push({ path: `${prefix}sites/${niche.slug}`, props: { locale, kind: 'niche', routePath: `sites/${niche.slug}`, slug: niche.slug } });
     }
     for (const service of services) {
       pages.push({ path: `${prefix}services/${service.slug}`, props: { locale, kind: 'service', routePath: `services/${service.slug}`, slug: service.slug } });
@@ -44,7 +51,11 @@ const t = copy[locale];
 const projectItem = kind === 'project' ? projects.find((item) => item.slug === slug) : undefined;
 const serviceItem = kind === 'service' ? services.find((item) => item.slug === slug) : undefined;
 
+const nicheItem = kind === 'niche' ? findNiche(slug ?? '') : undefined;
+const nicheProject = nicheItem ? projects.find((item) => item.slug === nicheItem.demo) : undefined;
+
 if (kind === 'project' && !projectItem) throw new Error(`Unknown project: ${slug}`);
+if (kind === 'niche' && (!nicheItem || !nicheProject)) throw new Error(`Unknown niche: ${slug}`);
 if (kind === 'service' && !serviceItem) throw new Error(`Unknown service: ${slug}`);
 
 const metadata = (() => {
@@ -55,6 +66,17 @@ const metadata = (() => {
       image: previewImage(projectItem, locale),
       imageAlt: localize(projectItem.preview.alt, locale),
     };
+  }
+  if (nicheItem && nicheProject) {
+    return {
+      title: localize(nicheItem.title, locale),
+      description: localize(nicheItem.description, locale),
+      image: previewImage(nicheProject, locale),
+      imageAlt: localize(nicheProject.preview.alt, locale),
+    };
+  }
+  if (kind === 'sites') {
+    return { title: sitesCopy[locale].title, description: sitesCopy[locale].description };
   }
   if (serviceItem) {
     return {
@@ -74,7 +96,41 @@ const metadata = (() => {
   return map[kind as keyof typeof map];
 })();
 
+const faqSchema = (items: FaqItem[]) => ({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: items.map((item) => ({ '@type': 'Question', name: item.question, acceptedAnswer: { '@type': 'Answer', text: item.answer } })),
+});
+const websiteOffer = (name: string, description: string, price: number, path: string) => ({
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name,
+  description,
+  serviceType: name,
+  provider: { '@type': 'Person', name: identity.name, url: new URL(withLocale(locale), Astro.site).toString() },
+  areaServed: serviceArea.schema[locale],
+  url: new URL(withLocale(locale, path), Astro.site).toString(),
+  offers: {
+    '@type': 'Offer',
+    price: String(price),
+    priceCurrency: 'BRL',
+    description: locale === 'pt' ? `A partir de ${brl(price)}, com domínio e hospedagem do primeiro ano.` : `From ${brl(price)}, with the first year of domain and hosting.`,
+  },
+});
+
 const pageSchema = (() => {
+  if (nicheItem) {
+    return [
+      websiteOffer(localize(nicheItem.title, locale), localize(nicheItem.description, locale), nicheItem.price, `sites/${nicheItem.slug}`),
+      faqSchema(nicheFaq(nicheItem, locale)),
+    ];
+  }
+  if (kind === 'sites') {
+    return [
+      websiteOffer(sitesCopy[locale].title, sitesCopy[locale].description, offer.price, 'sites'),
+      faqSchema(sitesCopy[locale].faq),
+    ];
+  }
   if (projectItem) {
     const path = withLocale(locale, `work/${projectItem.slug}`);
     return {
@@ -133,6 +189,8 @@ const pageSchema = (() => {
 
 <BaseLayout locale={locale} title={metadata.title} description={metadata.description} routePath={routePath} image={'image' in metadata ? metadata.image : undefined} imageAlt={'imageAlt' in metadata ? metadata.imageAlt : undefined} pageSchema={pageSchema}>
   {kind === 'home' && <HomePage locale={locale} />}
+  {kind === 'sites' && <SitesPage locale={locale} />}
+  {kind === 'niche' && nicheItem && <NichePage locale={locale} niche={nicheItem} />}
   {kind === 'work' && <ListingPage locale={locale} type="work" />}
   {kind === 'services' && <ListingPage locale={locale} type="services" />}
   {kind === 'project' && projectItem && <ProjectPage locale={locale} project={projectItem} />}

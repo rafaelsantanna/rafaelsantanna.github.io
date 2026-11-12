@@ -1,0 +1,127 @@
+/* Small-business website offer: the /sites/ hub and one page per segment. */
+
+.sites-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  gap: var(--space-7) clamp(2rem, 1rem + 4vw, 5rem);
+  align-items: start;
+  padding-block: clamp(3rem, 2rem + 4vw, 6rem) var(--space-8);
+}
+.sites-hero__copy { display: grid; gap: var(--space-5); align-content: start; }
+.sites-hero__copy .display-title { max-width: 14ch; }
+
+/* Price and inclusions panel */
+.offer-box {
+  display: grid;
+  gap: var(--space-4);
+  padding: clamp(1.5rem, 1rem + 1.5vw, 2.25rem);
+  border: 1px solid var(--violet-line);
+  border-radius: var(--radius-panel);
+  background: linear-gradient(160deg, var(--violet-soft), transparent 60%), var(--surface-1);
+}
+.offer-box__title { color: var(--text-muted); font-family: var(--font-body); font-size: 0.8125rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+.offer-box__price { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 var(--space-2); }
+.offer-box__price span { color: var(--text-soft); }
+.offer-box__price strong { font-family: var(--font-display); font-size: var(--step-5); font-weight: 700; letter-spacing: -0.04em; line-height: 1; }
+.offer-box__terms { color: var(--text-soft); }
+.offer-box__list { display: grid; gap: var(--space-3); padding-block-start: var(--space-4); border-block-start: 1px solid var(--line); list-style: none; }
+.offer-box__list li { display: grid; grid-template-columns: auto 1fr; gap: var(--space-3); align-items: start; line-height: 1.45; }
+.offer-box__list .icon { margin-block-start: 0.1em; color: var(--violet); }
+.offer-box__extras { padding-block-start: var(--space-4); border-block-start: 1px solid var(--line); color: var(--text-soft); font-size: 0.9375rem; }
+.offer-box__extras summary { display: flex; align-items: center; min-height: 2.75rem; color: var(--text); font-weight: 600; cursor: pointer; }
+.offer-box__extras summary:focus-visible { outline-offset: 2px; }
+.offer-box__extras ul { display: grid; gap: var(--space-2); margin-block: var(--space-2) var(--space-3); padding-inline-start: 1.1rem; }
+
+/* Segment cards */
+.niche-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(1rem, 0.5rem + 1.5vw, 1.75rem); list-style: none; }
+.niche-grid > li { min-width: 0; }
+.niche-card {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  height: 100%;
+  overflow: hidden;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-panel);
+  background: var(--surface-1);
+  transition: border-color var(--dur) var(--ease);
+}
+.niche-card:hover { border-color: var(--line-hover); }
+.niche-card__media { display: block; overflow: hidden; border-block-end: 1px solid var(--line); background: var(--surface-2); }
+.niche-card__media img { width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; object-position: top; transition: transform var(--dur-slow) var(--ease); }
+.niche-card:hover .niche-card__media img { transform: scale(1.03); }
+.niche-card__body { display: grid; grid-template-rows: auto auto 1fr; gap: var(--space-3); padding: var(--space-5); }
+.niche-card__meta { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--space-2) var(--space-4); }
+.niche-card__price { color: var(--text-soft); font-size: 0.875rem; font-weight: 600; }
+.niche-card h2, .niche-card h3 { font-size: var(--step-2); letter-spacing: var(--tracking-tight); line-height: 1.2; }
+.niche-card h2 a, .niche-card h3 a { color: inherit; text-decoration: none; }
+.niche-card h2 a:hover, .niche-card h3 a:hover { text-decoration: underline; text-decoration-color: var(--violet); text-underline-offset: 0.2em; }
+.niche-card .button-row { align-self: end; margin-block-start: var(--space-2); }
+
+/* On the hub, the first segment leads across the full row so seven cards fill the grid evenly. */
+.niche-grid--lead > li:first-child { grid-column: 1 / -1; }
+@media (min-width: 52em) {
+  .niche-grid--lead > li:first-child .niche-card { grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); grid-template-rows: none; }
+  .niche-grid--lead > li:first-child .niche-card__media { border-block-end: 0; border-inline-end: 1px solid var(--line); }
+  .niche-grid--lead > li:first-child .niche-card__body { align-content: center; padding: clamp(1.5rem, 1rem + 2vw, 3rem); }
+  .niche-grid--lead > li:first-child .niche-card h2,
+  .niche-grid--lead > li:first-child .niche-card h3 { font-size: var(--step-3); }
+}
+
+/* How it works */
+.sites-how__inner { display: grid; grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr); gap: var(--space-6) clamp(2.5rem, 2rem + 4vw, 6rem); align-items: start; }
+.sites-how__head { display: grid; gap: var(--space-4); }
+.sites-how__head h2 { max-width: 12ch; }
+.sites-steps { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-5); list-style: none; }
+.sites-steps li { display: grid; align-content: start; gap: var(--space-2); padding: var(--space-5); border: 1px solid var(--line); border-radius: var(--radius-panel); background: var(--surface-1); }
+.sites-steps__number { color: var(--violet); font-family: var(--font-mono); font-size: 0.875rem; }
+.sites-steps p { color: var(--text-soft); }
+
+.sites-callouts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-5); }
+.sites-callouts .text-link { margin-block-start: var(--space-3); }
+
+.sites-close__inner {
+  display: grid;
+  justify-items: start;
+  gap: var(--space-5);
+  padding: clamp(2rem, 1.5rem + 3vw, 4rem);
+  border: 1px solid var(--violet-line);
+  border-radius: var(--radius-panel);
+  background: radial-gradient(120% 140% at 100% 0%, var(--violet-soft), transparent 60%), var(--surface-1);
+}
+.sites-close__inner h2 { max-width: 18ch; }
+
+/* Segment page */
+.niche-hero { padding-block: clamp(2rem, 1.5rem + 2vw, 3.5rem) var(--space-8); }
+.niche-hero__grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: var(--space-7) clamp(2rem, 1rem + 4vw, 5rem); align-items: center; margin-block-start: var(--space-6); }
+.niche-hero__copy { display: grid; gap: var(--space-5); }
+.niche-hero__copy h1 { font-size: var(--step-5); letter-spacing: -0.045em; line-height: 1.02; }
+.niche-hero__demo { display: grid; gap: var(--space-3); }
+.niche-hero__demo a { display: block; text-decoration: none; }
+.niche-hero__demo figcaption { color: var(--text-muted); font-size: 0.875rem; }
+
+.niche-reasons { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-5); margin-block-start: var(--space-5); list-style: none; }
+.niche-reasons li { display: grid; align-content: start; gap: var(--space-3); padding-block-start: var(--space-5); border-block-start: 2px solid var(--violet-line); }
+.niche-reasons h2 { font-size: var(--step-2); letter-spacing: var(--tracking-tight); line-height: 1.2; }
+.niche-reasons p { color: var(--text-soft); }
+
+.niche-includes__inner { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); gap: var(--space-7) clamp(2rem, 1rem + 4vw, 5rem); align-items: start; }
+.niche-includes__inner h2 { max-width: 16ch; margin-block: var(--space-4) var(--space-5); }
+.niche-includes__list { display: grid; gap: var(--space-3); list-style: none; }
+.niche-includes__list li { display: grid; grid-template-columns: auto 1fr; gap: var(--space-3); align-items: start; font-size: var(--step-1); }
+.niche-includes__list .icon { margin-block-start: 0.2em; color: var(--violet); }
+.niche-includes__searches { margin-block-start: var(--space-6); color: var(--text-muted); font-size: 0.9375rem; }
+
+.niche-others__title { margin-block-end: var(--space-6); font-size: var(--step-3); }
+.niche-grid--compact .niche-card h3 { font-size: var(--step-1); }
+
+@media (max-width: 63.99em) {
+  .niche-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .sites-how__inner { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 51.99em) {
+  .sites-hero, .niche-hero__grid, .niche-includes__inner { grid-template-columns: minmax(0, 1fr); }
+  .niche-reasons, .sites-callouts { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 39.99em) {
+  .niche-grid, .sites-steps { grid-template-columns: minmax(0, 1fr); }
+}

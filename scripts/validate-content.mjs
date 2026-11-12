@@ -3,6 +3,7 @@ import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { concepts, experience, previewImage, projects, selectedWork, services } from '../src/data/content.ts';
 import { machineRoutes } from '../src/data/machine.ts';
+import { niches } from '../src/data/small-business.ts';
 
 const locales = ['en', 'pt'];
 const forbidden = [/\[TODO\]/i, /Unknown Developer/i, /if I'm not mistaken/i, /—/u];
@@ -119,7 +120,7 @@ for (const concept of concepts) {
 }
 
 const routes = machineRoutes();
-const perLocale = 7 + projects.length * 2 + services.length;
+const perLocale = 8 + niches.length + projects.length * 2 + services.length;
 assert.equal(routes.length, perLocale * 2, `Expected ${perLocale} Markdown routes per locale`);
 assert.equal(new Set(routes.map((route) => `${route.locale}/${route.slug}`)).size, routes.length, 'Machine routes must be unique');
 for (const route of routes) {

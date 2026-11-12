@@ -38,7 +38,7 @@ const imageUrl = new URL(image, Astro.site);
 const socialImageAlt = imageAlt ?? (locale === 'pt' ? `Prévia do portfólio de ${identity.name}` : `${identity.name} portfolio preview`);
 const structuredDescription = ['', 'services', 'about', 'cv', 'contact'].includes(path) ? identity.summary[locale] : description;
 const markdownPath = `/markdown/${locale}/${path || 'index'}.md`;
-const parentSection = path.startsWith('services/') ? 'services' : 'work';
+const parentSection = path.startsWith('services/') ? 'services' : path.startsWith('sites/') ? 'sites' : 'work';
 const breadcrumbSchema = path && !errorPage ? {
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
@@ -52,7 +52,7 @@ const breadcrumbSchema = path && !errorPage ? {
     ...(path.includes('/') ? [{
       '@type': 'ListItem',
       position: 2,
-      name: parentSection === 'work' ? t.nav.work : t.nav.services,
+      name: t.nav[parentSection],
       item: new URL(withLocale(locale, parentSection), Astro.site).toString(),
     }] : []),
     {

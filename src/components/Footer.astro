@@ -11,6 +11,7 @@ const links = [
   { href: `mailto:${identity.email}`, label: identity.email },
   { href: identity.linkedin, label: 'LinkedIn', rel: 'me noreferrer' },
   { href: identity.github, label: 'GitHub', rel: 'me noreferrer' },
+  { href: withLocale(locale, 'sites'), label: pt ? 'Sites para pequenos negócios' : 'Websites for small businesses' },
   { href: withLocale(locale, 'cv'), label: t.nav.cv },
   { href: withLocale(locale, 'for-agents'), label: t.nav.agents },
 ];

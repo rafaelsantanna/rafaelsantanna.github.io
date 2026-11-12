@@ -10,17 +10,16 @@ import { copy, findProject, identity, localize, withLocale, type DemoProject, ty
 
 interface Props {
   locale: Locale;
-  projectsId: string;
-  contactId: string;
+  systemsId: string;
 }
 
-const { locale, projectsId, contactId } = Astro.props;
+const { locale, systemsId } = Astro.props;
 const t = copy[locale];
 const pt = locale === 'pt';
 
 const ui = pt
   ? {
-      accent: 'testar agora',
+      accent: 'trazem cliente',
       remote: 'Remoto',
       portraitAlt: 'Rafael Sant’ Anna, de óculos e fones de ouvido, sorrindo para a câmera',
       viewProject: 'ver projeto',
@@ -65,8 +64,8 @@ const minis = [
       </h1>
       <p class="hero__intro">{t.heroIntro}</p>
       <div class="button-row hero__actions">
-        <a class="button button--primary" href={`#${projectsId}`}>{t.seeWork}<Icon name="arrow-down" /></a>
-        <a class="button button--secondary" href={`#${contactId}`}>{t.discuss}</a>
+        <a class="button button--primary" href={withLocale(locale, 'sites')}>{t.heroSites}<Icon name="arrow-right" /></a>
+        <a class="button button--secondary" href={`#${systemsId}`}>{t.heroSystems}<Icon name="arrow-down" /></a>
       </div>
       <ul class="hero__meta">
         <li><Icon name="pin" />{identity.location}</li>

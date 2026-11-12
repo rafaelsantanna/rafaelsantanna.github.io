@@ -2,11 +2,11 @@
 import Icon from '@/components/ui/Icon.astro';
 import Exhibit from '@/components/home/Exhibit.astro';
 import ProjectCard from '@/components/ui/ProjectCard.astro';
-import { projects, type Locale } from '@/data/content';
+import { projects, withLocale, type Locale } from '@/data/content';
 
-interface Props { locale: Locale; id: string }
+interface Props { locale: Locale; id: string; systemsId: string }
 
-const { locale, id } = Astro.props;
+const { locale, id, systemsId } = Astro.props;
 const pt = locale === 'pt';
 const products = projects.slice(0, 5);
 const landingPages = projects.slice(5);
@@ -14,19 +14,25 @@ const ui = pt
   ? {
       index: 'Projetos',
       title: 'Abra, clique, teste.',
-      lede: 'Cinco produtos e sete landing pages, cada um com direção de arte própria e funcionando no navegador. Nada aqui é só imagem.',
+      lede: 'Sete landing pages e cinco sistemas, cada um com direção de arte própria e funcionando no navegador. Nada aqui é só imagem.',
       note: 'Todos são projetos autorais, criados por mim para mostrar como eu trabalho.',
       noteMore: 'A experiência com clientes reais está no currículo.',
-      landingTitle: 'Landing pages por segmento',
+      landingTitle: 'Sites para negócios locais',
+      offer: 'Preço, prazo e o que está incluído',
+      systemsTitle: 'Sistemas, apps e IA',
+      systemsLede: 'Para empresas que precisam organizar a operação: painéis, sistemas internos, modernização de telas antigas, assistentes com IA e apps de campo.',
       landingLede: 'Sites para negócios locais, de climatização a pousada, academia, escola de dança e música, pet e estética automotiva. Cada um com identidade própria, explica o serviço e leva o cliente até o WhatsApp, a reserva ou o orçamento.',
     }
   : {
       index: 'Projects',
       title: 'Open it, click it, test it.',
-      lede: 'Five products and seven landing pages, each with its own art direction and running in your browser. Nothing here is just a picture.',
+      lede: 'Seven landing pages and five systems, each with its own art direction and running in your browser. Nothing here is just a picture.',
       note: 'Every project here is my own work, built to show how I work.',
       noteMore: 'Real client experience is in the CV.',
-      landingTitle: 'Landing pages by segment',
+      landingTitle: 'Websites for local businesses',
+      offer: 'Price, timeline, and what is included',
+      systemsTitle: 'Systems, apps, and AI',
+      systemsLede: 'For companies that need to organize operations: dashboards, internal systems, modernization of old screens, AI assistants, and field apps.',
       landingLede: 'Sites for local businesses, from air conditioning to guesthouses, martial arts, dance and music schools, pet care and car detailing. Each has its own identity, explains the service, and leads visitors to WhatsApp, a booking, or a quote.',
     };
 ---
@@ -44,22 +50,31 @@ const ui = pt
       </div>
     </header>
 
-    <ol class="exhibits">
-      {products.map((project, index) => (
-        <li><Exhibit project={project} locale={locale} index={index} showIndex /></li>
-      ))}
-    </ol>
-
-    <section class="landing-pair" aria-labelledby="landing-title">
+    <section class="landing-pair landing-pair--lead" aria-labelledby="landing-title">
       <div class="landing-pair__head">
         <h3 id="landing-title">{ui.landingTitle}</h3>
-        <p>{ui.landingLede}</p>
+        <div>
+          <p>{ui.landingLede}</p>
+          <a class="text-link" href={withLocale(locale, 'sites')}>{ui.offer}<Icon name="arrow-right" /></a>
+        </div>
       </div>
       <ul class="landing-pair__grid">
         {landingPages.map((project, index) => (
-          <li data-reveal><ProjectCard project={project} locale={locale} number={products.length + index + 1} headingLevel="h4" /></li>
+          <li data-reveal><ProjectCard project={project} locale={locale} number={index + 1} headingLevel="h4" /></li>
         ))}
       </ul>
+    </section>
+
+    <section class="landing-pair" id={systemsId} aria-labelledby="systems-title">
+      <div class="landing-pair__head">
+        <h3 id="systems-title">{ui.systemsTitle}</h3>
+        <p>{ui.systemsLede}</p>
+      </div>
+      <ol class="exhibits">
+        {products.map((project, index) => (
+          <li><Exhibit project={project} locale={locale} index={landingPages.length + index} showIndex /></li>
+        ))}
+      </ol>
     </section>
   </div>
 </section>

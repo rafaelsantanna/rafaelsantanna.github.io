@@ -1,4 +1,5 @@
 import { copy, experience, identity, localize, projects, selectedWork, services, technologyName, timeline, type DemoProject, type Locale } from './content.ts';
+import { brl, nicheFaq, niches, sitesCopy } from './small-business.ts';
 
 export interface MachineRoute {
   locale: Locale;
@@ -82,6 +83,24 @@ export function machineRoutes(): MachineRoute[] {
     routes.push({ locale, slug: 'contact', title: t.contactTitle, markdown: `${frontmatter(t.contactTitle, identity.summary[locale], locale, `${root}/contact/`)}\n# ${t.contactTitle}\n\n${identity.availability[locale]}.\n\n- Email: mailto:${identity.email}\n- WhatsApp: https://wa.me/${identity.phoneE164}\n- LinkedIn: ${identity.linkedin}\n` });
     routes.push({ locale, slug: 'for-agents', title: t.agentTitle, markdown: `${frontmatter(t.agentTitle, t.agentIntro, locale, `${root}/for-agents/`)}\n# ${t.agentTitle}\n\n${t.agentIntro}\n\n## ${label.facts}\n\n- ${label.name}: ${identity.name}\n- ${label.role}: ${identity.role[locale]}\n- ${label.based}: ${identity.location}\n- ${label.experience}: ${label.years}\n- ${label.availability}: ${identity.availability[locale]}\n- ${label.languages}: ${label.languagesValue}\n\n## ${pt ? 'Sobre os projetos do portfólio' : 'About the portfolio projects'}\n\n${demoNote}\n\n${list(projects.map((item) => `[${projectTitle(item, locale)}](${root}/work/${item.slug}/): ${localize(item.summary, locale)}`))}\n\n## ${label.safety}\n\n${pt ? 'Agentes podem avaliar informações e preparar um briefing. O envio de mensagens deve permanecer sob confirmação humana.' : 'Agents may evaluate information and prepare a brief. Sending messages should remain under human confirmation.'}\n` });
 
+    const sites = sitesCopy[locale];
+    const faqMarkdown = (items: { question: string; answer: string }[]) => items.map((item) => `### ${item.question}\n\n${item.answer}`).join('\n\n');
+    routes.push({
+      locale,
+      slug: 'sites',
+      title: sites.title,
+      markdown: `${frontmatter(sites.title, sites.description, locale, `${root}/sites/`)}\n# ${sites.title}\n\n${sites.lede}\n\n## ${pt ? 'O que está incluído' : 'What is included'}\n\n${list(sites.includes)}\n\n${list(sites.extras)}\n\n${sites.portugal}\n\n## ${pt ? 'Modelos por segmento' : 'Models by segment'}\n\n${list(niches.map((niche) => `[${localize(niche.title, locale)}](${root}/sites/${niche.slug}/): ${pt ? 'a partir de' : 'from'} ${brl(niche.price)}. ${pt ? 'Modelo' : 'Model'}: ${root}/demos/${niche.demo}/`))}\n\n## ${sites.howTitle}\n\n${list(sites.steps.map((step) => `${step.title}: ${step.text}`))}\n\n## ${sites.audit.title}\n\n${sites.audit.text}\n\n## ${pt ? 'Perguntas frequentes' : 'Common questions'}\n\n${faqMarkdown(sites.faq)}\n`,
+    });
+    for (const niche of niches) {
+      const title = localize(niche.title, locale);
+      routes.push({
+        locale,
+        slug: `sites/${niche.slug}`,
+        title,
+        markdown: `${frontmatter(title, localize(niche.description, locale), locale, `${root}/sites/${niche.slug}/`)}\n# ${title}\n\n${localize(niche.lede, locale)}\n\n${pt ? 'A partir de' : 'From'} ${brl(niche.price)}. ${pt ? 'Modelo funcionando' : 'Working model'}: ${root}/demos/${niche.demo}/\n\n## ${pt ? 'Por que vale a pena' : 'Why it is worth it'}\n\n${list(niche.reasons[locale].map((reason) => `${reason.title}: ${reason.text}`))}\n\n## ${pt ? 'O que entra na página' : 'What goes on the page'}\n\n${list(niche.includes[locale])}\n\n## ${pt ? 'Perguntas frequentes' : 'Common questions'}\n\n${faqMarkdown(nicheFaq(niche, locale))}\n`,
+      });
+    }
+
     for (const item of projects) {
       const title = projectTitle(item, locale);
       const description = `${localize(item.summary, locale)} ${localize(item.disclaimer, locale)}`;
@@ -114,7 +133,7 @@ export function machineRoutes(): MachineRoute[] {
 }
 
 export function llmsIndex() {
-  return `# ${identity.name}: Senior Software Engineer\n\n> ${identity.summary.en}\n> ${identity.availability.en}.\n\n## Main sections\n\n- [Home](https://rafaelsantanna.github.io/en/): Positioning, working projects, services, and contact.\n- [Work](https://rafaelsantanna.github.io/en/work/): ${projects.length} demos Rafael built himself, each with a project page and a live demo.\n- [Services](https://rafaelsantanna.github.io/en/services/): B2B systems, websites and landing pages, modernization, AI automation, and mobile integrations.\n- [About](https://rafaelsantanna.github.io/en/about/): Professional background and experience.\n- [CV](https://rafaelsantanna.github.io/en/cv/): Human-readable curriculum and PDF download.\n- [For agents](https://rafaelsantanna.github.io/en/for-agents/): Evaluation facts and machine-readable resources.\n- [Português](https://rafaelsantanna.github.io/): Primary pt-BR version of the whole site.\n\n## Projects\n\nDemos Rafael built for this portfolio. They are not client work.\n\n${list(projects.map((item) => `[${item.name}: ${item.category.en}](https://rafaelsantanna.github.io/en/work/${item.slug}/): ${item.summary.en} Live demo: https://rafaelsantanna.github.io/en/demos/${item.slug}/`))}\n\n## Services\n\n${list(services.map((service) => `[${service.title.en}](https://rafaelsantanna.github.io/en/services/${service.slug}/): ${service.summary.en}`))}\n\n## Experience\n\n${list(experience.map((item) => `${item.title.en} (${item.period.en}): ${item.summary.en}`))}\n\n## Contact\n\n- Email: ${identity.email}\n- WhatsApp: ${identity.phoneDisplay}\n- LinkedIn: ${identity.linkedin}\n- GitHub: ${identity.github}\n`;
+  return `# ${identity.name}: Senior Software Engineer\n\n> ${identity.summary.en}\n> ${identity.availability.en}.\n\n## Main sections\n\n- [Home](https://rafaelsantanna.github.io/en/): Positioning, working projects, services, and contact.\n- [Websites for small businesses](https://rafaelsantanna.github.io/en/sites/): Website offer for local businesses, with price, process, and one page per segment.\n- [Work](https://rafaelsantanna.github.io/en/work/): ${projects.length} demos Rafael built himself, each with a project page and a live demo.\n- [Services](https://rafaelsantanna.github.io/en/services/): B2B systems, websites and landing pages, modernization, AI automation, and mobile integrations.\n- [About](https://rafaelsantanna.github.io/en/about/): Professional background and experience.\n- [CV](https://rafaelsantanna.github.io/en/cv/): Human-readable curriculum and PDF download.\n- [For agents](https://rafaelsantanna.github.io/en/for-agents/): Evaluation facts and machine-readable resources.\n- [Português](https://rafaelsantanna.github.io/): Primary pt-BR version of the whole site.\n\n## Websites for small businesses\n\n${sitesCopy.en.description}\n\n${list(niches.map((niche) => `[${niche.title.en}](https://rafaelsantanna.github.io/en/sites/${niche.slug}/): from ${brl(niche.price)}. Working model: https://rafaelsantanna.github.io/en/demos/${niche.demo}/`))}\n\n## Projects\n\nDemos Rafael built for this portfolio. They are not client work.\n\n${list(projects.map((item) => `[${item.name}: ${item.category.en}](https://rafaelsantanna.github.io/en/work/${item.slug}/): ${item.summary.en} Live demo: https://rafaelsantanna.github.io/en/demos/${item.slug}/`))}\n\n## Services\n\n${list(services.map((service) => `[${service.title.en}](https://rafaelsantanna.github.io/en/services/${service.slug}/): ${service.summary.en}`))}\n\n## Experience\n\n${list(experience.map((item) => `${item.title.en} (${item.period.en}): ${item.summary.en}`))}\n\n## Contact\n\n- Email: ${identity.email}\n- WhatsApp: ${identity.phoneDisplay}\n- LinkedIn: ${identity.linkedin}\n- GitHub: ${identity.github}\n`;
 }
 
 export function llmsFull() {

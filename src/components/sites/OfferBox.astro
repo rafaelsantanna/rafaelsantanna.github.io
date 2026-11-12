@@ -1,0 +1,29 @@
+---
+import Icon from '@/components/ui/Icon.astro';
+import type { Locale } from '@/data/content';
+import { brl, offer, sitesCopy } from '@/data/small-business';
+
+interface Props { locale: Locale; price?: number; headingLevel?: 'h2' | 'h3' }
+
+const { locale, price = offer.price, headingLevel = 'h2' } = Astro.props;
+const Heading = headingLevel;
+const pt = locale === 'pt';
+const c = sitesCopy[locale];
+const terms = pt
+  ? `Pronta em ${offer.businessDays} dias úteis. Metade para começar, metade quando você aprovar.`
+  : `Ready in ${offer.businessDays} business days. Half to start, half when you approve.`;
+---
+
+<aside class="offer-box" aria-labelledby="offer-box-title">
+  <Heading id="offer-box-title" class="offer-box__title">{pt ? 'Quanto custa' : 'Price'}</Heading>
+  <p class="offer-box__price"><span>{pt ? 'a partir de' : 'from'}</span> <strong>{brl(price)}</strong></p>
+  <p class="offer-box__terms">{terms}</p>
+  <ul class="offer-box__list">
+    {c.includes.map((item) => <li><Icon name="check" />{item}</li>)}
+  </ul>
+  <details class="offer-box__extras">
+    <summary>{pt ? 'Depois do primeiro ano e o que fica à parte' : 'After the first year and what costs extra'}</summary>
+    <ul>{c.extras.map((item) => <li>{item}</li>)}</ul>
+    <p>{c.portugal}</p>
+  </details>
+</aside>

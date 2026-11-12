@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { concepts, experience, previewImage, projects, services } from '../src/data/content.ts';
+import { niches } from '../src/data/small-business.ts';
 import { homeFaq } from '../src/data/faq.ts';
 
 const dist = resolve('dist');
@@ -45,11 +46,12 @@ assert.ok(existsSync(notFound), 'Missing 404 page');
     assert.ok(existsSync(targetFor(match[1])), `Broken internal link ${match[1]} in the 404 page`);
   }
 }
-const pagesPerLocale = 7 + projects.length * 2 + services.length;
+const pagesPerLocale = 8 + niches.length + projects.length * 2 + services.length;
 
 assert.equal(pages.length, pagesPerLocale * 2, `Expected ${pagesPerLocale * 2} HTML pages, found ${pages.length}`);
-// One redirect per former /pt/ page plus the legacy case-study and landing-page routes.
-const expectedRedirects = pagesPerLocale + 14;
+// One redirect per former /pt/ page plus the legacy case-study and landing-page routes. The /sites/ pages were
+// published after the move to the root, so they never had a /pt/ URL to keep.
+const expectedRedirects = pagesPerLocale - (1 + niches.length) + 14;
 assert.equal(redirects.length, expectedRedirects, `Expected ${expectedRedirects} legacy redirects, found ${redirects.length}`);
 
 for (const file of redirects) {

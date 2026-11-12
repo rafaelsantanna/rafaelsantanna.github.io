@@ -1,0 +1,27 @@
+---
+import type { Locale } from '@/data/content';
+import type { FaqItem } from '@/data/faq';
+
+interface Props { locale: Locale; items: FaqItem[]; id: string; title?: string }
+
+const { locale, items, id, title } = Astro.props;
+const pt = locale === 'pt';
+const heading = title ?? (pt ? 'Antes de pedir a sua.' : 'Before you order yours.');
+---
+
+<section class="home-faq section" aria-labelledby={`${id}-title`}>
+  <div class="home-faq__inner shell">
+    <header class="home-faq__head" data-reveal>
+      <p class="section-index">{pt ? 'Perguntas frequentes' : 'Common questions'}</p>
+      <h2 id={`${id}-title`}>{heading}</h2>
+    </header>
+    <div class="home-faq__list">
+      {items.map((item) => (
+        <details class="home-faq__item">
+          <summary>{item.question}</summary>
+          <p>{item.answer}</p>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>
