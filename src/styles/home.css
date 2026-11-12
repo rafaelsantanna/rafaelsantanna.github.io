@@ -109,20 +109,20 @@
   to { opacity: 1; transform: none; }
 }
 
-.landing-pair { margin-block-start: clamp(5rem, 3.5rem + 6vw, 9rem); }
-.landing-pair--lead { margin-block-start: var(--space-7); }
-.landing-pair__head .text-link { margin-block-start: var(--space-3); }
-.landing-pair__head {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  align-items: end;
-  gap: var(--space-4) var(--space-8);
-  margin-block-end: var(--space-7);
-  padding-block-start: var(--space-6);
-  border-block-start: 1px solid var(--line);
+/* Showroom: two groups, websites for local businesses first, then systems. */
+.showroom { padding-block-start: clamp(3rem, 2rem + 4vw, 6rem); }
+.showroom__group + .showroom__group { margin-block-start: clamp(5rem, 3.5rem + 6vw, 9rem); }
+.showroom__disclosure {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.55rem;
+  max-width: 72ch;
+  margin-block: calc(clamp(2.5rem, 2rem + 3vw, 4.5rem) * -0.5) var(--space-6);
+  color: var(--text-muted);
+  font-size: 0.875rem;
+  line-height: 1.5;
 }
-.landing-pair__head h3 { font-size: var(--step-3); letter-spacing: var(--tracking-display); line-height: 1.1; }
-.landing-pair__head p { max-width: 52ch; color: var(--text-soft); }
+.showroom__disclosure .icon { margin-block-start: 0.15em; color: var(--violet); }
 .landing-pair__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(1rem, 0.5rem + 1.5vw, 1.75rem); list-style: none; }
 .landing-pair__grid .landing-card { height: 100%; }
 
@@ -356,7 +356,6 @@
   .exhibits > li:nth-child(even) .exhibit { grid-template-columns: minmax(0, 1fr); gap: var(--space-6); }
   .exhibits > li:nth-child(even) .exhibit__media { order: 0; }
   .experience__grid { grid-template-columns: minmax(0, 1fr); }
-  .landing-pair__head { grid-template-columns: minmax(0, 1fr); }
   .contact-close__inner { grid-template-columns: minmax(0, 1fr); grid-template-areas: 'index' 'title' 'lede' 'email' 'routes'; }
 }
 
