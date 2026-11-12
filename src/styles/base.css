@@ -33,6 +33,15 @@
   /* Feedback */
   --danger-text: #ffb4b4;
 
+  /* Theme-dependent chrome: sticky header, menu scrim, dot grids, subtle fills and shadow tints */
+  --header-bg: rgb(9 9 13 / 86%);
+  --scrim: rgb(9 9 13 / 72%);
+  --dot: rgb(255 255 255 / 9%);
+  --dot-strong: rgb(255 255 255 / 13%);
+  --fill-subtle: rgb(255 255 255 / 5%);
+  --shade: rgb(0 0 0 / 65%);
+  --shade-strong: rgb(0 0 0 / 80%);
+
   /* Type */
   --font-display: 'Geologica', 'Segoe UI', system-ui, sans-serif;
   --font-body: 'Atkinson Hyperlegible Next', 'Segoe UI', system-ui, sans-serif;
@@ -72,13 +81,52 @@
   --radius-window: 10px;
   --radius-control: 10px;
   --radius-pill: 999px;
-  --shadow-float: 0 30px 60px -20px rgb(0 0 0 / 70%), 0 12px 24px -12px rgb(0 0 0 / 55%);
+  --shadow-float: 0 30px 60px -20px var(--shade), 0 12px 24px -12px var(--shade);
 
   /* Motion */
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
   --dur-fast: 180ms;
   --dur: 320ms;
   --dur-slow: 700ms;
+}
+
+/* Light theme. The head script sets data-theme from the saved choice or the system preference before first paint. */
+:root[data-theme='light'] {
+  color-scheme: light;
+
+  --canvas: #f6f5fa;
+  --surface-1: #ffffff;
+  --surface-2: #f0eef6;
+  --surface-3: #e6e3ef;
+  --line: rgb(24 20 44 / 10%);
+  --line-strong: rgb(24 20 44 / 17%);
+  --line-hover: rgb(24 20 44 / 32%);
+
+  --window-border: rgb(24 20 44 / 14%);
+  --window-bar: #efedf5;
+  --window-divider: rgb(24 20 44 / 8%);
+  --window-dot: rgb(24 20 44 / 18%);
+
+  --text: #16131f;
+  --text-soft: #464257;
+  --text-muted: #67627a;
+
+  --violet: #6545d8;
+  --violet-strong: #5636c9;
+  --violet-hover: #5134bd;
+  --violet-soft: rgb(101 69 216 / 10%);
+  --violet-line: rgb(101 69 216 / 38%);
+  --on-violet: #ffffff;
+
+  --danger-text: #b42318;
+
+  --header-bg: rgb(246 245 250 / 86%);
+  --scrim: rgb(22 19 31 / 38%);
+  --dot: rgb(24 20 44 / 10%);
+  --dot-strong: rgb(24 20 44 / 14%);
+  --fill-subtle: rgb(24 20 44 / 5%);
+  --shade: rgb(40 30 90 / 16%);
+  --shade-strong: rgb(40 30 90 / 24%);
 }
 
 *, *::before, *::after { box-sizing: border-box; }

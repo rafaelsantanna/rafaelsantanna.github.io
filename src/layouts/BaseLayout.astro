@@ -21,7 +21,7 @@ const { locale, title, description, routePath, image, imageAlt, pageSchema, erro
 const path = routePath.replace(/^\/+|\/+$/g, '');
 ---
 
-<Document locale={locale} title={title} description={description} routePath={routePath} image={image} imageAlt={imageAlt} pageSchema={pageSchema} bodyClass="site" errorPage={errorPage}>
+<Document locale={locale} title={title} description={description} routePath={routePath} image={image} imageAlt={imageAlt} pageSchema={pageSchema} bodyClass="site" errorPage={errorPage} themeable>
   <Header locale={locale} routePath={path} />
   <main id="main-content">
     <slot />
@@ -29,3 +29,8 @@ const path = routePath.replace(/^\/+|\/+$/g, '');
   <Footer locale={locale} />
   <WebMcpTools />
 </Document>
+
+<script>
+  import { trackPointerLight } from '@/components/ui/pointer-light';
+  trackPointerLight();
+</script>

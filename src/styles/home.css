@@ -92,7 +92,7 @@
 .exhibit__stack { margin-block-start: var(--space-2); }
 
 @media (hover: hover) and (pointer: fine) {
-  .exhibit:hover .exhibit__stage .frame { transform: translateY(-8px); box-shadow: 0 44px 70px -24px rgb(0 0 0 / 80%), 0 14px 28px -14px rgb(0 0 0 / 60%); }
+  .exhibit:hover .exhibit__stage .frame { transform: translateY(-8px); box-shadow: 0 44px 70px -24px var(--shade-strong), 0 14px 28px -14px var(--shade); }
 }
 
 @supports (animation-timeline: view()) {

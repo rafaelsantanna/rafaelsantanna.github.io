@@ -43,6 +43,17 @@ const otherLocale = pt ? 'en' : 'pt-BR';
         ))}
       </ul>
       <div class="site-nav__actions">
+        <button
+          class="theme-toggle"
+          type="button"
+          data-theme-toggle
+          data-label-light={pt ? 'Usar tema claro' : 'Use light theme'}
+          data-label-dark={pt ? 'Usar tema escuro' : 'Use dark theme'}
+          aria-label={pt ? 'Alternar tema claro e escuro' : 'Toggle light and dark theme'}
+        >
+          <Icon name="sun" class="theme-toggle__sun" />
+          <Icon name="moon" class="theme-toggle__moon" />
+        </button>
         <a class="locale-switch" href={routePath === '404' ? withLocale(locale === 'pt' ? 'en' : 'pt') : alternatePath(locale, routePath)} lang={otherLocale} hreflang={otherLocale}>
           <Icon name="globe" />{t.switchLocale}
         </a>
@@ -54,6 +65,55 @@ const otherLocale = pt ? 'en' : 'pt-BR';
 </header>
 
 <script>
+  // Light and dark theme: the head script already applied the saved or system theme; this keeps the toggle in sync.
+  const root = document.documentElement;
+  const themeToggle = document.querySelector<HTMLButtonElement>('[data-theme-toggle]');
+  const themeColor = document.querySelector<HTMLMetaElement>('meta[data-theme-color]');
+  const readSaved = () => {
+    try { return localStorage.getItem('theme'); } catch { return null; }
+  };
+  const setTheme = (theme: 'light' | 'dark') => {
+    root.dataset.theme = theme;
+    themeColor?.setAttribute('content', getComputedStyle(root).getPropertyValue('--canvas').trim());
+    if (themeToggle) {
+      const label = (theme === 'light' ? themeToggle.dataset.labelDark : themeToggle.dataset.labelLight) ?? '';
+      themeToggle.setAttribute('aria-label', label);
+      themeToggle.title = label;
+    }
+  };
+  // Animated switch: a circle grows from the toggle where view transitions exist, a cross-fade elsewhere.
+  const applyTheme = (theme: 'light' | 'dark', animate: boolean) => {
+    if (!animate || matchMedia('(prefers-reduced-motion: reduce)').matches) return setTheme(theme);
+    if (!document.startViewTransition || !themeToggle) {
+      root.classList.add('theme-switching');
+      window.setTimeout(() => root.classList.remove('theme-switching'), 450);
+      return setTheme(theme);
+    }
+    const box = themeToggle.getBoundingClientRect();
+    const x = box.left + box.width / 2;
+    const y = box.top + box.height / 2;
+    const radius = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
+    root.classList.add('theme-reveal');
+    const transition = document.startViewTransition(() => setTheme(theme));
+    transition.ready.then(() => {
+      root.animate(
+        { clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${radius}px at ${x}px ${y}px)`] },
+        { duration: 600, easing: 'cubic-bezier(0.16, 1, 0.3, 1)', pseudoElement: '::view-transition-new(root)' },
+      );
+    });
+    transition.finished.finally(() => root.classList.remove('theme-reveal'));
+  };
+  setTheme(root.dataset.theme === 'light' ? 'light' : 'dark');
+  themeToggle?.addEventListener('click', () => {
+    const next = root.dataset.theme === 'light' ? 'dark' : 'light';
+    try { localStorage.setItem('theme', next); } catch { /* Private mode: the choice lasts for this page only. */ }
+    applyTheme(next, true);
+  });
+  matchMedia('(prefers-color-scheme: light)').addEventListener('change', (event) => {
+    const saved = readSaved();
+    if (saved !== 'light' && saved !== 'dark') applyTheme(event.matches ? 'light' : 'dark', true);
+  });
+
   const header = document.querySelector<HTMLElement>('[data-site-header]');
   const toggle = document.querySelector<HTMLButtonElement>('[data-menu-toggle]');
   const nav = document.querySelector<HTMLElement>('[data-site-nav]');

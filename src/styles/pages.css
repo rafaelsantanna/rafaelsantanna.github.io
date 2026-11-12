@@ -108,7 +108,7 @@
 .project-hero__aside .lede { font-size: var(--step-1); }
 
 .project-stage__panel { display: block; padding: clamp(1rem, 0.25rem + 4vw, 4.5rem) clamp(1rem, 0.25rem + 5vw, 6rem) 0; border-end-start-radius: var(--radius-panel); border-end-end-radius: var(--radius-panel); }
-.project-stage__panel .frame { border-block-end: 0; border-end-start-radius: 0; border-end-end-radius: 0; box-shadow: 0 -20px 60px -30px rgb(0 0 0 / 70%); }
+.project-stage__panel .frame { border-block-end: 0; border-end-start-radius: 0; border-end-end-radius: 0; box-shadow: 0 -20px 60px -30px var(--shade); }
 
 .project-body {
   display: grid;

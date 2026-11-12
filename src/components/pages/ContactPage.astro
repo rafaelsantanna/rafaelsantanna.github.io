@@ -224,7 +224,7 @@ const routes = [
   .channel__copy[data-copied] .channel__copy-icon--done { display: inline-flex; color: var(--violet); }
   .channel__copy[data-copied] { border-color: var(--violet-line); }
   .channels__status { min-height: 1.5em; margin-block-start: calc(var(--space-3) * -1); color: var(--text-soft); font-size: var(--step--1); }
-  .channels__status[data-error] { color: #ffb4b4; }
+  .channels__status[data-error] { color: var(--danger-text); }
   .channels__routes { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-3); list-style: none; }
   @container (min-width: 42rem) {
     .channels__routes { grid-template-columns: repeat(3, minmax(0, 1fr)); }

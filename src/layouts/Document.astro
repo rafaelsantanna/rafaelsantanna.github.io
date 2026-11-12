@@ -14,6 +14,8 @@ interface Props {
   bodyClass?: string;
   /** Not-found page: kept out of search and without language alternates. */
   errorPage?: boolean;
+  /** Portfolio pages follow the saved or system light/dark theme; demos keep their own fixed art direction. */
+  themeable?: boolean;
 }
 
 const {
@@ -28,6 +30,7 @@ const {
   colorScheme = 'dark',
   bodyClass,
   errorPage = false,
+  themeable = false,
 } = Astro.props;
 const t = copy[locale];
 const path = routePath.replace(/^\/+|\/+$/g, '');
@@ -112,8 +115,18 @@ const schemas = [
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script is:inline>document.documentElement.classList.add('js');</script>
-    <meta name="theme-color" content={themeColor} />
-    <meta name="color-scheme" content={colorScheme} />
+    {themeable && (
+      <script is:inline>
+        (function () {
+          var theme = null;
+          try { theme = localStorage.getItem('theme'); } catch (error) {}
+          if (theme !== 'light' && theme !== 'dark') theme = matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+          document.documentElement.dataset.theme = theme;
+        })();
+      </script>
+    )}
+    <meta name="theme-color" content={themeColor} data-theme-color={themeable ? '' : undefined} />
+    <meta name="color-scheme" content={themeable ? 'dark light' : colorScheme} />
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
     <meta name="author" content={identity.name} />

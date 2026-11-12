@@ -45,7 +45,7 @@
   position: absolute;
   inset: -6% -4%;
   z-index: -1;
-  background-image: radial-gradient(rgb(255 255 255 / 13%) 1px, transparent 1.5px);
+  background-image: radial-gradient(var(--dot-strong) 1px, transparent 1.5px);
   background-size: 22px 22px;
   -webkit-mask-image: radial-gradient(closest-side, #000 55%, transparent);
   mask-image: radial-gradient(closest-side, #000 55%, transparent);
@@ -86,7 +86,7 @@
 
 .desk[data-draggable] [data-desk-handle] { cursor: grab; }
 .desk-item[data-dragging] [data-desk-handle] { cursor: grabbing; }
-.desk-item[data-dragging] > * { box-shadow: 0 40px 70px -20px rgb(0 0 0 / 80%), 0 0 0 1px var(--violet-line); }
+.desk-item[data-dragging] > * { box-shadow: 0 40px 70px -20px var(--shade-strong), 0 0 0 1px var(--violet-line); }
 
 .window--portrait img {
   width: 100%;
@@ -244,7 +244,7 @@
   }
   .desk__minis .desk-item { flex: 0 0 15.5rem; scroll-snap-align: start; }
   .desk__minis .desk-item--phone { flex-basis: 12rem; }
-  .desk__minis .mini { display: flex; flex-direction: column; height: 100%; box-shadow: 0 16px 30px -18px rgb(0 0 0 / 70%); }
+  .desk__minis .mini { display: flex; flex-direction: column; height: 100%; box-shadow: 0 16px 30px -18px var(--shade); }
   .desk__minis .mini__body { flex: 1; }
   .desk__swipe {
     display: flex;

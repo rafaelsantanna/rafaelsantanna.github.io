@@ -14,7 +14,7 @@
 }
 .site-header[data-scrolled] {
   border-block-end-color: var(--line);
-  background: rgb(9 9 13 / 86%);
+  background: var(--header-bg);
   -webkit-backdrop-filter: blur(14px) saturate(140%);
   backdrop-filter: blur(14px) saturate(140%);
 }
@@ -90,6 +90,34 @@
 }
 .locale-switch:hover { color: var(--text); background: var(--surface-1); }
 .locale-switch .icon { width: 1.05rem; height: 1.05rem; color: var(--text-muted); }
+
+/* Light and dark theme toggle: shows the theme it switches to. */
+.theme-toggle {
+  display: inline-grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-control);
+  background: transparent;
+  color: var(--text-soft);
+  cursor: pointer;
+  transition: color var(--dur-fast) var(--ease), background-color var(--dur-fast) var(--ease);
+}
+.theme-toggle:hover { color: var(--text); background: var(--surface-1); }
+.theme-toggle .icon { grid-area: 1 / 1; width: 1.15rem; height: 1.15rem; transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease); }
+.theme-toggle__moon { opacity: 0; transform: rotate(-60deg) scale(0.6); }
+:root[data-theme='light'] .theme-toggle__sun { opacity: 0; transform: rotate(60deg) scale(0.6); }
+:root[data-theme='light'] .theme-toggle__moon { opacity: 1; transform: none; }
+
+/* A short cross-fade while the theme changes, so surfaces and text do not snap. */
+.theme-switching,
+.theme-switching *,
+.theme-switching *::before,
+.theme-switching *::after {
+  transition: background-color 400ms var(--ease), border-color 400ms var(--ease), color 400ms var(--ease), fill 400ms var(--ease), box-shadow 400ms var(--ease) !important;
+}
 
 .menu-toggle {
   display: none;
@@ -267,7 +295,7 @@
   width: 1.25rem;
   height: 1.25rem;
   flex: none;
-  border: 1px solid rgb(255 255 255 / 18%);
+  border: 1px solid var(--line-strong);
   border-radius: 50%;
   background: linear-gradient(135deg, var(--p-base) 0 50%, var(--p-accent) 50% 100%);
 }
@@ -396,7 +424,7 @@
   overflow: hidden;
   padding: 0.1rem 0.75rem;
   border-radius: var(--radius-pill);
-  background: rgb(255 255 255 / 5%);
+  background: var(--fill-subtle);
   color: var(--text-muted);
   font-family: var(--font-mono);
   font-size: 0.6875rem;
@@ -428,7 +456,7 @@
   position: absolute;
   inset: 0;
   z-index: -1;
-  background-image: radial-gradient(rgb(255 255 255 / 9%) 1px, transparent 1.4px);
+  background-image: radial-gradient(var(--dot) 1px, transparent 1.4px);
   background-size: 18px 18px;
   -webkit-mask-image: linear-gradient(to bottom, #000, transparent 85%);
   mask-image: linear-gradient(to bottom, #000, transparent 85%);
@@ -462,7 +490,7 @@
   transition: border-color var(--dur) var(--ease);
 }
 .project-card__stage { padding: clamp(1.25rem, 1rem + 2vw, 2.25rem) clamp(1.25rem, 1rem + 2vw, 2.25rem) 0; border: 0; border-start-start-radius: inherit; border-start-end-radius: inherit; border-end-start-radius: 0; border-end-end-radius: 0; }
-.project-card__stage .frame { border-end-start-radius: 0; border-end-end-radius: 0; border-block-end: 0; box-shadow: 0 -10px 40px -18px rgb(0 0 0 / 60%); transition: transform var(--dur-slow) var(--ease); }
+.project-card__stage .frame { border-end-start-radius: 0; border-end-end-radius: 0; border-block-end: 0; box-shadow: 0 -10px 40px -18px var(--shade); transition: transform var(--dur-slow) var(--ease); }
 /* The last row takes the spare height, so the actions of cards that share a row line up. */
 .project-card__body { display: grid; grid-template-rows: repeat(3, auto) 1fr; align-content: start; gap: var(--space-3); padding: var(--space-5) clamp(1.25rem, 1rem + 1vw, 1.75rem) clamp(1.25rem, 1rem + 1vw, 1.75rem); border-block-start: 1px solid var(--line); }
 .project-card__meta { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-2) var(--space-4); }

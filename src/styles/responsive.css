@@ -24,11 +24,11 @@
     padding: var(--space-3) var(--gutter) var(--space-6);
     border-block-end: 1px solid var(--line);
     background: var(--canvas);
-    box-shadow: 0 30px 40px -20px rgb(0 0 0 / 70%);
+    box-shadow: 0 30px 40px -20px var(--shade);
   }
   .site-header[data-menu-open] { border-block-end-color: var(--line); background: var(--canvas); -webkit-backdrop-filter: none; backdrop-filter: none; }
   /* Dims the page under the open menu; it sits below the header bar and the panel in the header's stacking context. */
-  .site-header__scrim { position: fixed; inset: 0; z-index: -1; background: rgb(9 9 13 / 72%); }
+  .site-header__scrim { position: fixed; inset: 0; z-index: -1; background: var(--scrim); }
   html[data-menu-open] { overflow: hidden; }
   .site-nav[data-open] .site-nav__list { display: grid; gap: 0; }
   .site-nav[data-open] .site-nav__list a {

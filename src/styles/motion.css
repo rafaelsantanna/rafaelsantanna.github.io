@@ -1,0 +1,126 @@
+/* Motion layer for the portfolio pages: page transitions, entrances, scroll-linked details and hover light.
+   Everything here is progressive enhancement and switches off with prefers-reduced-motion. */
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Cross-page transition: the header stays put while the page underneath fades and rises. */
+  @view-transition { navigation: auto; }
+  .site-header { view-transition-name: site-header; }
+  ::view-transition-old(root) { animation: page-out 200ms var(--ease) both; }
+  ::view-transition-new(root) { animation: page-in 480ms var(--ease) both; }
+
+  /* The theme toggle drives its own circular reveal from the button (see Header.astro). */
+  :root.theme-reveal::view-transition-old(root),
+  :root.theme-reveal::view-transition-new(root) { animation: none; mix-blend-mode: normal; }
+  :root.theme-reveal::view-transition-new(root) { z-index: 2; }
+  :root.theme-reveal .site-header { view-transition-name: none; }
+
+  /* Hero entrances: copy arrives line by line, windows settle in after it. */
+  .hero__copy > *,
+  .sites-hero__copy > *,
+  .niche-hero__copy > *,
+  .service-hero__grid > *,
+  .sites-hero .offer-box,
+  .niche-hero__demo {
+    animation: rise-in 900ms var(--ease) backwards;
+  }
+  .hero__copy > :nth-child(2), .sites-hero__copy > :nth-child(2), .niche-hero__copy > :nth-child(2), .service-hero__grid > :nth-child(2) { animation-delay: 80ms; }
+  .hero__copy > :nth-child(3), .sites-hero__copy > :nth-child(3), .niche-hero__copy > :nth-child(3) { animation-delay: 160ms; }
+  .hero__copy > :nth-child(4), .sites-hero__copy > :nth-child(4), .niche-hero__copy > :nth-child(4) { animation-delay: 240ms; }
+  .hero__copy > :nth-child(5) { animation-delay: 320ms; }
+  .sites-hero .offer-box, .niche-hero__demo { animation-delay: 220ms; }
+
+  .desk-item { animation: window-in 1000ms var(--ease) backwards; }
+  .desk-item:nth-child(2) { animation-delay: 260ms; }
+  .desk__minis .desk-item:nth-child(1) { animation-delay: 360ms; }
+  .desk__minis .desk-item:nth-child(2) { animation-delay: 440ms; }
+  .desk__minis .desk-item:nth-child(3) { animation-delay: 520ms; }
+  .desk__minis .desk-item:nth-child(4) { animation-delay: 600ms; }
+
+  /* The accent word of the home headline gets a slow light sweep. */
+  .hero__accent {
+    background: linear-gradient(100deg, var(--violet) 0 40%, var(--violet-hover) 50%, var(--violet) 60% 100%) 0 0 / 250% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: accent-sweep 6s 1.2s ease-in-out infinite;
+  }
+
+  /* Primary buttons: a light sheen crosses on hover. */
+  .button--primary { position: relative; overflow: hidden; isolation: isolate; }
+  .button--primary::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(110deg, transparent 30%, rgb(255 255 255 / 35%) 50%, transparent 70%);
+    transform: translateX(-120%);
+    transition: transform 700ms var(--ease);
+  }
+  .button--primary:hover::after { transform: translateX(120%); }
+
+  /* Cards light up where the pointer is (coordinates come from motion.ts). */
+  .project-card, .niche-card, .sites-steps li, .offer-box, .callout { position: relative; }
+  .project-card::after, .niche-card::after, .sites-steps li::after, .offer-box::after, .callout::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    border-radius: inherit;
+    background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), var(--violet-soft), transparent 60%);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 400ms var(--ease);
+  }
+  .project-card:hover::after, .niche-card:hover::after, .sites-steps li:hover::after, .offer-box:hover::after, .callout:hover::after { opacity: 1; }
+  .sites-steps li, .niche-card, .callout { transition: border-color var(--dur) var(--ease), transform var(--dur) var(--ease); }
+  .sites-steps li:hover, .callout:hover { border-color: var(--violet-line); transform: translateY(-3px); }
+
+  @supports (animation-timeline: view()) {
+    /* Screenshots inside browser frames pan gently while they cross the viewport. */
+    .frame__media { overflow: hidden; }
+    .frame__media img {
+      animation: frame-pan linear both;
+      animation-timeline: view();
+      animation-range: cover 0% cover 100%;
+    }
+
+    /* Step numbers and section labels draw a short line as they arrive. */
+    .section-index::before {
+      content: '';
+      display: inline-block;
+      width: 1.5rem;
+      height: 1px;
+      vertical-align: middle;
+      background: currentColor;
+      transform-origin: left;
+      animation: line-draw linear both;
+      animation-timeline: view();
+      animation-range: entry 10% entry 90%;
+    }
+  }
+
+  @supports (animation-timeline: scroll()) {
+    /* Reading progress along the bottom edge of the sticky header. */
+    .site-header::after {
+      content: '';
+      position: absolute;
+      inset-inline: 0;
+      inset-block-end: -1px;
+      height: 2px;
+      background: linear-gradient(90deg, var(--violet-strong), var(--violet-hover));
+      transform: scaleX(0);
+      transform-origin: left;
+      animation: progress-grow linear both;
+      animation-timeline: scroll(root);
+    }
+  }
+}
+
+@keyframes page-out { to { opacity: 0; transform: translateY(-0.5rem); } }
+@keyframes page-in { from { opacity: 0; transform: translateY(1rem); } }
+@keyframes rise-in { from { opacity: 0; translate: 0 1.25rem; } }
+@keyframes window-in { from { opacity: 0; translate: 0 1.5rem; scale: 0.96; } }
+@keyframes accent-sweep { 0%, 55% { background-position: 100% 0; } 100% { background-position: -50% 0; } }
+@keyframes frame-pan { from { transform: scale(1.06) translateY(-2.5%); } to { transform: scale(1.06) translateY(2.5%); } }
+@keyframes line-draw { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@keyframes progress-grow { to { transform: scaleX(1); } }
