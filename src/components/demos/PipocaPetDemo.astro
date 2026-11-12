@@ -1,0 +1,412 @@
+---
+import DemoBar from '@/components/demos/DemoBar.astro';
+import { withLocale, type DemoProject, type Locale } from '@/data/content';
+import { copy } from '@/components/demos/creche-pet/copy';
+import { brl, prices, taxiRoundTrip } from '@/components/demos/creche-pet/pricing';
+
+interface Props { locale: Locale; project: DemoProject }
+
+const { locale, project } = Astro.props;
+const pt = locale === 'pt';
+const t = pt ? copy.pt : copy.en;
+const defaultPrice = prices.banho.curta.m;
+// Strings and prices the client script needs, passed through one data attribute.
+const clientData = JSON.stringify({
+  prices,
+  taxi: taxiRoundTrip,
+  sim: { includes: t.sim.includes, flatNote: t.sim.flatNote, sizeWord: t.sim.sizeWord, coatWord: t.sim.coatWord, taxiWord: t.sim.taxiWord, from: t.sim.from, services: t.sim.services, sizes: t.sim.sizes, coats: t.sim.coats },
+  message: t.message,
+  contact: { empty: t.contact.empty, copied: t.contact.copied, copy: t.contact.copy, services: t.contact.services },
+});
+// Index of the matching chip in the message builder service list.
+const simServiceToContact: Record<string, number> = { creche: 1, banho: 2, tosa: 3, hotel: 4 };
+const tabToContact: Record<string, number> = { creche: 1, banho: 3, hotel: 4 };
+const defaultSummary = `${t.sim.services[1].label}, ${t.sim.sizeWord} ${t.sim.sizes[1].label}, ${t.sim.coatWord} ${t.sim.coats[0].label.toLowerCase()}: ${t.sim.from} ${brl(defaultPrice)}.`;
+const kernels = Array.from({ length: 9 }, (_, index) => index);
+---
+
+<DemoBar locale={locale} project={project} />
+<article class="demo demo--pipoca" data-pipoca={clientData} data-sim-map={JSON.stringify(simServiceToContact)}>
+  <svg class="pp-defs" aria-hidden="true" focusable="false">
+    <symbol id="pp-mark" viewBox="0 0 48 48">
+      <circle cx="24" cy="24" r="23" fill="#ff7a2f" />
+      <path d="M12 15c-6 3-7 14-1 19 3-4 4-12 3-19z" fill="#14213d" />
+      <path d="M36 15c6 3 7 14 1 19-3-4-4-12-3-19z" fill="#14213d" />
+      <g fill="#fff6ea"><circle cx="18" cy="19" r="7" /><circle cx="30" cy="19" r="7" /><circle cx="24" cy="14.5" r="7" /><circle cx="16.5" cy="27" r="7" /><circle cx="31.5" cy="27" r="7" /><circle cx="24" cy="30" r="9" /></g>
+      <circle cx="20" cy="23.5" r="1.9" fill="#14213d" /><circle cx="28" cy="23.5" r="1.9" fill="#14213d" />
+      <ellipse cx="24" cy="28.5" rx="2.8" ry="2.1" fill="#14213d" />
+      <path d="M21.4 31.6q2.6 2.2 5.2 0" fill="none" stroke="#14213d" stroke-width="1.5" stroke-linecap="round" />
+    </symbol>
+    <symbol id="pp-kernel" viewBox="0 0 24 24">
+      <path d="M8 19c-4 0-5.5-5-2.4-7C4.8 8 8.6 5.6 11 7.4 12 4 17.4 4.2 17.4 8.3c3.8.2 4.6 5.4 1.2 6.9.8 3.3-3.4 5-5.6 3.1C11.4 20.6 8.2 20.9 8 19z" fill="#fff6ea" stroke="#14213d" stroke-width="1.6" stroke-linejoin="round" />
+      <path d="M10.2 14.6c1.2.9 3 .9 4.2-.3" fill="none" stroke="#ff7a2f" stroke-width="1.6" stroke-linecap="round" />
+    </symbol>
+    <symbol id="pp-check" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="11" fill="#ff7a2f" />
+      <path d="M7 12.4l3.2 3.1L17 8.8" fill="none" stroke="#14213d" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" />
+    </symbol>
+    <symbol id="pp-paw" viewBox="0 0 24 24">
+      <ellipse cx="12" cy="16" rx="5" ry="4.2" /><circle cx="6" cy="10.5" r="2.3" /><circle cx="10" cy="6.5" r="2.4" /><circle cx="14.5" cy="6.5" r="2.4" /><circle cx="18.3" cy="10.5" r="2.3" />
+    </symbol>
+  </svg>
+
+  <div class="pp-sentinel" aria-hidden="true"></div>
+  <nav class="pp-nav" aria-label={t.nav}>
+    <a class="pp-brand" href="#pipoca-inicio">
+      <svg class="pp-brand__mark" aria-hidden="true"><use href="#pp-mark" /></svg>
+      <span>Pipoca Pet<small>{t.tagline}</small></span>
+    </a>
+    <div class="pp-nav__links">
+      <a href="#pipoca-servicos">{t.links.services}</a>
+      <a href="#pipoca-monte">{t.links.simulator}</a>
+      <a href="#pipoca-dia">{t.links.day}</a>
+      <a href="#pipoca-regras">{t.links.rules}</a>
+      <a href="#pipoca-duvidas">{t.links.faq}</a>
+    </div>
+    <a class="pp-pill pp-pill--small" href="#pipoca-contato">{t.navCta}</a>
+  </nav>
+
+  <header id="pipoca-inicio" class="pp-hero">
+    <div class="pp-shell">
+      <p class="pp-eyebrow"><svg aria-hidden="true"><use href="#pp-paw" /></svg>{t.hero.eyebrow}</p>
+      <h1 class="pp-hero__title">
+        <span class="pp-hero__line">{t.hero.lead}</span>
+        <span class="pp-hero__line">{t.hero.before}<span class="pp-accent">{t.hero.accent}<svg viewBox="0 0 300 30" preserveAspectRatio="none" aria-hidden="true"><path d="M4 20C60 8 110 26 160 15s100-9 136 2" pathLength="1" /></svg></span>{t.hero.after}</span>
+      </h1>
+      <div class="pp-hero__grid">
+        <div class="pp-hero__copy">
+          <p class="pp-hero__lede">{t.hero.lede}</p>
+          <div class="pp-hero__actions">
+            <a class="pp-pill" href="#pipoca-contato">{t.hero.cta}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13m-5-6 6 6-6 6" /></svg></a>
+            <a class="pp-link" href="#pipoca-servicos">{t.hero.secondary}</a>
+          </div>
+          <p class="pp-hero__proof"><svg aria-hidden="true"><use href="#pp-check" /></svg>{t.hero.proof}</p>
+          <dl class="pp-hero__facts">
+            {t.hero.facts.map((fact) => (
+              <div><dt>{fact.term}</dt><dd>{fact.value}</dd></div>
+            ))}
+          </dl>
+        </div>
+        <div class="pp-collage">
+          <figure class="pp-collage__arch">
+            <img src="/images/concepts/creche-pet-hero.webp" alt={t.hero.heroAlt} width="1024" height="688" fetchpriority="high" />
+          </figure>
+          <figure class="pp-collage__polaroid">
+            <img src="/images/concepts/creche-pet-brincar.webp" alt={t.hero.playAlt} width="896" height="1120" loading="lazy" />
+            <figcaption>{t.hero.playCaption}</figcaption>
+          </figure>
+          <figure class="pp-collage__card">
+            <img src="/images/concepts/creche-pet-banho.webp" alt={t.hero.bathAlt} width="896" height="1120" loading="lazy" />
+            <figcaption>{t.hero.bathCaption}</figcaption>
+          </figure>
+          <div class="pp-collage__ring" aria-hidden="true">
+            <svg class="pp-collage__ring-text" viewBox="0 0 120 120">
+              <defs><path id="pp-ring-path" d="M60 60m-46 0a46 46 0 1 1 92 0a46 46 0 1 1-92 0" /></defs>
+              <text><textPath href="#pp-ring-path" textLength="288">{t.hero.sticker}</textPath></text>
+            </svg>
+            <svg class="pp-collage__ring-mark"><use href="#pp-mark" /></svg>
+          </div>
+          <p class="pp-collage__price"><strong>{t.hero.priceSticker[0]}</strong><span>{t.hero.priceSticker[1]}</span></p>
+          <div class="pp-pop" data-pop>
+            <button class="pp-pop__button" type="button" hidden aria-label={t.hero.popLabel}>
+              <svg viewBox="0 0 64 64" aria-hidden="true">
+                <g class="pp-pop__heap"><use href="#pp-kernel" x="8" y="2" width="22" height="22" /><use href="#pp-kernel" x="22" y="-2" width="22" height="22" /><use href="#pp-kernel" x="34" y="4" width="22" height="22" /></g>
+                <path d="M10 20h44l-6 40H16z" fill="#fff6ea" stroke="#14213d" stroke-width="2.4" stroke-linejoin="round" />
+                <path d="M19 20l3 40h6l-1-40zm18 0l-1 40h6l3-40z" fill="#ff7a2f" />
+                <path d="M10 20h44l-6 40H16z" fill="none" stroke="#14213d" stroke-width="2.4" stroke-linejoin="round" />
+              </svg>
+              <span class="pp-pop__hint" aria-hidden="true">{t.hero.popHint}</span>
+            </button>
+            <div class="pp-pop__kernels" aria-hidden="true">
+              {kernels.map(() => <svg class="pp-pop__kernel"><use href="#pp-kernel" /></svg>)}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="pp-marquee">
+    <div class="pp-marquee__track">
+      {[0, 1].map((copyIndex) => (
+        <ul aria-hidden={copyIndex === 1 ? 'true' : undefined}>
+          {t.marquee.map((item) => (
+            <li>{item}<svg aria-hidden="true"><use href="#pp-kernel" /></svg></li>
+          ))}
+        </ul>
+      ))}
+    </div>
+  </div>
+
+  <section id="pipoca-servicos" class="pp-section pp-services" aria-labelledby="pp-services-title">
+    <div class="pp-shell">
+      <div class="pp-head pp-reveal">
+        <p class="pp-eyebrow">{t.services.eyebrow}</p>
+        <h2 id="pp-services-title" class="pp-title">{t.services.title} <span>{t.services.muted}</span></h2>
+      </div>
+      <div class="pp-tabs" data-tabs>
+        <div class="pp-tabs__list" role="tablist" aria-label={t.services.tabsLabel} hidden>
+          {t.services.tabs.map((tab, index) => (
+            <button type="button" role="tab" id={`pp-tab-${tab.id}`} aria-controls={`pp-panel-${tab.id}`} aria-selected={index === 0 ? 'true' : 'false'} tabindex={index === 0 ? 0 : -1}>{tab.tab}</button>
+          ))}
+          <span class="pp-tabs__thumb" aria-hidden="true"></span>
+        </div>
+        {t.services.tabs.map((tab, index) => (
+          <div class="pp-panel" role="tabpanel" id={`pp-panel-${tab.id}`} aria-labelledby={`pp-tab-${tab.id}`} data-index={index}>
+            <figure class={`pp-panel__photo pp-panel__photo--${tab.id}`}>
+              <img src={tab.image} alt={tab.alt} width={tab.w} height={tab.h} loading="lazy" />
+            </figure>
+            <div class="pp-panel__body">
+              <h3><span class="pp-panel__kicker">{tab.tab}</span>{tab.title}</h3>
+              <p class="pp-panel__lede">{tab.lede}</p>
+              <div class="pp-panel__cols">
+                <div>
+                  <h4>{t.services.includes}</h4>
+                  <ul class="pp-checks">
+                    {tab.list.map((item) => <li><svg aria-hidden="true"><use href="#pp-check" /></svg>{item}</li>)}
+                  </ul>
+                </div>
+                <div>
+                  <h4>{t.services.pricesLabel}</h4>
+                  <dl class="pp-prices">
+                    {tab.prices.map((row) => (
+                      <div><dt>{row.label}<small>{row.note}</small></dt><dd>{row.value}</dd></div>
+                    ))}
+                  </dl>
+                </div>
+              </div>
+              <p class="pp-panel__note">{tab.note}</p>
+              <a class="pp-pill" href="#pipoca-contato" data-prefill-service={tabToContact[tab.id]}>{t.services.cta}</a>
+            </div>
+          </div>
+        ))}
+      </div>
+      <p class="pp-taxi"><svg aria-hidden="true"><use href="#pp-paw" /></svg>{t.services.taxi}</p>
+    </div>
+  </section>
+
+  <section id="pipoca-monte" class="pp-section pp-sim pp-wavy" aria-labelledby="pp-sim-title">
+    <div class="pp-shell">
+      <div class="pp-head pp-reveal">
+        <p class="pp-eyebrow">{t.sim.eyebrow}</p>
+        <h2 id="pp-sim-title" class="pp-title">{t.sim.title} <span>{t.sim.muted}</span></h2>
+      </div>
+      <div class="pp-sim__grid" role="group" aria-label={t.sim.group} data-sim>
+        <div class="pp-sim__controls">
+          <fieldset class="pp-choice pp-choice--size">
+            <legend>{t.sim.sizeLegend}</legend>
+            {t.sim.sizes.map((size) => (
+              <label><input type="radio" name="pp-size" value={size.value} checked={size.value === 'm'} /><span><b>{size.label}</b><small>{size.hint}</small></span></label>
+            ))}
+          </fieldset>
+          <fieldset class="pp-choice pp-choice--coat">
+            <legend>{t.sim.coatLegend}</legend>
+            {t.sim.coats.map((coat) => (
+              <label><input type="radio" name="pp-coat" value={coat.value} checked={coat.value === 'curta'} /><span><b>{coat.label}</b></span></label>
+            ))}
+          </fieldset>
+          <fieldset class="pp-choice pp-choice--service">
+            <legend>{t.sim.serviceLegend}</legend>
+            {t.sim.services.map((service) => (
+              <label><input type="radio" name="pp-service" value={service.value} checked={service.value === 'banho'} /><span><b>{service.label}</b><small>{service.hint}</small></span></label>
+            ))}
+          </fieldset>
+          <label class="pp-toggle"><input type="checkbox" name="pp-taxi" /><span>{t.sim.taxi}</span></label>
+          <p class="pp-sim__chip" aria-hidden="true"><span>{t.sim.from}</span><b>R$&nbsp;<span data-sim-value>{defaultPrice}</span></b></p>
+        </div>
+        <div class="pp-sim__card">
+          <div class="pp-stage" data-size="m" data-coat="curta">
+            <svg class="pp-stage__svg" viewBox="0 0 360 240" aria-hidden="true">
+              <g class="pp-stage__fence">
+                <rect x="10" y="96" width="340" height="11" rx="5" /><rect x="10" y="150" width="340" height="11" rx="5" />
+                {[24, 74, 124, 174, 224, 274, 324].map((x) => <path d={`M${x} 216V74l11-12 11 12v142z`} />)}
+              </g>
+              <path class="pp-stage__ground" d="M0 214c60-8 120-8 180-6s120 2 180-4v36H0z" />
+              <ellipse class="pp-stage__shadow" cx="190" cy="216" rx="104" ry="8" />
+              <g class="pp-dog">
+                <path class="pp-dog__tail" d="M98 124C76 116 66 96 72 74" />
+                <g class="pp-dog__plume"><circle cx="76" cy="80" r="11" /><circle cx="73" cy="96" r="11" /><circle cx="80" cy="110" r="10" /></g>
+                <rect class="pp-dog__far" x="128" y="152" width="20" height="62" rx="10" /><rect class="pp-dog__far" x="236" y="152" width="20" height="62" rx="10" />
+                <g class="pp-dog__coat">{[112, 128, 144, 160, 176, 192, 208, 224, 240].map((cx) => <circle cx={cx} cy="170" r="11" />)}<circle cx="258" cy="140" r="14" /><circle cx="250" cy="156" r="12" /></g>
+                <rect class="pp-dog__leg" x="104" y="150" width="21" height="64" rx="10.5" /><rect class="pp-dog__leg" x="212" y="150" width="21" height="64" rx="10.5" />
+                <rect class="pp-dog__body" x="94" y="100" width="172" height="72" rx="36" />
+                <path class="pp-dog__body" d="M232 124c0-30 18-48 40-50l20 24c-10 14-20 32-28 46z" />
+                <circle class="pp-dog__body" cx="284" cy="78" r="34" />
+                <ellipse class="pp-dog__belly" cx="314" cy="92" rx="23" ry="15" />
+                <ellipse class="pp-dog__ink" cx="333" cy="85" rx="7.5" ry="6.2" />
+                <path class="pp-dog__tongue" d="M312 102c2 10 12 10 13 1z" />
+                <circle class="pp-dog__ink" cx="295" cy="68" r="4.6" />
+                <circle cx="296.6" cy="66.4" r="1.4" fill="#fff6ea" />
+                <path class="pp-dog__ear" d="M262 50c-12 6-15 40-1 52 11-10 14-36 9-54z" />
+                <g class="pp-dog__coat"><circle cx="261" cy="100" r="7" /><circle cx="268" cy="94" r="6" /></g>
+                <path class="pp-dog__collar" d="M244 106c10 9 26 10 38 2" />
+                <circle class="pp-dog__tag" cx="262" cy="118" r="6.5" />
+              </g>
+            </svg>
+            <p class="pp-stage__badge" aria-hidden="true"><span data-sim-size-label>M</span></p>
+          </div>
+          <div class="pp-sim__price">
+            <p class="pp-sim__from">{t.sim.from}</p>
+            <p class="pp-sim__value" aria-hidden="true">R$&nbsp;<span data-sim-value>{defaultPrice}</span></p>
+            <p class="pp-visually-hidden" role="status" aria-live="polite" data-sim-live>{defaultSummary}</p>
+            <p class="pp-sim__includes" data-sim-includes>{t.sim.includes.banho}</p>
+            <p class="pp-sim__note" data-sim-note>{t.sim.finalNote}</p>
+            <a class="pp-pill" href="#pipoca-contato" data-sim-use>{t.sim.use}</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="pipoca-dia" class="pp-section pp-day pp-wavy" aria-labelledby="pp-day-title">
+    <div class="pp-shell">
+      <div class="pp-head pp-reveal">
+        <p class="pp-eyebrow">{t.day.eyebrow}</p>
+        <h2 id="pp-day-title" class="pp-title">{t.day.title} <span>{t.day.muted}</span></h2>
+      </div>
+      <ol class="pp-timeline pp-reveal">
+        {t.day.timeline.map((item) => (
+          <li><b>{item.time}</b><span>{item.text}</span></li>
+        ))}
+      </ol>
+      <div class="pp-moments">
+        {t.day.cards.map((card, index) => (
+          <article class={`pp-moment pp-moment--${index + 1} pp-reveal`}>
+            <img src={card.image} alt={card.alt} width={card.w} height={card.h} loading="lazy" />
+            <p class="pp-moment__time">{card.time}</p>
+            <details>
+              <summary><h3>{card.title}</h3><span class="pp-moment__plus" aria-hidden="true"></span><span class="pp-visually-hidden">{t.day.more}</span></summary>
+              <p>{card.text}</p>
+            </details>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="pp-section pp-steps pp-wavy" aria-labelledby="pp-steps-title">
+    <div class="pp-shell">
+      <div class="pp-head pp-reveal">
+        <p class="pp-eyebrow">{t.steps.eyebrow}</p>
+        <h2 id="pp-steps-title" class="pp-title">{t.steps.title} <span>{t.steps.muted}</span></h2>
+      </div>
+      <ol class="pp-steps__list">
+        {t.steps.items.map((step, index) => (
+          <li class="pp-reveal">
+            <span class="pp-steps__num" aria-hidden="true">{index + 1}</span>
+            <h3>{step.title}</h3>
+            <p>{step.text}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section id="pipoca-regras" class="pp-section pp-rules pp-wavy" aria-labelledby="pp-rules-title">
+    <div class="pp-shell">
+      <div class="pp-head pp-reveal">
+        <p class="pp-eyebrow">{t.rules.eyebrow}</p>
+        <h2 id="pp-rules-title" class="pp-title">{t.rules.title} <span>{t.rules.muted}</span></h2>
+      </div>
+      <ul class="pp-rules__grid">
+        {t.rules.items.map((rule, index) => (
+          <li class={`pp-rule pp-rule--${index + 1} pp-reveal`}>
+            <svg aria-hidden="true"><use href="#pp-check" /></svg>
+            <h3>{rule.title}</h3>
+            <p>{rule.text}</p>
+          </li>
+        ))}
+      </ul>
+      <div class="pp-rules__extra">
+        <div class="pp-bag pp-reveal">
+          <svg class="pp-bag__mark" aria-hidden="true"><use href="#pp-mark" /></svg>
+          <h3>{t.rules.bagTitle}</h3>
+          <ul>{t.rules.bag.map((item) => <li><svg aria-hidden="true"><use href="#pp-paw" /></svg>{item}</li>)}</ul>
+        </div>
+        <div class="pp-hours pp-reveal">
+          <h3>{t.rules.hoursTitle}</h3>
+          <dl>{t.rules.hours.map((row) => <div><dt>{row.term}</dt><dd>{row.value}</dd></div>)}</dl>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="pipoca-duvidas" class="pp-section pp-faq pp-wavy" aria-labelledby="pp-faq-title">
+    <div class="pp-shell pp-faq__inner">
+      <div class="pp-head pp-reveal">
+        <p class="pp-eyebrow">{t.faq.eyebrow}</p>
+        <h2 id="pp-faq-title" class="pp-title">{t.faq.title} <span>{t.faq.muted}</span></h2>
+      </div>
+      <div class="pp-faq__list">
+        {t.faq.items.map((item) => (
+          <details>
+            <summary>{item.q}<span class="pp-faq__icon" aria-hidden="true"></span></summary>
+            <p>{item.a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section id="pipoca-contato" class="pp-section pp-contact pp-wavy" aria-labelledby="pp-contact-title">
+    <div class="pp-shell pp-contact__inner">
+      <div class="pp-contact__copy">
+        <p class="pp-eyebrow">{t.contact.eyebrow}</p>
+        <h2 id="pp-contact-title" class="pp-title">{t.contact.title} <span>{t.contact.muted}</span></h2>
+        <p>{t.contact.lede}</p>
+        <svg class="pp-contact__mark" aria-hidden="true"><use href="#pp-mark" /></svg>
+      </div>
+      <div class="pp-builder" role="group" aria-label={t.contact.group} data-builder>
+        <div class="pp-builder__row">
+          <label class="pp-field">{t.contact.tutor}<input type="text" name="pp-tutor" autocomplete="given-name" maxlength="40" placeholder={t.contact.tutorPh} /></label>
+          <label class="pp-field">{t.contact.dog}<input type="text" name="pp-dog" autocomplete="off" maxlength="40" placeholder={t.contact.dogPh} /></label>
+        </div>
+        <div class="pp-builder__row">
+          <fieldset class="pp-chips pp-chips--size">
+            <legend>{t.contact.sizeLegend}</legend>
+            {t.sim.sizes.map((size) => (
+              <label><input type="radio" name="pp-msg-size" value={size.value} /><span>{size.label}<small>{size.hint}</small></span></label>
+            ))}
+          </fieldset>
+          <label class="pp-field">{t.contact.age}<input type="text" name="pp-age" autocomplete="off" maxlength="24" placeholder={t.contact.agePh} /></label>
+        </div>
+        <fieldset class="pp-chips">
+          <legend>{t.contact.servicesLegend}</legend>
+          {t.contact.services.map((service, index) => (
+            <label><input type="checkbox" name="pp-msg-service" value={index} /><span>{service}</span></label>
+          ))}
+        </fieldset>
+        <label class="pp-field">{t.contact.note}<input type="text" name="pp-note" autocomplete="off" maxlength="140" placeholder={t.contact.notePh} /></label>
+        <div class="pp-builder__actions">
+          <button class="pp-pill" type="button" data-build>{t.contact.build}</button>
+          <button class="pp-pill pp-pill--ghost" type="button" data-copy hidden>{t.contact.copy}</button>
+        </div>
+        <div class="pp-chat">
+          <p class="pp-chat__from">{t.contact.bubbleFrom}</p>
+          <p class="pp-chat__bubble" role="status" aria-live="polite" data-output>{t.contact.initial}</p>
+        </div>
+        <p class="pp-builder__local">{t.contact.localNote}</p>
+        <noscript><p class="demo-noscript">{t.contact.noscript}</p></noscript>
+      </div>
+    </div>
+  </section>
+
+  <footer class="pp-footer">
+    <div class="pp-shell pp-footer__inner">
+      <a class="pp-brand" href="#pipoca-inicio">
+        <svg class="pp-brand__mark" aria-hidden="true"><use href="#pp-mark" /></svg>
+        <span>Pipoca Pet<small>{t.tagline}</small></span>
+      </a>
+      <p>{t.footer.hours}<br />{t.footer.area}</p>
+      <div class="pp-footer__links">
+        <a href={withLocale(locale, 'contact')}>{t.footer.contact}</a>
+        <a href={withLocale(locale, 'work')}>{t.footer.back}</a>
+      </div>
+    </div>
+  </footer>
+</article>
+
+<script>
+  import { initPipoca } from '@/components/demos/creche-pet/client';
+  initPipoca();
+</script>

@@ -1,251 +1,182 @@
 ---
 import DemoBar from '@/components/demos/DemoBar.astro';
+import { climaCopy } from '@/components/demos/clima-certa/copy';
 import { localize, withLocale, type Concept, type DemoProject, type Locale } from '@/data/content';
 
 interface Props { locale: Locale; concept: Concept; project: DemoProject }
 
 const { locale, concept, project } = Astro.props;
-const pt = locale === 'pt';
-const [installation, maintenance, repair] = concept.sections[locale];
-const t = pt
-  ? {
-      nav: 'Navegação Clima Certa',
-      tagline: 'ar-condicionado residencial e comercial',
-      hours: 'Segunda a sábado, das 8h às 18h',
-      response: 'Visita técnica em até 48 horas úteis',
-      services: 'Serviços',
-      symptoms: 'Sintomas',
-      process: 'Como funciona',
-      faq: 'Dúvidas',
-      request: 'Pedir orçamento',
-      heroLede: 'Instalação, limpeza e conserto de split em casas, apartamentos e pequenos escritórios. Conte o que está acontecendo e o técnico chega sabendo o que levar.',
-      heroCta: 'Pedir orçamento',
-      heroSecondary: 'Descobrir o que pode ser',
-      heroAlt: 'Técnico em uma escada instalando o suporte de um ar-condicionado split na parede de um quarto',
-      facts: [
-        { term: 'Aparelhos', value: 'Split de 9.000 a 36.000 BTUs' },
-        { term: 'Garantia', value: '90 dias em todo serviço' },
-        { term: 'Visita técnica', value: 'R$ 120, abatida no conserto' },
-      ],
-      servicesTitle: 'Preço de partida claro, antes da visita.',
-      from: 'a partir de',
-      serviceRows: [
-        { price: 'R$ 450', detail: 'Aparelhos até 12.000 BTUs, com até 3 metros de tubulação de cobre, suporte e dreno.', image: '/images/concepts/clima-sala.webp', alt: 'Sala clara com um ar-condicionado split branco acima do sofá e cortinas filtrando o sol', w: 1536, h: 1024 },
-        { price: 'R$ 220', detail: 'Limpeza da evaporadora e da condensadora, higienização com bactericida e teste de funcionamento.', image: '/images/concepts/clima-filtro.webp', alt: 'Mãos de um técnico com luvas retirando o filtro de um ar-condicionado split', w: 1024, h: 1280 },
-        { price: 'R$ 120', detail: 'Diagnóstico no local, com orçamento antes de qualquer troca de peça. Se você aprovar o conserto, a visita é abatida.', image: '/images/concepts/climatizacao-local-hero.webp', alt: 'Técnico medindo a pressão do gás de uma condensadora com manômetros', w: 1799, h: 874 },
-      ],
-      repairPriceLabel: 'visita técnica',
-      sizingTitle: 'Quantos BTUs para o seu ambiente?',
-      sizingLede: 'Referência para um cômodo com até duas pessoas. Sol da tarde, cozinha integrada ou muitos eletrônicos pedem um aparelho acima. Na visita, o técnico confirma.',
-      sizingHead: ['Área do cômodo', 'Aparelho indicado'],
-      sizing: [
-        ['Até 10 m²', '7.500 a 9.000 BTUs'],
-        ['Até 15 m²', '9.000 a 12.000 BTUs'],
-        ['Até 20 m²', '12.000 BTUs'],
-        ['Até 30 m²', '18.000 BTUs'],
-        ['Até 40 m²', '24.000 BTUs'],
-      ],
-      symptomsTitle: 'O que o seu aparelho está fazendo?',
-      symptomsLede: 'Escolha o que você está percebendo. Algumas coisas dá para resolver sem chamar ninguém.',
-      symptomsLegend: 'Sintoma',
-      causeLabel: 'Causas mais comuns',
-      tryLabel: 'Antes de chamar',
-      checkLabel: 'O que o técnico verifica',
-      symptomCta: 'Pedir visita para isso',
-      symptomList: [
-        { id: 'pingando', name: 'Pingando água', cause: 'Dreno entupido, mangueira sem caimento ou filtro tão sujo que a serpentina congela e depois descongela.', tryFirst: 'Desligue o aparelho, tire o filtro e lave com água corrente. Espere secar antes de recolocar.', check: 'Desentope o dreno, corrige o caimento da mangueira e confere o nivelamento da evaporadora.' },
-        { id: 'nao-gela', name: 'Não gela', cause: 'Filtro sujo, condensadora sem ventilação ou pouco gás por causa de um vazamento.', tryFirst: 'Confira se está no modo refrigerar, limpe o filtro e veja se a unidade externa não está coberta ou encostada em algo.', check: 'Mede a pressão do gás, procura o vazamento e testa o capacitor e o compressor.' },
-        { id: 'barulho', name: 'Barulho estranho', cause: 'Peça solta, ventilador desbalanceado, suporte frouxo ou rolamento gasto.', tryFirst: 'Observe se o barulho vem da unidade de dentro ou da de fora e em que momento começa.', check: 'Reaperta fixações e suportes, equilibra o ventilador e avalia a troca do rolamento.' },
-        { id: 'cheiro', name: 'Cheiro ruim', cause: 'Fungos e bactérias acumulados na serpentina e na bandeja de água.', tryFirst: 'Limpe o filtro. Se o cheiro continuar depois de uma hora ligado, a limpeza precisa ser interna.', check: 'Faz a higienização completa da evaporadora com produto bactericida e limpa a bandeja.' },
-        { id: 'desliga', name: 'Desliga sozinho', cause: 'Timer ou modo sono ativado, pilhas fracas no controle, superaquecimento da condensadora ou problema elétrico.', tryFirst: 'Confira o timer e o modo sono, troque as pilhas do controle e veja se o disjuntor está desarmando.', check: 'Mede a tensão na tomada, verifica a placa, o sensor de temperatura e o capacitor.' },
-      ],
-      processTitle: 'Do primeiro contato à visita.',
-      steps: [
-        { title: 'Conte o que precisa', text: 'Tipo de serviço, tamanho do ambiente e o que você já percebeu no aparelho.' },
-        { title: 'Receba as opções', text: 'O técnico responde com o que faz sentido para o seu caso e uma estimativa de valor.' },
-        { title: 'Marque a visita', text: 'Você escolhe o melhor dia e o técnico chega com o material certo.' },
-      ],
-      faqTitle: 'Dúvidas frequentes',
-      faqs: [
-        { q: 'Vocês instalam aparelho comprado em outra loja?', a: 'Sim. Só pedimos o modelo e a potência para levar o suporte e a tubulação certos.' },
-        { q: 'O material da instalação está incluso?', a: 'Até 3 metros de tubulação de cobre, suporte e dreno estão no preço. O que passar disso é cobrado por metro, e o valor vai no orçamento antes da visita.' },
-        { q: 'De quanto em quanto tempo devo fazer a limpeza?', a: 'Em casa, a cada seis meses. Em escritório ou ambiente com muita poeira, a cada três.' },
-        { q: 'Atendem prédio com regra de fachada?', a: 'Sim. Seguimos as regras do condomínio para a posição da condensadora e combinamos o horário com a portaria.' },
-      ],
-      requestTitle: 'O que está acontecendo no seu espaço?',
-      requestLede: 'Escolha o tipo de serviço e descreva em poucas palavras. Assim o primeiro contato já começa com contexto.',
-      requestNote: 'Demonstração local: não calcula capacidade, não verifica agenda e não envia seus dados.',
-      plannerGroup: 'Rascunho do pedido',
-      kindLabel: 'Qual é o serviço?',
-      kinds: ['Instalação nova', 'Manutenção', 'Conserto', 'Ainda não sei'],
-      repairKind: 'Conserto',
-      maintenanceKind: 'Manutenção',
-      noteLabel: 'O que você observou?',
-      notePlaceholder: 'Ex.: o quarto recebe sol à tarde e o aparelho está pingando.',
-      submit: 'Montar rascunho',
-      status: 'Escolha uma opção e escreva uma observação. Nenhum dado será enviado.',
-      noscript: 'O rascunho interativo precisa de JavaScript. O conteúdo da página continua disponível.',
-      labels: { kind: 'Serviço', note: 'Observação', empty: 'Escolha uma opção e escreva uma observação.', ready: 'Rascunho local:' },
-      contact: 'Fale com Rafael',
-      back: 'Voltar ao portfólio',
-    }
-  : {
-      nav: 'Clima Certa navigation',
-      tagline: 'home and office air conditioning',
-      hours: 'Monday to Saturday, 8 am to 6 pm',
-      response: 'Service visits within 48 working hours',
-      services: 'Services',
-      symptoms: 'Symptoms',
-      process: 'How it works',
-      faq: 'FAQ',
-      request: 'Request a quote',
-      heroLede: 'Split air conditioners installed, cleaned, and repaired in homes, apartments, and small offices. Tell us what is happening and the technician arrives knowing what to bring.',
-      heroCta: 'Request a quote',
-      heroSecondary: 'Find out what it might be',
-      heroAlt: 'Technician on a step ladder fixing the mounting plate of a split air conditioner on a bedroom wall',
-      facts: [
-        { term: 'Units', value: 'Splits from 9,000 to 36,000 BTU' },
-        { term: 'Warranty', value: '90 days on every job' },
-        { term: 'Service visit', value: 'R$ 120, deducted from the repair' },
-      ],
-      servicesTitle: 'A clear starting price, before the visit.',
-      from: 'from',
-      serviceRows: [
-        { price: 'R$ 450', detail: 'Units up to 12,000 BTU, with up to 3 metres of copper piping, bracket, and drain.', image: '/images/concepts/clima-sala.webp', alt: 'Bright living room with a white split air conditioner above the sofa and curtains filtering the sun', w: 1536, h: 1024 },
-        { price: 'R$ 220', detail: 'Cleaning of the indoor and outdoor units, antibacterial treatment, and a performance test.', image: '/images/concepts/clima-filtro.webp', alt: 'Gloved technician hands sliding the filter out of a split air conditioner', w: 1024, h: 1280 },
-        { price: 'R$ 120', detail: 'On-site diagnosis, with a quote before any part is replaced. If you approve the repair, the visit is deducted.', image: '/images/concepts/climatizacao-local-hero.webp', alt: 'Technician measuring refrigerant pressure on an outdoor unit with gauges', w: 1799, h: 874 },
-      ],
-      repairPriceLabel: 'service visit',
-      sizingTitle: 'How many BTU for your room?',
-      sizingLede: 'A guide for a room with up to two people. Afternoon sun, an open kitchen, or lots of electronics call for a larger unit. The technician confirms on the visit.',
-      sizingHead: ['Room size', 'Suggested unit'],
-      sizing: [
-        ['Up to 10 m²', '7,500 to 9,000 BTU'],
-        ['Up to 15 m²', '9,000 to 12,000 BTU'],
-        ['Up to 20 m²', '12,000 BTU'],
-        ['Up to 30 m²', '18,000 BTU'],
-        ['Up to 40 m²', '24,000 BTU'],
-      ],
-      symptomsTitle: 'What is your unit doing?',
-      symptomsLede: 'Pick what you are noticing. Some things you can fix without calling anyone.',
-      symptomsLegend: 'Symptom',
-      causeLabel: 'Most common causes',
-      tryLabel: 'Before you call',
-      checkLabel: 'What the technician checks',
-      symptomCta: 'Request a visit for this',
-      symptomList: [
-        { id: 'pingando', name: 'Dripping water', cause: 'A blocked drain, a hose without enough slope, or a filter so dirty the coil freezes and then thaws.', tryFirst: 'Turn the unit off, take out the filter, and rinse it under running water. Let it dry before putting it back.', check: 'Clears the drain, fixes the hose slope, and checks that the indoor unit is level.' },
-        { id: 'nao-gela', name: 'Not cooling', cause: 'A dirty filter, an outdoor unit without airflow, or low refrigerant from a leak.', tryFirst: 'Make sure it is in cooling mode, clean the filter, and check the outdoor unit is not covered or blocked.', check: 'Measures refrigerant pressure, finds the leak, and tests the capacitor and compressor.' },
-        { id: 'barulho', name: 'Strange noise', cause: 'A loose part, an unbalanced fan, a loose bracket, or a worn bearing.', tryFirst: 'Notice whether the noise comes from the indoor or outdoor unit and when it starts.', check: 'Tightens fixings and brackets, balances the fan, and assesses the bearing.' },
-        { id: 'cheiro', name: 'Bad smell', cause: 'Mould and bacteria built up on the coil and in the drip tray.', tryFirst: 'Clean the filter. If the smell is still there after an hour of use, it needs an internal clean.', check: 'Fully sanitises the indoor unit with antibacterial product and cleans the tray.' },
-        { id: 'desliga', name: 'Turns itself off', cause: 'A timer or sleep mode, weak remote batteries, an overheating outdoor unit, or an electrical fault.', tryFirst: 'Check the timer and sleep mode, change the remote batteries, and see if the breaker is tripping.', check: 'Measures the outlet voltage and checks the board, temperature sensor, and capacitor.' },
-      ],
-      processTitle: 'From first contact to the visit.',
-      steps: [
-        { title: 'Tell us what you need', text: 'Type of service, room size, and anything you have noticed about the unit.' },
-        { title: 'Get your options', text: 'The technician replies with what makes sense for your case and an estimated price.' },
-        { title: 'Book the visit', text: 'You pick the day and the technician arrives with the right parts.' },
-      ],
-      faqTitle: 'Common questions',
-      faqs: [
-        { q: 'Do you install units bought elsewhere?', a: 'Yes. We only ask for the model and capacity so we bring the right bracket and piping.' },
-        { q: 'Are installation materials included?', a: 'Up to 3 metres of copper piping, the bracket, and the drain are included. Anything beyond that is charged per metre and shown in the quote before the visit.' },
-        { q: 'How often should the unit be cleaned?', a: 'Every six months at home. Every three in an office or a dusty space.' },
-        { q: 'Do you work in buildings with facade rules?', a: 'Yes. We follow the building rules for where the outdoor unit goes and arrange the time with the front desk.' },
-      ],
-      requestTitle: 'What is happening in your space?',
-      requestLede: 'Choose the type of service and describe it in a few words, so the first conversation starts with context.',
-      requestNote: 'Local demo: it does not size equipment, check a schedule, or send your details.',
-      plannerGroup: 'Request draft',
-      kindLabel: 'Which service?',
-      kinds: ['New installation', 'Maintenance', 'Repair', 'Not sure yet'],
-      repairKind: 'Repair',
-      maintenanceKind: 'Maintenance',
-      noteLabel: 'What have you noticed?',
-      notePlaceholder: 'For example: the bedroom gets afternoon sun and the unit is dripping.',
-      submit: 'Build my draft',
-      status: 'Choose an option and add a note. Nothing will be sent.',
-      noscript: 'The interactive draft needs JavaScript. The rest of the page remains available.',
-      labels: { kind: 'Service', note: 'Note', empty: 'Choose an option and add a note.', ready: 'Your local draft:' },
-      contact: 'Contact Rafael',
-      back: 'Back to portfolio',
-    };
-const serviceSections = [installation, maintenance, repair];
-// Non-breaking hyphens keep compound words such as "ar-condicionado" on one line in the large headline.
+const t = climaCopy(locale);
+const serviceSections = concept.sections[locale];
+
+// The headline comes from the concept; the accent word is split out so it can carry the hand-drawn underline.
+const tagline = localize(concept.demoTagline, locale);
+const accentAt = tagline.indexOf(t.heroAccent);
+const headBefore = (accentAt > -1 ? tagline.slice(0, accentAt) : tagline).trim().replace(/-/g, '‑');
+const headAfter = accentAt > -1 ? tagline.slice(accentAt + t.heroAccent.length) : '';
+
+const icons: Record<string, string> = {
+  drip: 'M12 3c3 4.5 6 7.6 6 11a6 6 0 0 1-12 0c0-3.4 3-6.5 6-11z',
+  warm: 'M10 14.5V5a2 2 0 0 1 4 0v9.5a4 4 0 1 1-4 0z M12 9v8',
+  noise: 'M4 9v6h4l5 4V5L8 9H4z M16.5 8.5a5 5 0 0 1 0 7 M19 6a8.5 8.5 0 0 1 0 12',
+  smell: 'M8 20c-2-3 2-5 0-8s2-5 0-8 M13 20c-2-3 2-5 0-8s2-5 0-8 M18 20c-2-3 2-5 0-8s2-5 0-8',
+  power: 'M12 3v9 M7 6.5a7 7 0 1 0 10 0',
+  check: 'M5 12.5l4.5 4.5L19 7.5',
+  arrow: 'M5 12h14 M13 6l6 6-6 6',
+  flake: 'M12 2v20 M3.3 7l17.4 10 M3.3 17l17.4-10 M9 3.5l3 2.5 3-2.5 M9 20.5l3-2.5 3 2.5',
+};
+
+// Periodic waves: translating the 2880-wide path by half its width loops without a seam.
+const airWave = (y: number, amp: number, period = 360) => {
+  let d = `M0 ${y}`;
+  for (let x = 0; x < 2880; x += period) d += ` Q${x + period / 4} ${y - amp} ${x + period / 2} ${y} T${x + period} ${y}`;
+  return d;
+};
+const airLines = [
+  { d: airWave(70, 18), w: 2 },
+  { d: airWave(150, 26, 480), w: 1.5 },
+  { d: airWave(250, 14), w: 2.5 },
+  { d: airWave(340, 22, 480), w: 1.5 },
+];
+const divider = 'M0 64V34C180 6 360 2 540 22S900 62 1080 44 1320 8 1440 20V64Z';
+const brandMark = 'M8 27c2.4-2.6 4.8 2.6 7.2 0s4.8 2.6 7.2 0 4.8 2.6 7.2 0 M12 33c2-2.2 4 2.2 6 0s4-2.2 6 0';
 ---
 
 <DemoBar locale={locale} project={project} />
-<article class="demo demo--clima">
-  <div class="cc-strip">
-    <p>{t.hours}</p>
-    <p>{t.response}</p>
-  </div>
+<article class="demo demo--clima" data-clima>
   <nav class="cc-nav" aria-label={t.nav}>
     <a class="cc-brand" href="#clima-inicio">
-      <svg class="cc-brand__mark" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="18" fill="currentColor" /><path d="M10 16 C14 12, 18 20, 22 16 S30 12, 30 16 M10 22 C14 18, 18 26, 22 22 S30 18, 30 22 M10 28 C14 24, 18 32, 22 28 S30 24, 30 28" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" /></svg>
-      <span>Clima Certa<small>{t.tagline}</small></span>
+      <svg class="cc-brand__mark" viewBox="0 0 40 40" aria-hidden="true"><rect x="3" y="5" width="34" height="15" rx="7" fill="currentColor" /><path d="M10 14.5h20" stroke="#fff" stroke-width="2.2" stroke-linecap="round" /><path d={brandMark} fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" /></svg>
+      <span>Clima <b>Certa</b><small>{t.tagline}</small></span>
     </a>
     <div class="cc-nav__links">
       <a href="#clima-servicos">{t.services}</a>
       <a href="#clima-sintomas">{t.symptoms}</a>
       <a href="#clima-processo">{t.process}</a>
       <a href="#clima-duvidas">{t.faq}</a>
-      <a class="cc-nav__cta" href="#clima-pedido">{t.request}</a>
     </div>
+    <a class="cc-pill cc-pill--small" href="#clima-pedido">{t.request}</a>
   </nav>
 
   <header id="clima-inicio" class="cc-hero">
-    <div class="cc-shell cc-hero__top">
-      <h1>{localize(concept.demoTagline, locale).replace(/-/g, '\u2011')}</h1>
-      <div class="cc-hero__side">
-        <p>{t.heroLede}</p>
-        <div class="cc-hero__actions">
-          <a class="cc-button" href="#clima-pedido">{t.heroCta}</a>
-          <a class="cc-link" href="#clima-sintomas">{t.heroSecondary}</a>
+    <svg class="cc-air" viewBox="0 0 2880 400" preserveAspectRatio="none" aria-hidden="true">
+      {airLines.map((line) => <path d={line.d} fill="none" stroke="currentColor" stroke-width={line.w} stroke-linecap="round" />)}
+    </svg>
+    <div class="cc-shell cc-hero__copy">
+      <p class="cc-eyebrow"><svg viewBox="0 0 24 24" aria-hidden="true"><path d={icons.flake} /></svg>{t.heroEyebrow}</p>
+      <h1>
+        <span class="cc-h1__line">{headBefore}</span>{' '}
+        <span class="cc-h1__line">{accentAt > -1 && (
+          <span class="cc-accent">{t.heroAccent}<svg viewBox="0 0 300 24" preserveAspectRatio="none" aria-hidden="true"><path d="M4 16C40 6 70 6 104 13s70 9 102 0 62-8 90 1" /></svg></span>
+        )}{headAfter}</span>
+      </h1>
+      <p class="cc-hero__lede">{t.heroLede}</p>
+      <div class="cc-hero__actions">
+        <a class="cc-pill" href="#clima-pedido">{t.heroCta}<svg viewBox="0 0 24 24" aria-hidden="true"><path d={icons.arrow} /></svg></a>
+        <a class="cc-link" href="#clima-sintomas">{t.heroSecondary}</a>
+      </div>
+      <dl class="cc-facts">
+        {t.facts.map((fact) => <div><dt>{fact.term}</dt><dd>{fact.value}</dd></div>)}
+      </dl>
+    </div>
+
+    <div class="cc-collage">
+      <svg class="cc-collage__blob" viewBox="0 0 600 400" aria-hidden="true"><path d="M86 70C170-8 330 6 438 42s170 120 140 214-150 150-300 140S10 338 14 236 2 148 86 70z" fill="currentColor" /></svg>
+      <figure class="cc-collage__arch">
+        <img src="/images/concepts/clima-instalacao.webp" alt={t.heroAlt} width="1536" height="1024" fetchpriority="high" />
+      </figure>
+      <figure class="cc-collage__polaroid">
+        <img src="/images/concepts/climatizacao-local-hero.webp" alt={t.heroAltOutdoor} width="1799" height="874" loading="lazy" />
+        <figcaption>{t.heroCaption}</figcaption>
+      </figure>
+      <figure class="cc-collage__circle">
+        <img src="/images/concepts/clima-filtro.webp" alt={t.heroAltFilter} width="1024" height="1280" loading="lazy" />
+      </figure>
+      <div class="cc-sticker cc-sticker--ring">
+        <svg viewBox="0 0 120 120" aria-hidden="true"><defs><path id={`cc-ring-${locale}`} d="M60 60m-46 0a46 46 0 1 1 92 0a46 46 0 1 1-92 0" /></defs><text><textPath href={`#cc-ring-${locale}`} textLength="286" lengthAdjust="spacing">{t.stickerWarrantyRing}</textPath></text></svg>
+        <span>{t.stickerWarranty}</span>
+      </div>
+      <p class="cc-sticker cc-sticker--visit">{t.stickerVisit}</p>
+      <div class="cc-thermo" data-thermo data-state="cool" role="img" aria-label={t.thermoLabel}>
+        <div class="cc-thermo__tube" aria-hidden="true"><span class="cc-thermo__hot"></span><span class="cc-thermo__cold"></span></div>
+        <div class="cc-thermo__body" aria-hidden="true">
+          <p class="cc-thermo__title">{t.thermoTitle}</p>
+          <p class="cc-thermo__value"><span data-thermo-value>23</span><span class="cc-thermo__unit">°C</span></p>
+          <p class="cc-thermo__chips"><span class="cc-thermo__chip cc-thermo__chip--hot">{t.thermoBefore}</span><span class="cc-thermo__chip cc-thermo__chip--cold">{t.thermoAfter}</span></p>
         </div>
       </div>
     </div>
-    <figure class="cc-hero__photo">
-      <img src="/images/concepts/clima-instalacao.webp" alt={t.heroAlt} width="1536" height="1024" fetchpriority="high" />
-      <dl class="cc-facts">
-        {t.facts.map((fact) => (
-          <div><dt>{fact.term}</dt><dd>{fact.value}</dd></div>
-        ))}
-      </dl>
-    </figure>
   </header>
+
+  <div class="cc-marquee" role="region" aria-label={t.marqueeLabel}>
+    <div class="cc-marquee__track">
+      {[0, 1].map((copy) => (
+        <ul class="cc-marquee__list" aria-hidden={copy === 1 ? 'true' : undefined}>
+          {t.marquee.map((item) => <li>{item}<svg viewBox="0 0 24 24" aria-hidden="true"><path d={icons.flake} /></svg></li>)}
+        </ul>
+      ))}
+    </div>
+  </div>
 
   <section id="clima-servicos" class="cc-services" aria-labelledby="cc-services-title">
     <div class="cc-shell">
-      <h2 id="cc-services-title" class="cc-section-title">{t.servicesTitle}</h2>
-      <div class="cc-service-list">
+      <div class="cc-head cc-reveal">
+        <p class="cc-kicker">{t.servicesKicker}</p>
+        <h2 id="cc-services-title" class="cc-title">{t.servicesTitle} <span>{t.servicesTitleMuted}</span></h2>
+      </div>
+      <div class="cc-tabs cc-reveal">
+        <fieldset class="cc-tabs__picker">
+          <legend class="cc-visually-hidden">{t.servicesPicker}</legend>
+          {serviceSections.map((section, index) => (
+            <label>
+              <input type="radio" name="cc-service" value={String(index)} checked={index === 0} />
+              <span><b>{section.title}</b><small><span class="cc-tabs__from">{t.serviceRows[index].priceLabel} </span>{t.serviceRows[index].price}</small></span>
+            </label>
+          ))}
+        </fieldset>
         {serviceSections.map((section, index) => {
           const row = t.serviceRows[index];
           return (
-            <article class="cc-service">
-              <img src={row.image} alt={row.alt} width={row.w} height={row.h} loading="lazy" />
+            <article class="cc-service" data-service={String(index)}>
+              <figure class="cc-service__photo">
+                <img src={row.image} alt={row.alt} width={row.w} height={row.h} loading="lazy" style={`object-position: ${row.position}`} />
+                <figcaption class="cc-sticker cc-sticker--tag">{row.badge}</figcaption>
+              </figure>
               <div class="cc-service__body">
                 <h3>{section.title}</h3>
-                <p class="cc-service__price"><span>{index === 2 ? t.repairPriceLabel : t.from}</span> {row.price}</p>
-                <p>{section.text}</p>
-                <p class="cc-service__detail">{row.detail}</p>
+                <p class="cc-service__text">{section.text}</p>
+                <p class="cc-service__price"><span>{row.priceLabel}</span> {row.price}</p>
+                <p class="cc-service__label">{t.includesLabel}</p>
+                <ul class="cc-checks">
+                  {row.items.map((item) => <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d={icons.check} /></svg>{item}</li>)}
+                </ul>
+                <a class="cc-pill" href="#clima-pedido" data-prefill-kind={row.kind}>{row.cta}<svg viewBox="0 0 24 24" aria-hidden="true"><path d={icons.arrow} /></svg></a>
               </div>
             </article>
           );
         })}
       </div>
 
-      <div class="cc-sizing">
-        <div>
+      <div class="cc-sizing cc-reveal">
+        <div class="cc-sizing__intro">
+          <p class="cc-kicker">{t.sizingKicker}</p>
           <h3>{t.sizingTitle}</h3>
           <p>{t.sizingLede}</p>
+          <div class="cc-sizing__control">
+            <label for={`cc-size-${locale}`}>{t.sizingSlider}</label>
+            <input id={`cc-size-${locale}`} type="range" min="0" max={String(t.sizing.length - 1)} step="1" value="2" data-sizing-range />
+            <output for={`cc-size-${locale}`} data-sizing-output>{t.sizing[2][0]}: {t.sizing[2][1]}</output>
+            <small>{t.sizingHint}</small>
+          </div>
+        </div>
+        <div class="cc-sizing__plan" aria-hidden="true">
+          <div class="cc-sizing__room" data-sizing-room><span class="cc-sizing__unit"></span><span class="cc-sizing__air"></span></div>
+          <span class="cc-sizing__area" data-sizing-area>{t.sizing[2][0]}</span>
         </div>
         <table>
           <thead><tr><th scope="col">{t.sizingHead[0]}</th><th scope="col">{t.sizingHead[1]}</th></tr></thead>
           <tbody>
-            {t.sizing.map(([area, unit]) => (
-              <tr><th scope="row">{area}</th><td>{unit}</td></tr>
-            ))}
+            {t.sizing.map(([area, unit], index) => <tr data-sizing-row data-active={index === 2 ? '' : undefined}><th scope="row">{area}</th><td>{unit}</td></tr>)}
           </tbody>
         </table>
       </div>
@@ -253,22 +184,40 @@ const serviceSections = [installation, maintenance, repair];
   </section>
 
   <section id="clima-sintomas" class="cc-symptoms" aria-labelledby="cc-symptoms-title">
+    <svg class="cc-divider" viewBox="0 0 1440 64" preserveAspectRatio="none" aria-hidden="true"><path d={divider} fill="currentColor" /></svg>
     <div class="cc-shell">
-      <div class="cc-symptoms__head">
-        <h2 id="cc-symptoms-title" class="cc-section-title">{t.symptomsTitle}</h2>
+      <div class="cc-head cc-head--split cc-reveal">
+        <div>
+          <p class="cc-kicker">{t.symptomsKicker}</p>
+          <h2 id="cc-symptoms-title" class="cc-title">{t.symptomsTitle}</h2>
+        </div>
         <p>{t.symptomsLede}</p>
       </div>
-      <div class="cc-symptoms__body">
-        <fieldset class="cc-symptoms__picker">
+      <div class="cc-sym cc-reveal">
+        <fieldset class="cc-sym__picker">
           <legend class="cc-visually-hidden">{t.symptomsLegend}</legend>
           {t.symptomList.map((symptom, index) => (
-            <label>
+            <label data-tone={symptom.icon}>
               <input type="radio" name="cc-symptom" value={symptom.id} checked={index === 0} />
-              <span>{symptom.name}</span>
+              <span><svg viewBox="0 0 24 24" aria-hidden="true"><path d={icons[symptom.icon]} /></svg><b>{symptom.name}</b><small>{symptom.short}</small></span>
             </label>
           ))}
         </fieldset>
-        <div class="cc-symptoms__panels">
+        <div class="cc-sym__stage">
+          <svg class="cc-unit" viewBox="0 0 320 230" aria-hidden="true">
+            <circle class="cc-unit__glow" cx="160" cy="110" r="118" />
+            <g class="cc-unit__fx cc-unit__fx--cool" data-fx="cool"><path d="M90 140q14 14 0 28t0 28 M160 140q14 14 0 28t0 28 M230 140q14 14 0 28t0 28" /></g>
+            <g class="cc-unit__body">
+              <rect x="34" y="40" width="252" height="78" rx="22" />
+              <path class="cc-unit__vent" d="M62 102h196" />
+              <circle class="cc-unit__led" cx="252" cy="64" r="5" />
+            </g>
+            <g class="cc-unit__fx" data-fx="drip"><path d="M100 128c5 8 9 12 9 17a9 9 0 0 1-18 0c0-5 4-9 9-17z" /><path d="M150 128c5 8 9 12 9 17a9 9 0 0 1-18 0c0-5 4-9 9-17z" /><path d="M200 128c5 8 9 12 9 17a9 9 0 0 1-18 0c0-5 4-9 9-17z" /></g>
+            <g class="cc-unit__fx" data-fx="warm"><path d="M100 220q-12-12 0-24t0-24 0-24" /><path d="M160 220q-12-12 0-24t0-24 0-24" /><path d="M220 220q-12-12 0-24t0-24 0-24" /></g>
+            <g class="cc-unit__fx" data-fx="noise"><path d="M296 60a26 26 0 0 1 0 38 M306 46a44 44 0 0 1 0 66" /><path d="M24 60a26 26 0 0 0 0 38 M14 46a44 44 0 0 0 0 66" /></g>
+            <g class="cc-unit__fx" data-fx="smell"><path d="M110 210c-10-12 10-18 0-30s10-18 0-30" /><path d="M160 214c-10-12 10-18 0-30s10-18 0-30" /><path d="M210 210c-10-12 10-18 0-30s10-18 0-30" /></g>
+            <g class="cc-unit__fx" data-fx="power"><circle cx="252" cy="64" r="7" /><path d="M160 150v24 M146 158a20 20 0 1 0 28 0" /></g>
+          </svg>
           {t.symptomList.map((symptom) => (
             <article class="cc-symptom" data-symptom={symptom.id}>
               <h3>{symptom.name}</h3>
@@ -277,7 +226,7 @@ const serviceSections = [installation, maintenance, repair];
                 <div><dt>{t.tryLabel}</dt><dd>{symptom.tryFirst}</dd></div>
                 <div><dt>{t.checkLabel}</dt><dd>{symptom.check}</dd></div>
               </dl>
-              <a class="cc-link" href="#clima-pedido" data-prefill-kind={symptom.id === 'cheiro' ? t.maintenanceKind : t.repairKind} data-prefill-note={symptom.name}>{t.symptomCta}</a>
+              <a class="cc-pill cc-pill--frost" href="#clima-pedido" data-prefill-kind={symptom.id === 'cheiro' ? t.maintenanceKind : t.repairKind} data-prefill-note={symptom.name}>{t.symptomCta}<svg viewBox="0 0 24 24" aria-hidden="true"><path d={icons.arrow} /></svg></a>
             </article>
           ))}
         </div>
@@ -286,26 +235,43 @@ const serviceSections = [installation, maintenance, repair];
   </section>
 
   <section id="clima-processo" class="cc-process" aria-labelledby="cc-process-title">
+    <svg class="cc-divider" viewBox="0 0 1440 64" preserveAspectRatio="none" aria-hidden="true"><path d={divider} fill="currentColor" /></svg>
     <div class="cc-shell">
-      <h2 id="cc-process-title" class="cc-section-title">{t.processTitle}</h2>
-      <ol class="cc-steps">
-        {t.steps.map((step, index) => (
-          <li>
-            <span class="cc-steps__number" aria-hidden="true">{index + 1}</span>
-            <h3>{step.title}</h3>
-            <p>{step.text}</p>
-          </li>
-        ))}
-      </ol>
+      <div class="cc-head cc-reveal">
+        <p class="cc-kicker">{t.processKicker}</p>
+        <h2 id="cc-process-title" class="cc-title">{t.processTitle} <span>{t.processTitleMuted}</span></h2>
+      </div>
+      <div class="cc-steps cc-reveal">
+        <ol>
+          {t.steps.map((step, index) => (
+            <li>
+              <span class="cc-steps__number" aria-hidden="true">{index + 1}</span>
+              <h3>{step.title}</h3>
+              <p>{step.text}</p>
+            </li>
+          ))}
+        </ol>
+      </div>
+      <div class="cc-policies cc-reveal">
+        <h3>{t.policiesTitle}</h3>
+        <dl>
+          {t.policies.map((policy) => <div><dt>{policy.term}</dt><dd>{policy.value}</dd></div>)}
+        </dl>
+      </div>
     </div>
   </section>
 
   <section id="clima-duvidas" class="cc-faq" aria-labelledby="cc-faq-title">
     <div class="cc-shell cc-faq__inner">
-      <h2 id="cc-faq-title" class="cc-section-title">{t.faqTitle}</h2>
-      <div>
-        {t.faqs.map((item) => (
-          <details>
+      <div class="cc-faq__head cc-reveal">
+        <p class="cc-kicker">{t.faqKicker}</p>
+        <h2 id="cc-faq-title" class="cc-title">{t.faqTitle}</h2>
+        <p>{t.faqLede}</p>
+        <a class="cc-link" href="#clima-pedido">{t.request}</a>
+      </div>
+      <div class="cc-faq__list cc-reveal">
+        {t.faqs.map((item, index) => (
+          <details open={index === 0}>
             <summary>{item.q}</summary>
             <p>{item.a}</p>
           </details>
@@ -314,74 +280,71 @@ const serviceSections = [installation, maintenance, repair];
     </div>
   </section>
 
-  <section id="clima-pedido" class="cc-request">
+  <section id="clima-pedido" class="cc-request" aria-labelledby="cc-request-title">
+    <svg class="cc-divider" viewBox="0 0 1440 64" preserveAspectRatio="none" aria-hidden="true"><path d={divider} fill="currentColor" /></svg>
+    <svg class="cc-air cc-air--request" viewBox="0 0 2880 400" preserveAspectRatio="none" aria-hidden="true">
+      {airLines.map((line) => <path d={line.d} fill="none" stroke="currentColor" stroke-width={line.w} stroke-linecap="round" />)}
+    </svg>
     <div class="cc-shell cc-request__inner">
       <div class="cc-request__copy">
-        <h2>{t.requestTitle}</h2>
+        <p class="cc-kicker">{t.requestKicker}</p>
+        <h2 id="cc-request-title">{t.requestTitle}</h2>
         <p>{t.requestLede}</p>
         <p class="cc-request__note">{t.requestNote}</p>
       </div>
       <div
         role="group"
         aria-label={t.plannerGroup}
-        class="cc-form"
+        class="cc-builder"
         data-demo-planner
+        data-label-greeting={t.labels.greeting}
         data-label-kind={t.labels.kind}
+        data-label-place={t.labels.place}
+        data-label-area={t.labels.area}
         data-label-note={t.labels.note}
         data-label-empty={t.labels.empty}
-        data-label-ready={t.labels.ready}
       >
-        <fieldset class="cc-form__kinds">
+        <fieldset class="cc-chips">
           <legend>{t.kindLabel}</legend>
-          {t.kinds.map((kind) => (
-            <label><input type="radio" name="kind" value={kind} /><span>{kind}</span></label>
-          ))}
+          {t.kinds.map((kind) => <label><input type="radio" name="kind" value={kind} /><span>{kind}</span></label>)}
         </fieldset>
-        <label class="cc-form__note">
-          {t.noteLabel}
-          <textarea name="note" rows="4" maxlength="240" placeholder={t.notePlaceholder}></textarea>
+        <fieldset class="cc-chips">
+          <legend>{t.placeLabel}</legend>
+          {t.places.map((place) => <label><input type="radio" name="place" value={place} /><span>{place}</span></label>)}
+        </fieldset>
+        <label class="cc-field">
+          {t.areaLabel}
+          <input type="text" name="area" maxlength="60" autocomplete="off" placeholder={t.areaPlaceholder} />
         </label>
-        <button type="button" data-demo-update>{t.submit}</button>
-        <p class="cc-form__status" role="status" aria-live="polite">{t.status}</p>
+        <label class="cc-field">
+          {t.noteLabel}
+          <textarea name="note" rows="3" maxlength="240" placeholder={t.notePlaceholder}></textarea>
+        </label>
+        <button type="button" data-demo-update class="cc-pill cc-pill--block">{t.submit}</button>
+        <div class="cc-bubble">
+          <p class="cc-bubble__head"><svg viewBox="0 0 40 40" aria-hidden="true"><rect x="3" y="5" width="34" height="15" rx="7" fill="currentColor" /><path d={brandMark} fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" /></svg>{t.previewTitle}</p>
+          <p class="cc-bubble__text" role="status" aria-live="polite">{t.status}</p>
+        </div>
         <noscript><p class="demo-noscript">{t.noscript}</p></noscript>
       </div>
     </div>
   </section>
 
   <footer class="cc-footer">
-    <a class="cc-brand" href="#clima-inicio">
-      <svg class="cc-brand__mark" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="18" fill="currentColor" /><path d="M10 16 C14 12, 18 20, 22 16 S30 12, 30 16 M10 22 C14 18, 18 26, 22 22 S30 18, 30 22 M10 28 C14 24, 18 32, 22 28 S30 24, 30 28" fill="none" stroke="#0a2131" stroke-width="2" stroke-linecap="round" /></svg>
-      <span>Clima Certa<small>{t.tagline}</small></span>
-    </a>
-    <a href={withLocale(locale, 'contact')}>{t.contact}</a>
+    <p class="cc-footer__mark" aria-hidden="true">Clima Certa</p>
+    <div class="cc-footer__row">
+      <a class="cc-brand" href="#clima-inicio">
+        <svg class="cc-brand__mark" viewBox="0 0 40 40" aria-hidden="true"><rect x="3" y="5" width="34" height="15" rx="7" fill="currentColor" /><path d="M10 14.5h20" stroke="#06182f" stroke-width="2.2" stroke-linecap="round" /><path d={brandMark} fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" /></svg>
+        <span>Clima <b>Certa</b><small>{t.tagline}</small></span>
+      </a>
+      <p>{t.footerHours}<br />{t.footerArea}</p>
+      <a href={withLocale(locale, 'contact')}>{t.contact}</a>
+    </div>
     <a class="cc-footer__back" href={withLocale(locale, 'work')}>{t.back}</a>
   </footer>
 </article>
 
 <script>
-  document.querySelectorAll<HTMLElement>('[data-demo-planner]').forEach((planner) => {
-    const status = planner.querySelector<HTMLElement>('[role="status"]');
-    const noteField = planner.querySelector<HTMLTextAreaElement>('[name="note"]');
-
-    planner.querySelector<HTMLButtonElement>('[data-demo-update]')?.addEventListener('click', () => {
-      if (!status) return;
-      const kind = planner.querySelector<HTMLInputElement>('[name="kind"]:checked')?.value.trim() || '';
-      const note = noteField?.value.trim() || '';
-      if (!kind || !note) {
-        status.textContent = planner.dataset.labelEmpty || '';
-        return;
-      }
-      status.textContent = `${planner.dataset.labelReady || ''} ${planner.dataset.labelKind}: ${kind}. ${planner.dataset.labelNote}: ${note}`;
-    });
-
-    // A symptom link fills the draft with the matching service and a starting note.
-    document.querySelectorAll<HTMLAnchorElement>('[data-prefill-kind]').forEach((link) => {
-      link.addEventListener('click', () => {
-        const kind = planner.querySelector<HTMLInputElement>(`[name="kind"][value="${link.dataset.prefillKind}"]`);
-        if (kind) kind.checked = true;
-        if (noteField && !noteField.value.trim()) noteField.value = `${link.dataset.prefillNote}. `;
-        window.setTimeout(() => noteField?.focus({ preventScroll: true }), 0);
-      });
-    });
-  });
+  import { initClima } from '@/components/demos/clima-certa/client';
+  document.querySelectorAll<HTMLElement>('[data-clima]').forEach((root) => initClima(root));
 </script>

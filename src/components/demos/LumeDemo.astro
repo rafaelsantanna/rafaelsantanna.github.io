@@ -1,0 +1,527 @@
+---
+import DemoBar from '@/components/demos/DemoBar.astro';
+import { withLocale, type DemoProject, type Locale } from '@/data/content';
+import { care, faqs, formatPrice, services as allServices, sizes as allSizes, steps as allSteps, type SizeId } from '@/components/demos/estetica-automotiva/data';
+
+interface Props { locale: Locale; project: DemoProject }
+
+const { locale, project } = Astro.props;
+const pt = locale === 'pt';
+const services = allServices[locale];
+const sizes = allSizes[locale];
+const steps = allSteps[locale];
+const price = (value: number) => formatPrice(value, locale);
+const t = pt
+  ? {
+      nav: 'Navegação Lume',
+      tagline: 'estética automotiva',
+      links: { services: 'Serviços', compare: 'Antes e depois', quote: 'Orçamento', faq: 'Dúvidas' },
+      navCta: 'Montar orçamento',
+      eyebrow: 'Estúdio de estética automotiva, com hora marcada',
+      h1: ['Seu carro', 'com', 'brilho', 'de vitrine.'],
+      heroLede: 'Lavagem detalhada, polimento, vitrificação e higienização interna feitos sem pressa, em estúdio fechado e com luz de inspeção. Preço de partida por porte e prazo combinado antes de começar.',
+      heroCta: 'Montar meu orçamento',
+      heroSecondary: 'Ver antes e depois',
+      heroAlt: 'SUV grafite parado em um estúdio escuro, com reflexos de tubos de LED no capô e no piso brilhante',
+      facts: [
+        { term: 'Leva e traz', value: 'Na cidade e na região metropolitana' },
+        { term: 'Atendimento', value: 'Terça a sábado, das 8h às 18h' },
+        { term: 'Capacidade', value: 'No máximo 3 carros por dia' },
+      ],
+      marquee: ['Lavagem detalhada', 'Polimento', 'Vitrificação', 'Higienização', 'Faróis', 'Oxi-sanitização', 'Couro'],
+      servicesEyebrow: 'Serviços',
+      servicesTitle: ['Preço de partida,', 'por porte de carro.'],
+      servicesLede: 'Os valores abaixo são para hatch. Sedã, SUV e picape aparecem embaixo de cada serviço e no orçamento. O valor final é confirmado na avaliação, antes de começar.',
+      from: 'a partir de',
+      turnaround: 'Prazo',
+      included: 'O que está incluso',
+      otherSizes: (p: number[]) => `Sedã ${price(p[1])} · SUV ${price(p[2])} · Picape ${price(p[3])}`,
+      otherSizesLabel: 'Outros portes',
+      add: 'Incluir no orçamento',
+      compareEyebrow: 'Antes e depois',
+      compareTitle: ['Farol amarelado', 'de volta ao cristal.'],
+      compareLede: 'O sol queima o verniz do farol e ele fica opaco. Isso tira luz à noite e envelhece o carro. Lixamos em etapas, polimos e selamos com verniz UV.',
+      compareLabel: 'Arraste para comparar antes e depois',
+      before: 'Antes',
+      after: 'Depois',
+      beforeAlt: 'Farol de um carro grafite amarelado e opaco, com a lente embaçada',
+      afterAlt: 'O mesmo farol depois da revitalização, com a lente transparente e brilhante',
+      compareFacts: [
+        { term: 'Valor', value: 'R$ 180 o par' },
+        { term: 'Prazo', value: '2 horas' },
+        { term: 'Duração', value: 'De 1 a 2 anos com o verniz UV' },
+      ],
+      compareHonest: 'Se a lente estiver trincada ou com umidade por dentro, a revitalização não resolve. Nesse caso a gente avisa antes.',
+      studioEyebrow: 'O estúdio',
+      studioTitle: ['Luz forte,', 'tempo de sobra.'],
+      studioLede: 'Trabalhamos com hora marcada e no máximo três carros por dia. Cada etapa é conferida com luz de inspeção, a mesma que mostra cada marca na pintura.',
+      studioList: ['Produtos com ficha técnica, sem receita caseira', 'Toalhas separadas por etapa e por parte do carro', 'Fotos do antes e depois de cada carro'],
+      polishAlt: 'Mãos com luvas pretas passando uma politriz com boina laranja no capô preto de um carro',
+      polishCaption: 'Polimento em etapas: corte, refino e conferência na luz.',
+      interiorAlt: 'Mão com luva preta escovando com espuma o banco de couro bege de um carro',
+      interiorCaption: 'Couro limpo com escova macia e pH neutro.',
+      quoteEyebrow: 'Monte seu orçamento',
+      quoteTitle: ['Quanto fica', 'o seu carro?'],
+      quoteLede: 'Escolha o porte e os serviços. A estimativa e o prazo mudam na hora.',
+      quoteGroup: 'Simulador de orçamento',
+      sizeLegend: '1. Porte do carro',
+      serviceLegend: '2. Serviços',
+      summaryTitle: 'Sua estimativa',
+      summaryFrom: 'A partir de',
+      summaryTime: 'Prazo estimado',
+      summaryPickup: 'Leva e traz',
+      summaryEmpty: 'Escolha pelo menos um serviço.',
+      summaryNote: 'Estimativa de partida. O valor final é confirmado na avaliação, antes de qualquer serviço.',
+      useQuote: 'Usar na minha mensagem',
+      includedTag: 'incluso',
+      labels: { sameDay: 'Pronto no mesmo dia', days: '{n} dias úteis', pickupFree: 'Grátis neste orçamento', pickupPaid: 'R$ 40 por trajeto', total: 'Estimativa a partir de' },
+      processEyebrow: 'Como funciona',
+      processTitle: ['Do primeiro contato', 'à entrega.'],
+      policies: [
+        { term: 'Leva e traz', value: 'Buscamos e devolvemos na cidade e na região metropolitana. Grátis em serviços a partir de R$ 600; abaixo disso, R$ 40 por trajeto.' },
+        { term: 'Agenda', value: 'Terça a sábado, das 8h às 18h. O carro é entregue até as 18h do dia combinado.' },
+        { term: 'Pagamento', value: 'Pix ou cartão. Acima de R$ 600, em até 3 vezes sem juros.' },
+        { term: 'Remarcação', value: 'Avise com 24 horas de antecedência e remarcamos sem custo.' },
+      ],
+      careEyebrow: 'Depois da vitrificação',
+      careTitle: ['Seis cuidados', 'para durar mais.'],
+      careLede: 'A vitrificação dura o que dura a lavagem. Esse guia vai junto com o carro, impresso.',
+      faqEyebrow: 'Dúvidas',
+      faqTitle: ['O que mais', 'perguntam no WhatsApp.'],
+      msgEyebrow: 'Pedir orçamento',
+      msgTitle: ['Conte o carro.', 'A gente responde.'],
+      msgLede: 'Preencha o básico e monte a mensagem. Você revisa o texto antes de mandar para o estúdio.',
+      msgGroup: 'Montar mensagem de orçamento',
+      nameLabel: 'Seu nome',
+      carLabel: 'Carro: marca, modelo e ano',
+      carPlaceholder: 'Ex.: sedã prata, 2019',
+      sizeLabel: 'Porte',
+      servicesLabel: 'Serviços',
+      pickupLabel: 'Precisa de leva e traz?',
+      pickupYes: 'Sim, buscar o carro',
+      pickupNo: 'Não, eu levo',
+      build: 'Montar mensagem',
+      copy: 'Copiar texto',
+      copied: 'Texto copiado',
+      msgNote: 'Nada é enviado: a mensagem fica aqui na tela para você copiar.',
+      msgEmpty: 'Sua mensagem aparece aqui.',
+      msgLabels: { missing: 'Escreva seu nome e escolha pelo menos um serviço.', hello: 'Olá! Meu nome é {name}.', ask: 'Queria um orçamento para o meu carro', services: 'Serviços', pickupYes: 'Preciso do leva e traz.', pickupNo: 'Eu levo o carro até o estúdio.', estimate: 'No site deu a partir de {total}.', close: 'Qual o próximo horário livre?' },
+      noscript: 'O orçamento e a mensagem precisam de JavaScript. Os preços e prazos continuam na página.',
+      footerHours: 'Atendimento com hora marcada, terça a sábado, das 8h às 18h.',
+      contact: 'Fale com Rafael',
+      back: 'Voltar ao portfólio',
+    }
+  : {
+      nav: 'Lume navigation',
+      tagline: 'car detailing studio',
+      links: { services: 'Services', compare: 'Before and after', quote: 'Quote', faq: 'FAQ' },
+      navCta: 'Build a quote',
+      eyebrow: 'Car detailing studio, by appointment',
+      h1: ['Your car', 'with a', 'showroom', 'shine.'],
+      heroLede: 'Detailed washes, paint correction, ceramic coating, and interior cleaning done without rushing, in a closed studio under inspection lights. Starting prices by vehicle size and a turnaround agreed before we start.',
+      heroCta: 'Build my quote',
+      heroSecondary: 'See before and after',
+      heroAlt: 'Graphite SUV parked in a dark studio, with LED tube reflections on the hood and the glossy floor',
+      facts: [
+        { term: 'Pickup and delivery', value: 'Across the city and metro area' },
+        { term: 'Opening hours', value: 'Tuesday to Saturday, 8 am to 6 pm' },
+        { term: 'Capacity', value: 'No more than 3 cars a day' },
+      ],
+      marquee: ['Detailed wash', 'Paint correction', 'Ceramic coating', 'Interior', 'Headlights', 'Ozone', 'Leather'],
+      servicesEyebrow: 'Services',
+      servicesTitle: ['Starting prices,', 'by vehicle size.'],
+      servicesLede: 'The prices below are for hatchbacks. Sedan, SUV, and pickup prices sit under each service and in the quote. The final price is confirmed at the inspection, before we start.',
+      from: 'from',
+      turnaround: 'Turnaround',
+      included: 'What is included',
+      otherSizes: (p: number[]) => `Sedan ${price(p[1])} · SUV ${price(p[2])} · Pickup ${price(p[3])}`,
+      otherSizesLabel: 'Other sizes',
+      add: 'Add to quote',
+      compareEyebrow: 'Before and after',
+      compareTitle: ['Yellowed headlight,', 'crystal clear again.'],
+      compareLede: 'Sunlight burns the headlight clear coat until it turns cloudy. You lose light at night and the car looks older. We sand in stages, polish, and seal with UV clear coat.',
+      compareLabel: 'Drag to compare before and after',
+      before: 'Before',
+      after: 'After',
+      beforeAlt: 'Headlight of a graphite car, yellowed and cloudy, with a hazy lens',
+      afterAlt: 'The same headlight after restoration, with a clear and glossy lens',
+      compareFacts: [
+        { term: 'Price', value: 'R$ 180 per pair' },
+        { term: 'Turnaround', value: '2 hours' },
+        { term: 'Lasts', value: '1 to 2 years with UV clear coat' },
+      ],
+      compareHonest: 'If the lens is cracked or has moisture inside, restoration will not fix it. In that case we tell you first.',
+      studioEyebrow: 'The studio',
+      studioTitle: ['Strong light,', 'plenty of time.'],
+      studioLede: 'We work by appointment and take no more than three cars a day. Every stage is checked under inspection lights, the same lights that reveal every mark in the paint.',
+      studioList: ['Products with technical data sheets, no home recipes', 'Separate towels for each stage and part of the car', 'Before and after photos of every car'],
+      polishAlt: 'Hands in black gloves running a polisher with an orange pad over the black hood of a car',
+      polishCaption: 'Correction in stages: cut, finish, and a check under the light.',
+      interiorAlt: 'Black-gloved hand brushing foam over a beige leather car seat',
+      interiorCaption: 'Leather cleaned with a soft brush and pH-neutral product.',
+      quoteEyebrow: 'Build your quote',
+      quoteTitle: ['How much', 'for your car?'],
+      quoteLede: 'Choose the size and the services. The estimate and turnaround update instantly.',
+      quoteGroup: 'Quote simulator',
+      sizeLegend: '1. Vehicle size',
+      serviceLegend: '2. Services',
+      summaryTitle: 'Your estimate',
+      summaryFrom: 'From',
+      summaryTime: 'Estimated turnaround',
+      summaryPickup: 'Pickup and delivery',
+      summaryEmpty: 'Choose at least one service.',
+      summaryNote: 'A starting estimate. The final price is confirmed at the inspection, before any work.',
+      useQuote: 'Use in my message',
+      includedTag: 'included',
+      labels: { sameDay: 'Ready the same day', days: '{n} working days', pickupFree: 'Free on this quote', pickupPaid: 'R$ 40 each way', total: 'Estimate from' },
+      processEyebrow: 'How it works',
+      processTitle: ['From first message', 'to handover.'],
+      policies: [
+        { term: 'Pickup and delivery', value: 'We collect and return across the city and metro area. Free on services from R$ 600; below that, R$ 40 each way.' },
+        { term: 'Schedule', value: 'Tuesday to Saturday, 8 am to 6 pm. The car is handed back by 6 pm on the agreed day.' },
+        { term: 'Payment', value: 'Pix or card. Above R$ 600, up to 3 interest-free instalments.' },
+        { term: 'Rescheduling', value: 'Let us know 24 hours ahead and we reschedule at no cost.' },
+      ],
+      careEyebrow: 'After the ceramic coating',
+      careTitle: ['Six habits', 'for a longer life.'],
+      careLede: 'A coating lasts as long as the washing allows. This guide goes home with the car, printed.',
+      faqEyebrow: 'Questions',
+      faqTitle: ['What people ask', 'us on WhatsApp.'],
+      msgEyebrow: 'Request a quote',
+      msgTitle: ['Tell us the car.', 'We reply.'],
+      msgLede: 'Fill in the basics and build the message. You review the text before sending it to the studio.',
+      msgGroup: 'Build a quote message',
+      nameLabel: 'Your name',
+      carLabel: 'Car: make, model, and year',
+      carPlaceholder: 'E.g. silver sedan, 2019',
+      sizeLabel: 'Size',
+      servicesLabel: 'Services',
+      pickupLabel: 'Need pickup and delivery?',
+      pickupYes: 'Yes, collect the car',
+      pickupNo: 'No, I will bring it',
+      build: 'Build message',
+      copy: 'Copy text',
+      copied: 'Text copied',
+      msgNote: 'Nothing is sent: the message stays on this screen for you to copy.',
+      msgEmpty: 'Your message appears here.',
+      msgLabels: { missing: 'Write your name and choose at least one service.', hello: 'Hi! My name is {name}.', ask: 'I would like a quote for my car', services: 'Services', pickupYes: 'I need pickup and delivery.', pickupNo: 'I will bring the car to the studio.', estimate: 'The website estimate was from {total}.', close: 'When is the next free slot?' },
+      noscript: 'The quote and the message need JavaScript. Prices and turnaround times remain on the page.',
+      footerHours: 'By appointment, Tuesday to Saturday, 8 am to 6 pm.',
+      contact: 'Contact Rafael',
+      back: 'Back to portfolio',
+    };
+
+// Side-profile silhouettes drawn for the size picker: body outline plus two wheels.
+const silhouettes: Record<SizeId, { body: string; wheels: [number, number] }> = {
+  hatch: { body: 'M14 23 V11 Q14 6 19 6 H40 L48 12 L62 14 Q67 15 67 19 V23', wheels: [24, 57] },
+  sedan: { body: 'M8 23 V17 Q8 14 12 14 L22 13 L30 6 H48 L56 13 L68 14.5 Q72 15 72 19 V23', wheels: [20, 60] },
+  suv: { body: 'M8 23 V9 Q8 5 12 5 H50 L58 12 L68 13.5 Q72 14 72 18 V23', wheels: [20, 60] },
+  picape: { body: 'M6 23 V13 H34 V6 Q34 4 36 4 H50 L57 12 L70 13.5 Q74 14 74 18 V23', wheels: [18, 62] },
+};
+const serviceJson = JSON.stringify(services.map(({ id, name, hours, prices }) => ({ id, name, hours, prices })));
+---
+
+<DemoBar locale={locale} project={project} />
+<article class="demo demo--lume" data-lume data-locale={locale}>
+  <nav class="lu-nav" aria-label={t.nav} data-lume-nav>
+    <a class="lu-brand" href="#lume-inicio">
+      <svg class="lu-brand__mark" viewBox="0 0 40 40" aria-hidden="true"><rect x="1.5" y="1.5" width="37" height="37" rx="10" fill="none" stroke="currentColor" stroke-width="1.6" /><path d="M10 28 L21 11 M16 31 L29 12 M24 31 L31 20" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" /></svg>
+      <span>Lume<small>{t.tagline}</small></span>
+    </a>
+    <div class="lu-nav__links">
+      <a href="#lume-servicos">{t.links.services}</a>
+      <a href="#lume-antes-depois">{t.links.compare}</a>
+      <a href="#lume-orcamento">{t.links.quote}</a>
+      <a href="#lume-duvidas">{t.links.faq}</a>
+    </div>
+    <a class="lu-pill lu-pill--small" href="#lume-orcamento">{t.navCta}</a>
+  </nav>
+
+  <header id="lume-inicio" class="lu-hero">
+    <span class="lu-hero__sentinel" data-lume-sentinel aria-hidden="true"></span>
+    <figure class="lu-hero__photo">
+      <img src="/images/concepts/estetica-automotiva-hero.webp" alt={t.heroAlt} width="1024" height="688" fetchpriority="high" />
+    </figure>
+    <div class="lu-shell lu-hero__copy">
+      <p class="lu-eyebrow">{t.eyebrow}</p>
+      <h1>
+        <span>{t.h1[0]}</span>
+        <span>{t.h1[1]} <span class="lu-sweep">{t.h1[2]}<span class="lu-sweep__window" aria-hidden="true"><span>{t.h1[2]}</span></span></span></span>
+        <span>{t.h1[3]}</span>
+      </h1>
+      <p class="lu-hero__lede">{t.heroLede}</p>
+      <div class="lu-hero__actions">
+        <a class="lu-pill" href="#lume-orcamento">{t.heroCta}<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10 H15 M10.5 5.5 L15 10 L10.5 14.5" /></svg></a>
+        <a class="lu-link" href="#lume-antes-depois">{t.heroSecondary}</a>
+      </div>
+    </div>
+    <dl class="lu-shell lu-facts">
+      {t.facts.map((fact) => (
+        <div><dt>{fact.term}</dt><dd>{fact.value}</dd></div>
+      ))}
+    </dl>
+  </header>
+
+  <div class="lu-marquee" aria-hidden="true">
+    <div class="lu-marquee__track">
+      {[0, 1].map(() => (
+        <p>{t.marquee.map((word, index) => (<><span class={index % 2 ? 'is-outline' : ''}>{word}</span><i></i></>))}</p>
+      ))}
+    </div>
+  </div>
+
+  <section id="lume-servicos" class="lu-section lu-services" aria-labelledby="lu-services-title">
+    <div class="lu-shell">
+      <div class="lu-head" data-reveal>
+        <p class="lu-eyebrow">{t.servicesEyebrow}</p>
+        <h2 id="lu-services-title" class="lu-title">{t.servicesTitle[0]} <span>{t.servicesTitle[1]}</span></h2>
+        <p class="lu-head__lede">{t.servicesLede}</p>
+      </div>
+      <ol class="lu-menu">
+        {services.map((service, index) => (
+          <li class="lu-menu__row" data-reveal>
+            <span class="lu-menu__index" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+            <div class="lu-menu__main">
+              <h3>{service.name}</h3>
+              <p>{service.text}</p>
+              <p class="lu-menu__includes"><span class="lu-visually-hidden">{t.included}: </span>{service.includes.join(' · ')}</p>
+              {service.note && <p class="lu-menu__note">{service.note}</p>}
+            </div>
+            <dl class="lu-menu__meta">
+              <div><dt>{t.turnaround}</dt><dd>{service.turnaround}</dd></div>
+              <div class="lu-menu__price"><dt>{t.from}</dt><dd>{price(service.prices[0])}</dd></div>
+              {service.id !== 'farol' && <div class="lu-menu__sizes"><dt class="lu-visually-hidden">{t.otherSizesLabel}</dt><dd>{t.otherSizes(service.prices)}</dd></div>}
+            </dl>
+            <button type="button" class="lu-add" data-add={service.id} aria-pressed="false" hidden>
+              <svg viewBox="0 0 20 20" aria-hidden="true"><path class="lu-add__plus" d="M10 4 V16 M4 10 H16" /><path class="lu-add__check" d="M4.5 10.5 L8.5 14.5 L15.5 6" /></svg>
+              <span>{t.add}<span class="lu-visually-hidden">: {service.name}</span></span>
+            </button>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section id="lume-antes-depois" class="lu-section lu-compare-section" aria-labelledby="lu-compare-title">
+    <div class="lu-shell lu-compare-grid">
+      <div class="lu-compare" data-lume-compare style="--pos: 50%">
+        <img src="/images/concepts/estetica-automotiva-farol-antes.webp" alt={t.beforeAlt} width="1168" height="880" loading="lazy" />
+        <img class="lu-compare__after" src="/images/concepts/estetica-automotiva-farol-depois.webp" alt={t.afterAlt} width="1168" height="880" loading="lazy" />
+        <span class="lu-compare__tag lu-compare__tag--before" aria-hidden="true">{t.before}</span>
+        <span class="lu-compare__tag lu-compare__tag--after" aria-hidden="true">{t.after}</span>
+        <span class="lu-compare__handle" aria-hidden="true"><span><svg viewBox="0 0 24 24"><path d="M9 7 L4 12 L9 17 M15 7 L20 12 L15 17" /></svg></span></span>
+        <input id={`lu-compare-${locale}`} class="lu-compare__range" type="range" min="0" max="100" value="50" step="1" />
+        <label class="lu-compare__label" for={`lu-compare-${locale}`}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 7 L4 12 L9 17 M15 7 L20 12 L15 17" /></svg>{t.compareLabel}</label>
+      </div>
+      <div class="lu-compare-copy" data-reveal>
+        <p class="lu-eyebrow">{t.compareEyebrow}</p>
+        <h2 id="lu-compare-title" class="lu-title">{t.compareTitle[0]} <span>{t.compareTitle[1]}</span></h2>
+        <p>{t.compareLede}</p>
+        <dl class="lu-mini-facts">
+          {t.compareFacts.map((fact) => (<div><dt>{fact.term}</dt><dd>{fact.value}</dd></div>))}
+        </dl>
+        <p class="lu-small">{t.compareHonest}</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="lume-estudio" class="lu-section lu-studio" aria-labelledby="lu-studio-title">
+    <div class="lu-shell lu-studio__grid">
+      <div class="lu-studio__copy" data-reveal>
+        <p class="lu-eyebrow">{t.studioEyebrow}</p>
+        <h2 id="lu-studio-title" class="lu-title">{t.studioTitle[0]} <span>{t.studioTitle[1]}</span></h2>
+        <p>{t.studioLede}</p>
+        <ul class="lu-ticks">{t.studioList.map((item) => <li>{item}</li>)}</ul>
+      </div>
+      <figure class="lu-frame lu-frame--a" data-reveal>
+        <img src="/images/concepts/estetica-automotiva-polimento.webp" alt={t.polishAlt} width="896" height="1120" loading="lazy" />
+        <figcaption>{t.polishCaption}</figcaption>
+      </figure>
+      <figure class="lu-frame lu-frame--b" data-reveal>
+        <img src="/images/concepts/estetica-automotiva-interior.webp" alt={t.interiorAlt} width="896" height="1120" loading="lazy" />
+        <figcaption>{t.interiorCaption}</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section id="lume-orcamento" class="lu-section lu-quote-section" aria-labelledby="lu-quote-title">
+    <span class="lu-watermark" aria-hidden="true">Lume</span>
+    <div class="lu-shell">
+      <div class="lu-head" data-reveal>
+        <p class="lu-eyebrow">{t.quoteEyebrow}</p>
+        <h2 id="lu-quote-title" class="lu-title">{t.quoteTitle[0]} <span>{t.quoteTitle[1]}</span></h2>
+        <p class="lu-head__lede">{t.quoteLede}</p>
+      </div>
+      <div
+        class="lu-quote"
+        role="group"
+        aria-label={t.quoteGroup}
+        data-lume-quote
+        data-services={serviceJson}
+        data-labels={JSON.stringify({ ...t.labels, included: t.includedTag })}
+      >
+        <div class="lu-quote__inputs">
+          <fieldset class="lu-sizes">
+            <legend>{t.sizeLegend}</legend>
+            {sizes.map((size, index) => (
+              <label class="lu-size">
+                <input type="radio" name={`lu-size-${locale}`} value={size.id} checked={index === 0} data-size />
+                <span class="lu-size__card">
+                  <svg viewBox="0 0 80 30" aria-hidden="true"><path d={silhouettes[size.id].body} />{silhouettes[size.id].wheels.map((cx) => <circle cx={cx} cy="23" r="4.5" />)}<path class="lu-size__ground" d="M2 28.5 H78" /></svg>
+                  <strong>{size.name}</strong>
+                  <small>{size.example}</small>
+                </span>
+              </label>
+            ))}
+          </fieldset>
+          <fieldset class="lu-picks">
+            <legend>{t.serviceLegend}</legend>
+            {services.map((service) => (
+              <label class="lu-pick">
+                <input type="checkbox" value={service.id} checked={service.id === 'polimento'} data-pick />
+                <span class="lu-pick__body">
+                  <span class="lu-pick__box" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="M4.5 10.5 L8.5 14.5 L15.5 6" /></svg></span>
+                  <span class="lu-pick__name">{service.name}</span>
+                  <span class="lu-pick__price" data-price-for={service.id}>{price(service.prices[0])}</span>
+                </span>
+              </label>
+            ))}
+          </fieldset>
+        </div>
+        <div class="lu-summary">
+          <p class="lu-summary__title">{t.summaryTitle}</p>
+          <p class="lu-summary__from">{t.summaryFrom}</p>
+          <p class="lu-summary__total" aria-hidden="true" data-total data-value="650">{price(650)}</p>
+          <p class="lu-visually-hidden" aria-live="polite" aria-atomic="true" data-total-live></p>
+          <dl class="lu-summary__meta">
+            <div><dt>{t.summaryTime}</dt><dd data-time>-</dd></div>
+            <div><dt>{t.summaryPickup}</dt><dd data-pickup>{t.labels.pickupPaid}</dd></div>
+          </dl>
+          <ul class="lu-summary__list" data-list><li class="is-empty">{t.summaryEmpty}</li></ul>
+          <p class="lu-small">{t.summaryNote}</p>
+          <button type="button" class="lu-pill lu-pill--block" data-use-quote>{t.useQuote}</button>
+        </div>
+      </div>
+      <noscript><p class="demo-noscript lu-small">{t.noscript}</p></noscript>
+    </div>
+  </section>
+
+  <section id="lume-processo" class="lu-section lu-process" aria-labelledby="lu-process-title">
+    <div class="lu-shell">
+      <div class="lu-head" data-reveal>
+        <p class="lu-eyebrow">{t.processEyebrow}</p>
+        <h2 id="lu-process-title" class="lu-title">{t.processTitle[0]} <span>{t.processTitle[1]}</span></h2>
+      </div>
+      <ol class="lu-steps">
+        {steps.map((step, index) => (
+          <li data-reveal>
+            <span class="lu-steps__n" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+            <h3>{step.title}</h3>
+            <p>{step.text}</p>
+          </li>
+        ))}
+      </ol>
+      <dl class="lu-policies" data-reveal>
+        {t.policies.map((policy) => (<div><dt>{policy.term}</dt><dd>{policy.value}</dd></div>))}
+      </dl>
+    </div>
+  </section>
+
+  <section id="lume-cuidados" class="lu-section lu-care" aria-labelledby="lu-care-title">
+    <div class="lu-shell lu-care__grid">
+      <div class="lu-head" data-reveal>
+        <p class="lu-eyebrow">{t.careEyebrow}</p>
+        <h2 id="lu-care-title" class="lu-title">{t.careTitle[0]} <span>{t.careTitle[1]}</span></h2>
+        <p class="lu-head__lede">{t.careLede}</p>
+      </div>
+      <ol class="lu-care__list">
+        {care[locale].map((item, index) => (
+          <li data-reveal><span aria-hidden="true">{String(index + 1).padStart(2, '0')}</span><p>{item}</p></li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section id="lume-duvidas" class="lu-section lu-faq" aria-labelledby="lu-faq-title">
+    <div class="lu-shell lu-faq__grid">
+      <div class="lu-head" data-reveal>
+        <p class="lu-eyebrow">{t.faqEyebrow}</p>
+        <h2 id="lu-faq-title" class="lu-title">{t.faqTitle[0]} <span>{t.faqTitle[1]}</span></h2>
+      </div>
+      <div class="lu-faq__list">
+        {faqs[locale].map((item) => (
+          <details>
+            <summary>{item.q}<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 4 V16 M4 10 H16" /></svg></summary>
+            <p>{item.a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section id="lume-mensagem" class="lu-section lu-message" aria-labelledby="lu-message-title">
+    <div class="lu-shell lu-message__grid">
+      <div class="lu-message__copy">
+        <p class="lu-eyebrow">{t.msgEyebrow}</p>
+        <h2 id="lu-message-title" class="lu-title">{t.msgTitle[0]} <span>{t.msgTitle[1]}</span></h2>
+        <p>{t.msgLede}</p>
+        <p class="lu-message__note">{t.msgNote}</p>
+      </div>
+      <div
+        class="lu-builder"
+        role="group"
+        aria-label={t.msgGroup}
+        data-lume-message
+        data-labels={JSON.stringify(t.msgLabels)}
+        data-copied={t.copied}
+      >
+        <div class="lu-builder__row">
+          <label class="lu-field"><span>{t.nameLabel}</span><input type="text" name="lu-name" autocomplete="given-name" maxlength="60" /></label>
+          <label class="lu-field"><span>{t.carLabel}</span><input type="text" name="lu-car" maxlength="80" placeholder={t.carPlaceholder} /></label>
+        </div>
+        <fieldset class="lu-chips">
+          <legend>{t.sizeLabel}</legend>
+          {sizes.map((size, index) => (
+            <label><input type="radio" name={`lu-msg-size-${locale}`} value={size.id} data-label={size.name} checked={index === 0} /><span>{size.name}</span></label>
+          ))}
+        </fieldset>
+        <fieldset class="lu-chips">
+          <legend>{t.servicesLabel}</legend>
+          {services.map((service) => (
+            <label><input type="checkbox" value={service.id} data-label={service.name} data-msg-service /><span>{service.name}</span></label>
+          ))}
+        </fieldset>
+        <fieldset class="lu-chips">
+          <legend>{t.pickupLabel}</legend>
+          <label><input type="radio" name={`lu-pickup-${locale}`} value="yes" /><span>{t.pickupYes}</span></label>
+          <label><input type="radio" name={`lu-pickup-${locale}`} value="no" checked /><span>{t.pickupNo}</span></label>
+        </fieldset>
+        <div class="lu-builder__actions">
+          <button type="button" class="lu-pill" data-build>{t.build}</button>
+          <button type="button" class="lu-ghost-button" data-copy hidden>{t.copy}</button>
+        </div>
+        <div class="lu-bubble" role="status" aria-live="polite"><p data-output>{t.msgEmpty}</p></div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="lu-footer">
+    <div class="lu-shell lu-footer__inner">
+      <a class="lu-brand" href="#lume-inicio">
+        <svg class="lu-brand__mark" viewBox="0 0 40 40" aria-hidden="true"><rect x="1.5" y="1.5" width="37" height="37" rx="10" fill="none" stroke="currentColor" stroke-width="1.6" /><path d="M10 28 L21 11 M16 31 L29 12 M24 31 L31 20" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" /></svg>
+        <span>Lume<small>{t.tagline}</small></span>
+      </a>
+      <p>{t.footerHours}</p>
+      <div class="lu-footer__links">
+        <a href={withLocale(locale, 'contact')}>{t.contact}</a>
+        <a href={withLocale(locale, 'work')}>{t.back}</a>
+      </div>
+    </div>
+  </footer>
+</article>
+
+<script>
+  import { initLume } from '@/components/demos/estetica-automotiva/client';
+
+  document.querySelectorAll<HTMLElement>('[data-lume]').forEach(initLume);
+</script>

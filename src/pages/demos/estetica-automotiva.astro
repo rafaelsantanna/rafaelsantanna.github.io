@@ -1,0 +1,12 @@
+---
+import DemoLayout from '@/layouts/DemoLayout.astro';
+import LumeDemo from '@/components/demos/LumeDemo.astro';
+import { project } from '@/data/projects/estetica-automotiva';
+import '@/styles/landing-base.css';
+import '@/styles/demos.css';
+import '@/styles/landing-lume.css';
+---
+
+<DemoLayout locale="pt" project={project}>
+  <LumeDemo locale="pt" project={project} />
+</DemoLayout>

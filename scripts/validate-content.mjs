@@ -15,8 +15,13 @@ assert.deepEqual(projects.map((item) => item.slug), [
   'knowledge-assistant',
   'online-booking',
   'field-service-app',
-  'pousada-boutique',
   'climatizacao-local',
+  'academia-luta',
+  'escola-danca',
+  'escola-musica',
+  'pousada-boutique',
+  'creche-pet',
+  'estetica-automotiva',
 ], 'Projects must keep the intended presentation order');
 assert.equal(experience.length, 6, 'Expected six experience entries (five past roles and the current one)');
 assert.equal(experience.filter((item) => item.current).length, 1, 'Expected exactly one current role');

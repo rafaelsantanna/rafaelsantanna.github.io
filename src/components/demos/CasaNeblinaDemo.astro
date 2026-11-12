@@ -1,264 +1,215 @@
 ---
 import DemoBar from '@/components/demos/DemoBar.astro';
+import Ridge from '@/components/demos/casa-neblina/Ridge.astro';
+import { copyFor, photos, type PhotoKey } from '@/components/demos/casa-neblina/copy';
 import { localize, withLocale, type Concept, type DemoProject, type Locale } from '@/data/content';
 
 interface Props { locale: Locale; concept: Concept; project: DemoProject }
 
 const { locale, concept, project } = Astro.props;
-const pt = locale === 'pt';
-const demoImage = concept.image.replace(/\.png$/, '.webp');
+const t = copyFor(locale);
 const [intro, spaces, surroundings] = concept.sections[locale];
-const t = pt
-  ? {
-      nav: 'Navegação Casa Neblina',
-      tagline: 'pousada na serra',
-      house: 'A casa',
-      suites: 'Suítes',
-      around: 'Arredores',
-      arrive: 'Como chegar',
-      planStay: 'Ver datas',
-      heroLead: 'Pousada com seis suítes na serra, a 1.400 metros',
-      heroLede: 'Uma casa de madeira e pedra no meio da mata, com café da manhã demorado, lareira à noite e a névoa subindo do vale toda manhã.',
-      heroCta: 'Ver datas e valores',
-      heroSecondary: 'Conhecer as suítes',
-      heroCaption: 'Varanda da casa principal, num fim de tarde de maio',
-      facts: [
-        { term: 'Suítes', value: 'Seis, para até 4 pessoas' },
-        { term: 'Café da manhã', value: 'Incluso, das 8h às 10h30' },
-        { term: 'Distância', value: '2h30 de São Paulo' },
-      ],
-      dayTitle: 'Um dia por aqui',
-      day: [
-        { time: '7h', text: 'A névoa ainda cobre o vale. Tem café coado na varanda para quem acorda cedo.' },
-        { time: '8h', text: 'Café da manhã na sala, com pão de queijo da casa, frutas do pomar e queijos da região.' },
-        { time: '11h', text: 'Trilha até a cachoeira, 40 minutos a pé pela mata.' },
-        { time: '16h', text: 'Chá e bolo na varanda enquanto a luz baixa atrás da serra.' },
-        { time: '19h30', text: 'Jantar de quinta a sábado, com reserva até o meio-dia.' },
-        { time: '21h', text: 'Lareira acesa na sala e céu estrelado quando a névoa deixa.' },
-      ],
-      roomAlt: 'Quarto com cama de linho, manta verde e janela inteira para o vale coberto de névoa',
-      roomCaption: 'Suíte Mata, logo depois do amanhecer',
-      breakfastAlt: 'Mesa de café da manhã com bule, pão de queijo e frutas ao lado do fogão a lenha',
-      breakfastCaption: 'Café da manhã servido na sala, perto do fogão a lenha',
-      specLabels: { area: 'Área', bed: 'Cama', guests: 'Pessoas' },
-      from: 'a partir de',
-      perNight: 'por noite',
-      rooms: [
-        { name: 'Suíte Mata', area: '28 m²', bed: 'Queen', guests: 'Até 2', text: 'Janela inteira para o vale e varanda privativa.', price: 'R$ 690' },
-        { name: 'Suíte Lareira', area: '34 m²', bed: 'Queen', guests: 'Até 2', text: 'Lareira a lenha, banheira e vista para a mata.', price: 'R$ 890' },
-        { name: 'Chalé da Pedra', area: '52 m²', bed: 'Queen e duas de solteiro', guests: 'Até 4', text: 'Dois ambientes, cozinha compacta e deck próprio.', price: 'R$ 1.150' },
-      ],
-      priceNote: 'Valores para duas pessoas com café da manhã. Mínimo de duas noites em fins de semana e feriados.',
-      trailAlt: 'Trilha de terra entre araucárias e samambaias, envolta pela névoa da manhã',
-      nearbyTitle: 'Perto da porteira',
-      nearby: [
-        { place: 'Cachoeira do Poço Fundo', distance: '40 min a pé' },
-        { place: 'Mirante da Pedra Alta', distance: '15 min de carro' },
-        { place: 'Feira de produtores, aos sábados', distance: '10 min de carro' },
-        { place: 'Vila com restaurantes e empório', distance: '20 min de carro' },
-      ],
-      beforeTitle: 'Antes de vir',
-      before: [
-        { term: 'Como chegar', text: 'São 2h30 de São Paulo. Os últimos 4 km são de estrada de terra, tranquila para carro comum. O endereço exato vai junto com a confirmação.' },
-        { term: 'Entrada e saída', text: 'Check-in a partir das 15h e check-out até as 12h. Se for chegar depois das 20h, avise antes.' },
-        { term: 'Pets', text: 'Cães de pequeno porte são bem-vindos na Suíte Mata e no Chalé da Pedra.' },
-        { term: 'Crianças', text: 'Crianças até 6 anos não pagam no Chalé da Pedra.' },
-        { term: 'Internet', text: 'Wi-Fi na casa e nas suítes. O sinal de celular fica fraco em alguns pontos da mata.' },
-      ],
-      nightAlt: 'A pousada à noite, com as janelas acesas no meio da mata e da névoa',
-      plannerTitle: 'Rascunhe sua estadia.',
-      plannerLede: 'Escolha quando quer chegar, quantas noites, quantas pessoas e a suíte. O resumo fica pronto para você mandar quando quiser.',
-      plannerNote: 'Este formulário de demonstração só organiza os dados no seu dispositivo durante esta visita. Não consulta disponibilidade nem envia informações.',
-      plannerGroup: 'Rascunho de estadia',
-      arrivalLabel: 'Chegada',
-      nightsLabel: 'Noites',
-      guestsLabel: 'Pessoas',
-      suiteLabel: 'Suíte',
-      choose: 'Escolha',
-      undecided: 'Ainda não sei',
-      submit: 'Ver meu rascunho',
-      status: 'Preencha as opções para ver seu rascunho. Nenhum dado será enviado.',
-      noscript: 'O rascunho interativo precisa de JavaScript. As informações da página continuam disponíveis.',
-      labels: { arrival: 'Chegada', nights: 'Noites', guests: 'Pessoas', suite: 'Suíte', empty: 'Preencha chegada, noites e pessoas para ver seu rascunho.', invalidDate: 'Escolha uma data de hoje em diante.', ready: 'Rascunho local:' },
-      contact: 'Fale com Rafael',
-      back: 'Voltar ao portfólio',
-    }
-  : {
-      nav: 'Casa Neblina navigation',
-      tagline: 'mountain lodge',
-      house: 'The house',
-      suites: 'Suites',
-      around: 'Around here',
-      arrive: 'Getting here',
-      planStay: 'Check dates',
-      heroLead: 'A lodge with six suites in the mountains, 1,400 metres up',
-      heroLede: 'A wood and stone house in the middle of the forest, with long breakfasts, a fire at night, and mist rising from the valley every morning.',
-      heroCta: 'See dates and rates',
-      heroSecondary: 'See the suites',
-      heroCaption: 'The main house porch on a late afternoon in May',
-      facts: [
-        { term: 'Suites', value: 'Six, for up to 4 guests' },
-        { term: 'Breakfast', value: 'Included, 8 to 10:30 am' },
-        { term: 'Distance', value: '2.5 hours from São Paulo' },
-      ],
-      dayTitle: 'A day here',
-      day: [
-        { time: '7 am', text: 'Mist still covers the valley. Fresh coffee on the porch for early risers.' },
-        { time: '8 am', text: 'Breakfast in the living room, with homemade cheese bread, orchard fruit, and local cheeses.' },
-        { time: '11 am', text: 'A trail to the waterfall, 40 minutes on foot through the forest.' },
-        { time: '4 pm', text: 'Tea and cake on the porch as the light drops behind the ridge.' },
-        { time: '7:30 pm', text: 'Dinner Thursday to Saturday, booked by noon.' },
-        { time: '9 pm', text: 'The fire is lit in the living room, and the stars come out when the mist allows.' },
-      ],
-      roomAlt: 'Bedroom with linen bedding, a green throw, and a full-height window onto the misty valley',
-      roomCaption: 'Suíte Mata, just after sunrise',
-      breakfastAlt: 'Breakfast table with a coffee pot, cheese bread, and fruit next to the wood stove',
-      breakfastCaption: 'Breakfast served in the living room, next to the wood stove',
-      specLabels: { area: 'Size', bed: 'Bed', guests: 'Guests' },
-      from: 'from',
-      perNight: 'per night',
-      rooms: [
-        { name: 'Suíte Mata', area: '28 m²', bed: 'Queen', guests: 'Up to 2', text: 'A full-height window onto the valley and a private balcony.', price: 'R$ 690' },
-        { name: 'Suíte Lareira', area: '34 m²', bed: 'Queen', guests: 'Up to 2', text: 'A wood fireplace, a bathtub, and a view of the forest.', price: 'R$ 890' },
-        { name: 'Chalé da Pedra', area: '52 m²', bed: 'Queen and two singles', guests: 'Up to 4', text: 'Two rooms, a compact kitchen, and its own deck.', price: 'R$ 1,150' },
-      ],
-      priceNote: 'Rates for two guests with breakfast. Two-night minimum on weekends and public holidays.',
-      trailAlt: 'Dirt trail between araucaria trees and tree ferns, wrapped in morning mist',
-      nearbyTitle: 'Just past the gate',
-      nearby: [
-        { place: 'Poço Fundo waterfall', distance: '40 min on foot' },
-        { place: 'Pedra Alta lookout', distance: '15 min by car' },
-        { place: 'Farmers market, on Saturdays', distance: '10 min by car' },
-        { place: 'Village with restaurants and a deli', distance: '20 min by car' },
-      ],
-      beforeTitle: 'Before you come',
-      before: [
-        { term: 'Getting here', text: 'It is 2.5 hours from São Paulo. The last 4 km are a dirt road, easy for a regular car. The exact address comes with your confirmation.' },
-        { term: 'Check-in and out', text: 'Check-in from 3 pm and check-out by noon. If you will arrive after 8 pm, let us know.' },
-        { term: 'Pets', text: 'Small dogs are welcome in Suíte Mata and Chalé da Pedra.' },
-        { term: 'Children', text: 'Children up to 6 stay free in Chalé da Pedra.' },
-        { term: 'Internet', text: 'Wi-Fi in the house and the suites. Mobile signal is weak in parts of the forest.' },
-      ],
-      nightAlt: 'The lodge at night, its windows glowing in the forest and the mist',
-      plannerTitle: 'Sketch out your stay.',
-      plannerLede: 'Pick when you would like to arrive, how many nights, how many guests, and a suite. The summary is ready whenever you want to send it.',
-      plannerNote: 'This demo form only organizes details on your device during this visit. It does not check availability or send information.',
-      plannerGroup: 'Stay draft',
-      arrivalLabel: 'Arrival',
-      nightsLabel: 'Nights',
-      guestsLabel: 'Guests',
-      suiteLabel: 'Suite',
-      choose: 'Choose',
-      undecided: 'Not sure yet',
-      submit: 'Preview my draft',
-      status: 'Choose a few options to see your draft. Nothing will be sent.',
-      noscript: 'The interactive draft needs JavaScript. The rest of the page remains available.',
-      labels: { arrival: 'Arrival', nights: 'Nights', guests: 'Guests', suite: 'Suite', empty: 'Choose an arrival date, nights, and guests to see your draft.', invalidDate: 'Choose today or a future date.', ready: 'Your local draft:' },
-      contact: 'Contact Rafael',
-      back: 'Back to portfolio',
-    };
+const heroAlt = localize(concept.imageAlt, locale);
+const dayPhotos = [...new Set(t.day.map((moment) => moment.photo))] as PhotoKey[];
+const pad = (value: number) => String(value).padStart(2, '0');
+const plannerData = JSON.stringify({ msg: t.msg, suites: t.suites.map(({ id, name, rate, max, pets }) => ({ id, name, rate, max, pets })), copied: t.copied });
+const arrow = '<svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M4 10h11M11 5l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+const suiteIcons: Record<string, string> = {
+  mata: '<path d="M6 34V12a2 2 0 0 1 2-2h24a2 2 0 0 1 2 2v22M6 34h28M20 10v24M9 27l5-6 3 3M23 28l4-5 4 5" />',
+  lareira: '<path d="M8 34V14l12-7 12 7v20M8 34h24M15 34v-9a5 5 0 0 1 10 0v9M20 30c-2-1.5-2.5-3.5-.5-6 .4 1.6 2.5 2 2.5 4s-1 2-2 2" />',
+  chale: '<path d="M4 34h32M8 34V20L20 8l12 12v14M14 34v-8h6v8M24 24h5v4h-5zM10 30h2M28 32h2M26 15V9h3v9" />',
+};
 ---
 
 <DemoBar locale={locale} project={project} />
-<article class="demo demo--neblina">
-  <header id="casa-inicio" class="nb-hero">
-    <img class="nb-hero__image" src={demoImage} alt={localize(concept.imageAlt, locale)} width={concept.imageWidth} height={concept.imageHeight} fetchpriority="high" />
-    <div class="nb-hero__veil" aria-hidden="true"></div>
-    <div class="nb-mist" aria-hidden="true"><span></span><span></span><span></span></div>
-
-    <nav class="nb-nav" aria-label={t.nav}>
+<article class="demo demo--neblina" data-nb-root>
+  <nav class="nb-nav" aria-label={t.nav} data-nb-nav>
+    <div class="nb-nav__inner">
       <a class="nb-brand" href="#casa-inicio">
-        <svg class="nb-brand__mark" viewBox="0 0 40 40" aria-hidden="true"><path d="M4 30 L15 15 L22 23 L27 17 L36 30" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" /><path d="M6 34 H34" stroke="currentColor" stroke-width="1.6" opacity="0.55" /></svg>
+        <svg class="nb-brand__mark" viewBox="0 0 40 40" aria-hidden="true"><path d="M8 36V18a12 12 0 0 1 24 0v18" fill="none" stroke="currentColor" stroke-width="1.6" /><path d="M11 29l6-7 4 4 3-3 5 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" /><path d="M13 33h14M16 15.5h8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" opacity="0.6" /></svg>
         <span>Casa Neblina<small>{t.tagline}</small></span>
       </a>
       <div class="nb-nav__links">
-        <a href="#casa-estadia">{t.house}</a>
-        <a href="#casa-suites">{t.suites}</a>
-        <a href="#casa-arredores">{t.around}</a>
-        <a href="#casa-chegar">{t.arrive}</a>
-        <a class="nb-nav__cta" href="#casa-planejar">{t.planStay}</a>
+        {t.links.map((link) => <a href={link.href}>{link.label}</a>)}
       </div>
-    </nav>
+      <a class="nb-pill nb-nav__cta" href="#casa-planejar">{t.navCta}</a>
+    </div>
+  </nav>
 
-    <div class="nb-hero__content">
-      <p class="nb-hero__lead">{t.heroLead}</p>
-      <h1>{localize(concept.demoTagline, locale)}</h1>
-      <p class="nb-hero__lede">{t.heroLede}</p>
-      <div class="nb-hero__actions">
-        <a class="nb-button" href="#casa-planejar">{t.heroCta}</a>
-        <a class="nb-link" href="#casa-suites">{t.heroSecondary}</a>
+  <header id="casa-inicio" class="nb-hero">
+    <div class="nb-shell nb-hero__grid">
+      <div class="nb-hero__copy">
+        <p class="nb-eyebrow">{t.eyebrow}</p>
+        <h1><span>{t.titleLead}</span> <em>{t.titleAccent}</em></h1>
+        <p class="nb-hero__lede">{t.heroLede}</p>
+        <div class="nb-hero__actions">
+          <a class="nb-pill nb-pill--lg" href="#casa-planejar">{t.heroCta} <Fragment set:html={arrow} /></a>
+          <a class="nb-textlink" href="#casa-suites">{t.heroSecondary}</a>
+        </div>
+        <p class="nb-hero__direct">{t.heroDirect}</p>
+      </div>
+      <div class="nb-hero__art">
+        <figure class="nb-hero__frame">
+          <img src={photos.hero.src} alt={heroAlt} width={photos.hero.w} height={photos.hero.h} fetchpriority="high" />
+        </figure>
+        <figure class="nb-hero__arch">
+          <img src={photos.room.src} alt={t.roomAlt} width={photos.room.w} height={photos.room.h} />
+          <figcaption>{t.roomTag}</figcaption>
+        </figure>
+        <div class="nb-sticker" aria-hidden="true">
+          <svg viewBox="0 0 120 120"><defs><path id={`nb-ring-${locale}`} d="M60 60m-45 0a45 45 0 1 1 90 0a45 45 0 1 1-90 0" /></defs><text><textPath href={`#nb-ring-${locale}`} textLength="279" lengthAdjust="spacing">{t.sticker}</textPath></text></svg>
+          <svg class="nb-sticker__mark" viewBox="0 0 40 40"><path d="M7 28l9-11 6 7 4-4 7 8" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" /><path d="M9 32h22" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" opacity="0.6" /></svg>
+        </div>
+        <p class="nb-hero__caption">{t.heroCaption}</p>
+        <div class="nb-mist" aria-hidden="true"><span></span><span></span><span></span></div>
+      </div>
+    </div>
+    <dl class="nb-shell nb-facts">
+      {t.facts.map((fact) => (
+        <div><dt>{fact.label}</dt><dd>{fact.value}</dd></div>
+      ))}
+    </dl>
+  </header>
+
+  <section id="casa-estadia" class="nb-house" aria-labelledby="nb-house-title">
+    <div class="nb-shell nb-house__intro" data-nb-reveal>
+      <div>
+        <p class="nb-eyebrow">{t.houseEyebrow}</p>
+        <h2 id="nb-house-title" class="nb-title">{intro.title}</h2>
+      </div>
+      <div>
+        <p class="nb-house__text">{intro.text}</p>
+        <h3 class="nb-label">{t.amenitiesTitle}</h3>
+        <ul class="nb-chips">
+          {t.amenities.map((item) => <li>{item}</li>)}
+        </ul>
       </div>
     </div>
 
-    <dl class="nb-facts">
-      {t.facts.map((fact) => (
-        <div><dt>{fact.term}</dt><dd>{fact.value}</dd></div>
-      ))}
-    </dl>
-    <p class="nb-hero__caption">{t.heroCaption}</p>
-  </header>
-
-  <section id="casa-estadia" class="nb-day">
-    <div class="nb-shell nb-day__inner">
-      <div class="nb-day__intro">
-        <h2>{intro.title}</h2>
-        <p>{intro.text}</p>
+    <div class="nb-shell nb-day" data-nb-day data-nb-reveal>
+      <div class="nb-day__stage">
+        {dayPhotos.map((key, index) => (
+          <img class:list={['nb-day__photo', index === 0 && 'is-active']} data-photo={key} src={photos[key].src} alt={t.photoAlt[key]} width={photos[key].w} height={photos[key].h} loading="lazy" aria-hidden={index === 0 ? undefined : 'true'} style={key === t.day[0].photo ? `object-position: ${t.day[0].position}` : undefined} />
+        ))}
+        <div class="nb-day__mist" aria-hidden="true" style={`--mist: ${t.day[0].mist}`} data-nb-day-mist><span></span><span></span><span></span></div>
+        <div class="nb-day__now">
+          <p class="nb-day__time" data-nb-day-time>{t.day[0].time}</p>
+          <p class="nb-day__moment" data-nb-day-title>{t.day[0].title}</p>
+        </div>
       </div>
-      <div>
-        <h3 class="nb-day__title">{t.dayTitle}</h3>
-        <ol class="nb-day__list">
-          {t.day.map((moment) => (
-            <li><time>{moment.time}</time><p>{moment.text}</p></li>
+      <div class="nb-day__panel">
+        <h3>{t.dayTitle}</h3>
+        <p class="nb-day__hint">{t.dayHint}</p>
+        <p class="nb-day__detail" data-nb-day-text>{t.day[0].text}</p>
+        <svg class="nb-day__arc" viewBox="0 0 600 120" aria-hidden="true" focusable="false">
+          <path d="M50 110 Q300 -40 550 110" fill="none" stroke="currentColor" stroke-width="1" stroke-dasharray="3 6" />
+          <g data-nb-day-sun><circle r="11" class="nb-day__sun" /><circle r="19" class="nb-day__halo" /></g>
+        </svg>
+        <ol class="nb-day__list" aria-label={t.dayGroup}>
+          {t.day.map((moment, index) => (
+            <li>
+              <button type="button" aria-pressed={index === 0 ? 'true' : 'false'} data-photo={moment.photo} data-mist={moment.mist} data-position={moment.position} data-title={moment.title} data-text={moment.text}>
+                <time>{moment.time}</time><span>{moment.title}</span>
+              </button>
+              <p>{moment.text}</p>
+            </li>
           ))}
         </ol>
       </div>
     </div>
+    <Ridge class="nb-ridge--to-forest" />
   </section>
 
   <section id="casa-suites" class="nb-suites" aria-labelledby="nb-suites-title">
-    <div class="nb-shell nb-suites__inner">
-      <figure class="nb-suites__room">
-        <img src="/images/concepts/neblina-quarto.webp" alt={t.roomAlt} width="1024" height="1536" loading="lazy" />
-        <figcaption>{t.roomCaption}</figcaption>
-      </figure>
-      <div class="nb-suites__copy">
-        <h2 id="nb-suites-title">{spaces.title}</h2>
-        <p class="nb-suites__lede">{spaces.text}</p>
-        <ul class="nb-rooms">
-          {t.rooms.map((room) => (
-            <li>
-              <div class="nb-rooms__head">
-                <h3>{room.name}</h3>
-                <p class="nb-rooms__price"><span>{t.from}</span> {room.price} <span>{t.perNight}</span></p>
+    <div class="nb-shell">
+      <div class="nb-suites__head" data-nb-reveal>
+        <div>
+          <p class="nb-eyebrow">{t.suitesEyebrow}</p>
+          <h2 id="nb-suites-title" class="nb-title">{spaces.title}</h2>
+        </div>
+        <p>{spaces.text}</p>
+      </div>
+      <div class="nb-suites__body">
+        <div class="nb-gallery" role="region" aria-label={t.galleryLabel} data-nb-gallery data-nb-reveal>
+          <div class="nb-gallery__frame">
+            {t.gallery.map((slide, index) => (
+              <figure class:list={['nb-gallery__slide', index === 0 && 'is-active']} aria-hidden={index === 0 ? undefined : 'true'}>
+                <img src={photos[slide.photo].src} alt={t.photoAlt[slide.photo]} width={photos[slide.photo].w} height={photos[slide.photo].h} loading="lazy" style={`object-position: ${slide.position}`} />
+                <figcaption>{slide.caption}</figcaption>
+              </figure>
+            ))}
+          </div>
+          <div class="nb-gallery__bar">
+            <p class="nb-gallery__count" aria-hidden="true"><span data-nb-count>01</span> / {pad(t.gallery.length)}</p>
+            <div class="nb-gallery__thumbs">
+              {t.gallery.map((slide, index) => (
+                <button type="button" aria-pressed={index === 0 ? 'true' : 'false'} aria-label={`${t.galleryThumb} ${index + 1}: ${slide.caption}`} data-nb-thumb={index}>
+                  <img src={photos[slide.photo].src} alt="" width={photos[slide.photo].w} height={photos[slide.photo].h} loading="lazy" style={`object-position: ${slide.position}`} />
+                </button>
+              ))}
+            </div>
+            <div class="nb-gallery__arrows">
+              <button type="button" aria-label={t.galleryPrev} data-nb-step="-1"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M16 10H5M9 5l-5 5 5 5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" /></svg></button>
+              <button type="button" aria-label={t.galleryNext} data-nb-step="1"><Fragment set:html={arrow} /></button>
+            </div>
+          </div>
+        </div>
+
+        <ul class="nb-suite-list">
+          {t.suites.map((suite) => (
+            <li class="nb-suite" data-nb-reveal>
+              <svg class="nb-suite__icon" viewBox="0 0 40 40" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" set:html={suiteIcons[suite.id]}></svg>
+              <div>
+                <div class="nb-suite__head">
+                  <h3>{suite.name}</h3>
+                  <p class="nb-suite__price"><span>{t.from}</span> {suite.price} <span>{t.perNight}</span></p>
+                </div>
+                <p class="nb-suite__text">{suite.text}</p>
+                <dl>
+                  <div><dt>{t.specLabels.area}</dt><dd>{suite.area}</dd></div>
+                  <div><dt>{t.specLabels.bed}</dt><dd>{suite.bed}</dd></div>
+                  <div><dt>{t.specLabels.guests}</dt><dd>{suite.guests}</dd></div>
+                </dl>
+                <a class="nb-suite__pick" href="#casa-planejar" data-nb-pick={suite.id}>{t.pickSuite} <Fragment set:html={arrow} /></a>
               </div>
-              <p>{room.text}</p>
-              <dl>
-                <div><dt>{t.specLabels.area}</dt><dd>{room.area}</dd></div>
-                <div><dt>{t.specLabels.bed}</dt><dd>{room.bed}</dd></div>
-                <div><dt>{t.specLabels.guests}</dt><dd>{room.guests}</dd></div>
-              </dl>
             </li>
           ))}
         </ul>
-        <p class="nb-suites__note">{t.priceNote}</p>
       </div>
-      <figure class="nb-suites__breakfast">
-        <img src="/images/concepts/neblina-cafe.webp" alt={t.breakfastAlt} width="1536" height="1024" loading="lazy" />
-        <figcaption>{t.breakfastCaption}</figcaption>
-      </figure>
+      <p class="nb-suites__note">{t.priceNote}</p>
     </div>
+    <Ridge class="nb-ridge--to-fog" />
   </section>
 
-  <section id="casa-arredores" class="nb-around">
-    <img class="nb-around__image" src="/images/concepts/neblina-trilha.webp" alt={t.trailAlt} width="1916" height="821" loading="lazy" />
-    <div class="nb-around__shade" aria-hidden="true"></div>
-    <div class="nb-shell nb-around__inner">
-      <div class="nb-around__copy">
-        <h2>{surroundings.title}</h2>
-        <p>{surroundings.text}</p>
+  <section id="casa-arredores" class="nb-around" aria-labelledby="nb-around-title">
+    <div class="nb-shell">
+      <div class="nb-around__head" data-nb-reveal>
+        <div>
+          <p class="nb-eyebrow">{t.aroundEyebrow}</p>
+          <h2 id="nb-around-title" class="nb-title">{surroundings.title}</h2>
+        </div>
+        <div>
+          <p>{surroundings.text}</p>
+          <div class="nb-season" role="group" aria-label={t.seasonGroup} data-nb-season>
+            {t.seasons.map((season, index) => (
+              <button type="button" aria-pressed={index === 0 ? 'true' : 'false'} data-season={season.id}>{season.label}<small>{season.months}</small></button>
+            ))}
+          </div>
+        </div>
       </div>
-      <div class="nb-around__nearby">
-        <h3>{t.nearbyTitle}</h3>
+      <ul class="nb-places" data-nb-places data-season="inverno">
+        {t.places.map((place) => (
+          <li class="nb-place" data-nb-reveal>
+            <div class="nb-place__photo"><img src={photos[place.photo].src} alt={t.photoAlt[place.photo]} width={photos[place.photo].w} height={photos[place.photo].h} loading="lazy" style={`object-position: ${place.position}`} /></div>
+            <p class="nb-place__distance">{place.distance}</p>
+            <h3>{place.name}</h3>
+            <p class="nb-place__text" data-season-text="inverno"><span class="nb-place__season">{t.seasons[0].label}: </span>{place.inverno}</p>
+            <p class="nb-place__text" data-season-text="verao"><span class="nb-place__season">{t.seasons[1].label}: </span>{place.verao}</p>
+          </li>
+        ))}
+      </ul>
+      <div class="nb-nearby" data-nb-reveal>
+        <h3 class="nb-label">{t.nearbyTitle}</h3>
         <dl>
           {t.nearby.map((item) => (
             <div><dt>{item.place}</dt><dd>{item.distance}</dd></div>
@@ -268,109 +219,130 @@ const t = pt
     </div>
   </section>
 
-  <section id="casa-chegar" class="nb-before" aria-labelledby="nb-before-title">
-    <div class="nb-shell nb-before__inner">
-      <h2 id="nb-before-title">{t.beforeTitle}</h2>
-      <dl>
-        {t.before.map((item) => (
-          <div><dt>{item.term}</dt><dd>{item.text}</dd></div>
+  <section id="casa-chegar" class="nb-arrive" aria-labelledby="nb-arrive-title">
+    <Ridge class="nb-ridge--from-fog" flip />
+    <div class="nb-shell nb-arrive__grid">
+      <div class="nb-arrive__intro" data-nb-reveal>
+        <p class="nb-eyebrow">{t.arriveEyebrow}</p>
+        <h2 id="nb-arrive-title" class="nb-title">{t.arriveLead} <em>{t.arriveAccent}</em></h2>
+        <div class="nb-hours">
+          <p><strong>{t.checkIn.time}</strong><span>{t.checkIn.label}</span></p>
+          <p><strong>{t.checkOut.time}</strong><span>{t.checkOut.label}</span></p>
+        </div>
+        <p class="nb-arrive__late">{t.lateArrival}</p>
+      </div>
+      <figure class="nb-route" data-nb-reveal>
+        <svg viewBox="0 0 520 300" role="img" aria-label={t.routeLabel}>
+          <path class="nb-route__hills nb-route__hills--far" d="M0 120 C60 90 100 70 150 82 S240 40 300 56 S400 30 450 50 S500 60 520 54" />
+          <path class="nb-route__hills" d="M0 170 C50 140 110 120 170 134 S270 96 330 116 S430 92 520 110" />
+          <path class="nb-route__road" d="M24 270 C110 266 150 236 210 238 S290 246 318 222" />
+          <path class="nb-route__dirt" d="M318 222 C350 200 330 180 372 168 S440 160 452 132" />
+          <circle class="nb-route__dot" cx="318" cy="222" r="5" />
+          <g class="nb-route__pines"><path d="M478 136l7-20 7 20z" /><path d="M492 138l6-15 6 15z" /><path d="M418 150l6-17 6 17z" /><path d="M150 236l6-17 6 17z" /><path d="M164 238l5-13 5 13z" /></g>
+          <g class="nb-route__house" transform="translate(452 132)"><path d="M-14 0 V-14 L0 -26 L14 -14 V0 Z" /><path d="M-4 0 v-8 h8 v8" /></g>
+          <text x="30" y="252">{t.route.asphalt}</text>
+          <text x="394" y="206">{t.route.dirt}</text>
+          <text x="452" y="88" text-anchor="middle">{t.route.gate}</text>
+        </svg>
+      </figure>
+      <dl class="nb-rules" data-nb-reveal>
+        {t.rules.map((rule) => (
+          <div><dt>{rule.term}</dt><dd>{rule.text}</dd></div>
         ))}
       </dl>
     </div>
   </section>
 
-  <section id="casa-planejar" class="nb-planner">
-    <img class="nb-planner__image" src="/images/concepts/neblina-noite.webp" alt={t.nightAlt} width="1536" height="1024" loading="lazy" />
-    <div class="nb-planner__shade" aria-hidden="true"></div>
-    <div class="nb-shell nb-planner__inner">
-      <div class="nb-planner__copy">
-        <h2>{t.plannerTitle}</h2>
-        <p>{t.plannerLede}</p>
-        <p class="nb-planner__note">{t.plannerNote}</p>
+  <section id="casa-duvidas" class="nb-faq" aria-labelledby="nb-faq-title">
+    <div class="nb-shell nb-faq__grid">
+      <div class="nb-faq__intro" data-nb-reveal>
+        <p class="nb-eyebrow">{t.faqEyebrow}</p>
+        <h2 id="nb-faq-title" class="nb-title">{t.faqLead} <em>{t.faqAccent}</em></h2>
+        <figure class="nb-faq__photo">
+          <img src={photos.breakfast.src} alt={t.photoAlt.breakfast} width={photos.breakfast.w} height={photos.breakfast.h} loading="lazy" />
+        </figure>
       </div>
-      <div
-        role="group"
-        aria-label={t.plannerGroup}
-        class="nb-form"
-        data-demo-planner
-        data-label-arrival={t.labels.arrival}
-        data-label-nights={t.labels.nights}
-        data-label-guests={t.labels.guests}
-        data-label-suite={t.labels.suite}
-        data-label-empty={t.labels.empty}
-        data-label-invalid-date={t.labels.invalidDate}
-        data-label-ready={t.labels.ready}
-      >
-        <label class="nb-form__wide">{t.arrivalLabel}<input name="arrival" type="date" /></label>
-        <label>
-          {t.nightsLabel}
-          <select name="nights">
-            <option value="">{t.choose}</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4+</option>
-          </select>
-        </label>
-        <label>
-          {t.guestsLabel}
-          <select name="guests">
-            <option value="">{t.choose}</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-          </select>
-        </label>
-        <label class="nb-form__wide">
-          {t.suiteLabel}
-          <select name="suite">
-            <option value="">{t.undecided}</option>
-            {t.rooms.map((room) => <option>{room.name}</option>)}
-          </select>
-        </label>
-        <button class="nb-form__wide" type="button" data-demo-update>{t.submit}</button>
-        <p class="nb-form__status nb-form__wide" role="status" aria-live="polite">{t.status}</p>
-        <noscript><p class="demo-noscript">{t.noscript}</p></noscript>
+      <div class="nb-faq__list" data-nb-reveal>
+        {t.faqs.map((item) => (
+          <details>
+            <summary>{item.q}<span class="nb-faq__icon" aria-hidden="true"></span></summary>
+            <p>{item.a}</p>
+          </details>
+        ))}
       </div>
     </div>
   </section>
 
+  <section id="casa-planejar" class="nb-plan" aria-labelledby="nb-plan-title">
+    <img class="nb-plan__bg" src={photos.night.src} alt="" width={photos.night.w} height={photos.night.h} loading="lazy" />
+    <div class="nb-plan__shade" aria-hidden="true"></div>
+    <div class="nb-shell nb-plan__grid">
+      <div class="nb-plan__copy">
+        <p class="nb-eyebrow">{t.plannerEyebrow}</p>
+        <h2 id="nb-plan-title" class="nb-title">{t.plannerLead} <em>{t.plannerAccent}</em></h2>
+        <p class="nb-plan__lede">{t.plannerLede}</p>
+        <div class="nb-direct">
+          <h3>{t.directTitle}</h3>
+          <p>{t.directText}</p>
+        </div>
+        <p class="nb-plan__note">{t.plannerNote}</p>
+      </div>
+      <div role="group" aria-label={t.plannerGroup} class="nb-form" data-demo-planner data-nb-planner={plannerData}>
+        <div class="nb-form__row">
+          <label>{t.checkInLabel}<input name="checkin" type="date" /></label>
+          <label>{t.checkOutLabel}<input name="checkout" type="date" /></label>
+        </div>
+        <div class="nb-form__guests">
+          <span id={`nb-guests-${locale}`}>{t.guestsLabel}</span>
+          <div class="nb-stepper">
+            <button type="button" aria-label={t.guestsLess} data-nb-guests="-1"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 10h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" /></svg></button>
+            <input name="guests" type="number" min="1" max="4" value="2" inputmode="numeric" aria-labelledby={`nb-guests-${locale}`} />
+            <button type="button" aria-label={t.guestsMore} data-nb-guests="1"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 10h10M10 5v10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" /></svg></button>
+          </div>
+        </div>
+        <fieldset class="nb-form__suites">
+          <legend>{t.suiteLegend}</legend>
+          {t.suites.map((suite) => (
+            <label class="nb-option"><input type="radio" name="suite" value={suite.id} /><span>{suite.name}<small>{t.from} {suite.price}</small></span></label>
+          ))}
+          <label class="nb-option"><input type="radio" name="suite" value="" checked /><span>{t.suiteUndecided}</span></label>
+        </fieldset>
+        <fieldset class="nb-form__extras">
+          <legend>{t.extrasLegend}</legend>
+          {t.extras.map((extra) => (
+            <label class="nb-chip"><input type="checkbox" name="extras" value={extra.id} /><span>{extra.label}</span></label>
+          ))}
+        </fieldset>
+        <label class="nb-form__name">
+          <span>{t.nameLabel} <small>{t.nameHint}</small></span>
+          <input name="name" type="text" maxlength="40" autocomplete="given-name" />
+        </label>
+        <button class="nb-form__submit" type="button" data-demo-update>{t.submit}</button>
+        <div class="nb-form__status" role="status" aria-live="polite" data-nb-status><p>{t.status}</p></div>
+        <button class="nb-form__copy" type="button" data-nb-copy hidden>{t.copy}</button>
+        <noscript><p class="demo-noscript">{t.noscript}</p></noscript>
+      </div>
+    </div>
+    <div class="nb-mist nb-mist--plan" aria-hidden="true"><span></span><span></span><span></span></div>
+  </section>
+
   <footer class="nb-footer">
-    <a class="nb-brand" href="#casa-inicio">
-      <svg class="nb-brand__mark" viewBox="0 0 40 40" aria-hidden="true"><path d="M4 30 L15 15 L22 23 L27 17 L36 30" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" /><path d="M6 34 H34" stroke="currentColor" stroke-width="1.6" opacity="0.55" /></svg>
-      <span>Casa Neblina<small>{t.tagline}</small></span>
-    </a>
-    <a href={withLocale(locale, 'contact')}>{t.contact}</a>
-    <a class="nb-footer__back" href={withLocale(locale, 'work')}>{t.back}</a>
+    <div class="nb-shell nb-footer__grid">
+      <a class="nb-brand" href="#casa-inicio">
+        <svg class="nb-brand__mark" viewBox="0 0 40 40" aria-hidden="true"><path d="M8 36V18a12 12 0 0 1 24 0v18" fill="none" stroke="currentColor" stroke-width="1.6" /><path d="M11 29l6-7 4 4 3-3 5 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" /><path d="M13 33h14M16 15.5h8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" opacity="0.6" /></svg>
+        <span>Casa Neblina<small>{t.tagline}</small></span>
+      </a>
+      <p>{t.footerLine}</p>
+      <div class="nb-footer__links">
+        <a href={withLocale(locale, 'contact')}>{t.contact}</a>
+        <a href={withLocale(locale, 'work')}>{t.back}</a>
+      </div>
+    </div>
+    <p class="nb-footer__word" aria-hidden="true">Casa <em>Neblina</em></p>
   </footer>
 </article>
 
 <script>
-  document.querySelectorAll<HTMLElement>('[data-demo-planner]').forEach((planner) => {
-    planner.querySelector<HTMLButtonElement>('[data-demo-update]')?.addEventListener('click', () => {
-      const status = planner.querySelector<HTMLElement>('[role="status"]');
-      if (!status) return;
-      const arrival = planner.querySelector<HTMLInputElement>('[name="arrival"]')?.value || '';
-      const nightsSelect = planner.querySelector<HTMLSelectElement>('[name="nights"]');
-      const guestsSelect = planner.querySelector<HTMLSelectElement>('[name="guests"]');
-      const suite = planner.querySelector<HTMLSelectElement>('[name="suite"]')?.value || '';
-      if (!arrival || !nightsSelect?.value || !guestsSelect?.value) {
-        status.textContent = planner.dataset.labelEmpty || '';
-        return;
-      }
-      const nights = nightsSelect.selectedOptions[0]?.textContent?.trim() || '';
-      const guests = guestsSelect.selectedOptions[0]?.textContent?.trim() || '';
-      const selectedDate = new Date(`${arrival}T00:00:00`);
-      const today = new Date();
-      today.setHours(0, 0, 0, 0);
-      if (!Number.isFinite(selectedDate.getTime()) || selectedDate < today) {
-        status.textContent = planner.dataset.labelInvalidDate || '';
-        return;
-      }
-      const arrivalLabel = new Intl.DateTimeFormat(document.documentElement.lang, { dateStyle: 'long' }).format(selectedDate);
-      const suitePart = suite ? `, ${planner.dataset.labelSuite}: ${suite}` : '';
-      status.textContent = `${planner.dataset.labelReady || ''} ${planner.dataset.labelArrival}: ${arrivalLabel}, ${planner.dataset.labelNights}: ${nights}, ${planner.dataset.labelGuests}: ${guests}${suitePart}.`;
-    });
-  });
+  import { initNeblina } from '@/components/demos/casa-neblina/client';
+  initNeblina();
 </script>

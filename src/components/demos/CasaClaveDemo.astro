@@ -1,0 +1,465 @@
+---
+import DemoBar from '@/components/demos/DemoBar.astro';
+import { withLocale, type DemoProject, type Locale } from '@/data/content';
+import { copy } from './escola-musica/copy';
+
+interface Props { locale: Locale; project: DemoProject }
+
+const { locale, project } = Astro.props;
+const pt = locale === 'pt';
+const t = pt ? copy.pt : copy.en;
+
+const courseNames = Object.fromEntries(t.courses.list.map((course) => [course.id, course.name]));
+const courseOnline = Object.fromEntries(t.courses.list.map((course) => [course.id, course.online]));
+const ageLabels = Object.fromEntries(t.finder.ages.map((age) => [age.id, age.label]));
+const sideA = t.courses.list.filter((course) => course.track.startsWith('A'));
+const sideB = t.courses.list.filter((course) => course.track.startsWith('B'));
+
+// One octave from C4: semitone, keyboard letter, and whether the key is black.
+const pianoKeys = [
+  [0, 'A'], [1, 'W'], [2, 'S'], [3, 'E'], [4, 'D'], [5, 'F'], [6, 'T'],
+  [7, 'G'], [8, 'Y'], [9, 'H'], [10, 'U'], [11, 'J'], [12, 'K'],
+].map(([note, letter]) => ({ note: note as number, letter: letter as string, black: [1, 3, 6, 8, 10].includes(note as number) }));
+const blackSlot: Record<number, number> = { 1: 1, 3: 2, 6: 4, 8: 5, 10: 6 };
+// Faded first bar of the melody on the staff, as a hint of what the play button does. Bottom line E4 sits at y = 60.
+const staffStep: Record<number, number> = { 0: -2, 2: -1, 4: 0, 5: 1, 7: 2 };
+const staffHint = [4, 4, 5, 7, 7, 5, 4, 2, 0].map((note, index) => ({ x: 34 + index * 30, y: 60 - staffStep[note] * 5 }));
+
+const wave = 'M0,24 C60,6 120,6 180,24 S300,42 360,24 S480,6 540,24 S660,42 720,24 S840,6 900,24 S1020,42 1080,24 S1200,6 1260,24 S1380,42 1440,24 V48 H0 Z';
+---
+
+<DemoBar locale={locale} project={project} />
+<article class="demo demo--clave" data-clave>
+  <div class="clave-sentinel" data-header-sentinel aria-hidden="true"></div>
+  <header class="clave-header">
+    <nav class="clave-shell clave-header__inner" aria-label={t.nav}>
+      <a class="clave-brand" href="#clave-inicio">
+        <svg class="clave-brand__mark" viewBox="0 0 40 40" aria-hidden="true">
+          <circle cx="20" cy="20" r="19" fill="#b53a24" />
+          <path d="M12.5 16.2c0-4.6 3.9-7.6 8.6-7.6 5.4 0 8.9 3.8 8.9 9 0 7.8-6.6 13.2-16.2 16.8" fill="none" stroke="#f6efe2" stroke-width="2.6" stroke-linecap="round" />
+          <circle cx="14.6" cy="16.4" r="3.4" fill="#f6efe2" />
+          <circle cx="33" cy="14" r="1.7" fill="#f6efe2" />
+          <circle cx="33" cy="21" r="1.7" fill="#f6efe2" />
+        </svg>
+        <span>Casa Clave<small>{t.tagline}</small></span>
+      </a>
+      <div class="clave-header__links">
+        <a href="#clave-cursos">{t.menu.courses}</a>
+        <a href="#clave-teclado">{t.menu.keyboard}</a>
+        <a href="#clave-precos">{t.menu.prices}</a>
+        <a href="#clave-duvidas">{t.menu.faq}</a>
+      </div>
+      <a class="clave-pill clave-pill--small clave-header__cta" href="#clave-contato"><span class="clave-header__cta-full">{t.menu.cta}</span><span class="clave-header__cta-short" aria-hidden="true">{t.menu.ctaShort}</span></a>
+    </nav>
+  </header>
+
+  <section id="clave-inicio" class="clave-hero" aria-labelledby="clave-title">
+    <div class="clave-shell">
+      <p class="clave-kicker clave-hero__eyebrow">{t.hero.eyebrow}</p>
+      <h1 id="clave-title" class="clave-hero__title">
+        <span class="clave-hero__line">{t.hero.titleA}</span>
+        <span class="clave-hero__line clave-hero__line--staff">{t.hero.titleB} <span class="clave-accent">{t.hero.titleAccent}<svg viewBox="0 0 300 24" preserveAspectRatio="none" aria-hidden="true"><path d="M4 14 Q 20 2, 36 14 T 68 14 T 100 14 T 132 14 T 164 14 T 196 14 T 228 14 T 260 14 T 296 12" /></svg></span></span>
+      </h1>
+      <div class="clave-hero__grid">
+        <div class="clave-hero__copy">
+          <p class="clave-hero__lede">{t.hero.lede}</p>
+          <div class="clave-hero__actions">
+            <a class="clave-pill" href="#clave-contato">{t.hero.cta}<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5" /></svg></a>
+            <a class="clave-link" href="#clave-teclado">{t.hero.secondary}</a>
+          </div>
+          <dl class="clave-facts">
+            {t.hero.facts.map((fact) => (
+              <div><dt>{fact.term}</dt><dd>{fact.value}</dd></div>
+            ))}
+          </dl>
+        </div>
+        <figure class="clave-hero__art">
+          <svg class="clave-record" viewBox="0 0 200 200" aria-hidden="true">
+            <circle cx="100" cy="100" r="99" fill="#1b1714" />
+            {[90, 82, 74, 66, 58, 50].map((r) => <circle cx="100" cy="100" r={r} fill="none" stroke="#f6efe2" stroke-opacity="0.07" />)}
+            <path d="M40 60 A 72 72 0 0 1 92 30" fill="none" stroke="#f6efe2" stroke-opacity="0.18" stroke-width="3" stroke-linecap="round" />
+            <path d="M160 140 A 72 72 0 0 1 120 168" fill="none" stroke="#f6efe2" stroke-opacity="0.1" stroke-width="3" stroke-linecap="round" />
+            <circle cx="100" cy="100" r="34" fill="#b53a24" />
+            <circle cx="100" cy="100" r="26" fill="none" stroke="#f6efe2" stroke-opacity="0.35" />
+            <path d="M92 97c0-3 2.6-5 5.7-5 3.6 0 5.9 2.5 5.9 6 0 5.2-4.4 8.8-10.8 11.2" fill="none" stroke="#f6efe2" stroke-width="1.8" stroke-linecap="round" />
+            <circle cx="106.8" cy="95.5" r="1.1" fill="#f6efe2" />
+            <circle cx="106.8" cy="100.2" r="1.1" fill="#f6efe2" />
+            <circle cx="100" cy="100" r="2.4" fill="#f6efe2" />
+          </svg>
+          <div class="clave-hero__photo">
+            <img src="/images/concepts/escola-musica-hero.webp" alt={t.hero.alt} width="1024" height="688" fetchpriority="high" />
+          </div>
+          <svg class="clave-sticker" viewBox="0 0 120 120" aria-hidden="true">
+            <defs><path id="clave-sticker-path" d="M60 60 m-44 0 a44 44 0 1 1 88 0 a44 44 0 1 1 -88 0" /></defs>
+            <circle cx="60" cy="60" r="58" fill="#d9a441" />
+            <text><textPath href="#clave-sticker-path" startOffset="0" textLength="274" lengthAdjust="spacing">{`${t.hero.sticker} · ${t.hero.sticker} · `}</textPath></text>
+            <g fill="#163a2e"><ellipse cx="55" cy="70" rx="7.5" ry="5.6" transform="rotate(-20 55 70)" /><rect x="60.6" y="42" width="2.8" height="28" /><path d="M63.4 42c4 3.5 10 6 8.4 14.5 3.6-7.4-2-11.6-8.4-14.5z" /></g>
+          </svg>
+          <figcaption>{t.hero.caption}</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <div class="clave-marquee" aria-hidden="true">
+    <div class="clave-marquee__track">
+      {[0, 1].map(() => (
+        <ul>
+          {t.marquee.map((item) => (
+            <li>{item}<svg viewBox="0 0 16 24"><path d="M6 19V3l8 3" fill="none" stroke="currentColor" stroke-width="2" /><ellipse cx="4" cy="19" rx="4" ry="3" fill="currentColor" /></svg></li>
+          ))}
+        </ul>
+      ))}
+    </div>
+  </div>
+
+  <section id="clave-cursos" class="clave-courses" aria-labelledby="clave-courses-title">
+    <div class="clave-shell clave-courses__inner">
+      <div class="clave-courses__head" data-reveal>
+        <p class="clave-kicker">{t.courses.kicker}</p>
+        <h2 id="clave-courses-title" class="clave-title">{t.courses.title}<span>{t.courses.sub}</span></h2>
+      </div>
+      <div class="clave-tracks">
+        {[sideA, sideB].map((side, sideIndex) => (
+          <div class="clave-tracks__side" data-reveal>
+            {sideIndex === 1 && <p class="clave-tracks__flip" aria-hidden="true">{pt ? 'Lado B' : 'Side B'}</p>}
+            {side.map((course) => (
+              <details class="clave-track">
+                <summary>
+                  <span class="clave-track__no" aria-hidden="true">{course.track}</span>
+                  <span class="clave-track__name">{course.name}</span>
+                  <span class="clave-track__age">{course.age}</span>
+                  <span class="clave-track__tags">
+                    <span>{t.courses.inPerson}</span>
+                    {course.online && <span class="is-online">{t.courses.online}</span>}
+                  </span>
+                  <span class="clave-plus" aria-hidden="true"></span>
+                </summary>
+                <div class={course.image ? 'clave-track__body has-photo' : 'clave-track__body'}>
+                  {course.image && <img src={course.image} alt={course.alt} width={course.w} height={course.h} loading="lazy" />}
+                  <div>
+                    <p class="clave-track__label">{t.courses.firstLabel}</p>
+                    <p>{course.first}</p>
+                    <a class="clave-link" href="#clave-contato" data-prefill-course={course.id}>{`${t.courses.book} ${course.name.toLowerCase()}`}</a>
+                  </div>
+                </div>
+              </details>
+            ))}
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <svg class="clave-wave clave-wave--to-green" viewBox="0 0 1440 48" preserveAspectRatio="none" aria-hidden="true"><path d={wave} /></svg>
+  <section id="clave-teclado" class="clave-piano" aria-labelledby="clave-piano-title">
+    <div class="clave-shell clave-piano__inner">
+      <div class="clave-piano__copy" data-reveal>
+        <p class="clave-kicker">{t.piano.kicker}</p>
+        <h2 id="clave-piano-title" class="clave-title">{t.piano.title}<span>{t.piano.titleMuted}</span></h2>
+        <p>{t.piano.lede}</p>
+      </div>
+      <div
+        class="clave-instrument"
+        role="group"
+        aria-label={t.piano.group}
+        data-piano
+        data-names={t.piano.notes.join('|')}
+        data-short={t.piano.short.join('|')}
+        data-play={t.piano.play}
+        data-stop={t.piano.stop}
+        data-now={t.piano.now}
+      >
+        <div class="clave-stand">
+          <svg class="clave-staff" viewBox="0 0 310 84" role="img" aria-label={t.piano.staffLabel}>
+            {[30, 40, 50, 60, 70].map((y) => <line class="clave-staff__line" x1="0" x2="310" y1={y - 10} y2={y - 10} />)}
+            <g data-piano-trail>
+              {staffHint.map((note) => (
+                <g class="clave-staff__note clave-staff__hint">
+                  {note.y >= 70 && <line x1={note.x - 10} x2={note.x + 10} y1="70" y2="70" />}
+                  <ellipse cx={note.x} cy={note.y} rx="6.4" ry="4.6" transform={`rotate(-20 ${note.x} ${note.y})`} />
+                </g>
+              ))}
+            </g>
+          </svg>
+          <p class="clave-stand__readout" data-piano-readout>{t.piano.idle}</p>
+        </div>
+        <div class="clave-keys">
+          {pianoKeys.map((key) => (
+            <button
+              type="button"
+              class={key.black ? 'clave-key clave-key--black' : 'clave-key'}
+              style={key.black ? `--slot: ${blackSlot[key.note]}` : undefined}
+              data-note={key.note}
+              aria-label={`${t.piano.notes[key.note]}, ${t.piano.keyWord} ${key.letter}`}
+            >
+              {!key.black && <span class="clave-key__name" aria-hidden="true">{t.piano.short[key.note]}</span>}
+              <span class="clave-key__letter" aria-hidden="true">{key.letter}</span>
+            </button>
+          ))}
+        </div>
+        <div class="clave-instrument__foot">
+          <button type="button" class="clave-pill clave-pill--brass" data-piano-play aria-pressed="false">
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path class="clave-icon-play" d="M6 4l10 6-10 6z" /><rect class="clave-icon-stop" x="5" y="5" width="10" height="10" rx="1.5" /></svg>
+            <span data-label>{t.piano.play}</span>
+          </button>
+          <p>{t.piano.piece}</p>
+        </div>
+        <noscript><p class="demo-noscript">{t.piano.noscript}</p></noscript>
+      </div>
+    </div>
+  </section>
+  <svg class="clave-wave clave-wave--from-green" viewBox="0 0 1440 48" preserveAspectRatio="none" aria-hidden="true"><path d={wave} /></svg>
+
+  <section id="clave-precos" class="clave-prices" aria-labelledby="clave-prices-title">
+    <p class="clave-watermark" aria-hidden="true">Clave</p>
+    <div class="clave-shell">
+      <div class="clave-prices__head" data-reveal>
+        <p class="clave-kicker">{t.prices.kicker}</p>
+        <h2 id="clave-prices-title" class="clave-title">{t.prices.title}<span>{t.prices.titleMuted}</span></h2>
+      </div>
+      <div class="clave-prices__grid">
+        <div class="clave-formats" data-reveal>
+          <div class="clave-tabs" role="tablist" aria-label={t.prices.tabsLabel}>
+            {t.prices.formats.map((format, index) => (
+              <button type="button" role="tab" id={`clave-tab-${format.id}`} aria-controls={`clave-panel-${format.id}`} aria-selected={index === 0 ? 'true' : 'false'}>{format.tab}</button>
+            ))}
+          </div>
+          {t.prices.formats.map((format) => (
+            <div class="clave-format" role="tabpanel" id={`clave-panel-${format.id}`} aria-labelledby={`clave-tab-${format.id}`}>
+              <p class="clave-format__price"><span>{t.prices.from}</span> <strong>{format.price}</strong><span>{format.unit}</span></p>
+              <p class="clave-format__note">{format.note}</p>
+              <ul>
+                {format.items.map((item) => <li>{item}</li>)}
+              </ul>
+              <a class="clave-pill" href="#clave-contato" data-prefill-course={format.id === 'turma' ? 'musicalizacao' : undefined}>{t.prices.cta}</a>
+            </div>
+          ))}
+        </div>
+        <div class="clave-included" data-reveal>
+          <h3>{t.prices.includedTitle}</h3>
+          <ul>
+            {t.prices.included.map((item, index) => (
+              <li><span class="clave-included__no" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span><div><strong>{item.title}</strong><p>{item.text}</p></div></li>
+            ))}
+          </ul>
+          <div class="clave-hours">
+            <h3>{t.prices.hoursTitle}</h3>
+            {t.prices.hours.map((line) => <p>{line}</p>)}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="clave-casa" class="clave-house" aria-labelledby="clave-house-title">
+    <div class="clave-shell">
+      <div class="clave-house__head" data-reveal>
+        <p class="clave-kicker">{t.house.kicker}</p>
+        <h2 id="clave-house-title" class="clave-title">{t.house.title}<span>{t.house.titleMuted}</span></h2>
+        <p>{t.house.lede}</p>
+      </div>
+      <div class="clave-collage">
+        {t.house.photos.map((photo, index) => (
+          <figure class={`clave-photo clave-photo--${index + 1}`} data-reveal>
+            <div class="clave-photo__frame">
+              <img src={photo.src} alt={photo.alt} width="896" height="1120" loading="lazy" />
+              <details class="clave-photo__more">
+                <summary><span class="clave-sr">{`${t.house.more} ${photo.caption}`}</span><span class="clave-plus" aria-hidden="true"></span></summary>
+                <p>{photo.detail}</p>
+              </details>
+            </div>
+            <figcaption>{photo.caption}</figcaption>
+            {index === 2 && <p class="clave-photo__badge" aria-hidden="true">{t.house.badge}</p>}
+          </figure>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <svg class="clave-wave clave-wave--to-green" viewBox="0 0 1440 48" preserveAspectRatio="none" aria-hidden="true"><path d={wave} /></svg>
+  <section id="clave-como" class="clave-steps" aria-labelledby="clave-steps-title">
+    <div class="clave-shell">
+      <div data-reveal>
+        <p class="clave-kicker">{t.steps.kicker}</p>
+        <h2 id="clave-steps-title" class="clave-title">{t.steps.title}<span>{t.steps.titleMuted}</span></h2>
+      </div>
+      <ol class="clave-steps__list" data-reveal>
+        {t.steps.list.map((step, index) => (
+          <li style={`--rise: ${index}`}>
+            <span class="clave-steps__note" aria-hidden="true">{index + 1}</span>
+            <h3>{step.title}</h3>
+            <p>{step.text}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+  <svg class="clave-wave clave-wave--from-green" viewBox="0 0 1440 48" preserveAspectRatio="none" aria-hidden="true"><path d={wave} /></svg>
+
+  <section id="clave-curso-ideal" class="clave-finder" aria-labelledby="clave-finder-title">
+    <div class="clave-shell clave-finder__inner">
+      <div class="clave-finder__copy" data-reveal>
+        <p class="clave-kicker">{t.finder.kicker}</p>
+        <h2 id="clave-finder-title" class="clave-title">{t.finder.title}</h2>
+        <p>{t.finder.lede}</p>
+      </div>
+      <div
+        class="clave-card clave-finder__card"
+        role="group"
+        aria-label={t.finder.group}
+        data-finder
+        data-reveal
+        data-reasons={JSON.stringify(t.finder.reasons)}
+        data-courses={JSON.stringify(courseNames)}
+        data-online={JSON.stringify(courseOnline)}
+        data-idle={t.finder.idle}
+        data-price-individual={t.finder.priceLine.individual}
+        data-price-turma={t.finder.priceLine.turma}
+        data-online-line={t.finder.onlineLine}
+      >
+        <fieldset class="clave-chips">
+          <legend>{t.finder.ageLegend}</legend>
+          {t.finder.ages.map((age) => (
+            <label><input type="radio" name="clave-finder-age" value={age.id} /><span>{age.label}</span></label>
+          ))}
+        </fieldset>
+        <fieldset class="clave-chips">
+          <legend>{t.finder.goalLegend}</legend>
+          {t.finder.goals.map((goal) => (
+            <label><input type="radio" name="clave-finder-goal" value={goal.id} /><span>{goal.label}</span></label>
+          ))}
+        </fieldset>
+        <div class="clave-result" data-finder-result data-state="idle">
+          <div role="status" aria-live="polite">
+            <p class="clave-result__label">{t.finder.suggestion}</p>
+            <p class="clave-result__name" data-finder-name></p>
+            <p class="clave-result__reason" data-finder-reason>{t.finder.idle}</p>
+            <p class="clave-result__meta" data-finder-meta></p>
+          </div>
+          <button type="button" class="clave-pill clave-pill--small" data-finder-use hidden>{t.finder.use}</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="clave-duvidas" class="clave-faq" aria-labelledby="clave-faq-title">
+    <div class="clave-shell clave-faq__inner">
+      <div data-reveal>
+        <p class="clave-kicker">{t.faq.kicker}</p>
+        <h2 id="clave-faq-title" class="clave-title">{t.faq.title}<span>{t.faq.titleMuted}</span></h2>
+      </div>
+      <div class="clave-faq__list" data-reveal>
+        {t.faq.list.map((item) => (
+          <details>
+            <summary><span>{item.q}</span><span class="clave-plus" aria-hidden="true"></span></summary>
+            <p>{item.a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <svg class="clave-wave clave-wave--to-brass" viewBox="0 0 1440 48" preserveAspectRatio="none" aria-hidden="true"><path d={wave} /></svg>
+  <section id="clave-contato" class="clave-contact" aria-labelledby="clave-contact-title">
+    <div class="clave-shell clave-contact__inner">
+      <div class="clave-contact__copy">
+        <p class="clave-kicker">{t.contact.kicker}</p>
+        <h2 id="clave-contact-title" class="clave-title">{t.contact.title}</h2>
+        <p>{t.contact.lede}</p>
+        <svg class="clave-contact__wave" viewBox="0 0 240 60" aria-hidden="true">
+          {[6, 18, 30, 12, 40, 24, 50, 30, 16, 38, 22, 8, 28, 44, 18, 34, 10, 26, 14, 6].map((h, i) => <rect x={i * 12} y={30 - h / 2} width="6" height={h} rx="3" />)}
+        </svg>
+      </div>
+      <div
+        class="clave-card clave-builder"
+        role="group"
+        aria-label={t.contact.group}
+        data-builder
+        data-msg={JSON.stringify(t.contact.msg)}
+        data-ages={JSON.stringify(ageLabels)}
+        data-copied={t.contact.copied}
+      >
+        <div class="clave-builder__row">
+          <label class="clave-field">
+            <span>{t.contact.name}</span>
+            <input type="text" name="clave-name" autocomplete="given-name" maxlength="60" placeholder={t.contact.namePlaceholder} />
+          </label>
+          <label class="clave-field">
+            <span>{t.contact.age}</span>
+            <select name="clave-age">
+              <option value="">{t.contact.agePlaceholder}</option>
+              {t.finder.ages.map((age) => <option value={age.id}>{age.label}</option>)}
+            </select>
+          </label>
+        </div>
+        <fieldset class="clave-chips">
+          <legend>{t.contact.course}</legend>
+          {t.courses.list.map((course) => (
+            <label><input type="radio" name="clave-course" value={course.id} data-label={course.name} /><span>{course.name}</span></label>
+          ))}
+        </fieldset>
+        <div class="clave-builder__row">
+          <fieldset class="clave-chips">
+            <legend>{t.contact.instrument}</legend>
+            {t.contact.instrumentOptions.map((option) => (
+              <label><input type="radio" name="clave-instrument" value={option.id} /><span>{option.label}</span></label>
+            ))}
+          </fieldset>
+          <fieldset class="clave-chips">
+            <legend>{t.contact.period}</legend>
+            {t.contact.periods.map((option) => (
+              <label><input type="radio" name="clave-period" value={option.id} /><span>{option.label}</span></label>
+            ))}
+          </fieldset>
+        </div>
+        <button type="button" class="clave-pill clave-pill--wide" data-builder-build>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z" /></svg>
+          {t.contact.build}
+        </button>
+        <div class="clave-bubble" role="status" aria-live="polite" data-builder-status data-state="idle">{t.contact.status}</div>
+        <button type="button" class="clave-link clave-builder__copy" data-builder-copy hidden>{t.contact.copy}</button>
+        <p class="clave-builder__note">{t.contact.note}</p>
+        <noscript><p class="demo-noscript">{t.contact.noscript}</p></noscript>
+      </div>
+    </div>
+  </section>
+
+  <footer class="clave-footer">
+    <div class="clave-shell clave-footer__inner">
+      <a class="clave-brand" href="#clave-inicio">
+        <svg class="clave-brand__mark" viewBox="0 0 40 40" aria-hidden="true">
+          <circle cx="20" cy="20" r="19" fill="#d9a441" />
+          <path d="M12.5 16.2c0-4.6 3.9-7.6 8.6-7.6 5.4 0 8.9 3.8 8.9 9 0 7.8-6.6 13.2-16.2 16.8" fill="none" stroke="#0f2a21" stroke-width="2.6" stroke-linecap="round" />
+          <circle cx="14.6" cy="16.4" r="3.4" fill="#0f2a21" />
+          <circle cx="33" cy="14" r="1.7" fill="#0f2a21" />
+          <circle cx="33" cy="21" r="1.7" fill="#0f2a21" />
+        </svg>
+        <span>Casa Clave<small>{t.tagline}</small></span>
+      </a>
+      <div class="clave-footer__info">
+        <p>{t.footer.hours}</p>
+        <p>{t.footer.area}</p>
+      </div>
+      <div class="clave-footer__links">
+        <a href={withLocale(locale, 'contact')}>{t.footer.contact}</a>
+        <a href={withLocale(locale, 'work')}>{t.footer.back}</a>
+      </div>
+    </div>
+  </footer>
+</article>
+
+<script>
+  import { initPiano } from './escola-musica/piano';
+  import { initBuilder, initFinder, initHeader, initPrefillLinks, initReveals, initTabs } from './escola-musica/client';
+
+  document.querySelectorAll<HTMLElement>('[data-clave]').forEach((root) => {
+    initHeader(root);
+    initReveals(root);
+    initTabs(root);
+    initFinder(root);
+    initPrefillLinks(root);
+    initBuilder(root);
+    root.querySelectorAll<HTMLElement>('[data-piano]').forEach(initPiano);
+  });
+</script>

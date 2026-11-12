@@ -1,0 +1,653 @@
+---
+import DemoBar from '@/components/demos/DemoBar.astro';
+import { withLocale, type DemoProject, type Locale } from '@/data/content';
+import { classesFor, days, levels, modalities, periods, weeklyClassCount } from '@/components/demos/academia-luta/schedule';
+
+interface Props { locale: Locale; project: DemoProject }
+
+const { locale, project } = Astro.props;
+const pt = locale === 'pt';
+const t = pt
+  ? {
+      nav: 'Navegação Guarda Alta',
+      tagline: 'jiu-jitsu e muay thai',
+      links: [['#ga-modalidades', 'Modalidades'], ['#ga-horarios', 'Horários'], ['#ga-planos', 'Planos'], ['#ga-duvidas', 'Dúvidas']],
+      navCta: 'Aula grátis',
+      heroEyebrow: 'Jiu-jitsu · No-gi · Muay Thai · Kids',
+      h1: ['Todo faixa preta', 'começou na', 'branca'],
+      heroLede: 'Treino para adultos e crianças a partir de 4 anos, com turmas para quem está começando do zero. A primeira aula é gratuita e o kimono a gente empresta.',
+      heroCta: 'Agendar aula experimental',
+      heroSecondary: 'Ver a grade da semana',
+      heroAlt: 'Dois atletas treinando jiu-jitsu no tatame azul, um de kimono branco e faixa preta passando a guarda do outro, de kimono azul, sob a luz que entra pela janela',
+      ring: 'AULA EXPERIMENTAL GRÁTIS • KIMONO EMPRESTADO • ',
+      ringCenter: ['1ª', 'aula'],
+      facts: [
+        { value: String(weeklyClassCount), label: 'turmas por semana, de segunda a sábado' },
+        { value: '4 a 13', label: 'anos na turma kids, separada por idade' },
+        { value: 'R$ 0', label: 'na primeira aula, com kimono emprestado' },
+      ],
+      marquee: ['Jiu-jitsu', 'No-gi', 'Muay Thai', 'Kids', 'Feminino', 'Treino livre'],
+      modEyebrow: 'Modalidades',
+      modTitle: ['Escolha por onde', 'começar.'],
+      modLede: 'Cinco turmas diferentes no mesmo tatame. Se não souber qual é a sua, faça a aula experimental de duas e decida depois.',
+      showTimes: 'Ver horários',
+      modItems: [
+        { id: 'jj', name: 'Jiu-jitsu com kimono', text: 'Alavanca, posição e paciência. Você aprende a se defender sem depender de força e a controlar alguém maior que você.', tags: ['Com kimono', 'Turma iniciante seg e qua'] },
+        { id: 'nogi', name: 'No-gi', text: 'O mesmo jiu-jitsu, sem kimono: mais rápido e com pegadas no corpo. Bermuda e camiseta de treino bastam.', tags: ['Sem kimono', 'Ter e qui'] },
+        { id: 'mt', name: 'Muay Thai', text: 'Socos, chutes, joelhadas e cotoveladas no aparador e no saco. Condicionamento forte, e sparring só quando você quiser.', tags: ['Luvas emprestadas na 1ª aula', 'Iniciante ter e qui'] },
+        { id: 'kids', name: 'Kids, 4 a 13 anos', text: 'Disciplina, coordenação e confiança, com turmas separadas por idade e muita brincadeira no meio da técnica.', tags: ['4 a 7 anos', '8 a 13 anos'] },
+        { id: 'fem', name: 'Feminino', text: 'Jiu-jitsu só para mulheres, com foco em técnica e defesa pessoal. Para quem prefere começar num ambiente só delas.', tags: ['Ter e qui 18h', 'Sáb 10h15'] },
+      ],
+      mtAlt: 'Atleta de muay thai com bandagens vermelhas acertando um chute alto no saco de pancada',
+      mtCaption: 'Muay Thai, turma iniciante das 19h',
+      schedEyebrow: 'Grade semanal',
+      schedTitle: ['Escolha seu', 'horário.'],
+      schedLede: 'Filtre por modalidade e nível. Achou um horário bom? Toque na turma e a mensagem já sai com o dia e a hora.',
+      filtersLabel: 'Filtrar a grade',
+      modLegend: 'Modalidade',
+      levelLegend: 'Nível da turma',
+      all: 'Todas',
+      anyLevel: 'Qualquer',
+      dayLegend: 'Dia da semana',
+      count: { all: '{n} turmas na semana', some: '{n} turmas combinam com o filtro', none: 'Nenhuma turma com essa combinação. Tente outro nível.' },
+      dayEmpty: 'Sem turma com esse filtro neste dia.',
+      minutes: 'min',
+      tryCta: 'Quero experimentar este horário',
+      firstEyebrow: 'Aula experimental',
+      firstTitle: ['Como é a', 'primeira aula.'],
+      firstLede: 'Ninguém chega sabendo. A primeira aula é para conhecer o espaço, o professor e o ritmo da turma, sem cobrança.',
+      tabsLabel: 'Primeira aula para',
+      bringTitle: 'O que levar',
+      firstCta: 'Quero agendar a minha',
+      tabs: [
+        {
+          id: 'adulto', tab: 'Adulto', image: '/images/concepts/academia-luta-faixa.webp', tape: 'A gente ensina até a amarrar a faixa',
+          alt: 'Mãos firmando o nó de uma faixa preta gasta sobre um kimono branco',
+          steps: [
+            ['Chegue 15 minutos antes', 'Você preenche uma ficha rápida, conhece o espaço e pega o kimono emprestado.'],
+            ['Aquecimento no seu ritmo', 'Corrida leve, rolamentos e movimentos básicos. Ninguém vai cobrar fôlego de atleta.'],
+            ['Técnica com um parceiro', 'O professor ensina uma posição e você repete com um aluno mais graduado.'],
+            ['Conversa no final', 'Tire dúvidas sobre horários e planos. Sem pressão para fechar nada no dia.'],
+          ],
+          bring: ['Garrafa de água', 'Chinelo para fora do tatame', 'Unhas das mãos e dos pés cortadas', 'Bermuda e camiseta sem zíper para no-gi e muay thai'],
+        },
+        {
+          id: 'kids', tab: 'Kids', image: '/images/concepts/academia-luta-kids.webp', tape: 'Responsável pode assistir',
+          alt: 'Crianças de kimono branco sentadas no tatame azul ouvindo o professor, de faixa preta, explicar a aula',
+          steps: [
+            ['Chegada com o responsável', 'Ficha com contato de emergência e qualquer cuidado de saúde que a gente precise saber.'],
+            ['Brincadeiras que ensinam', 'Aquecimento com jogos de equilíbrio, rolamento e coordenação.'],
+            ['Técnica com regra clara', 'Turma separada por idade, com professor e monitor no tatame o tempo todo.'],
+            ['Retorno para a família', 'No fim, o professor conta como foi e indica a turma certa para a idade.'],
+          ],
+          bring: ['Garrafa de água', 'Chinelo', 'Roupa leve, se não tiver kimono', 'Cabelo preso e unhas cortadas'],
+        },
+      ],
+      beltEyebrow: 'Faixas e graduação',
+      beltTitle: ['Da branca', 'à preta.'],
+      beltLede: 'Não existe prazo fixo. A troca de faixa acontece em duas cerimônias por ano, avaliando frequência, técnica e comportamento no tatame.',
+      belts: [
+        { name: 'Branca', time: 'O começo', text: 'Postura, quedas, fugas e as primeiras finalizações. Aqui o objetivo é aprender a se defender.' },
+        { name: 'Azul', time: 'Em média 2 anos', text: 'Você já se defende bem e começa a montar o seu jogo.' },
+        { name: 'Roxa', time: 'Mais 2 anos, em média', text: 'Conecta as técnicas e ataca com intenção. Muita gente começa a ajudar os mais novos.' },
+        { name: 'Marrom', time: 'Mais 1 a 2 anos', text: 'Refinamento: menos força, mais tempo certo.' },
+        { name: 'Preta', time: 'Não é o fim', text: 'É o começo de ensinar. A partir dela, os graus contam os anos de faixa.' },
+      ],
+      beltNotes: [
+        'Entre uma faixa e outra são 4 graus, as fitas brancas na ponta da faixa.',
+        'Crianças têm faixas próprias até os 15 anos: cinza, amarela, laranja e verde.',
+        'No Muay Thai não tem faixa. O professor acompanha a sua evolução por nível de turma.',
+      ],
+      planEyebrow: 'Planos',
+      planTitle: ['Preço claro,', 'sem fidelidade.'],
+      from: 'a partir de',
+      perMonth: '/mês',
+      plans: [
+        { name: 'Mensal', price: '189', sub: 'Uma modalidade adulta', items: ['Todas as aulas da modalidade', 'Treino livre de sábado', 'Cancela quando quiser'] },
+        { name: 'Trimestral', price: '169', sub: 'Uma modalidade, R$ 507 no trimestre', items: ['Todas as aulas da modalidade', 'Treino livre de sábado', 'Camiseta de treino na matrícula'], tag: 'Menor valor por mês' },
+        { name: 'Combo', price: '259', sub: 'Duas modalidades adultas', items: ['Jiu-jitsu e muay thai, ou qualquer dupla', 'Todas as aulas das duas', 'Treino livre de sábado'] },
+        { name: 'Kids', price: '149', sub: 'De 4 a 13 anos', items: ['Até 3 aulas por semana', 'Turma separada por idade', '10% de desconto para irmãos'] },
+      ],
+      planNote: 'Sem taxa de matrícula. O kimono não está incluso: dá para usar o seu ou comprar na recepção.',
+      planCta: 'Começar pela aula grátis',
+      rulesEyebrow: 'Regras do tatame',
+      rulesTitle: ['Combinados', 'que protegem todo mundo.'],
+      rules: [
+        ['Unhas cortadas', 'Das mãos e dos pés. Unha grande machuca o parceiro e rasga o kimono.'],
+        ['Chinelo fora, pé limpo dentro', 'Ninguém pisa no tatame de calçado nem anda descalço no banheiro.'],
+        ['Kimono lavado a cada treino', 'Roupa de treino usada uma vez e lavada. Vale para a faixa também.'],
+        ['Sem anel, brinco ou relógio', 'Tire tudo antes de entrar. Cabelo comprido vai preso.'],
+        ['Machucado ou gripado, descansa', 'Ferida aberta ou doença que passa para os outros: volte quando melhorar.'],
+        ['Bateu, soltou', 'O parceiro bateu no tatame ou em você, solta na hora. Sem exceção.'],
+      ],
+      faqTitle: ['Perguntas que', 'chegam no WhatsApp.'],
+      faqs: [
+        { q: 'Qual a idade mínima para treinar?', a: '4 anos, na turma kids. Dos 14 aos 17 anos o aluno treina nas turmas adultas, com autorização dos responsáveis.' },
+        { q: 'Nunca treinei nada. Vou conseguir acompanhar?', a: 'Vai. As turmas iniciantes começam do zero, e nas turmas de todos os níveis o professor coloca você com um parceiro mais graduado. Ninguém vai para o treino pesado na primeira semana.' },
+        { q: 'Preciso estar em forma para começar?', a: 'Não. O condicionamento vem com o treino. Cada um respeita o próprio ritmo, e dá para parar e beber água sempre que precisar.' },
+        { q: 'Tenho uma lesão antiga. Posso treinar?', a: 'Avise o professor antes da aula. Na maioria dos casos dá para adaptar os exercícios. Se for algo recente ou cirurgia, pedimos a liberação do seu médico.' },
+        { q: 'Competir é obrigatório?', a: 'Não. Tem aluno que compete e tem aluno que treina pela saúde e pela cabeça. A graduação não depende de campeonato.' },
+        { q: 'Preciso comprar kimono antes da primeira aula?', a: 'Não. Na aula experimental a gente empresta. Se decidir continuar, você usa o seu ou compra na recepção. Para no-gi e muay thai, roupa de treino comum serve no começo.' },
+        { q: 'Posso assistir a aula do meu filho?', a: 'Pode. Na turma kids os responsáveis acompanham do banco ao lado do tatame, principalmente nas primeiras semanas.' },
+      ],
+      bookEyebrow: 'Aula experimental',
+      bookTitle: ['Bora para o', 'primeiro treino?'],
+      bookLede: 'Preencha do seu jeito e a mensagem fica pronta para mandar no WhatsApp da academia. Se escolheu um horário na grade, ele já está aqui.',
+      nextTitle: 'Depois da mensagem',
+      nextSteps: ['Você manda a mensagem no WhatsApp da academia.', 'A recepção responde confirmando a vaga e o horário.', 'É só chegar 15 minutos antes, com água e chinelo.'],
+      bookNote: 'Nada é enviado daqui: a mensagem só aparece na tela para você revisar e copiar.',
+      builderLabel: 'Montar mensagem de agendamento',
+      nameLabel: 'Seu nome',
+      namePlaceholder: 'Como podemos te chamar?',
+      ageLegend: 'Para quem é a aula?',
+      ages: [['adulto', 'Para mim', 'para mim'], ['teen', 'Adolescente, 14 a 17', 'para meu filho ou minha filha, de 14 a 17 anos'], ['crianca', 'Criança, 4 a 13', 'para meu filho ou minha filha, de 4 a 13 anos']],
+      expLegend: 'Experiência',
+      exps: [['nunca', 'Nunca treinei', 'Vai ser a primeira vez no tatame.'], ['ja', 'Já treinei', 'Já tem experiência com luta.']],
+      modalityLegend: 'Modalidade',
+      modalitySay: { jj: 'jiu-jitsu', nogi: 'no-gi', mt: 'muay thai', kids: 'jiu-jitsu kids', fem: 'jiu-jitsu feminino' },
+      slotLabel: 'Horário preferido',
+      slotPlaceholder: 'Ex.: segunda, 19:00',
+      build: 'Montar mensagem',
+      copy: 'Copiar mensagem',
+      copied: 'Mensagem copiada',
+      copyFailed: 'Não deu para copiar. Selecione o texto acima.',
+      msg: {
+        greeting: 'Oi, Guarda Alta! Meu nome é {name}.',
+        want: 'Quero agendar uma aula experimental de {modality} {who}.',
+        slot: 'Horário que prefiro: {slot}.',
+        noSlot: 'Ainda não escolhi o horário.',
+        closing: 'Pode me confirmar se tem vaga?',
+        empty: 'Escreva seu nome e escolha uma modalidade para montar a mensagem.',
+        ready: 'Sua mensagem',
+      },
+      statusIdle: 'A mensagem aparece aqui, pronta para revisar.',
+      noscript: 'O montador de mensagem precisa de JavaScript. A grade e o resto da página continuam disponíveis.',
+      footerLine: 'Segunda a sábado, das 6h30 às 21h30.',
+      contact: 'Fale com Rafael',
+      back: 'Voltar ao portfólio',
+    }
+  : {
+      nav: 'Guarda Alta navigation',
+      tagline: 'jiu-jitsu and muay thai',
+      links: [['#ga-modalidades', 'Disciplines'], ['#ga-horarios', 'Timetable'], ['#ga-planos', 'Plans'], ['#ga-duvidas', 'FAQ']],
+      navCta: 'Free class',
+      heroEyebrow: 'Jiu-jitsu · No-gi · Muay Thai · Kids',
+      h1: ['Every black belt', 'started as a', 'white belt'],
+      heroLede: 'Training for adults and kids from age 4, with classes for people starting from zero. The first class is free and we lend you the gi.',
+      heroCta: 'Book a free trial class',
+      heroSecondary: 'See the weekly timetable',
+      heroAlt: 'Two athletes training jiu-jitsu on a blue mat, one in a white gi and black belt passing the guard of the other, in a blue gi, under light from a window',
+      ring: 'FREE TRIAL CLASS • GI ON LOAN • FREE TRIAL CLASS • ',
+      ringCenter: ['1st', 'class'],
+      facts: [
+        { value: String(weeklyClassCount), label: 'classes a week, Monday to Saturday' },
+        { value: '4 to 13', label: 'year olds in kids classes, split by age' },
+        { value: 'R$ 0', label: 'for the first class, gi on loan' },
+      ],
+      marquee: ['Jiu-jitsu', 'No-gi', 'Muay Thai', 'Kids', 'Women only', 'Open mat'],
+      modEyebrow: 'Disciplines',
+      modTitle: ['Choose where', 'to start.'],
+      modLede: 'Five different classes on the same mat. Not sure which one is yours? Take the trial class in two and decide later.',
+      showTimes: 'See times',
+      modItems: [
+        { id: 'jj', name: 'Jiu-jitsu in the gi', text: 'Leverage, position, and patience. You learn to defend yourself without relying on strength and to control someone bigger than you.', tags: ['In the gi', 'Beginners Mon and Wed'] },
+        { id: 'nogi', name: 'No-gi', text: 'The same jiu-jitsu without the gi: faster, with grips on the body. Shorts and a training shirt are enough.', tags: ['No gi', 'Tue and Thu'] },
+        { id: 'mt', name: 'Muay Thai', text: 'Punches, kicks, knees, and elbows on pads and the heavy bag. Serious conditioning, and partner sparring only when you want it.', tags: ['Gloves on loan for class 1', 'Beginners Tue and Thu'] },
+        { id: 'kids', name: 'Kids, ages 4 to 13', text: 'Discipline, coordination, and confidence, with classes split by age and plenty of games mixed into the technique.', tags: ['Ages 4 to 7', 'Ages 8 to 13'] },
+        { id: 'fem', name: 'Women only', text: 'Jiu-jitsu for women only, focused on technique and self-defence. For those who would rather start in a space of their own.', tags: ['Tue and Thu 6 pm', 'Sat 10:15'] },
+      ],
+      mtAlt: 'Muay thai athlete with red hand wraps landing a high kick on a heavy bag',
+      mtCaption: 'Muay Thai, 7 pm beginners class',
+      schedEyebrow: 'Weekly timetable',
+      schedTitle: ['Pick your', 'time.'],
+      schedLede: 'Filter by discipline and level. Found a good slot? Tap the class and the message comes with the day and time.',
+      filtersLabel: 'Filter the timetable',
+      modLegend: 'Discipline',
+      levelLegend: 'Class level',
+      all: 'All',
+      anyLevel: 'Any',
+      dayLegend: 'Day of the week',
+      count: { all: '{n} classes this week', some: '{n} classes match the filter', none: 'No class matches that combination. Try another level.' },
+      dayEmpty: 'No class with this filter on this day.',
+      minutes: 'min',
+      tryCta: 'I want to try this slot',
+      firstEyebrow: 'Trial class',
+      firstTitle: ['What the first', 'class is like.'],
+      firstLede: 'Nobody walks in knowing. The first class is for meeting the space, the coach, and the pace of the group, with no pressure.',
+      tabsLabel: 'First class for',
+      bringTitle: 'What to bring',
+      firstCta: 'Book mine',
+      tabs: [
+        {
+          id: 'adulto', tab: 'Adults', image: '/images/concepts/academia-luta-faixa.webp', tape: 'We even teach you to tie the belt',
+          alt: 'Hands tightening the knot of a worn black belt over a white gi',
+          steps: [
+            ['Arrive 15 minutes early', 'Fill in a short form, see the space, and pick up the gi we lend you.'],
+            ['Warm up at your pace', 'Light running, rolls, and basic movements. Nobody expects an athlete’s stamina.'],
+            ['Technique with a partner', 'The coach teaches one position and you drill it with a higher belt.'],
+            ['A chat at the end', 'Ask about times and plans. No pressure to sign up on the day.'],
+          ],
+          bring: ['A water bottle', 'Flip-flops for off the mat', 'Trimmed finger and toe nails', 'Shorts and a shirt without zips for no-gi and muay thai'],
+        },
+        {
+          id: 'kids', tab: 'Kids', image: '/images/concepts/academia-luta-kids.webp', tape: 'Parents can watch',
+          alt: 'Children in white gis sitting on a blue mat listening to the black belt coach explain the class',
+          steps: [
+            ['Arrive with a guardian', 'A form with an emergency contact and any health detail we should know.'],
+            ['Games that teach', 'A warm-up with balance, rolling, and coordination games.'],
+            ['Technique with clear rules', 'Classes split by age, with a coach and an assistant on the mat the whole time.'],
+            ['Feedback for the family', 'At the end, the coach tells you how it went and suggests the right class for their age.'],
+          ],
+          bring: ['A water bottle', 'Flip-flops', 'Light clothes if there is no gi', 'Hair tied back and nails trimmed'],
+        },
+      ],
+      beltEyebrow: 'Belts and grading',
+      beltTitle: ['From white', 'to black.'],
+      beltLede: 'There is no fixed deadline. Promotions happen at two ceremonies a year, based on attendance, technique, and behaviour on the mat.',
+      belts: [
+        { name: 'White', time: 'The start', text: 'Posture, breakfalls, escapes, and the first submissions. The goal here is learning to defend yourself.' },
+        { name: 'Blue', time: 'About 2 years', text: 'You defend well and start building your own game.' },
+        { name: 'Purple', time: 'About 2 more years', text: 'You connect techniques and attack with intent. Many start helping newer students.' },
+        { name: 'Brown', time: '1 to 2 more years', text: 'Refinement: less strength, better timing.' },
+        { name: 'Black', time: 'Not the end', text: 'It is the start of teaching. From here, degrees count the years at black belt.' },
+      ],
+      beltNotes: [
+        'Between belts there are 4 degrees, the white stripes at the tip of the belt.',
+        'Children have their own belts until 15: grey, yellow, orange, and green.',
+        'Muay Thai has no belts. The coach follows your progress by class level.',
+      ],
+      planEyebrow: 'Plans',
+      planTitle: ['Clear prices,', 'no lock-in.'],
+      from: 'from',
+      perMonth: '/month',
+      plans: [
+        { name: 'Monthly', price: '189', sub: 'One adult discipline', items: ['Every class in that discipline', 'Saturday open mat', 'Cancel any time'] },
+        { name: 'Quarterly', price: '169', sub: 'One discipline, R$ 507 per quarter', items: ['Every class in that discipline', 'Saturday open mat', 'Training shirt when you join'], tag: 'Lowest monthly price' },
+        { name: 'Combo', price: '259', sub: 'Two adult disciplines', items: ['Jiu-jitsu and muay thai, or any pair', 'Every class in both', 'Saturday open mat'] },
+        { name: 'Kids', price: '149', sub: 'Ages 4 to 13', items: ['Up to 3 classes a week', 'Classes split by age', '10% off for siblings'] },
+      ],
+      planNote: 'No joining fee. The gi is not included: use your own or buy one at the front desk.',
+      planCta: 'Start with the free class',
+      rulesEyebrow: 'Mat rules',
+      rulesTitle: ['Agreements', 'that protect everyone.'],
+      rules: [
+        ['Trimmed nails', 'Fingers and toes. Long nails hurt your partner and tear the gi.'],
+        ['Flip-flops off, clean feet on', 'No shoes on the mat and no bare feet in the bathroom.'],
+        ['A clean gi every session', 'Training clothes are worn once and washed. The belt too.'],
+        ['No rings, earrings, or watches', 'Take everything off before you step on. Long hair goes up.'],
+        ['Injured or sick, rest', 'An open wound or something contagious: come back when you are better.'],
+        ['Tap means let go', 'When your partner taps the mat or you, release at once. No exceptions.'],
+      ],
+      faqTitle: ['Questions that', 'arrive on WhatsApp.'],
+      faqs: [
+        { q: 'What is the minimum age?', a: '4, in the kids classes. From 14 to 17, students train in the adult classes with a guardian’s permission.' },
+        { q: 'I have never trained. Will I keep up?', a: 'You will. Beginner classes start from zero, and in all-levels classes the coach pairs you with a higher belt. Nobody goes into hard sparring in the first week.' },
+        { q: 'Do I need to be fit to start?', a: 'No. Fitness comes with training. Everyone goes at their own pace, and you can stop for water whenever you need.' },
+        { q: 'I have an old injury. Can I train?', a: 'Tell the coach before class. In most cases the drills can be adapted. If it is recent or involved surgery, we ask for your doctor’s clearance.' },
+        { q: 'Do I have to compete?', a: 'No. Some students compete and some train for their health and their head. Promotions do not depend on tournaments.' },
+        { q: 'Do I need to buy a gi before the first class?', a: 'No. We lend you one for the trial class. If you stay, use your own or buy one at the front desk. For no-gi and muay thai, regular training clothes work at first.' },
+        { q: 'Can I watch my child’s class?', a: 'Yes. In kids classes, guardians can watch from the bench beside the mat, especially in the first weeks.' },
+      ],
+      bookEyebrow: 'Trial class',
+      bookTitle: ['Ready for your', 'first session?'],
+      bookLede: 'Fill it in your way and the message is ready to send to the gym on WhatsApp. If you picked a slot in the timetable, it is already here.',
+      nextTitle: 'After the message',
+      nextSteps: ['You send the message to the gym on WhatsApp.', 'The front desk replies to confirm the spot and the time.', 'Arrive 15 minutes early with water and flip-flops.'],
+      bookNote: 'Nothing is sent from here: the message only appears on screen for you to review and copy.',
+      builderLabel: 'Build a booking message',
+      nameLabel: 'Your name',
+      namePlaceholder: 'What should we call you?',
+      ageLegend: 'Who is the class for?',
+      ages: [['adulto', 'For me', 'for myself'], ['teen', 'Teen, 14 to 17', 'for my son or daughter, aged 14 to 17'], ['crianca', 'Child, 4 to 13', 'for my son or daughter, aged 4 to 13']],
+      expLegend: 'Experience',
+      exps: [['nunca', 'Never trained', 'It will be the first time on the mat.'], ['ja', 'Trained before', 'Has some martial-arts experience.']],
+      modalityLegend: 'Discipline',
+      modalitySay: { jj: 'jiu-jitsu', nogi: 'no-gi', mt: 'muay thai', kids: 'kids jiu-jitsu', fem: 'women-only jiu-jitsu' },
+      slotLabel: 'Preferred slot',
+      slotPlaceholder: 'For example: Monday, 19:00',
+      build: 'Build message',
+      copy: 'Copy message',
+      copied: 'Message copied',
+      copyFailed: 'Could not copy. Select the text above.',
+      msg: {
+        greeting: 'Hi, Guarda Alta! My name is {name}.',
+        want: 'I would like to book a trial {modality} class {who}.',
+        slot: 'My preferred slot: {slot}.',
+        noSlot: 'I have not picked a slot yet.',
+        closing: 'Could you confirm if there is a spot?',
+        empty: 'Write your name and choose a discipline to build the message.',
+        ready: 'Your message',
+      },
+      statusIdle: 'Your message appears here, ready to review.',
+      noscript: 'The message builder needs JavaScript. The timetable and the rest of the page remain available.',
+      footerLine: 'Monday to Saturday, 6:30 am to 9:30 pm.',
+      contact: 'Contact Rafael',
+      back: 'Back to portfolio',
+    };
+
+const say = t.modalitySay as Record<string, string>;
+const beltIds = ['branca', 'azul', 'roxa', 'marrom', 'preta'];
+const pad = (n: number) => String(n + 1).padStart(2, '0');
+const logo = '<rect width="40" height="40" rx="7" fill="#D02B1E"/><path d="M9 20.5 20 11l11 9.5M9 29.5 20 20l11 9.5" fill="none" stroke="#fff" stroke-width="4.2" stroke-linecap="square"/>';
+---
+
+<DemoBar locale={locale} project={project} />
+<article class="demo demo--guarda">
+  <header class="ga-header" data-ga-header>
+    <nav class="ga-header__inner" aria-label={t.nav}>
+      <a class="ga-brand" href="#ga-inicio">
+        <svg class="ga-brand__mark" viewBox="0 0 40 40" aria-hidden="true" set:html={logo} />
+        <span>Guarda Alta<small>{t.tagline}</small></span>
+      </a>
+      <div class="ga-header__links">
+        {t.links.map(([href, label]) => <a href={href}>{label}</a>)}
+      </div>
+      <a class="ga-pill ga-pill--small" href="#ga-agendar">{t.navCta}</a>
+    </nav>
+  </header>
+
+  <section id="ga-inicio" class="ga-hero ga-dark" aria-labelledby="ga-h1">
+    <span class="ga-sentinel" data-ga-sentinel aria-hidden="true"></span>
+    <figure class="ga-hero__photo">
+      <img src="/images/concepts/academia-luta-hero.webp" alt={t.heroAlt} width="1024" height="688" fetchpriority="high" />
+    </figure>
+    <div class="ga-shell ga-hero__content">
+      <p class="ga-eyebrow">{t.heroEyebrow}</p>
+      <h1 id="ga-h1" class="ga-hero__title">
+        <span class="ga-hero__line">{t.h1[0]}</span>{' '}
+        <span class="ga-hero__line">{t.h1[1]}</span>{' '}
+        <span class="ga-hero__line"><span class="ga-accent"><span>{t.h1[2]}</span></span></span>
+      </h1>
+      <p class="ga-hero__lede">{t.heroLede}</p>
+      <div class="ga-hero__actions">
+        <a class="ga-pill" href="#ga-agendar">{t.heroCta}<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5" /></svg></a>
+        <a class="ga-link" href="#ga-horarios">{t.heroSecondary}</a>
+      </div>
+      <ul class="ga-facts">
+        {t.facts.map((fact) => <li><strong>{fact.value}</strong><span>{fact.label}</span></li>)}
+      </ul>
+    </div>
+    <div class="ga-sticker" aria-hidden="true">
+      <svg class="ga-sticker__ring" viewBox="0 0 140 140"><defs><path id="ga-ring" d="M70 70m-55 0a55 55 0 1 1 110 0a55 55 0 1 1-110 0" /></defs><text><textPath href="#ga-ring" textLength="340">{t.ring}</textPath></text></svg>
+      <span class="ga-sticker__center"><b>{t.ringCenter[0]}</b>{t.ringCenter[1]}</span>
+    </div>
+    <div class="ga-beltline" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
+  </section>
+
+  <div class="ga-marquee" aria-hidden="true">
+    <div class="ga-marquee__track">
+      {[0, 1].map(() => (
+        <span class="ga-marquee__group">{t.marquee.map((item) => <><span>{item}</span><svg viewBox="0 0 20 20"><path d="M10 1 19 10 10 19 1 10Z" /></svg></>)}</span>
+      ))}
+    </div>
+  </div>
+
+  <section id="ga-modalidades" class="ga-mods ga-light ga-torn" aria-labelledby="ga-mods-title">
+    <div class="ga-shell ga-mods__grid">
+      <div class="ga-mods__aside">
+        <p class="ga-eyebrow">{t.modEyebrow}</p>
+        <h2 id="ga-mods-title" class="ga-title">{t.modTitle[0]} <span>{t.modTitle[1]}</span></h2>
+        <p class="ga-lede">{t.modLede}</p>
+        <figure class="ga-print" data-reveal>
+          <img src="/images/concepts/academia-luta-muaythai.webp" alt={t.mtAlt} width="896" height="1120" loading="lazy" />
+          <figcaption>{t.mtCaption}</figcaption>
+        </figure>
+      </div>
+      <ol class="ga-mods__list">
+        {t.modItems.map((item, index) => (
+          <li class="ga-mod" data-reveal>
+            <span class="ga-mod__num" aria-hidden="true">{pad(index)}</span>
+            <div class="ga-mod__body">
+              <h3>{item.name}</h3>
+              <p>{item.text}</p>
+              <ul class="ga-tags">{item.tags.map((tag) => <li>{tag}</li>)}</ul>
+              <a class="ga-arrow" href="#ga-horarios" data-ga-show={item.id}>{t.showTimes}<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5" /></svg></a>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section id="ga-horarios" class="ga-schedule ga-dark" aria-labelledby="ga-sched-title" data-ga-schedule>
+    <div class="ga-shell">
+      <div class="ga-head">
+        <div>
+          <p class="ga-eyebrow">{t.schedEyebrow}</p>
+          <h2 id="ga-sched-title" class="ga-title">{t.schedTitle[0]} <span>{t.schedTitle[1]}</span></h2>
+        </div>
+        <p class="ga-lede">{t.schedLede}</p>
+      </div>
+      <div class="ga-filters" role="group" aria-label={t.filtersLabel}>
+        <fieldset class="ga-chips">
+          <legend>{t.modLegend}</legend>
+          <label><input type="radio" name="ga-mod" value="all" checked /><span>{t.all}</span></label>
+          {modalities.map((mod) => <label><input type="radio" name="ga-mod" value={mod.id} /><span>{mod.name[locale]}</span></label>)}
+        </fieldset>
+        <fieldset class="ga-chips">
+          <legend>{t.levelLegend}</legend>
+          <label><input type="radio" name="ga-level" value="all" checked /><span>{t.anyLevel}</span></label>
+          {levels.map((level) => <label><input type="radio" name="ga-level" value={level.id} /><span>{level.name[locale]}</span></label>)}
+        </fieldset>
+      </div>
+      <p class="ga-count" role="status" aria-live="polite" data-ga-count data-all={t.count.all} data-some={t.count.some} data-none={t.count.none}>{t.count.all.replace('{n}', String(weeklyClassCount))}</p>
+      <fieldset class="ga-days" data-ga-days hidden>
+        <legend class="ga-sr">{t.dayLegend}</legend>
+        {days.map((day) => <label><input type="radio" name="ga-day" value={day.id} /><span>{day.short[locale]}<small data-ga-daycount={day.id}></small></span></label>)}
+      </fieldset>
+      <div class="ga-week" data-ga-week>
+        {periods.map((period, index) => <p class="ga-week__period" style={`grid-row: ${index + 2}`} aria-hidden="true">{period.name[locale]}</p>)}
+        {days.map((day) => (
+          <section class="ga-day" data-ga-day={day.id} aria-label={day.name[locale]}>
+            <h3 class="ga-day__name">{day.name[locale]}</h3>
+            {periods.map((period) => {
+              const list = classesFor(day.id, period.id);
+              return (
+                <div class="ga-day__slot">
+                  {list.length > 0 && <p class="ga-day__period">{period.name[locale]}</p>}
+                  {list.map((cell) => {
+                    const mod = modalities.find((item) => item.id === cell.modality)!.name[locale];
+                    const level = levels.find((item) => item.id === cell.level)!.name[locale];
+                    const detail = cell.note ? cell.note[locale] : level;
+                    return (
+                      <button type="button" class="ga-class" data-ga-class data-mod={cell.modality} data-level={cell.level} data-day={day.id} data-slot={`${day.name[locale]}, ${cell.time} (${mod}, ${detail.toLowerCase()})`}>
+                        <span class="ga-sr">{day.name[locale]},</span>
+                        <span class="ga-class__time">{cell.time}</span>
+                        <span class="ga-class__mod">{mod}</span>
+                        <span class="ga-class__meta">{detail} · {cell.minutes} {t.minutes}</span>
+                        <span class="ga-class__cta">{t.tryCta}</span>
+                      </button>
+                    );
+                  })}
+                </div>
+              );
+            })}
+            <p class="ga-day__empty">{t.dayEmpty}</p>
+          </section>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section id="ga-primeira-aula" class="ga-first ga-light ga-torn" aria-labelledby="ga-first-title">
+    <div class="ga-shell">
+      <div class="ga-head">
+        <div>
+          <p class="ga-eyebrow">{t.firstEyebrow}</p>
+          <h2 id="ga-first-title" class="ga-title">{t.firstTitle[0]} <span>{t.firstTitle[1]}</span></h2>
+        </div>
+        <p class="ga-lede">{t.firstLede}</p>
+      </div>
+      <div class="ga-tabs" data-ga-tabs>
+        <div class="ga-tabs__list" role="tablist" aria-label={t.tabsLabel} hidden>
+          {t.tabs.map((tab, index) => <button type="button" role="tab" id={`ga-tab-${tab.id}`} aria-controls={`ga-panel-${tab.id}`} aria-selected={index === 0 ? 'true' : 'false'}>{tab.tab}</button>)}
+        </div>
+        {t.tabs.map((tab) => (
+          <div class="ga-panel" role="tabpanel" id={`ga-panel-${tab.id}`} aria-labelledby={`ga-tab-${tab.id}`}>
+            <figure class="ga-panel__photo">
+              <img src={tab.image} alt={tab.alt} width="896" height="1120" loading="lazy" />
+              <figcaption class="ga-tape">{tab.tape}</figcaption>
+            </figure>
+            <div class="ga-panel__body">
+              <h3 class="ga-panel__title">{tab.tab}</h3>
+              <ol class="ga-steps">
+                {tab.steps.map(([title, text], index) => <li><span aria-hidden="true">{pad(index)}</span><div><h4>{title}</h4><p>{text}</p></div></li>)}
+              </ol>
+              <div class="ga-bring">
+                <h4>{t.bringTitle}</h4>
+                <ul>{tab.bring.map((item) => <li>{item}</li>)}</ul>
+              </div>
+              <a class="ga-pill" href="#ga-agendar">{t.firstCta}<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5" /></svg></a>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section id="ga-faixas" class="ga-belts ga-dark" aria-labelledby="ga-belts-title">
+    <div class="ga-shell">
+      <div class="ga-head">
+        <div>
+          <p class="ga-eyebrow">{t.beltEyebrow}</p>
+          <h2 id="ga-belts-title" class="ga-title">{t.beltTitle[0]} <span>{t.beltTitle[1]}</span></h2>
+        </div>
+        <p class="ga-lede">{t.beltLede}</p>
+      </div>
+      <ol class="ga-belt-list">
+        {t.belts.map((belt, index) => (
+          <li class={`ga-belt-row ga-belt-row--${beltIds[index]}`} style={`--w: ${52 + index * 12}%`}>
+            <span class="ga-belt" aria-hidden="true"><span class="ga-belt__tip">{Array.from({ length: index === 4 ? 0 : index % 4 + 1 }).map(() => <i></i>)}</span></span>
+            <div class="ga-belt-row__text">
+              <h3><span aria-hidden="true">{pad(index)}</span> {belt.name}</h3>
+              <p class="ga-belt-row__time">{belt.time}</p>
+              <p>{belt.text}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+      <ul class="ga-belt-notes">{t.beltNotes.map((note) => <li>{note}</li>)}</ul>
+    </div>
+  </section>
+
+  <section id="ga-planos" class="ga-plans ga-light ga-torn" aria-labelledby="ga-plans-title">
+    <span class="ga-watermark" aria-hidden="true">OSS</span>
+    <div class="ga-shell">
+      <p class="ga-eyebrow">{t.planEyebrow}</p>
+      <h2 id="ga-plans-title" class="ga-title">{t.planTitle[0]} <span>{t.planTitle[1]}</span></h2>
+      <ul class="ga-plan-list">
+        {t.plans.map((plan) => (
+          <li class:list={['ga-plan', { 'ga-plan--hot': 'tag' in plan }]} data-reveal>
+            {'tag' in plan && <p class="ga-plan__tag">{plan.tag}</p>}
+            <h3>{plan.name}</h3>
+            <p class="ga-plan__sub">{plan.sub}</p>
+            <p class="ga-plan__price"><small>{t.from}</small> <span>R$ <b>{plan.price}</b></span><small>{t.perMonth}</small></p>
+            <ul class="ga-checks">{plan.items.map((item) => <li>{item}</li>)}</ul>
+          </li>
+        ))}
+      </ul>
+      <div class="ga-plans__foot">
+        <p>{t.planNote}</p>
+        <a class="ga-pill ga-pill--dark" href="#ga-agendar">{t.planCta}<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5" /></svg></a>
+      </div>
+    </div>
+  </section>
+
+  <section id="ga-regras" class="ga-rules ga-dark" aria-labelledby="ga-rules-title">
+    <div class="ga-shell">
+      <p class="ga-eyebrow">{t.rulesEyebrow}</p>
+      <h2 id="ga-rules-title" class="ga-title">{t.rulesTitle[0]} <span>{t.rulesTitle[1]}</span></h2>
+      <ol class="ga-rule-list">
+        {t.rules.map(([title, text], index) => <li data-reveal><span aria-hidden="true">{pad(index)}</span><h3>{title}</h3><p>{text}</p></li>)}
+      </ol>
+    </div>
+  </section>
+
+  <section id="ga-duvidas" class="ga-faq ga-light ga-torn" aria-labelledby="ga-faq-title">
+    <div class="ga-shell ga-faq__grid">
+      <h2 id="ga-faq-title" class="ga-title">{t.faqTitle[0]} <span>{t.faqTitle[1]}</span></h2>
+      <div class="ga-faq__list">
+        {t.faqs.map((item) => (
+          <details>
+            <summary>{item.q}<span class="ga-faq__icon" aria-hidden="true"></span></summary>
+            <p>{item.a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section id="ga-agendar" class="ga-book" aria-labelledby="ga-book-title">
+    <div class="ga-shell ga-book__grid">
+      <div class="ga-book__copy">
+        <p class="ga-eyebrow">{t.bookEyebrow}</p>
+        <h2 id="ga-book-title" class="ga-title">{t.bookTitle[0]} <span>{t.bookTitle[1]}</span></h2>
+        <p class="ga-lede">{t.bookLede}</p>
+        <h3 class="ga-next__title">{t.nextTitle}</h3>
+        <ol class="ga-next">{t.nextSteps.map((step, index) => <li><span aria-hidden="true">{pad(index)}</span>{step}</li>)}</ol>
+        <div class="ga-beltline ga-beltline--short" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
+      </div>
+      <div
+        class="ga-builder"
+        role="group"
+        aria-label={t.builderLabel}
+        data-ga-builder
+        data-greeting={t.msg.greeting}
+        data-want={t.msg.want}
+        data-slot={t.msg.slot}
+        data-no-slot={t.msg.noSlot}
+        data-closing={t.msg.closing}
+        data-empty={t.msg.empty}
+        data-ready={t.msg.ready}
+        data-copy={t.copy}
+        data-copied={t.copied}
+        data-copy-failed={t.copyFailed}
+      >
+        <label class="ga-field">
+          <span>{t.nameLabel}</span>
+          <input type="text" name="ga-name" autocomplete="given-name" maxlength="60" placeholder={t.namePlaceholder} />
+        </label>
+        <fieldset class="ga-chips ga-chips--light">
+          <legend>{t.ageLegend}</legend>
+          {t.ages.map(([value, label, phrase], index) => <label><input type="radio" name="ga-age" value={value} data-say={phrase} checked={index === 0} /><span>{label}</span></label>)}
+        </fieldset>
+        <fieldset class="ga-chips ga-chips--light">
+          <legend>{t.expLegend}</legend>
+          {t.exps.map(([value, label, phrase], index) => <label><input type="radio" name="ga-exp" value={value} data-say={phrase} checked={index === 0} /><span>{label}</span></label>)}
+        </fieldset>
+        <fieldset class="ga-chips ga-chips--light">
+          <legend>{t.modalityLegend}</legend>
+          {modalities.map((mod) => <label><input type="radio" name="ga-modality" value={mod.id} data-say={say[mod.id]} /><span>{mod.name[locale]}</span></label>)}
+        </fieldset>
+        <label class="ga-field">
+          <span>{t.slotLabel}</span>
+          <input type="text" name="ga-slot" maxlength="80" placeholder={t.slotPlaceholder} />
+        </label>
+        <button type="button" class="ga-pill ga-pill--dark ga-builder__build" data-ga-build>{t.build}</button>
+        <p class="ga-bubble" role="status" aria-live="polite" data-ga-message>{t.statusIdle}</p>
+        <button type="button" class="ga-copy" data-ga-copy hidden>{t.copy}</button>
+        <p class="ga-builder__note">{t.bookNote}</p>
+        <noscript><p class="demo-noscript">{t.noscript}</p></noscript>
+      </div>
+    </div>
+  </section>
+
+  <footer class="ga-footer ga-dark">
+    <div class="ga-shell ga-footer__inner">
+      <a class="ga-brand" href="#ga-inicio">
+        <svg class="ga-brand__mark" viewBox="0 0 40 40" aria-hidden="true" set:html={logo} />
+        <span>Guarda Alta<small>{t.tagline}</small></span>
+      </a>
+      <p>{t.footerLine}</p>
+      <div class="ga-footer__links">
+        <a href={withLocale(locale, 'contact')}>{t.contact}</a>
+        <a href={withLocale(locale, 'work')}>{t.back}</a>
+      </div>
+    </div>
+  </footer>
+</article>
+
+<script>
+  import { initGuardaAlta } from '@/components/demos/academia-luta/client';
+  initGuardaAlta();
+</script>

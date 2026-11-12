@@ -1,0 +1,12 @@
+---
+import DemoLayout from '@/layouts/DemoLayout.astro';
+import CompassoDemo from '@/components/demos/CompassoDemo.astro';
+import { project } from '@/data/projects/escola-danca';
+import '@/styles/landing-base.css';
+import '@/styles/demos.css';
+import '@/styles/landing-compasso.css';
+---
+
+<DemoLayout locale="en" project={project}>
+  <CompassoDemo locale="en" project={project} />
+</DemoLayout>

@@ -1,0 +1,502 @@
+/* Pipoca Pet: dog daycare, bath and grooming. Cream paper, tangerine signature, deep navy ink.
+   Fredoka (rounded, chunky) for display, Atkinson Hyperlegible Next for text, popcorn motif in the mark and stickers. */
+@font-face {
+  font-family: 'Fredoka';
+  font-style: normal;
+  font-weight: 300 700;
+  font-display: swap;
+  src: url('/fonts/fredoka-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+html:has(.demo--pipoca) { color-scheme: light; background: #fff6ea; }
+
+.demo--pipoca {
+  --pp-cream: #fff6ea;
+  --pp-paper: #fffcf6;
+  --pp-peach: #ffe4d0;
+  --pp-sky: #cfe2ff;
+  --pp-tangerine: #ff7a2f;
+  --pp-orange-text: #d24e0e;
+  --pp-navy: #14213d;
+  --pp-navy-2: #22325a;
+  --pp-ink-soft: #4a5470;
+  --pp-line: rgb(20 33 61 / 16%);
+  --pp-display: 'Fredoka', 'Atkinson Hyperlegible Next', system-ui, sans-serif;
+  --pp-sans: 'Atkinson Hyperlegible Next', system-ui, sans-serif;
+  --pp-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --pp-ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --pp-surface: var(--pp-cream);
+  --pp-muted: #a0562a;
+  --demo-focus: var(--pp-navy);
+  background: var(--pp-cream);
+  color: var(--pp-navy);
+  font-family: var(--pp-sans);
+  font-size: 1.0625rem;
+}
+
+.demo--pipoca [hidden] { display: none !important; }
+.demo--pipoca h1, .demo--pipoca h2, .demo--pipoca h3, .demo--pipoca h4 { font-family: var(--pp-display); letter-spacing: -0.01em; }
+.demo--pipoca ul, .demo--pipoca ol { margin: 0; padding: 0; list-style: none; }
+.demo--pipoca fieldset { min-width: 0; margin: 0; padding: 0; border: 0; }
+.demo--pipoca legend { padding: 0; }
+.demo--pipoca .pp-defs { position: absolute; width: 0; height: 0; overflow: hidden; }
+.demo--pipoca .pp-shell { width: min(100% - 2.5rem, 78rem); margin-inline: auto; }
+.demo--pipoca .pp-visually-hidden { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+/* Shared atoms */
+.demo--pipoca .pp-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin-bottom: 1rem;
+  padding: 0.35rem 0.95rem;
+  border-radius: 999px;
+  background: var(--pp-navy);
+  color: var(--pp-cream);
+  font-family: var(--pp-display);
+  font-size: 0.92rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+.demo--pipoca .pp-eyebrow svg { width: 1.05rem; height: 1.05rem; fill: var(--pp-tangerine); }
+.demo--pipoca .pp-title { max-width: 22ch; font-size: clamp(2.3rem, 5vw, 4.1rem); font-weight: 700; line-height: 1; }
+.demo--pipoca .pp-title span { display: block; color: var(--pp-muted); font-weight: 500; }
+.demo--pipoca .pp-head { margin-bottom: clamp(2rem, 4vw, 3.25rem); }
+
+.demo--pipoca .pp-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  min-height: 3.25rem;
+  padding: 0.8rem 1.5rem;
+  border: 2.5px solid var(--pp-navy);
+  border-radius: 999px;
+  background: var(--pp-tangerine);
+  box-shadow: 0 4px 0 var(--pp-navy);
+  color: var(--pp-navy);
+  font-family: var(--pp-display);
+  font-size: 1.1rem;
+  font-weight: 600;
+  line-height: 1.1;
+  text-decoration: none;
+  transition: transform 180ms var(--pp-ease);
+}
+.demo--pipoca .pp-pill svg { width: 1.25rem; height: 1.25rem; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; transition: transform 220ms var(--pp-bounce); }
+.demo--pipoca .pp-pill:hover { transform: translateY(-2px); }
+.demo--pipoca .pp-pill:hover svg { transform: translateX(3px); }
+.demo--pipoca .pp-pill:active { transform: translateY(3px); }
+.demo--pipoca .pp-pill--small { min-height: 2.75rem; padding: 0.5rem 1.15rem; font-size: 1rem; box-shadow: 0 3px 0 var(--pp-navy); }
+.demo--pipoca .pp-pill--ghost { background: var(--pp-paper); }
+.demo--pipoca .pp-link { display: inline-flex; align-items: center; min-height: 2.75rem; color: var(--pp-navy); font-family: var(--pp-display); font-size: 1.1rem; font-weight: 600; text-decoration: underline wavy var(--pp-tangerine); text-decoration-thickness: 2px; text-underline-offset: 0.35em; }
+
+.demo--pipoca .pp-section { position: relative; padding-block: clamp(4.5rem, 9vw, 7.5rem); background: var(--pp-surface); }
+/* A wave in the section's own color overlaps the bottom of the previous section. */
+.demo--pipoca .pp-wavy::before {
+  position: absolute;
+  inset-inline: 0;
+  bottom: calc(100% - 1px);
+  height: clamp(16px, 2.6vw, 34px);
+  background: var(--pp-surface);
+  content: '';
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 40'%3E%3Cpath d='M0 20C20 0 40 0 60 20s40 20 60 0v20H0z'/%3E%3C/svg%3E") left bottom / auto 100% repeat-x;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 40'%3E%3Cpath d='M0 20C20 0 40 0 60 20s40 20 60 0v20H0z'/%3E%3C/svg%3E") left bottom / auto 100% repeat-x;
+  pointer-events: none;
+}
+
+/* Sticky navigation that condenses after the hero starts scrolling. */
+.demo--pipoca .pp-sentinel { height: 1px; margin-bottom: -1px; }
+.demo--pipoca .pp-nav {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  min-height: 4.75rem;
+  padding: 0.6rem max(1.25rem, calc((100% - 78rem) / 2));
+}
+.demo--pipoca .pp-nav::before {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: rgb(255 252 246 / 94%);
+  box-shadow: 0 10px 30px -18px rgb(20 33 61 / 45%);
+  content: '';
+  opacity: 0;
+  transition: opacity 240ms ease;
+}
+.demo--pipoca .pp-nav.is-condensed::before { opacity: 1; }
+.demo--pipoca .pp-nav.is-condensed .pp-brand small { opacity: 0; }
+.demo--pipoca .pp-nav.is-condensed .pp-brand__mark { transform: scale(0.86) rotate(-8deg); }
+.demo--pipoca .pp-brand { display: inline-flex; align-items: center; gap: 0.65rem; min-height: 2.75rem; color: inherit; font-family: var(--pp-display); font-size: 1.45rem; font-weight: 700; line-height: 1; text-decoration: none; }
+.demo--pipoca .pp-brand small { display: block; margin-top: 0.2rem; color: var(--pp-ink-soft); font-family: var(--pp-sans); font-size: 0.78rem; font-weight: 400; transition: opacity 200ms ease; }
+.demo--pipoca .pp-brand__mark { width: 3rem; height: 3rem; flex: none; transition: transform 300ms var(--pp-bounce); }
+.demo--pipoca .pp-brand:hover .pp-brand__mark { transform: rotate(-12deg) scale(1.06); }
+.demo--pipoca .pp-nav__links { display: flex; gap: clamp(0.8rem, 2vw, 1.8rem); font-family: var(--pp-display); font-size: 1.02rem; font-weight: 500; }
+.demo--pipoca .pp-nav__links a { display: inline-flex; align-items: center; min-height: 2.75rem; text-decoration: none; }
+.demo--pipoca .pp-nav__links a:hover { text-decoration: underline wavy var(--pp-tangerine); text-decoration-thickness: 2px; text-underline-offset: 0.4em; }
+
+/* Hero */
+.demo--pipoca .pp-hero {
+  position: relative;
+  padding: clamp(1.5rem, 3vw, 2.5rem) 0 clamp(4rem, 7vw, 6rem);
+  background:
+    radial-gradient(circle at 86% 58%, var(--pp-peach) 0 26rem, transparent 26.1rem),
+    radial-gradient(circle at 6% 92%, #ffeedd 0 9rem, transparent 9.1rem),
+    var(--pp-cream);
+}
+.demo--pipoca .pp-hero__title { font-size: clamp(3rem, 7.4vw, 7.25rem); font-weight: 700; line-height: 0.92; letter-spacing: -0.025em; }
+.demo--pipoca .pp-hero__line { display: block; }
+.demo--pipoca .pp-accent { position: relative; display: inline-block; color: var(--pp-orange-text); }
+.demo--pipoca .pp-accent svg { position: absolute; left: -2%; bottom: -0.12em; width: 104%; height: 0.3em; overflow: visible; }
+.demo--pipoca .pp-accent path { fill: none; stroke: var(--pp-tangerine); stroke-width: 6; stroke-linecap: round; }
+.demo--pipoca .pp-hero__grid { display: grid; grid-template-columns: minmax(0, 24rem) minmax(0, 1fr); gap: clamp(2rem, 5vw, 4.5rem); align-items: start; margin-top: clamp(1rem, 2vw, 1.5rem); }
+.demo--pipoca .pp-hero__copy { padding-top: clamp(0.5rem, 2vw, 1.5rem); }
+.demo--pipoca .pp-hero__lede { color: var(--pp-ink-soft); font-size: 1.15rem; line-height: 1.6; }
+.demo--pipoca .pp-hero__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 1.5rem; margin-top: 1.75rem; }
+.demo--pipoca .pp-hero__proof { display: flex; align-items: center; gap: 0.6rem; margin-top: 1.4rem; font-weight: 700; line-height: 1.35; }
+.demo--pipoca .pp-hero__proof svg { width: 1.6rem; height: 1.6rem; flex: none; }
+.demo--pipoca .pp-hero__facts { display: grid; margin-top: 1.75rem; border-top: 2px dashed var(--pp-line); }
+.demo--pipoca .pp-hero__facts div { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; padding: 0.7rem 0; border-bottom: 2px dashed var(--pp-line); }
+.demo--pipoca .pp-hero__facts dt { color: var(--pp-ink-soft); font-size: 0.92rem; }
+.demo--pipoca .pp-hero__facts dd { font-family: var(--pp-display); font-size: 1.08rem; font-weight: 600; text-align: right; }
+
+.demo--pipoca .pp-collage { position: relative; aspect-ratio: 1.22; }
+.demo--pipoca .pp-collage figure, .demo--pipoca .pp-collage img { margin: 0; }
+.demo--pipoca .pp-collage img { width: 100%; height: 100%; object-fit: cover; }
+.demo--pipoca .pp-collage__arch { position: absolute; left: 21%; top: 3%; width: 50%; height: 90%; overflow: hidden; border: 3px solid var(--pp-navy); border-radius: 999px 999px 2rem 2rem; box-shadow: 14px 14px 0 var(--pp-tangerine); }
+.demo--pipoca .pp-collage__arch img { object-position: 46% 50%; }
+.demo--pipoca .pp-collage__polaroid { position: absolute; left: 0; top: 24%; z-index: 2; width: 29%; padding: 0.55rem 0.55rem 0; border-radius: 0.5rem; background: var(--pp-paper); box-shadow: 0 18px 36px -14px rgb(20 33 61 / 45%); rotate: -8deg; }
+.demo--pipoca .pp-collage__polaroid img { aspect-ratio: 4 / 5; height: auto; border-radius: 0.25rem; }
+.demo--pipoca .pp-collage__polaroid figcaption { padding: 0.55rem 0 0.7rem; font-family: var(--pp-display); font-size: clamp(0.82rem, 1.2vw, 1rem); font-weight: 500; text-align: center; }
+.demo--pipoca .pp-collage__card { position: absolute; right: 0; bottom: 5%; z-index: 2; width: 27%; aspect-ratio: 4 / 5; overflow: hidden; border: 6px solid var(--pp-paper); border-radius: 1.75rem; box-shadow: 0 18px 36px -14px rgb(20 33 61 / 45%); rotate: 6deg; }
+.demo--pipoca .pp-collage__card figcaption { position: absolute; white-space: nowrap; left: 0.6rem; bottom: 0.6rem; padding: 0.25rem 0.7rem; border-radius: 999px; background: var(--pp-navy); color: var(--pp-cream); font-family: var(--pp-display); font-size: 0.85rem; font-weight: 500; rotate: -4deg; }
+.demo--pipoca .pp-collage__ring { position: absolute; right: 9%; top: 0; z-index: 3; width: clamp(6rem, 10vw, 8.5rem); aspect-ratio: 1; border-radius: 50%; background: var(--pp-navy); }
+.demo--pipoca .pp-collage__ring-text { width: 100%; height: 100%; }
+.demo--pipoca .pp-collage__ring-text text { fill: var(--pp-cream); font-family: var(--pp-display); font-size: 10.5px; font-weight: 600; letter-spacing: 0.5px; }
+.demo--pipoca .pp-collage__ring-mark { position: absolute; inset: 27%; width: 46%; height: 46%; }
+.demo--pipoca .pp-collage__price { position: absolute; left: 13%; bottom: 0; z-index: 3; display: grid; place-content: center; width: clamp(5.75rem, 9vw, 7.75rem); aspect-ratio: 1; border: 3px solid var(--pp-navy); border-radius: 50%; background: var(--pp-tangerine); line-height: 1; text-align: center; rotate: -10deg; }
+.demo--pipoca .pp-collage__price strong { font-family: var(--pp-display); font-size: clamp(1.25rem, 2vw, 1.75rem); font-weight: 700; }
+.demo--pipoca .pp-collage__price span { margin-top: 0.2rem; font-family: var(--pp-display); font-size: 0.9rem; font-weight: 500; }
+
+/* Popcorn bucket toy */
+.demo--pipoca .pp-pop { position: absolute; left: 61%; bottom: -3%; z-index: 4; }
+.demo--pipoca .pp-pop__button { display: grid; place-items: center; width: 4.75rem; height: 4.75rem; padding: 0.35rem; border: 0; border-radius: 1.2rem; background: transparent; transition: transform 220ms var(--pp-bounce); }
+.demo--pipoca .pp-pop__button svg { width: 100%; height: 100%; overflow: visible; }
+.demo--pipoca .pp-pop__button:hover { transform: rotate(-8deg) scale(1.06); }
+.demo--pipoca .pp-pop__hint { position: absolute; right: 84%; top: 0.4rem; padding: 0.15rem 0.6rem; border-radius: 999px; background: var(--pp-navy); color: var(--pp-cream); font-family: var(--pp-display); font-size: 0.85rem; font-weight: 500; white-space: nowrap; rotate: -8deg; }
+.demo--pipoca .pp-pop__kernels { position: absolute; left: 50%; top: 22%; width: 0; height: 0; pointer-events: none; }
+.demo--pipoca .pp-pop__kernel { position: absolute; left: -1rem; top: -1rem; width: 2rem; height: 2rem; opacity: 0; }
+.demo--pipoca .pp-pop.is-popping .pp-pop__kernel { animation: pp-kernel 900ms cubic-bezier(0.2, 0.7, 0.3, 1) var(--d, 0ms) both; }
+.demo--pipoca .pp-pop.is-popping .pp-pop__button svg { animation: pp-wiggle 420ms var(--pp-bounce); }
+@keyframes pp-kernel {
+  0% { opacity: 1; transform: translate(0, 0) scale(0.3); }
+  55% { opacity: 1; transform: translate(var(--x), var(--y)) rotate(var(--r)) scale(1.1); }
+  100% { opacity: 0; transform: translate(var(--x), calc(var(--y) + 46px)) rotate(var(--r)) scale(0.9); }
+}
+@keyframes pp-wiggle {
+  0%, 100% { transform: none; }
+  30% { transform: rotate(-10deg) scale(1.08); }
+  60% { transform: rotate(7deg); }
+}
+
+/* Marquee */
+.demo--pipoca .pp-marquee { position: relative; z-index: 5; width: 104%; margin: -1.5rem -2% 0; overflow: hidden; padding: 1rem 0; background: var(--pp-navy); color: var(--pp-cream); rotate: -1.4deg; }
+.demo--pipoca .pp-marquee__track { display: flex; width: max-content; }
+.demo--pipoca .pp-marquee ul { display: flex; flex: none; }
+.demo--pipoca .pp-marquee li { display: inline-flex; align-items: center; gap: 1.4rem; padding-right: 1.4rem; font-family: var(--pp-display); font-size: clamp(1.2rem, 2.2vw, 1.75rem); font-weight: 600; white-space: nowrap; }
+.demo--pipoca .pp-marquee li svg { width: 1.8rem; height: 1.8rem; }
+
+/* Services tabs */
+.demo--pipoca .pp-tabs { display: grid; gap: 2rem; }
+.demo--pipoca .pp-tabs__list { position: relative; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); justify-self: start; width: min(100%, 34rem); padding: 5px; border: 2.5px solid var(--pp-navy); border-radius: 999px; background: var(--pp-paper); }
+.demo--pipoca .pp-tabs__list [role='tab'] { position: relative; z-index: 1; min-height: 3rem; padding: 0.4rem 0.8rem; border: 0; border-radius: 999px; background: transparent; color: var(--pp-navy); font-family: var(--pp-display); font-size: 1.08rem; font-weight: 600; line-height: 1.1; }
+.demo--pipoca .pp-tabs__thumb { position: absolute; left: 5px; top: 5px; bottom: 5px; width: calc((100% - 10px) / 3); border-radius: 999px; background: var(--pp-tangerine); transform: translateX(calc(var(--pp-tab, 0) * 100%)); transition: transform 420ms var(--pp-bounce); }
+.demo--pipoca .pp-tabs__list [role='tab']:focus-visible { outline-offset: -4px; }
+.demo--pipoca .pp-panel { display: grid; grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr); gap: clamp(1.75rem, 4vw, 3.5rem); align-items: center; padding: clamp(1.25rem, 3vw, 2.5rem); border: 2.5px solid var(--pp-navy); border-radius: 2.25rem; background: var(--pp-paper); }
+@keyframes pp-panel-in { from { opacity: 0; transform: translateY(14px); } }
+.demo--pipoca .pp-panel__photo { margin: 0; overflow: hidden; aspect-ratio: 4 / 5; }
+.demo--pipoca .pp-panel__photo img { width: 100%; height: 100%; object-fit: cover; }
+.demo--pipoca .pp-panel__photo--creche { border-radius: 999px 999px 1.75rem 1.75rem; }
+.demo--pipoca .pp-panel__photo--banho { border-radius: 58% 42% 46% 54% / 44% 50% 50% 56%; }
+.demo--pipoca .pp-panel__photo--hotel { border-radius: 2rem; rotate: -2deg; }
+.demo--pipoca .pp-panel h3 { font-size: clamp(1.75rem, 3vw, 2.5rem); font-weight: 700; line-height: 1.05; }
+.demo--pipoca .pp-panel__kicker { display: block; margin-bottom: 0.4rem; color: var(--pp-orange-text); font-size: 0.95rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
+.demo--pipoca .pp-panel__lede { margin-top: 0.8rem; color: var(--pp-ink-soft); font-size: 1.1rem; }
+.demo--pipoca .pp-panel__cols { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.75rem; margin-top: 1.75rem; }
+.demo--pipoca .pp-panel h4 { margin: 0 0 0.75rem; color: var(--pp-ink-soft); font-size: 0.92rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
+.demo--pipoca .pp-checks li { display: flex; gap: 0.6rem; margin-bottom: 0.6rem; line-height: 1.4; }
+.demo--pipoca .pp-checks svg { width: 1.35rem; height: 1.35rem; flex: none; margin-top: 0.05rem; }
+.demo--pipoca .pp-prices div { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; padding: 0.55rem 0; border-bottom: 2px dashed var(--pp-line); }
+.demo--pipoca .pp-prices div:first-child { padding-top: 0; }
+.demo--pipoca .pp-prices dt { font-weight: 700; line-height: 1.3; }
+.demo--pipoca .pp-prices small { display: block; color: var(--pp-ink-soft); font-size: 0.86rem; font-weight: 400; }
+.demo--pipoca .pp-prices dd { font-family: var(--pp-display); font-size: 1.4rem; font-weight: 700; white-space: nowrap; }
+.demo--pipoca .pp-panel__note { margin: 1.25rem 0 1.5rem; color: var(--pp-ink-soft); font-size: 0.94rem; }
+.demo--pipoca .pp-taxi { display: flex; align-items: center; gap: 0.6rem; margin-top: 1.75rem; font-weight: 700; }
+.demo--pipoca .pp-taxi svg { width: 1.4rem; height: 1.4rem; flex: none; fill: var(--pp-tangerine); }
+
+/* Price simulator */
+.demo--pipoca .pp-sim { --pp-surface: var(--pp-navy); --pp-muted: #ffb48a; color: var(--pp-cream); }
+.demo--pipoca .pp-sim .pp-eyebrow { background: var(--pp-tangerine); color: var(--pp-navy); }
+.demo--pipoca .pp-sim .pp-eyebrow svg { fill: var(--pp-navy); }
+.demo--pipoca .pp-sim__grid { display: grid; grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr); gap: clamp(2rem, 5vw, 4rem); align-items: start; }
+.demo--pipoca .pp-choice { margin-bottom: 1.6rem; }
+.demo--pipoca .pp-choice legend { margin-bottom: 0.7rem; font-family: var(--pp-display); font-size: 1.2rem; font-weight: 600; }
+.demo--pipoca .pp-choice { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.6rem; }
+.demo--pipoca .pp-choice--coat { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.demo--pipoca .pp-choice--service { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.demo--pipoca .pp-choice label { position: relative; display: block; }
+.demo--pipoca .pp-choice input, .demo--pipoca .pp-chips input, .demo--pipoca .pp-toggle input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; }
+.demo--pipoca .pp-choice span { display: flex; flex-direction: column; justify-content: center; min-height: 3.5rem; height: 100%; padding: 0.7rem 0.95rem; border: 2px solid rgb(255 246 234 / 24%); border-radius: 1.15rem; background: var(--pp-navy-2); line-height: 1.2; transition: transform 240ms var(--pp-bounce); }
+.demo--pipoca .pp-choice b { font-family: var(--pp-display); font-size: 1.2rem; font-weight: 600; }
+.demo--pipoca .pp-choice--size b { font-size: 1.75rem; line-height: 1; }
+.demo--pipoca .pp-choice small { margin-top: 0.2rem; color: rgb(255 246 234 / 82%); font-size: 0.85rem; }
+.demo--pipoca .pp-choice label:hover span { border-color: var(--pp-tangerine); }
+.demo--pipoca .pp-choice input:checked + span { border-color: var(--pp-tangerine); background: var(--pp-tangerine); color: var(--pp-navy); transform: translateY(-3px); }
+.demo--pipoca .pp-choice input:checked + span small { color: var(--pp-navy); }
+.demo--pipoca .pp-choice input:focus-visible + span, .demo--pipoca .pp-chips input:focus-visible + span, .demo--pipoca .pp-toggle input:focus-visible + span { outline: 3px solid var(--pp-tangerine); outline-offset: 3px; }
+.demo--pipoca .pp-toggle { position: relative; display: inline-flex; align-items: center; min-height: 2.75rem; }
+.demo--pipoca .pp-toggle span { display: inline-flex; align-items: center; gap: 0.8rem; font-weight: 700; }
+.demo--pipoca .pp-toggle span::before { flex: none; width: 3.1rem; height: 1.75rem; border-radius: 999px; background: rgb(255 246 234 / 24%) radial-gradient(circle at 0.875rem 50%, var(--pp-cream) 0 0.6rem, transparent 0.62rem); content: ''; transition: background-color 200ms ease; }
+.demo--pipoca .pp-toggle input:checked + span::before { background: var(--pp-tangerine) radial-gradient(circle at 2.2rem 50%, var(--pp-navy) 0 0.6rem, transparent 0.62rem); }
+
+.demo--pipoca .pp-sim__card { overflow: hidden; border-radius: 2.25rem; background: var(--pp-cream); color: var(--pp-navy); box-shadow: 14px 14px 0 var(--pp-tangerine); }
+.demo--pipoca .pp-stage { position: relative; background: #ffeedf; }
+.demo--pipoca .pp-stage__svg { width: 100%; height: auto; }
+.demo--pipoca .pp-stage__fence { fill: #ffd8bb; }
+.demo--pipoca .pp-stage__ground { fill: #ffc59d; }
+.demo--pipoca .pp-stage__shadow { fill: var(--pp-navy); opacity: 0.16; transform-origin: 190px 216px; transition: transform 550ms var(--pp-bounce); }
+.demo--pipoca .pp-dog { transform-origin: 190px 214px; transition: transform 550ms var(--pp-bounce); }
+.demo--pipoca .pp-stage[data-size='p'] .pp-dog { transform: scale(0.58); }
+.demo--pipoca .pp-stage[data-size='m'] .pp-dog { transform: scale(0.78); }
+.demo--pipoca .pp-stage[data-size='g'] .pp-dog { transform: scale(0.98); }
+.demo--pipoca .pp-stage[data-size='p'] .pp-stage__shadow { transform: scale(0.55, 0.8); }
+.demo--pipoca .pp-stage[data-size='m'] .pp-stage__shadow { transform: scale(0.76, 0.9); }
+.demo--pipoca .pp-dog__body, .demo--pipoca .pp-dog__leg, .demo--pipoca .pp-dog__coat, .demo--pipoca .pp-dog__plume { fill: var(--pp-navy); }
+.demo--pipoca .pp-dog__far { fill: #0b1428; }
+.demo--pipoca .pp-dog__belly { fill: var(--pp-navy-2); }
+.demo--pipoca .pp-dog__ear { fill: #0b1428; }
+.demo--pipoca .pp-dog__ink { fill: #0b1428; }
+.demo--pipoca .pp-dog__tail { fill: none; stroke: var(--pp-navy); stroke-width: 13; stroke-linecap: round; }
+.demo--pipoca .pp-dog__tongue { fill: #ff8fa3; }
+.demo--pipoca .pp-dog__collar { fill: none; stroke: var(--pp-tangerine); stroke-width: 9; stroke-linecap: round; }
+.demo--pipoca .pp-dog__tag { fill: var(--pp-cream); stroke: var(--pp-navy); stroke-width: 2; }
+.demo--pipoca .pp-dog__coat, .demo--pipoca .pp-dog__plume { opacity: 0; transform: scale(0.4); transform-box: fill-box; transform-origin: center; transition: opacity 300ms ease, transform 450ms var(--pp-bounce); }
+.demo--pipoca .pp-stage[data-coat='longa'] .pp-dog__coat, .demo--pipoca .pp-stage[data-coat='longa'] .pp-dog__plume { opacity: 1; transform: none; }
+.demo--pipoca .pp-stage__badge { position: absolute; right: 1.1rem; top: 1.1rem; display: grid; place-items: center; width: 3.6rem; height: 3.6rem; border: 3px solid var(--pp-navy); border-radius: 50%; background: var(--pp-tangerine); font-family: var(--pp-display); font-size: 1.6rem; font-weight: 700; rotate: 8deg; }
+.demo--pipoca .pp-sim__price { padding: 1.5rem clamp(1.25rem, 3vw, 2rem) 2rem; }
+.demo--pipoca .pp-sim__from { color: var(--pp-ink-soft); font-family: var(--pp-display); font-size: 1rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; }
+.demo--pipoca .pp-sim__value { display: inline-block; font-family: var(--pp-display); font-size: clamp(3.4rem, 7vw, 5.25rem); font-weight: 700; font-variant-numeric: tabular-nums; line-height: 1; transform-origin: 0 70%; }
+.demo--pipoca .pp-sim__value.is-bumping { animation: pp-bump 520ms var(--pp-bounce); }
+@keyframes pp-bump { 40% { transform: scale(1.08) rotate(-2deg); } }
+.demo--pipoca .pp-sim__chip { display: none; }
+.demo--pipoca .pp-sim__includes { margin-top: 0.9rem; font-size: 1.05rem; font-weight: 700; }
+.demo--pipoca .pp-sim__note { margin: 0.5rem 0 1.4rem; color: var(--pp-ink-soft); font-size: 0.92rem; }
+
+/* A day here */
+.demo--pipoca .pp-day { --pp-surface: var(--pp-peach); --pp-muted: #9a4f22; }
+.demo--pipoca .pp-timeline { position: relative; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 1rem; }
+.demo--pipoca .pp-timeline::before { position: absolute; left: 1rem; right: 1rem; top: 1.05rem; border-top: 3px dashed rgb(20 33 61 / 30%); content: ''; }
+.demo--pipoca .pp-timeline li { position: relative; display: grid; gap: 0.5rem; justify-items: start; }
+.demo--pipoca .pp-timeline b { padding: 0.2rem 0.8rem; border-radius: 999px; background: var(--pp-navy); color: var(--pp-cream); font-family: var(--pp-display); font-size: 1.1rem; font-weight: 600; }
+.demo--pipoca .pp-timeline span { font-family: var(--pp-display); font-size: 1.05rem; font-weight: 500; line-height: 1.2; }
+.demo--pipoca .pp-moments { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(1.25rem, 3vw, 2.5rem); margin-top: clamp(2.5rem, 5vw, 4rem); }
+.demo--pipoca .pp-moment { position: relative; align-self: start; overflow: hidden; border: 6px solid var(--pp-paper); border-radius: 2rem; background: var(--pp-paper); box-shadow: 0 22px 40px -22px rgb(20 33 61 / 50%); }
+.demo--pipoca .pp-moment--1 { rotate: -2deg; }
+.demo--pipoca .pp-moment--2 { margin-top: 2.5rem; rotate: 1.5deg; }
+.demo--pipoca .pp-moment--3 { rotate: -1deg; }
+.demo--pipoca .pp-moment img { width: 100%; aspect-ratio: 4 / 5; height: auto; border-radius: 1.6rem; object-fit: cover; }
+.demo--pipoca .pp-moment__time { position: absolute; left: 0.9rem; top: 0.9rem; padding: 0.25rem 0.85rem; border: 2.5px solid var(--pp-navy); border-radius: 999px; background: var(--pp-tangerine); font-family: var(--pp-display); font-size: 1.05rem; font-weight: 700; }
+.demo--pipoca .pp-moment details { position: absolute; left: 0.7rem; right: 0.7rem; bottom: 0.7rem; padding: 0.55rem 0.55rem 0.55rem 1.1rem; border-radius: 1.4rem; background: var(--pp-paper); }
+.demo--pipoca .pp-moment summary { display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; cursor: pointer; list-style: none; }
+.demo--pipoca .pp-moment summary::-webkit-details-marker { display: none; }
+.demo--pipoca .pp-moment h3 { font-size: 1.2rem; font-weight: 600; line-height: 1.15; }
+.demo--pipoca .pp-moment__plus, .demo--pipoca .pp-faq__icon { position: relative; flex: none; width: 2.75rem; height: 2.75rem; border-radius: 50%; background: var(--pp-navy); transition: transform 300ms var(--pp-bounce); }
+.demo--pipoca .pp-moment__plus::before, .demo--pipoca .pp-moment__plus::after, .demo--pipoca .pp-faq__icon::before, .demo--pipoca .pp-faq__icon::after { position: absolute; left: 50%; top: 50%; width: 1rem; height: 2.5px; margin: -1.25px 0 0 -0.5rem; border-radius: 2px; background: var(--pp-cream); content: ''; }
+.demo--pipoca .pp-moment__plus::after, .demo--pipoca .pp-faq__icon::after { transform: rotate(90deg); }
+.demo--pipoca details[open] > summary .pp-moment__plus, .demo--pipoca details[open] > summary .pp-faq__icon { transform: rotate(135deg); }
+.demo--pipoca .pp-moment details p { padding: 0.5rem 0.5rem 0.5rem 0; color: var(--pp-ink-soft); font-size: 0.98rem; line-height: 1.5; }
+
+/* Steps */
+.demo--pipoca .pp-steps__list { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1.25rem; counter-reset: step; }
+.demo--pipoca .pp-steps__list li { padding: 1.75rem 1.5rem; border: 2.5px solid var(--pp-navy); border-radius: 1.9rem; background: var(--pp-paper); }
+.demo--pipoca .pp-steps__list li:nth-child(even) { margin-top: 2rem; background: #fff1e4; }
+.demo--pipoca .pp-steps__num { display: grid; place-items: center; width: 3.4rem; height: 3.4rem; margin-bottom: 1.1rem; border: 2.5px solid var(--pp-navy); border-radius: 50%; background: var(--pp-tangerine); font-family: var(--pp-display); font-size: 1.6rem; font-weight: 700; }
+.demo--pipoca .pp-steps__list h3 { font-size: 1.4rem; font-weight: 600; line-height: 1.15; }
+.demo--pipoca .pp-steps__list p { margin-top: 0.6rem; color: var(--pp-ink-soft); }
+
+/* Rules */
+.demo--pipoca .pp-rules { --pp-surface: var(--pp-sky); --pp-muted: #3a5a8c; }
+.demo--pipoca .pp-rules__grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1.25rem; }
+.demo--pipoca .pp-rule { padding: 1.6rem 1.4rem; border-radius: 1.75rem; background: var(--pp-paper); box-shadow: 0 16px 30px -22px rgb(20 33 61 / 55%); }
+.demo--pipoca .pp-rule--1 { rotate: -1.2deg; }
+.demo--pipoca .pp-rule--3 { rotate: 1deg; }
+.demo--pipoca .pp-rule svg { width: 2.1rem; height: 2.1rem; margin-bottom: 0.9rem; }
+.demo--pipoca .pp-rule h3 { font-size: 1.35rem; font-weight: 600; }
+.demo--pipoca .pp-rule p { margin-top: 0.5rem; color: var(--pp-ink-soft); }
+.demo--pipoca .pp-rules__extra { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 1.25rem; margin-top: 1.25rem; }
+.demo--pipoca .pp-bag, .demo--pipoca .pp-hours { padding: clamp(1.5rem, 3vw, 2.25rem); border-radius: 1.9rem; }
+.demo--pipoca .pp-bag { position: relative; overflow: hidden; background: var(--pp-navy); color: var(--pp-cream); }
+.demo--pipoca .pp-bag ul { position: relative; max-width: 30rem; }
+.demo--pipoca .pp-bag__mark { position: absolute; right: -2.5rem; bottom: -3rem; width: 11rem; height: 11rem; rotate: -14deg; }
+.demo--pipoca .pp-hours { border: 2.5px solid var(--pp-navy); background: var(--pp-tangerine); }
+.demo--pipoca .pp-bag h3, .demo--pipoca .pp-hours h3 { margin-bottom: 1rem; font-size: 1.6rem; font-weight: 700; }
+.demo--pipoca .pp-bag li { display: flex; gap: 0.7rem; margin-bottom: 0.7rem; }
+.demo--pipoca .pp-bag li svg { width: 1.3rem; height: 1.3rem; flex: none; margin-top: 0.15rem; fill: var(--pp-tangerine); }
+.demo--pipoca .pp-hours div { display: grid; gap: 0.1rem; padding: 0.65rem 0; border-bottom: 2px dashed rgb(20 33 61 / 30%); }
+.demo--pipoca .pp-hours div:last-child { border-bottom: 0; }
+.demo--pipoca .pp-hours dt { font-family: var(--pp-display); font-size: 1.15rem; font-weight: 600; }
+
+/* FAQ */
+.demo--pipoca .pp-faq { --pp-surface: var(--pp-cream); }
+.demo--pipoca .pp-faq__inner { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: clamp(2rem, 5vw, 5rem); align-items: start; }
+.demo--pipoca .pp-faq .pp-head { position: sticky; top: 6.5rem; }
+.demo--pipoca .pp-faq .pp-title { font-size: clamp(2.2rem, 4vw, 3.4rem); }
+.demo--pipoca .pp-faq__list details { border-bottom: 2px dashed var(--pp-line); }
+.demo--pipoca .pp-faq__list summary { display: flex; align-items: center; justify-content: space-between; gap: 1rem; min-height: 2.75rem; padding: 1.15rem 0; cursor: pointer; font-family: var(--pp-display); font-size: 1.2rem; font-weight: 600; line-height: 1.25; list-style: none; }
+.demo--pipoca .pp-faq__list summary::-webkit-details-marker { display: none; }
+.demo--pipoca .pp-faq__icon { width: 2.5rem; height: 2.5rem; background: var(--pp-peach); }
+.demo--pipoca .pp-faq__icon::before, .demo--pipoca .pp-faq__icon::after { background: var(--pp-navy); }
+.demo--pipoca .pp-faq__list details[open] .pp-faq__icon { background: var(--pp-tangerine); }
+.demo--pipoca .pp-faq__list details p { padding: 0 3.5rem 1.3rem 0; color: var(--pp-ink-soft); }
+
+/* Contact and message builder */
+.demo--pipoca .pp-contact { --pp-surface: var(--pp-tangerine); --pp-muted: #5b2a10; }
+.demo--pipoca .pp-contact__inner { display: grid; grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr); gap: clamp(2rem, 5vw, 4.5rem); align-items: start; }
+.demo--pipoca .pp-contact__copy > p:not(.pp-eyebrow) { max-width: 34ch; margin-top: 1.25rem; font-size: 1.15rem; }
+.demo--pipoca .pp-contact .pp-title { font-size: clamp(2.3rem, 4.4vw, 3.6rem); }
+.demo--pipoca .pp-contact__mark { width: clamp(7rem, 12vw, 10rem); height: clamp(7rem, 12vw, 10rem); margin-top: 2.5rem; padding: 0.55rem; border-radius: 50%; background: var(--pp-navy); box-shadow: 8px 8px 0 #c2410c; rotate: -10deg; }
+.demo--pipoca .pp-builder { display: grid; gap: 1.2rem; padding: clamp(1.25rem, 3vw, 2rem); border: 3px solid var(--pp-navy); border-radius: 2.25rem; background: var(--pp-cream); box-shadow: 12px 12px 0 var(--pp-navy); }
+.demo--pipoca .pp-builder__row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; align-items: end; }
+.demo--pipoca .pp-field { display: grid; gap: 0.4rem; font-family: var(--pp-display); font-size: 1rem; font-weight: 600; }
+.demo--pipoca .pp-field input { width: 100%; min-height: 3rem; padding: 0.65rem 1rem; border: 2px solid rgb(20 33 61 / 40%); border-radius: 0.95rem; background: var(--pp-paper); font-family: var(--pp-sans); font-size: 1rem; font-weight: 400; }
+.demo--pipoca .pp-field input::placeholder { color: #6b7187; }
+.demo--pipoca .pp-field input:hover { border-color: var(--pp-navy); }
+.demo--pipoca .pp-chips { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.demo--pipoca .pp-chips legend { width: 100%; margin-bottom: 0.45rem; font-family: var(--pp-display); font-size: 1rem; font-weight: 600; }
+.demo--pipoca .pp-chips label { position: relative; display: inline-flex; }
+.demo--pipoca .pp-chips span { display: inline-flex; align-items: center; gap: 0.35rem; min-height: 2.75rem; padding: 0.4rem 1rem; border: 2px solid var(--pp-navy); border-radius: 999px; background: var(--pp-paper); font-weight: 700; line-height: 1.1; transition: transform 200ms var(--pp-bounce); }
+.demo--pipoca .pp-chips small { font-size: 0.8rem; font-weight: 400; }
+.demo--pipoca .pp-chips--size small { display: none; }
+.demo--pipoca .pp-chips input:checked + span { background: var(--pp-navy); color: var(--pp-cream); transform: translateY(-2px); }
+.demo--pipoca .pp-builder__actions { display: flex; flex-wrap: wrap; gap: 0.8rem; }
+.demo--pipoca .pp-chat { padding: 1rem; border-radius: 1.4rem; background: #f4e8d8 radial-gradient(rgb(20 33 61 / 7%) 1.5px, transparent 1.6px) 0 0 / 14px 14px; }
+.demo--pipoca .pp-chat__from { margin-bottom: 0.35rem; color: var(--pp-ink-soft); font-size: 0.82rem; font-weight: 700; text-align: right; }
+.demo--pipoca .pp-chat__bubble { position: relative; max-width: 92%; min-height: 3rem; margin-left: auto; padding: 0.75rem 1rem; border-radius: 1.1rem 1.1rem 0.3rem 1.1rem; background: #d6f3c0; box-shadow: 0 2px 0 rgb(20 33 61 / 12%); line-height: 1.5; overflow-wrap: anywhere; }
+.demo--pipoca .pp-chat__bubble.is-warning { background: #ffe0cf; color: #6e2606; }
+.demo--pipoca .pp-builder__local { color: var(--pp-ink-soft); font-size: 0.9rem; }
+
+/* Footer */
+.demo--pipoca .pp-footer { padding: 3rem 0; background: var(--pp-navy); color: var(--pp-cream); }
+.demo--pipoca .pp-footer__inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1.5rem 3rem; }
+.demo--pipoca .pp-footer .pp-brand small { color: rgb(255 246 234 / 78%); }
+.demo--pipoca .pp-footer p { color: rgb(255 246 234 / 85%); font-size: 0.95rem; }
+.demo--pipoca .pp-footer__links { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; }
+.demo--pipoca .pp-footer__links a { display: inline-flex; align-items: center; min-height: 2.75rem; font-family: var(--pp-display); font-size: 1.05rem; font-weight: 600; text-decoration: underline wavy var(--pp-tangerine); text-decoration-thickness: 2px; text-underline-offset: 0.35em; }
+.demo--pipoca .pp-footer a:focus-visible { outline-color: var(--pp-tangerine); }
+.demo--pipoca .pp-sim a:focus-visible, .demo--pipoca .pp-sim input:focus-visible { outline-color: var(--pp-tangerine); }
+
+/* Motion: everything is visible by default; JS opts in to reveals only when motion is welcome. */
+@media (prefers-reduced-motion: no-preference) {
+  .demo--pipoca.pp-motion .pp-reveal { opacity: 0; translate: 0 28px; transition: opacity 700ms ease, translate 800ms var(--pp-ease); }
+  .demo--pipoca.pp-motion .pp-reveal.is-in { opacity: 1; translate: 0 0; }
+  .demo--pipoca .pp-hero__line { animation: pp-rise 800ms var(--pp-ease) both; }
+  .demo--pipoca .pp-hero__line + .pp-hero__line { animation-delay: 120ms; }
+  .demo--pipoca .pp-accent path { stroke-dasharray: 1; stroke-dashoffset: 1; animation: pp-draw 900ms var(--pp-ease) 650ms forwards; }
+  .demo--pipoca .pp-collage > * { animation: pp-pop-in 700ms var(--pp-bounce) both; }
+  .demo--pipoca .pp-collage__arch { animation-delay: 150ms; }
+  .demo--pipoca .pp-collage__polaroid { animation-delay: 350ms; }
+  .demo--pipoca .pp-collage__card { animation-delay: 480ms; }
+  .demo--pipoca .pp-collage__ring { animation-delay: 620ms; }
+  .demo--pipoca .pp-collage__price { animation-delay: 740ms; }
+  .demo--pipoca .pp-collage > .pp-pop { animation-delay: 860ms; }
+  .demo--pipoca .pp-collage__ring-text { animation: pp-spin 22s linear infinite; }
+  .demo--pipoca .pp-marquee__track { animation: pp-marquee 38s linear infinite; }
+  .demo--pipoca .pp-marquee:hover .pp-marquee__track { animation-play-state: paused; }
+  .demo--pipoca .pp-contact__mark { animation: pp-float 5s ease-in-out infinite; }
+  .demo--pipoca .pp-panel.is-entering { animation: pp-panel-in 480ms var(--pp-ease); }
+
+  @supports (animation-timeline: view()) {
+    .demo--pipoca .pp-collage__polaroid img, .demo--pipoca .pp-collage__card img { animation: pp-drift linear both; animation-timeline: view(); animation-range: cover 40% cover 100%; }
+  }
+}
+@keyframes pp-rise { from { opacity: 0; transform: translateY(0.35em); } }
+@keyframes pp-draw { to { stroke-dashoffset: 0; } }
+@keyframes pp-pop-in { from { opacity: 0; scale: 0.82; } }
+@keyframes pp-spin { to { transform: rotate(360deg); } }
+@keyframes pp-marquee { to { transform: translateX(-50%); } }
+@keyframes pp-float { 50% { transform: translateY(-10px); } }
+@keyframes pp-drift { to { transform: scale(1.08) translateY(-4%); } }
+.demo--pipoca .pp-collage__ring-text { transform-origin: 50% 50%; }
+
+/* Layout breakpoints */
+@media (min-width: 901px) {
+  /* The sticker climbs into the empty space beside the headline. */
+  .demo--pipoca .pp-collage__ring { top: -20%; }
+}
+
+@media (max-width: 1100px) {
+  .demo--pipoca .pp-steps__list, .demo--pipoca .pp-rules__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .demo--pipoca .pp-steps__list li:nth-child(even) { margin-top: 0; }
+  .demo--pipoca .pp-timeline { grid-template-columns: repeat(3, minmax(0, 1fr)); row-gap: 1.5rem; }
+  .demo--pipoca .pp-timeline::before { display: none; }
+  .demo--pipoca .pp-panel__cols { grid-template-columns: minmax(0, 1fr); }
+}
+
+@media (max-width: 900px) {
+  .demo--pipoca .pp-nav__links { display: none; }
+  .demo--pipoca .pp-hero__grid, .demo--pipoca .pp-panel, .demo--pipoca .pp-sim__grid, .demo--pipoca .pp-faq__inner, .demo--pipoca .pp-contact__inner, .demo--pipoca .pp-rules__extra { grid-template-columns: minmax(0, 1fr); }
+  .demo--pipoca .pp-hero__grid { gap: 0; }
+  /* On small screens the collage sits between the call to action and the facts. */
+  .demo--pipoca .pp-hero__copy { display: contents; }
+  .demo--pipoca .pp-hero__lede, .demo--pipoca .pp-hero__actions, .demo--pipoca .pp-hero__proof { max-width: 36rem; }
+  .demo--pipoca .pp-collage { order: 1; width: min(100%, 36rem); margin: 2.5rem auto 0; }
+  .demo--pipoca .pp-hero__facts { order: 2; max-width: 36rem; margin-top: 2.75rem; }
+  .demo--pipoca .pp-sim__card { order: -1; }
+  .demo--pipoca .pp-sim__chip { position: sticky; bottom: 1rem; z-index: 2; display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-top: 1.25rem; padding: 0.55rem 0.6rem 0.55rem 1.2rem; border: 2.5px solid var(--pp-cream); border-radius: 999px; background: var(--pp-tangerine); color: var(--pp-navy); font-family: var(--pp-display); font-weight: 600; box-shadow: 0 10px 24px -8px rgb(0 0 0 / 50%); }
+  .demo--pipoca .pp-sim__chip b { padding: 0.2rem 0.9rem; border-radius: 999px; background: var(--pp-navy); color: var(--pp-cream); font-size: 1.35rem; font-variant-numeric: tabular-nums; }
+  .demo--pipoca .pp-panel__photo { aspect-ratio: 16 / 11; }
+  .demo--pipoca .pp-panel__photo--creche { border-radius: 10rem 10rem 1.5rem 1.5rem; }
+  .demo--pipoca .pp-panel__photo--banho img { object-position: 50% 35%; }
+  .demo--pipoca .pp-panel__photo--hotel img { object-position: 50% 65%; }
+  .demo--pipoca .pp-panel__cols { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .demo--pipoca .pp-faq .pp-head { position: static; }
+  .demo--pipoca .pp-contact__mark { display: none; }
+  .demo--pipoca .pp-moments { grid-template-columns: minmax(0, 1fr); max-width: 30rem; margin-inline: auto; }
+  .demo--pipoca .pp-moment--2 { margin-top: 0; }
+  .demo--pipoca .pp-moment img { aspect-ratio: 1; }
+}
+
+@media (max-width: 640px) {
+  .demo--pipoca { font-size: 1rem; }
+  .demo--pipoca .pp-nav { min-height: 4rem; gap: 0.75rem; }
+  .demo--pipoca .pp-brand { font-size: 1.25rem; }
+  .demo--pipoca .pp-brand__mark { width: 2.6rem; height: 2.6rem; }
+  .demo--pipoca .pp-brand small { display: none; }
+  .demo--pipoca .pp-hero__title { font-size: clamp(2.3rem, 10.2vw, 4rem); }
+  .demo--pipoca .pp-collage { aspect-ratio: 0.92; margin-top: 0.5rem; }
+  .demo--pipoca .pp-collage__arch { left: 16%; width: 64%; height: 80%; box-shadow: 9px 9px 0 var(--pp-tangerine); }
+  .demo--pipoca .pp-collage__polaroid { top: 44%; width: 38%; padding: 0.4rem 0.4rem 0; }
+  .demo--pipoca .pp-collage__card { width: 36%; bottom: 2%; border-width: 4px; border-radius: 1.2rem; }
+  .demo--pipoca .pp-collage__card figcaption { font-size: 0.75rem; }
+  .demo--pipoca .pp-collage__polaroid figcaption { font-size: 0.74rem; }
+  .demo--pipoca .pp-title { font-size: clamp(2rem, 9vw, 2.6rem); }
+  .demo--pipoca .pp-collage__ring { right: 2%; }
+  .demo--pipoca .pp-collage__price { left: auto; right: 34%; bottom: -2%; }
+  .demo--pipoca .pp-pop { left: 2%; bottom: auto; top: 6%; }
+  .demo--pipoca .pp-pop__button { width: 4rem; height: 4rem; }
+  .demo--pipoca .pp-pop__hint { right: auto; left: 80%; top: 0; rotate: 8deg; }
+  .demo--pipoca .pp-marquee { margin-top: -0.75rem; }
+  .demo--pipoca .pp-tabs__list [role='tab'] { padding-inline: 0.35rem; font-size: 0.95rem; }
+  .demo--pipoca .pp-panel { border-radius: 1.75rem; }
+  .demo--pipoca .pp-panel__cols, .demo--pipoca .pp-steps__list, .demo--pipoca .pp-rules__grid, .demo--pipoca .pp-builder__row { grid-template-columns: minmax(0, 1fr); }
+  .demo--pipoca .pp-choice--service { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .demo--pipoca .pp-timeline { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .demo--pipoca .pp-faq__list details p { padding-right: 0; }
+  .demo--pipoca .pp-sim__card, .demo--pipoca .pp-builder { box-shadow: 8px 8px 0 var(--pp-navy); }
+  .demo--pipoca .pp-sim__card { box-shadow: 8px 8px 0 var(--pp-tangerine); }
+}

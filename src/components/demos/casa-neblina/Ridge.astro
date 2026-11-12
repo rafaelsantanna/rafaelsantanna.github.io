@@ -1,0 +1,10 @@
+---
+// Layered mountain ridge used as a section divider. It takes the color of the section that follows it.
+interface Props { class?: string; flip?: boolean }
+const { class: className, flip = false } = Astro.props;
+---
+
+<svg class:list={['nb-ridge', className, flip && 'nb-ridge--flip']} viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+  <path opacity="0.32" d="M0 120 V62 C110 34 190 70 300 50 S470 18 570 44 S760 72 870 40 S1070 26 1170 56 S1350 36 1440 48 V120 Z" fill="currentColor" />
+  <path d="M0 120 V96 C140 70 260 102 380 84 S600 64 720 88 S940 102 1060 80 S1300 66 1440 90 V120 Z" fill="currentColor" />
+</svg>

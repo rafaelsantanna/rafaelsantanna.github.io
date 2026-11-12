@@ -1,0 +1,12 @@
+---
+import DemoLayout from '@/layouts/DemoLayout.astro';
+import PipocaPetDemo from '@/components/demos/PipocaPetDemo.astro';
+import { project } from '@/data/projects/creche-pet';
+import '@/styles/landing-base.css';
+import '@/styles/demos.css';
+import '@/styles/landing-pipoca.css';
+---
+
+<DemoLayout locale="en" project={project}>
+  <PipocaPetDemo locale="en" project={project} />
+</DemoLayout>

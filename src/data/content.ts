@@ -7,6 +7,11 @@ import { project as onlineBooking } from './projects/online-booking.ts';
 import { project as fieldServiceApp } from './projects/field-service-app.ts';
 import { project as pousadaBoutique } from './projects/pousada-boutique.ts';
 import { project as climatizacaoLocal } from './projects/climatizacao-local.ts';
+import { project as academiaLuta } from './projects/academia-luta.ts';
+import { project as escolaDanca } from './projects/escola-danca.ts';
+import { project as escolaMusica } from './projects/escola-musica.ts';
+import { project as crechePet } from './projects/creche-pet.ts';
+import { project as esteticaAutomotiva } from './projects/estetica-automotiva.ts';
 
 export type { Concept, DemoProject, Experience, Locale, LocalizedText, ProjectKind, Service, TitledText } from './types';
 export { concepts };
@@ -312,7 +317,7 @@ export const services: Service[] = [
       en: ['Content and conversion structure', 'Responsive implementation', 'Contact and booking integrations', 'Performance and accessibility review'],
       pt: ['Estrutura de conteúdo e conversão', 'Implementação responsiva', 'Integrações de contato e agendamento', 'Revisão de performance e acessibilidade'],
     },
-    projects: ['online-booking', 'pousada-boutique', 'climatizacao-local'],
+    projects: ['climatizacao-local', 'academia-luta', 'escola-danca', 'escola-musica', 'pousada-boutique', 'creche-pet', 'estetica-automotiva', 'online-booking'],
     technologies: ['Astro', 'React', 'TypeScript', 'Responsive UI', 'SEO'],
   },
   {
@@ -381,8 +386,13 @@ export const projects: DemoProject[] = [
   knowledgeAssistant,
   onlineBooking,
   fieldServiceApp,
-  pousadaBoutique,
   climatizacaoLocal,
+  academiaLuta,
+  escolaDanca,
+  escolaMusica,
+  pousadaBoutique,
+  crechePet,
+  esteticaAutomotiva,
 ];
 
 /** Each demo is captured in both languages; English previews live under /images/projects/en/. */

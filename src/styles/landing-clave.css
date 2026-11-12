@@ -1,0 +1,399 @@
+/* Casa Clave: a neighbourhood music school styled like a record sleeve. Cream paper, deep green, brass and one tomato red.
+   Newsreader for display, Atkinson Hyperlegible Next for text, staff lines and sound waves drawn in SVG. */
+html:has(.demo--clave) { color-scheme: light; background: #f6efe2; }
+
+.demo--clave {
+  --clave-paper: #f6efe2;
+  --clave-paper-2: #eee3ce;
+  --clave-card: #fbf7ef;
+  --clave-green: #163a2e;
+  --clave-green-deep: #0f2a21;
+  --clave-brass: #d9a441;
+  --clave-brass-ink: #85591a;
+  --clave-tomato: #b53a24;
+  --clave-tomato-deep: #922c19;
+  --clave-ink: #163a2e;
+  --clave-muted: #586a5f;
+  --clave-cream-muted: #cdd8cd;
+  --clave-line: #d9cbb0;
+  --clave-line-strong: #8f7d5c;
+  --clave-serif: 'Newsreader', Georgia, serif;
+  --clave-sans: 'Atkinson Hyperlegible Next', system-ui, sans-serif;
+  --clave-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --clave-gutter: clamp(1.25rem, 4vw, 2.5rem);
+  --demo-focus: var(--clave-tomato);
+  background: var(--clave-paper);
+  color: var(--clave-ink);
+  font-family: var(--clave-sans);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+}
+
+.demo--clave [hidden] { display: none !important; }
+.demo--clave ::selection { background: var(--clave-brass); color: var(--clave-green-deep); }
+.demo--clave h1, .demo--clave h2, .demo--clave h3 { font-family: var(--clave-serif); font-optical-sizing: auto; font-weight: 500; letter-spacing: -0.02em; }
+.demo--clave .clave-shell { width: min(100% - 2 * var(--clave-gutter), 78rem); margin-inline: auto; }
+.demo--clave .clave-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.demo--clave .clave-kicker { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 1rem; color: var(--clave-brass-ink); font-size: 0.8rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; }
+.demo--clave .clave-kicker::before { content: ''; width: 1.6rem; height: 0.5rem; background: repeating-linear-gradient(currentColor 0 1px, transparent 1px 2px); opacity: 0.8; }
+.demo--clave .clave-title { max-width: 20ch; font-size: clamp(2.3rem, 4.6vw, 4.1rem); line-height: 1.02; }
+.demo--clave .clave-title span { display: block; color: var(--clave-muted); font-weight: 350; }
+
+/* Buttons and links */
+.demo--clave .clave-pill { display: inline-flex; align-items: center; justify-content: center; gap: 0.6rem; min-height: 3.25rem; padding: 0 1.6rem; border: 0; border-radius: 999px; background: var(--clave-tomato); color: #fff8ee; font-family: var(--clave-sans); font-size: 1rem; font-weight: 700; line-height: 1.2; text-align: center; text-decoration: none; transition: transform 0.25s var(--clave-ease), background-color 0.2s; }
+.demo--clave .clave-pill:hover { background: var(--clave-tomato-deep); transform: translateY(-2px); }
+.demo--clave .clave-pill svg { flex: 0 0 auto; width: 1.15rem; height: 1.15rem; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.demo--clave .clave-pill--small { min-height: 2.75rem; padding: 0 1.15rem; font-size: 0.92rem; }
+.demo--clave .clave-pill--brass { background: var(--clave-brass); color: var(--clave-green-deep); }
+.demo--clave .clave-pill--brass:hover { background: #e8b95a; }
+.demo--clave .clave-pill--brass svg { fill: currentColor; stroke: none; }
+.demo--clave .clave-icon-stop, .demo--clave [aria-pressed='true'] .clave-icon-play { display: none; }
+.demo--clave [aria-pressed='true'] .clave-icon-stop { display: inline; }
+.demo--clave .clave-pill--wide { width: 100%; min-height: 3.75rem; font-size: 1.08rem; }
+.demo--clave .clave-link { display: inline-flex; align-items: center; min-height: 2.75rem; padding: 0; border: 0; background: none; color: inherit; font-weight: 700; text-decoration: underline; text-decoration-color: var(--clave-tomato); text-decoration-thickness: 2px; text-underline-offset: 0.3em; }
+.demo--clave .clave-link:hover { color: var(--clave-tomato); }
+
+/* Plus icon shared by accordions and photo cards */
+.demo--clave .clave-plus { position: relative; flex: 0 0 auto; width: 2.75rem; height: 2.75rem; border: 1.5px solid currentColor; border-radius: 50%; transition: transform 0.35s var(--clave-ease), background-color 0.2s, color 0.2s; }
+.demo--clave .clave-plus::before, .demo--clave .clave-plus::after { content: ''; position: absolute; top: 50%; left: 50%; width: 0.9rem; height: 1.5px; background: currentColor; transform: translate(-50%, -50%); }
+.demo--clave .clave-plus::after { transform: translate(-50%, -50%) rotate(90deg); }
+.demo--clave details[open] > summary .clave-plus { transform: rotate(45deg); }
+.demo--clave summary { list-style: none; cursor: pointer; }
+.demo--clave summary::-webkit-details-marker { display: none; }
+
+/* Header */
+.demo--clave .clave-sentinel { height: 1px; }
+.demo--clave .clave-header { position: sticky; top: 0; z-index: 40; background: rgb(246 239 226 / 94%); backdrop-filter: blur(10px); }
+.demo--clave .clave-header::after { content: ''; position: absolute; inset: auto 0 0; height: 1px; background: var(--clave-line); box-shadow: 0 10px 30px rgb(22 58 46 / 12%); opacity: 0; transition: opacity 0.3s; }
+.demo--clave .clave-header.is-condensed::after { opacity: 1; }
+.demo--clave .clave-header__inner { display: flex; align-items: center; gap: 2rem; padding-block: 1.1rem; }
+.demo--clave .clave-header.is-condensed .clave-header__inner { padding-block: 0.5rem; }
+.demo--clave .clave-brand { display: inline-flex; white-space: nowrap; align-items: center; gap: 0.7rem; min-height: 2.75rem; color: inherit; font-family: var(--clave-serif); font-size: 1.5rem; font-weight: 600; letter-spacing: -0.02em; line-height: 1; text-decoration: none; }
+.demo--clave .clave-brand small { display: block; margin-top: 0.3rem; color: var(--clave-muted); font-family: var(--clave-sans); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; }
+.demo--clave .clave-brand__mark { width: 2.6rem; height: 2.6rem; transition: transform 0.35s var(--clave-ease); }
+.demo--clave .clave-header.is-condensed .clave-brand__mark { transform: scale(0.85) rotate(-12deg); }
+.demo--clave .clave-header__links { display: flex; gap: 0.25rem; margin-left: auto; }
+.demo--clave .clave-header__links a { display: inline-flex; align-items: center; min-height: 2.75rem; padding: 0 0.85rem; border-radius: 999px; font-weight: 700; font-size: 0.95rem; text-decoration: none; }
+.demo--clave .clave-header__links a:hover { background: var(--clave-paper-2); }
+.demo--clave .clave-header__cta { white-space: nowrap; }
+.demo--clave .clave-header__cta-short { display: none; }
+
+/* Hero */
+.demo--clave .clave-hero { position: relative; padding: clamp(2rem, 5vw, 4.5rem) 0 clamp(3.5rem, 7vw, 6rem); }
+.demo--clave .clave-hero__eyebrow { color: var(--clave-brass-ink); }
+.demo--clave .clave-hero__title { position: relative; font-size: clamp(2.75rem, 8.4vw, 8.1rem); font-weight: 500; line-height: 0.95; letter-spacing: -0.035em; text-wrap: initial; }
+.demo--clave .clave-hero__line { position: relative; z-index: 1; display: block; }
+.demo--clave .clave-hero__line--staff { isolation: isolate; }
+.demo--clave .clave-hero__line--staff::before { content: ''; position: absolute; z-index: -1; top: 0.12em; left: -1rem; right: calc(-1 * var(--clave-gutter)); height: 0.72em; background: repeating-linear-gradient(to bottom, rgb(217 164 65 / 55%) 0 1.5px, transparent 1.5px 0.175em); mask-image: linear-gradient(to right, transparent, #000 4%, #000 80%, transparent); }
+.demo--clave .clave-accent { position: relative; display: inline-block; color: var(--clave-tomato); font-weight: 350; white-space: nowrap; }
+.demo--clave .clave-accent svg { position: absolute; left: 0; bottom: -0.12em; width: 100%; height: 0.2em; overflow: visible; }
+.demo--clave .clave-accent path { fill: none; stroke: var(--clave-tomato); stroke-width: 3.5; stroke-linecap: round; vector-effect: non-scaling-stroke; stroke-dasharray: 420; stroke-dashoffset: 0; }
+.demo--clave .clave-hero__grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(2rem, 5vw, 5rem); align-items: start; margin-top: clamp(2.25rem, 4vw, 3.5rem); }
+.demo--clave .clave-hero__lede { font-size: clamp(1.1rem, 1.5vw, 1.3rem); line-height: 1.55; }
+.demo--clave .clave-hero__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 1.75rem; margin-top: 2rem; }
+.demo--clave .clave-facts { margin-top: 2.5rem; border-bottom: 1px solid var(--clave-line); }
+.demo--clave .clave-facts div { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 0.25rem 1rem; padding: 0.85rem 0; border-top: 1px solid var(--clave-line); }
+.demo--clave .clave-facts dt { color: var(--clave-muted); font-size: 0.8rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
+.demo--clave .clave-facts dd { font-family: var(--clave-serif); font-size: 1.25rem; }
+.demo--clave .clave-hero__art { position: relative; padding: 2.5rem 15% 0 0; }
+.demo--clave .clave-hero__photo { position: relative; z-index: 1; overflow: hidden; border-radius: 1.75rem; box-shadow: 0 30px 60px -28px rgb(15 42 33 / 55%); }
+.demo--clave .clave-hero__photo img { width: 100%; height: auto; aspect-ratio: 1024 / 688; object-fit: cover; }
+.demo--clave .clave-record { position: absolute; z-index: 0; top: 0; right: 0; width: 64%; height: auto; filter: drop-shadow(0 18px 30px rgb(15 42 33 / 35%)); }
+.demo--clave .clave-sticker { position: absolute; z-index: 2; left: -1.75rem; bottom: 3.25rem; width: clamp(6.5rem, 10vw, 8.25rem); height: auto; rotate: -10deg; transition: rotate 0.6s var(--clave-ease); }
+.demo--clave .clave-hero__art:hover .clave-sticker { rotate: 20deg; }
+.demo--clave .clave-sticker text { fill: var(--clave-green-deep); font-family: var(--clave-sans); font-size: 10.5px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+.demo--clave .clave-hero__art figcaption { display: flex; align-items: baseline; gap: 0.6rem; margin-top: 1rem; color: var(--clave-muted); font-family: var(--clave-serif); font-size: 1.05rem; font-weight: 400; }
+.demo--clave .clave-hero__art figcaption::before { content: ''; flex: 0 0 auto; align-self: center; width: 2.25rem; height: 1px; background: currentColor; }
+
+/* Marquee */
+.demo--clave .clave-marquee { overflow: hidden; padding: 1.1rem 0; background: var(--clave-green); color: var(--clave-paper); }
+.demo--clave .clave-marquee__track { display: flex; width: max-content; }
+.demo--clave .clave-marquee ul { display: flex; gap: 2.5rem; margin: 0; padding: 0 2.5rem 0 0; list-style: none; }
+.demo--clave .clave-marquee li { display: flex; align-items: center; gap: 2.5rem; font-family: var(--clave-serif); font-size: clamp(1.4rem, 2.4vw, 2rem); font-weight: 400; white-space: nowrap; }
+.demo--clave .clave-marquee svg { width: 0.6em; height: 0.9em; color: var(--clave-brass); }
+
+/* Courses as a tracklist */
+.demo--clave .clave-courses { padding: clamp(4rem, 8vw, 7rem) 0; }
+.demo--clave .clave-courses__inner { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); gap: clamp(2rem, 5vw, 5rem); align-items: start; }
+.demo--clave .clave-courses__head { position: sticky; top: 6.5rem; }
+.demo--clave .clave-courses__head .clave-title span { margin-top: 1rem; font-family: var(--clave-sans); font-size: 1.05rem; letter-spacing: 0; line-height: 1.5; }
+.demo--clave .clave-tracks__flip { display: flex; max-width: none; align-items: center; gap: 0.75rem; margin: 2.5rem 0 0.75rem; color: var(--clave-brass-ink); font-size: 0.8rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; }
+.demo--clave .clave-tracks__flip::after { content: ''; flex: 1; height: 1px; background: var(--clave-line); }
+.demo--clave .clave-track { border-bottom: 1px solid var(--clave-line); }
+.demo--clave .clave-tracks__side:first-child .clave-track:first-child { border-top: 1px solid var(--clave-line); }
+.demo--clave .clave-track summary { display: grid; grid-template-columns: 2.75rem minmax(0, 1fr) 8.5rem 13rem 2.75rem; align-items: center; gap: 0.5rem 1.25rem; padding: 1.15rem 0; }
+.demo--clave .clave-track__no { color: var(--clave-brass-ink); font-size: 0.85rem; font-weight: 700; letter-spacing: 0.08em; font-variant-numeric: tabular-nums; }
+.demo--clave .clave-track__name { font-family: var(--clave-serif); font-size: clamp(1.55rem, 2.5vw, 2.15rem); font-weight: 500; letter-spacing: -0.02em; line-height: 1.1; transition: color 0.2s; }
+.demo--clave .clave-track summary:hover .clave-track__name { color: var(--clave-tomato); }
+.demo--clave .clave-track__age { color: var(--clave-muted); font-size: 0.95rem; }
+.demo--clave .clave-track__tags { display: flex; gap: 0.35rem; }
+.demo--clave .clave-track__tags span { padding: 0.15rem 0.6rem; border: 1px solid var(--clave-line-strong); border-radius: 999px; font-size: 0.78rem; font-weight: 700; white-space: nowrap; }
+.demo--clave .clave-track__tags .is-online { border-color: var(--clave-green); background: var(--clave-green); color: var(--clave-paper); }
+.demo--clave .clave-track[open] .clave-plus { background: var(--clave-tomato); border-color: var(--clave-tomato); color: #fff8ee; }
+.demo--clave .clave-track__body { display: grid; gap: 1.5rem; padding: 0 0 1.75rem 4rem; }
+.demo--clave .clave-track__body.has-photo { grid-template-columns: 10rem minmax(0, 1fr); align-items: start; }
+.demo--clave .clave-track__body img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 999px 999px 1rem 1rem; }
+.demo--clave .clave-track__label { margin-bottom: 0.35rem; color: var(--clave-brass-ink); font-size: 0.8rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; }
+.demo--clave .clave-track__body .clave-link { margin-top: 0.5rem; }
+
+/* Wave dividers */
+.demo--clave .clave-wave { display: block; width: 100%; height: clamp(1.5rem, 3.4vw, 3rem); fill: var(--clave-green); }
+.demo--clave .clave-wave--to-green { background: var(--clave-paper); }
+.demo--clave .clave-wave--from-green { background: var(--clave-paper-2); transform: scaleY(-1); }
+.demo--clave .clave-wave--to-brass { background: var(--clave-paper); fill: var(--clave-brass); }
+
+/* Keyboard */
+.demo--clave .clave-piano { padding: clamp(3.5rem, 7vw, 6rem) 0; background: var(--clave-green); color: var(--clave-paper); }
+.demo--clave .clave-piano .clave-kicker, .demo--clave .clave-steps .clave-kicker { color: var(--clave-brass); }
+.demo--clave .clave-piano .clave-title span, .demo--clave .clave-steps .clave-title span { color: var(--clave-cream-muted); }
+.demo--clave .clave-piano__inner { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: clamp(2rem, 5vw, 5rem); align-items: center; }
+.demo--clave .clave-piano .clave-title { font-size: clamp(2.3rem, 3.9vw, 3.6rem); }
+.demo--clave .clave-piano__copy > p:last-child { margin-top: 1.5rem; color: var(--clave-cream-muted); }
+.demo--clave .clave-instrument { padding: 1.25rem; border-radius: 1.75rem; background: linear-gradient(160deg, #3a2a20, #1f1611 70%); box-shadow: inset 0 1px 0 rgb(255 255 255 / 12%), 0 40px 70px -35px rgb(0 0 0 / 70%); }
+.demo--clave .clave-stand { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 0.5rem 1rem; margin-bottom: 1.1rem; padding: 0.6rem 1.1rem; border-radius: 0.9rem; background: var(--clave-card); color: var(--clave-ink); }
+.demo--clave .clave-staff { width: 100%; max-width: 19rem; height: auto; }
+.demo--clave .clave-staff__line { stroke: var(--clave-ink); stroke-opacity: 0.45; stroke-width: 1; }
+.demo--clave .clave-staff__note { fill: var(--clave-ink); }
+.demo--clave .clave-staff__note line { stroke: var(--clave-ink); stroke-width: 1.2; }
+.demo--clave .clave-staff__note text { font-family: var(--clave-sans); font-size: 12px; font-weight: 700; }
+.demo--clave .clave-staff__note.is-last { fill: var(--clave-tomato); }
+.demo--clave .clave-staff__hint { opacity: 0.28; }
+.demo--clave .clave-stand__readout { min-width: 7rem; font-family: var(--clave-serif); font-size: 1.15rem; text-align: right; }
+.demo--clave .clave-keys { position: relative; display: flex; height: clamp(10.5rem, 20vw, 14.5rem); padding-top: 5px; border-radius: 0 0 0.75rem 0.75rem; background: linear-gradient(var(--clave-tomato) 0 4px, transparent 4px); --clave-white: calc(100% / 8); --clave-black: calc(100% / 8 * 0.62); }
+.demo--clave .clave-key { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 0.4rem; flex: 1 1 0; min-width: 0; padding: 0 0 0.8rem; border: 1px solid #c9b99c; border-top: 0; border-radius: 0 0 0.6rem 0.6rem; background: linear-gradient(#fffdf8 70%, #efe6d6); color: var(--clave-ink); box-shadow: inset 0 -5px 0 #e3d8c3; transition: transform 0.08s, background-color 0.08s; }
+.demo--clave .clave-key__name { font-family: var(--clave-serif); font-size: 0.95rem; font-weight: 500; }
+.demo--clave .clave-key__letter { min-width: 1.5rem; padding: 0.05rem 0.3rem; border: 1px solid var(--clave-line-strong); border-radius: 0.35rem; color: var(--clave-muted); font-size: 0.72rem; font-weight: 700; }
+.demo--clave .clave-key--black { position: absolute; z-index: 2; top: 5px; left: calc(var(--clave-white) * var(--slot) - var(--clave-black) / 2); width: var(--clave-black); height: 60%; padding-bottom: 0.6rem; border: 0; border-radius: 0 0 0.45rem 0.45rem; background: linear-gradient(#3a3330, #121010 85%); box-shadow: inset 0 -6px 0 #2a2422, 0 4px 6px rgb(0 0 0 / 35%); }
+.demo--clave .clave-key--black .clave-key__letter { border-color: rgb(246 239 226 / 45%); color: var(--clave-paper); }
+.demo--clave .clave-key.is-down, .demo--clave .clave-key:active { background: linear-gradient(#f5d995, var(--clave-brass)); box-shadow: inset 0 -2px 0 #c18d2c; transform: translateY(2px); }
+.demo--clave .clave-key--black.is-down, .demo--clave .clave-key--black:active { background: linear-gradient(var(--clave-tomato), var(--clave-tomato-deep)); box-shadow: inset 0 -2px 0 #6e2213; }
+.demo--clave .clave-key.is-down .clave-key__letter, .demo--clave .clave-key--black.is-down .clave-key__letter { color: inherit; }
+.demo--clave .clave-key:focus-visible { outline: 3px solid var(--clave-tomato); outline-offset: -7px; }
+.demo--clave .clave-key--black:focus-visible { outline-color: var(--clave-brass); }
+.demo--clave .clave-instrument__foot { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem 1.25rem; margin-top: 1.25rem; }
+.demo--clave .clave-instrument__foot p { color: #d8c9b4; font-family: var(--clave-serif); font-size: 1rem; }
+.demo--clave .clave-instrument .demo-noscript { margin-top: 1rem; color: var(--clave-paper); }
+
+/* Formats and prices */
+.demo--clave .clave-prices { position: relative; overflow: clip; padding: clamp(3.5rem, 7vw, 6rem) 0 clamp(4rem, 8vw, 7rem); background: var(--clave-paper-2); }
+.demo--clave .clave-watermark { position: absolute; top: 1.5rem; right: -2vw; color: transparent; font-family: var(--clave-serif); font-size: clamp(9rem, 27vw, 24rem); font-weight: 600; letter-spacing: -0.05em; line-height: 0.8; -webkit-text-stroke: 1.5px rgb(133 89 26 / 30%); pointer-events: none; user-select: none; }
+.demo--clave .clave-prices .clave-shell { position: relative; }
+.demo--clave .clave-prices__grid { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: clamp(2rem, 5vw, 4.5rem); align-items: start; margin-top: 2.75rem; }
+.demo--clave .clave-tabs { display: inline-flex; flex-wrap: wrap; gap: 0.25rem; padding: 0.3rem; border: 1px solid var(--clave-line); border-radius: 999px; background: var(--clave-card); }
+.demo--clave .clave-tabs button { min-height: 2.75rem; padding: 0 1.15rem; border: 0; border-radius: 999px; background: transparent; color: var(--clave-ink); font-size: 0.95rem; font-weight: 700; transition: background-color 0.2s, color 0.2s; }
+.demo--clave .clave-tabs button:hover { background: var(--clave-paper-2); }
+.demo--clave .clave-tabs button[aria-selected='true'] { background: var(--clave-green); color: var(--clave-paper); }
+.demo--clave .clave-format { display: grid; gap: 1rem; margin-top: 1rem; padding: clamp(1.5rem, 3.5vw, 2.75rem); border-radius: 1.75rem; background: var(--clave-green); color: var(--clave-paper); box-shadow: 0 30px 60px -35px rgb(15 42 33 / 65%); }
+.demo--clave .clave-format + .clave-format { margin-top: 1.25rem; }
+.demo--clave .clave-format__price { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.2rem 0.6rem; }
+.demo--clave .clave-format__price span { color: var(--clave-cream-muted); font-size: 0.95rem; }
+.demo--clave .clave-format__price strong { color: var(--clave-brass); font-family: var(--clave-serif); font-size: clamp(3.4rem, 7vw, 5.4rem); font-weight: 500; letter-spacing: -0.03em; line-height: 0.95; }
+.demo--clave .clave-format__note { font-family: var(--clave-serif); font-size: 1.3rem; }
+.demo--clave .clave-format ul { display: grid; gap: 0.6rem; margin: 0.25rem 0 0.75rem; padding: 0; list-style: none; }
+.demo--clave .clave-format li { position: relative; padding-left: 1.9rem; color: #e9efe7; }
+.demo--clave .clave-format li::before { content: ''; position: absolute; left: 0.2rem; top: 0.45em; width: 0.85rem; height: 0.45rem; border-left: 2px solid var(--clave-brass); border-bottom: 2px solid var(--clave-brass); transform: rotate(-45deg); }
+.demo--clave .clave-format .clave-pill { justify-self: start; }
+.demo--clave .clave-included h3 { font-size: 1.6rem; }
+.demo--clave .clave-included ul { margin: 1rem 0 0; padding: 0; list-style: none; }
+.demo--clave .clave-included li { display: grid; grid-template-columns: 2.75rem minmax(0, 1fr); gap: 0.75rem; padding: 1.1rem 0; border-top: 1px solid var(--clave-line); }
+.demo--clave .clave-included__no { color: var(--clave-brass-ink); font-family: var(--clave-serif); font-size: 1.5rem; line-height: 1.1; }
+.demo--clave .clave-included strong { display: block; font-size: 1.05rem; }
+.demo--clave .clave-included p { color: var(--clave-muted); }
+.demo--clave .clave-hours { margin-top: 0.5rem; padding: 1.25rem 1.4rem; border: 1.5px dashed var(--clave-line-strong); border-radius: 1.25rem; }
+.demo--clave .clave-hours h3 { margin-bottom: 0.35rem; font-size: 1.25rem; }
+
+/* Inside the house */
+.demo--clave .clave-house { padding: clamp(4rem, 8vw, 7rem) 0 clamp(4.5rem, 9vw, 8rem); }
+.demo--clave .clave-house__head { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 0 3rem; align-items: end; }
+.demo--clave .clave-house__head .clave-kicker { grid-column: 1 / -1; }
+.demo--clave .clave-house__head > p:last-child { color: var(--clave-muted); font-size: 1.1rem; }
+.demo--clave .clave-collage { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(1.25rem, 3vw, 3rem); align-items: start; margin-top: clamp(2.5rem, 5vw, 4rem); }
+.demo--clave .clave-photo { position: relative; }
+.demo--clave .clave-photo__frame { position: relative; overflow: hidden; }
+.demo--clave .clave-photo img { width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; }
+.demo--clave .clave-photo--1 { margin-top: 4rem; }
+.demo--clave .clave-photo--1 .clave-photo__frame { border-radius: 999px 999px 1.5rem 1.5rem; }
+.demo--clave .clave-photo--2 { padding: 0.85rem 0.85rem 0; background: #fffdf8; box-shadow: 0 25px 50px -25px rgb(15 42 33 / 45%); rotate: -2.5deg; }
+.demo--clave .clave-photo--2 figcaption { padding: 0.9rem 0 1.1rem; text-align: center; }
+.demo--clave .clave-photo--3 { margin-top: 2rem; }
+.demo--clave .clave-photo--3 .clave-photo__frame { border-radius: 2rem; }
+.demo--clave .clave-photo figcaption { display: flex; align-items: center; gap: 0.6rem; margin-top: 0.9rem; font-family: var(--clave-serif); font-size: 1.25rem; }
+.demo--clave .clave-photo--1 figcaption::before, .demo--clave .clave-photo--3 figcaption::before { content: ''; width: 1.75rem; height: 1px; background: var(--clave-tomato); }
+.demo--clave .clave-photo--2 figcaption { justify-content: center; margin-top: 0; }
+.demo--clave .clave-photo__badge { position: absolute; z-index: 2; top: -1.75rem; right: -1rem; display: grid; place-items: center; width: 7.25rem; height: 7.25rem; padding: 1rem; border-radius: 50%; background: var(--clave-tomato); color: #fff8ee; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; line-height: 1.3; text-align: center; text-transform: uppercase; rotate: 10deg; }
+.demo--clave .clave-photo__more { position: absolute; inset: auto 0.85rem 0.85rem; display: flex; flex-direction: column-reverse; align-items: flex-end; gap: 0.6rem; }
+.demo--clave .clave-photo__more summary { border-radius: 50%; }
+.demo--clave .clave-photo__more .clave-plus { display: block; background: var(--clave-paper); border-color: var(--clave-paper); color: var(--clave-ink); }
+.demo--clave .clave-photo__more[open] .clave-plus { background: var(--clave-tomato); border-color: var(--clave-tomato); color: #fff8ee; }
+.demo--clave .clave-photo__more p { padding: 0.85rem 1rem; border-radius: 1rem; background: rgb(251 247 239 / 96%); font-size: 0.95rem; line-height: 1.5; }
+
+/* How it works */
+.demo--clave .clave-steps { padding: clamp(3.5rem, 7vw, 5.5rem) 0 clamp(4rem, 8vw, 6.5rem); background: var(--clave-green); color: var(--clave-paper); }
+.demo--clave .clave-steps__list { position: relative; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 2rem; margin: 3rem 0 0; padding: 0; list-style: none; }
+.demo--clave .clave-steps__list::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: calc(4.4rem + 1px); background: repeating-linear-gradient(to bottom, rgb(246 239 226 / 28%) 0 1px, transparent 1px 1.1rem); }
+.demo--clave .clave-steps__list li { position: relative; padding-top: 6.5rem; }
+.demo--clave .clave-steps__note { position: absolute; top: calc(4.4rem - var(--rise) * 1.1rem - 1.15rem); left: 0; display: grid; place-items: center; width: 3rem; height: 2.3rem; color: var(--clave-green-deep); font-family: var(--clave-serif); font-size: 1.3rem; font-weight: 600; isolation: isolate; }
+.demo--clave .clave-steps__note::before { content: ''; position: absolute; inset: 0; z-index: -1; border-radius: 50%; background: var(--clave-brass); transform: rotate(-20deg); }
+.demo--clave .clave-steps__note::after { content: ''; position: absolute; right: 1px; bottom: 50%; width: 2px; height: 3.25rem; background: var(--clave-brass); }
+.demo--clave .clave-steps h3 { font-size: 1.55rem; }
+.demo--clave .clave-steps p { margin-top: 0.5rem; color: var(--clave-cream-muted); }
+
+/* Course finder */
+.demo--clave .clave-finder { padding: clamp(3.5rem, 7vw, 6rem) 0; background: var(--clave-paper-2); }
+.demo--clave .clave-finder__inner, .demo--clave .clave-faq__inner, .demo--clave .clave-contact__inner { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(2rem, 5vw, 5rem); align-items: start; }
+.demo--clave .clave-finder__copy > p:last-child { margin-top: 1.25rem; color: var(--clave-muted); }
+.demo--clave .clave-card { display: grid; gap: 1.5rem; padding: clamp(1.25rem, 3vw, 2.25rem); border: 1px solid var(--clave-line); border-radius: 1.75rem; background: var(--clave-card); box-shadow: 0 30px 60px -40px rgb(15 42 33 / 45%); }
+.demo--clave .clave-chips { display: flex; flex-wrap: wrap; align-content: flex-start; gap: 0.5rem; min-width: 0; margin: 0; padding: 0; border: 0; }
+.demo--clave .clave-chips legend { float: left; width: 100%; margin-bottom: 0.6rem; padding: 0; font-weight: 700; }
+.demo--clave .clave-chips label { position: relative; display: inline-flex; }
+.demo--clave .clave-chips input { position: absolute; inset: 0; opacity: 0; margin: 0; cursor: pointer; }
+.demo--clave .clave-chips span { display: inline-flex; align-items: center; min-height: 2.75rem; padding: 0.35rem 1.05rem; border: 1.5px solid var(--clave-line-strong); border-radius: 999px; background: #fffdf8; font-size: 0.95rem; font-weight: 700; line-height: 1.25; transition: background-color 0.15s, color 0.15s, border-color 0.15s; }
+.demo--clave .clave-chips label:hover span { border-color: var(--clave-green); }
+.demo--clave .clave-chips input:checked + span { border-color: var(--clave-green); background: var(--clave-green); color: var(--clave-paper); }
+.demo--clave .clave-chips input:focus-visible + span { outline: 3px solid var(--clave-tomato); outline-offset: 3px; }
+.demo--clave .clave-result { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 1rem; padding: 1.4rem 1.5rem; border-radius: 1.25rem; background: var(--clave-green); color: var(--clave-paper); }
+.demo--clave .clave-result[data-state='idle'] { border: 1.5px dashed var(--clave-line-strong); background: transparent; color: var(--clave-muted); }
+.demo--clave .clave-result [role='status'] { flex: 1 1 18rem; }
+.demo--clave .clave-result__label { color: var(--clave-brass); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; }
+.demo--clave .clave-result[data-state='idle'] .clave-result__label { color: var(--clave-brass-ink); }
+.demo--clave .clave-result__name { font-family: var(--clave-serif); font-size: clamp(1.8rem, 3vw, 2.4rem); line-height: 1.1; }
+.demo--clave .clave-result__name:empty, .demo--clave .clave-result__meta:empty { display: none; }
+.demo--clave .clave-result__reason { margin-top: 0.35rem; }
+.demo--clave .clave-result__meta { margin-top: 0.5rem; color: var(--clave-brass); font-weight: 700; }
+.demo--clave .clave-result .clave-pill { background: var(--clave-brass); color: var(--clave-green-deep); }
+
+/* FAQ */
+.demo--clave .clave-faq { padding: clamp(4rem, 8vw, 7rem) 0 clamp(3rem, 6vw, 5rem); }
+.demo--clave .clave-faq__list details { border-bottom: 1px solid var(--clave-line); }
+.demo--clave .clave-faq__list details:first-child { border-top: 1px solid var(--clave-line); }
+.demo--clave .clave-faq__list summary { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; padding: 1.2rem 0; font-family: var(--clave-serif); font-size: clamp(1.25rem, 2vw, 1.55rem); line-height: 1.25; }
+.demo--clave .clave-faq__list summary:hover { color: var(--clave-tomato); }
+.demo--clave .clave-faq__list details[open] .clave-plus { background: var(--clave-green); border-color: var(--clave-green); color: var(--clave-paper); }
+.demo--clave .clave-faq__list p { padding: 0 3.5rem 1.4rem 0; color: var(--clave-muted); }
+
+/* Contact and message builder */
+.demo--clave .clave-contact { padding: clamp(3.5rem, 7vw, 6rem) 0; background: var(--clave-brass); color: var(--clave-green-deep); }
+.demo--clave .clave-contact .clave-kicker { color: var(--clave-green-deep); }
+.demo--clave .clave-contact__copy { position: sticky; top: 6.5rem; }
+.demo--clave .clave-contact__copy > p:not(.clave-kicker) { margin-top: 1.25rem; font-size: 1.1rem; }
+.demo--clave .clave-contact__wave { width: min(100%, 15rem); height: auto; margin-top: 2.5rem; fill: var(--clave-green-deep); }
+.demo--clave .clave-contact__wave rect { transform-box: fill-box; transform-origin: center; }
+.demo--clave .clave-builder { gap: 1.4rem; border-color: transparent; box-shadow: 0 40px 70px -40px rgb(15 42 33 / 70%); color: var(--clave-ink); }
+.demo--clave .clave-builder__row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.4rem 1.25rem; }
+.demo--clave .clave-field { display: grid; gap: 0.5rem; font-weight: 700; }
+.demo--clave .clave-field input, .demo--clave .clave-field select { width: 100%; min-height: 3rem; padding: 0 1rem; border: 1.5px solid var(--clave-line-strong); border-radius: 0.85rem; background: #fffdf8; color: var(--clave-ink); font-weight: 400; }
+.demo--clave .clave-field input::placeholder { color: #75806f; }
+.demo--clave .clave-bubble { color: var(--clave-muted); font-size: 0.95rem; }
+.demo--clave .clave-bubble[data-state='error'] { color: var(--clave-tomato-deep); font-weight: 700; }
+.demo--clave .clave-bubble[data-state='ready'] { padding: 1rem 1.2rem; border-radius: 1.2rem 1.2rem 1.2rem 0.3rem; background: #dfecd6; color: var(--clave-ink); font-size: 1rem; }
+.demo--clave .clave-bubble__label { display: block; margin-bottom: 0.3rem; color: var(--clave-muted); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; }
+.demo--clave .clave-builder__copy { justify-self: start; margin-top: -0.75rem; }
+.demo--clave .clave-builder__note { margin-top: -0.4rem; color: var(--clave-muted); font-size: 0.88rem; }
+
+/* Footer */
+.demo--clave .clave-footer { padding: 3rem 0; background: var(--clave-green-deep); color: var(--clave-paper); }
+.demo--clave .clave-footer__inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1.5rem 3rem; }
+.demo--clave .clave-footer .clave-brand small { color: var(--clave-cream-muted); }
+.demo--clave .clave-footer__info { color: var(--clave-cream-muted); font-size: 0.95rem; }
+.demo--clave .clave-footer__links { display: flex; flex-wrap: wrap; gap: 0.25rem 1.5rem; }
+.demo--clave .clave-footer__links a { display: inline-flex; align-items: center; min-height: 2.75rem; font-weight: 700; text-decoration-color: var(--clave-brass); text-decoration-thickness: 2px; }
+.demo--clave .clave-footer a:focus-visible { outline-color: var(--clave-brass); }
+.demo--clave .clave-piano a:focus-visible, .demo--clave .clave-piano button:focus-visible:not(.clave-key), .demo--clave .clave-steps a:focus-visible { outline-color: var(--clave-brass); }
+.demo--clave .clave-contact .clave-pill:focus-visible { outline-color: var(--clave-green-deep); }
+
+/* Motion, only when the visitor has not asked for less */
+@media (prefers-reduced-motion: no-preference) {
+  .demo--clave .clave-hero__line, .demo--clave .clave-hero__grid { animation: clave-rise 1s var(--clave-ease) both; }
+  .demo--clave .clave-hero__line + .clave-hero__line { animation-delay: 0.12s; }
+  .demo--clave .clave-hero__grid { animation-delay: 0.25s; }
+  .demo--clave .clave-accent path { animation: clave-draw 1.4s 0.6s var(--clave-ease) both; }
+  .demo--clave .clave-record { animation: clave-slide 1.4s 0.35s var(--clave-ease) both; }
+  .demo--clave .clave-marquee__track { animation: clave-marquee 45s linear infinite; }
+  .demo--clave .clave-marquee:hover .clave-marquee__track { animation-play-state: paused; }
+  .demo--clave .clave-contact__wave rect { animation: clave-eq 1.6s ease-in-out infinite alternate; }
+  .demo--clave .clave-contact__wave rect:nth-child(3n) { animation-delay: -0.5s; }
+  .demo--clave .clave-contact__wave rect:nth-child(3n + 1) { animation-delay: -1.1s; }
+  .demo--clave.has-reveal [data-reveal] { transition: opacity 0.9s var(--clave-ease), transform 0.9s var(--clave-ease); }
+  .demo--clave.has-reveal [data-reveal]:not(.is-in) { opacity: 0; transform: translateY(2rem); }
+  .demo--clave.has-reveal .clave-photo--2[data-reveal]:not(.is-in) { transform: translateY(3rem); }
+
+  @supports (animation-timeline: scroll()) {
+    .demo--clave .clave-record { animation: clave-slide 1.4s 0.35s var(--clave-ease) both, clave-spin linear both; animation-timeline: auto, scroll(root); }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .demo--clave .clave-marquee__track, .demo--clave .clave-contact__wave rect { animation: none; }
+  .demo--clave .clave-key, .demo--clave .clave-key.is-down, .demo--clave .clave-key:active { transform: none; transition: none; }
+}
+
+@keyframes clave-rise { from { opacity: 0; transform: translateY(1.5rem); } }
+@keyframes clave-draw { from { stroke-dashoffset: 420; } }
+@keyframes clave-slide { from { translate: -22% 8%; } }
+@keyframes clave-spin { to { rotate: 720deg; } }
+@keyframes clave-marquee { to { transform: translateX(-50%); } }
+@keyframes clave-eq { from { transform: scaleY(0.45); } to { transform: scaleY(1); } }
+
+/* Tablet and phone */
+@media (max-width: 64rem) {
+  .demo--clave .clave-header__links { display: none; }
+  .demo--clave .clave-header__inner { justify-content: space-between; }
+  .demo--clave .clave-hero__grid, .demo--clave .clave-courses__inner, .demo--clave .clave-piano__inner, .demo--clave .clave-prices__grid, .demo--clave .clave-finder__inner, .demo--clave .clave-faq__inner, .demo--clave .clave-contact__inner, .demo--clave .clave-house__head { grid-template-columns: minmax(0, 1fr); }
+  .demo--clave .clave-hero__art { order: -1; }
+  .demo--clave .clave-courses__head, .demo--clave .clave-contact__copy { position: static; }
+  .demo--clave .clave-house__head > p:last-child { margin-top: 1rem; }
+  .demo--clave .clave-steps__list { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 3rem; }
+  .demo--clave .clave-steps__list::before { display: none; }
+  .demo--clave .clave-steps__list li { padding-top: 0; padding-left: 4.25rem; }
+  .demo--clave .clave-steps__note { top: 0; }
+  .demo--clave .clave-steps__note::after { display: none; }
+}
+
+@media (max-width: 48rem) {
+  .demo--clave .clave-track summary { grid-template-columns: 2.25rem minmax(0, 1fr) 2.75rem; gap: 0.35rem 0.75rem; }
+  .demo--clave .clave-track__age, .demo--clave .clave-track__tags { grid-column: 2; }
+  .demo--clave .clave-track__tags { grid-row: 3; }
+  .demo--clave .clave-track .clave-plus { grid-column: 3; grid-row: 1 / span 3; }
+}
+
+@media (max-width: 40rem) {
+  .demo--clave { font-size: 1rem; }
+  .demo--clave .clave-brand { font-size: 1.3rem; }
+  .demo--clave .clave-brand small { display: none; }
+  .demo--clave .clave-brand__mark { width: 2.3rem; height: 2.3rem; }
+  .demo--clave .clave-hero__title { font-size: clamp(2.5rem, 11.4vw, 3.4rem); }
+  .demo--clave .clave-header__cta-full { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .demo--clave .clave-header__cta-short { display: inline; }
+  .demo--clave .clave-hero__art figcaption::before { align-self: flex-start; margin-top: 0.75em; }
+  .demo--clave .clave-facts div { flex-direction: column; align-items: flex-start; }
+  .demo--clave .clave-watermark { top: auto; bottom: -1.5rem; }
+  .demo--clave .clave-pill--wide { padding: 0.5rem 1rem; font-size: 1rem; }
+  .demo--clave .clave-photo__badge { letter-spacing: 0.04em; }
+  .demo--clave .clave-hero__art { padding: 1.5rem 12% 0 0; }
+  .demo--clave .clave-hero__photo { border-radius: 1.25rem; }
+  .demo--clave .clave-sticker { left: -0.5rem; bottom: 2.75rem; width: 5.75rem; }
+  .demo--clave .clave-hero__actions .clave-pill { width: 100%; }
+  .demo--clave .clave-track__body { padding-left: 0; }
+  .demo--clave .clave-track__body.has-photo { grid-template-columns: 6.5rem minmax(0, 1fr); gap: 1rem; }
+  .demo--clave .clave-instrument { margin-inline: calc(-1 * var(--clave-gutter) + 0.25rem); padding: 0.75rem 0.35rem 1rem; border-radius: 1.25rem; }
+  .demo--clave .clave-stand { grid-template-columns: minmax(0, 1fr); padding: 0.5rem 0.8rem; }
+  .demo--clave .clave-stand__readout { text-align: left; }
+  .demo--clave .clave-key__name { font-size: 0.8rem; }
+  .demo--clave .clave-instrument__foot { padding-inline: 0.5rem; }
+  .demo--clave .clave-tabs { display: flex; }
+  .demo--clave .clave-tabs button { flex: 1 1 auto; padding: 0 0.8rem; }
+  .demo--clave .clave-collage { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .demo--clave .clave-photo--1 { margin-top: 0; }
+  .demo--clave .clave-photo--2 { margin-top: 2.5rem; }
+  .demo--clave .clave-photo--3 { grid-column: 1 / -1; margin-top: 1rem; }
+  .demo--clave .clave-photo--3 img { aspect-ratio: 4 / 3; }
+  .demo--clave .clave-photo figcaption { font-size: 1.05rem; }
+  .demo--clave .clave-photo__badge { top: -1.5rem; right: 0.5rem; width: 5.75rem; height: 5.75rem; font-size: 0.66rem; }
+  .demo--clave .clave-steps__list { grid-template-columns: minmax(0, 1fr); }
+  .demo--clave .clave-builder__row { grid-template-columns: minmax(0, 1fr); }
+  .demo--clave .clave-faq__list p { padding-right: 0; }
+}
+
+@media (hover: none) {
+  .demo--clave .clave-key__letter { display: none; }
+}

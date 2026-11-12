@@ -1,0 +1,399 @@
+---
+import DemoBar from '@/components/demos/DemoBar.astro';
+import { withLocale, type DemoProject, type Locale } from '@/data/content';
+import { copy, images } from './escola-danca/content';
+
+interface Props { locale: Locale; project: DemoProject }
+
+const { locale, project } = Astro.props;
+const pt = locale === 'pt';
+const t = pt ? copy.pt : copy.en;
+
+const [balletCard, jazzCard, hiphopCard] = t.ritmos.cards;
+const photo = {
+  hero: { ...images.hero, alt: t.hero.alt },
+  ballet: { ...images.ballet, alt: balletCard.alt },
+  jazz: { ...images.jazz, alt: jazzCard.alt },
+  hiphop: { ...images.hiphop, alt: hiphopCard.alt },
+};
+type PhotoKey = keyof typeof photo;
+const quizResults = Object.fromEntries(Object.entries(t.quiz.results).map(([key, result]) => {
+  const image = photo[result.img as PhotoKey];
+  return [key, { name: result.name, why: result.why, days: result.days, chip: result.chip, src: image.src, w: image.w, h: image.h, alt: image.alt }];
+}));
+const firstResult = t.quiz.results.ballet;
+const ritmoChips = [...t.ritmos.cards.map((card) => card.chip), ...t.ritmos.salao.styles.map((style) => style.chip), t.ritmos.maduros.chip];
+const marqueeLoop = [...t.marquee, ...t.marquee];
+const star = 'M12 0C13 8 16 11 24 12C16 13 13 16 12 24C11 16 8 13 0 12C8 11 11 8 12 0Z';
+const arrow = 'M5 12h14M13 6l6 6-6 6';
+const check = 'M4 12.5l5 5L20 6.5';
+---
+
+<DemoBar locale={locale} project={project} />
+<article class="demo demo--compasso">
+  <nav class="co-nav" aria-label={t.nav.label} data-nav>
+    <div class="co-nav__inner">
+      <a class="co-brand" href="#compasso-inicio">
+        <svg class="co-brand__mark" viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="21" fill="var(--co-magenta)" /><path d="M30.5 13.2C24.6 8.6 12.4 10.6 11.8 21.6C11.2 32.2 22.6 36.2 30.8 30.4" fill="none" stroke="var(--co-cream)" stroke-width="3.4" stroke-linecap="round" /><path d="M17.5 25.5C20.5 21 24.5 19.5 28.5 21.5" fill="none" stroke="var(--co-cream)" stroke-width="2.2" stroke-linecap="round" /><circle cx="31.5" cy="20.5" r="3.4" fill="var(--co-orange)" /></svg>
+        <span class="co-brand__name">Estúdio Compasso<small>{t.tagline}</small></span>
+      </a>
+      <div class="co-nav__links">
+        <a href="#compasso-ritmos">{t.nav.ritmos}</a>
+        <a href="#compasso-quiz">{t.nav.quiz}</a>
+        <a href="#compasso-horarios">{t.nav.horarios}</a>
+        <a href="#compasso-planos">{t.nav.planos}</a>
+        <a href="#compasso-duvidas">{t.nav.faq}</a>
+      </div>
+      <a class="co-btn co-btn--small" href="#compasso-contato"><span class="co-nav__cta-long">{t.nav.cta}</span><span class="co-nav__cta-short">{t.nav.ctaShort}</span></a>
+    </div>
+  </nav>
+
+  <header id="compasso-inicio" class="co-hero">
+    <svg class="co-flow co-flow--hero" viewBox="0 0 1440 900" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M-40 850C260 800 520 900 780 790S1120 520 1500 470" />
+      <path d="M-40 885C280 845 560 930 820 830S1160 580 1500 540" />
+    </svg>
+    <div class="co-shell co-hero__grid">
+      <div class="co-hero__copy">
+        <p class="co-eyebrow">{t.hero.eyebrow}</p>
+        <h1 class="co-hero__title">
+          <span class="co-hero__line">{t.hero.title}</span>
+          <span class="co-hero__line"><em class="co-accent">{t.hero.accent}<svg class="co-underline" viewBox="0 0 300 24" preserveAspectRatio="none" aria-hidden="true"><path d="M4 15C58 6 118 4 178 9S268 20 296 8" /></svg></em></span>
+        </h1>
+        <p class="co-hero__lede">{t.hero.lede}</p>
+        <div class="co-hero__actions">
+          <a class="co-btn" href="#compasso-contato">{t.hero.cta}<svg viewBox="0 0 24 24" aria-hidden="true"><path d={arrow} /></svg></a>
+          <a class="co-link" href="#compasso-quiz">{t.hero.secondary}</a>
+        </div>
+        <dl class="co-hero__facts">
+          {t.hero.facts.map((fact) => <div><dt>{fact.term}</dt><dd>{fact.value}</dd></div>)}
+        </dl>
+      </div>
+      <div class="co-hero__collage">
+        <figure class="co-arch"><img src={images.hero.src} alt={t.hero.alt} width={images.hero.w} height={images.hero.h} fetchpriority="high" /></figure>
+        <figure class="co-polaroid">
+          <img src={images.hiphop.src} alt={t.hero.polaroidAlt} width={images.hiphop.w} height={images.hiphop.h} />
+          <figcaption>{t.hero.polaroidCaption}</figcaption>
+        </figure>
+        <div class="co-badge" aria-hidden="true">
+          <svg class="co-badge__ring" viewBox="0 0 200 200"><defs><path id="co-badge-path" d="M100 100m-76 0a76 76 0 1 1 152 0a76 76 0 1 1-152 0" /></defs><text><textPath href="#co-badge-path" textLength="474" lengthAdjust="spacing">{t.hero.badge}</textPath></text></svg>
+          <span class="co-badge__center"><b>{t.hero.badgeTop}</b>{t.hero.badgeBottom}</span>
+        </div>
+        <p class="co-sticker">{t.hero.sticker}</p>
+      </div>
+    </div>
+  </header>
+
+  <div class="co-marquee">
+    <p class="co-visually-hidden">{t.marqueeLabel}: {t.marquee.join(', ')}.</p>
+    <div class="co-marquee__track" aria-hidden="true">
+      {marqueeLoop.map((name) => (
+        <span class="co-marquee__item">{name}<svg viewBox="0 0 24 24"><path d={star} /></svg></span>
+      ))}
+    </div>
+  </div>
+
+  <section id="compasso-ritmos" class="co-ritmos" aria-labelledby="co-ritmos-title">
+    <div class="co-shell">
+      <div class="co-head co-reveal">
+        <h2 id="co-ritmos-title" class="co-title">{t.ritmos.title} <em>{t.ritmos.accent}</em></h2>
+        <p>{t.ritmos.sub}</p>
+      </div>
+      <div class="co-ritmos__grid">
+        {t.ritmos.cards.map((card) => {
+          const image = images[card.img as 'ballet' | 'jazz' | 'hiphop'];
+          return (
+            <article class={`co-ritmo co-ritmo--${card.id} co-reveal`}>
+              <figure class="co-ritmo__photo"><img src={image.src} alt={card.alt} width={image.w} height={image.h} loading="lazy" /></figure>
+              <p class="co-ritmo__ages">{card.ages}</p>
+              <h3>{card.name}</h3>
+              <p class="co-ritmo__text">{card.text}</p>
+              <details class="co-wear">
+                <summary><span class="co-plus" aria-hidden="true"></span>{t.ritmos.wearLabel}</summary>
+                <p>{card.wear}</p>
+              </details>
+              <a class="co-link co-link--small" href="#compasso-contato" data-prefill-ritmo={card.chip}>{t.ritmos.trial}</a>
+            </article>
+          );
+        })}
+      </div>
+      <div class="co-ritmos__duo">
+        <article class="co-salao co-reveal">
+          <figure class="co-salao__photo"><img src={images.hero.src} alt={t.ritmos.salao.alt} width={images.hero.w} height={images.hero.h} loading="lazy" /></figure>
+          <div class="co-salao__body">
+            <p class="co-ritmo__ages">{t.ritmos.salao.ages}</p>
+            <h3>{t.ritmos.salao.name}</h3>
+            <p>{t.ritmos.salao.text}</p>
+            <ul class="co-salao__styles">
+              {t.ritmos.salao.styles.map((style) => (
+                <li><a href="#compasso-contato" data-prefill-ritmo={style.chip}><span>{style.name}</span><small>{style.days}</small></a></li>
+              ))}
+            </ul>
+            <details class="co-wear">
+              <summary><span class="co-plus" aria-hidden="true"></span>{t.ritmos.wearLabel}</summary>
+              <p>{t.ritmos.salao.wear}</p>
+            </details>
+          </div>
+          <p class="co-salao__sticker">{t.ritmos.salao.sticker}</p>
+        </article>
+        <article class="co-maduros co-reveal">
+          <p class="co-maduros__big" aria-hidden="true">{t.ritmos.maduros.big}</p>
+          <p class="co-ritmo__ages">{t.ritmos.maduros.ages}</p>
+          <h3>{t.ritmos.maduros.name}</h3>
+          <p>{t.ritmos.maduros.text}</p>
+          <details class="co-wear">
+            <summary><span class="co-plus" aria-hidden="true"></span>{t.ritmos.wearLabel}</summary>
+            <p>{t.ritmos.maduros.wear}</p>
+          </details>
+          <a class="co-link co-link--small" href="#compasso-contato" data-prefill-ritmo={t.ritmos.maduros.chip}>{t.ritmos.trial}</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="compasso-quiz" class="co-quiz co-waved" aria-labelledby="co-quiz-title">
+    <svg class="co-flow co-flow--quiz" viewBox="0 0 1440 900" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M-40 260C220 120 420 420 700 300S1100 80 1500 220" />
+      <path d="M-40 760C260 640 460 900 760 780S1180 560 1500 700" />
+    </svg>
+    <div class="co-shell co-quiz__grid">
+      <div class="co-quiz__intro co-reveal">
+        <p class="co-eyebrow">{t.quiz.eyebrow}</p>
+        <h2 id="co-quiz-title" class="co-title">{t.quiz.title} <em>{t.quiz.accent}</em></h2>
+        <p>{t.quiz.lede}</p>
+        <ul class="co-quiz__perks">{t.quiz.perks.map((perk) => <li>{perk}</li>)}</ul>
+      </div>
+      <div
+        class="co-quiz__card co-reveal"
+        role="group"
+        aria-label={t.quiz.group}
+        data-quiz
+        data-results={JSON.stringify(quizResults)}
+        data-progress={t.quiz.progress}
+        data-done={t.quiz.progressDone}
+      >
+        <div class="co-quiz__progress" aria-hidden="true">
+          <div class="co-quiz__bars"><span data-quiz-bar class="is-on"></span><span data-quiz-bar></span><span data-quiz-bar></span></div>
+          <p data-quiz-progress>{t.quiz.progress.replace('{n}', '1')}</p>
+        </div>
+        {t.quiz.questions.map((question, index) => (
+          <div class="co-quiz__step" data-quiz-step>
+            <h3 tabindex="-1" data-quiz-focus>{question.title}</h3>
+            <div class="co-quiz__options">
+              {question.options.map((option) => (
+                <button type="button" class="co-option" data-value={option.value} aria-pressed="false">
+                  <span class="co-option__label">{option.label}</span>
+                  <span class="co-option__hint">{option.hint}</span>
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d={arrow} /></svg>
+                </button>
+              ))}
+            </div>
+            {index > 0 && <button type="button" class="co-quiz__back" data-quiz-back>{t.quiz.back}</button>}
+          </div>
+        ))}
+        <div class="co-quiz__result" data-quiz-result hidden>
+          <figure class="co-quiz__photo"><img src={images.ballet.src} alt={balletCard.alt} width={images.ballet.w} height={images.ballet.h} loading="lazy" data-key="ballet" /></figure>
+          <div class="co-quiz__answer">
+            <h3 tabindex="-1" data-quiz-focus><span>{t.quiz.resultEyebrow}</span> <em data-result-name>{firstResult.name}</em></h3>
+            <p data-result-why>{firstResult.why}</p>
+            <div class="co-quiz__days"><p>{t.quiz.daysLabel}</p><p data-result-days>{firstResult.days}</p></div>
+            <div class="co-quiz__actions">
+              <a class="co-btn co-btn--orange" href="#compasso-contato" data-prefill-ritmo={firstResult.chip}>{t.quiz.cta}<svg viewBox="0 0 24 24" aria-hidden="true"><path d={arrow} /></svg></a>
+              <button type="button" class="co-quiz__back" data-quiz-restart>{t.quiz.restart}</button>
+            </div>
+          </div>
+        </div>
+        <noscript><p class="demo-noscript">{t.quiz.noscript}</p></noscript>
+      </div>
+    </div>
+  </section>
+
+  <section id="compasso-horarios" class="co-schedule co-waved" aria-labelledby="co-schedule-title" data-schedule>
+    <div class="co-shell co-schedule__grid">
+      <div class="co-schedule__intro co-reveal">
+        <h2 id="co-schedule-title" class="co-title">{t.schedule.title} <em>{t.schedule.accent}</em></h2>
+        <p>{t.schedule.sub}</p>
+        <ul class="co-legend">
+          {Object.entries(t.schedule.families).map(([family, label]) => <li class={`co-fam co-fam--${family}`}>{label}</li>)}
+        </ul>
+        <p class="co-schedule__note">{t.schedule.hours}</p>
+        <p class="co-schedule__note">{t.schedule.makeup}</p>
+      </div>
+      <div class="co-schedule__board co-reveal">
+        <div class="co-tabs" role="tablist" aria-label={t.schedule.tabsLabel} data-tabs>
+          {t.schedule.days.map((day, index) => (
+            <button type="button" role="tab" id={`co-tab-${day.id}`} aria-controls={`co-day-${day.id}`} aria-selected={index === 0 ? 'true' : 'false'} tabindex={index === 0 ? 0 : -1}>
+              <span aria-hidden="true">{day.short}</span><span class="co-visually-hidden">{day.long}</span>
+              <small data-today hidden>{t.schedule.today}</small>
+            </button>
+          ))}
+        </div>
+        {t.schedule.days.map((day) => (
+          <div class="co-day" id={`co-day-${day.id}`} role="tabpanel" aria-labelledby={`co-tab-${day.id}`}>
+            <h3>{day.long}</h3>
+            <ul>
+              {day.classes.map((slot) => (
+                <li>
+                  <span class="co-day__time">{slot.time}</span>
+                  <span class="co-day__name">{slot.name}<small>{slot.detail}</small></span>
+                  <span class={`co-fam co-fam--${slot.family}`}>{t.schedule.families[slot.family]}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="co-steps co-waved" aria-labelledby="co-steps-title">
+    <div class="co-shell">
+      <h2 id="co-steps-title" class="co-title co-reveal">{t.steps.title} <em>{t.steps.accent}</em></h2>
+      <div class="co-steps__track">
+        <svg class="co-steps__line" viewBox="0 0 1200 80" preserveAspectRatio="none" aria-hidden="true"><path d="M0 50C150 10 250 80 400 44S650 6 800 40S1050 84 1200 30" /></svg>
+        <ol class="co-steps__list">
+          {t.steps.items.map((step, index) => (
+            <li class="co-reveal">
+              <span class="co-steps__num" aria-hidden="true">{index + 1}</span>
+              <h3>{step.title}</h3>
+              <p>{step.text}</p>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section id="compasso-planos" class="co-plans co-waved" aria-labelledby="co-plans-title">
+    <p class="co-plans__watermark" aria-hidden="true">{t.plans.watermark}</p>
+    <div class="co-shell">
+      <div class="co-head co-reveal">
+        <h2 id="co-plans-title" class="co-title">{t.plans.title} <em>{t.plans.accent}</em></h2>
+        <p>{t.plans.sub}</p>
+      </div>
+      <div class="co-plans__grid">
+        {t.plans.list.map((plan) => (
+          <article class={`co-plan co-reveal${'tag' in plan ? ' co-plan--featured' : ''}`}>
+            {'tag' in plan && <p class="co-plan__tag">{plan.tag}</p>}
+            <h3>{plan.name}</h3>
+            <p class="co-plan__price"><small>{t.plans.from}</small><span><abbr title="reais">R$</abbr><b>{plan.price}</b>{t.plans.perMonth}</span></p>
+            <p class="co-plan__note">{plan.note}</p>
+            <ul>{plan.items.map((item) => <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d={check} /></svg>{item}</li>)}</ul>
+            <a class="co-btn co-btn--block" href="#compasso-contato">{t.plans.cta}</a>
+          </article>
+        ))}
+      </div>
+      <div class="co-extras co-reveal">
+        <h3>{t.plans.extrasTitle}</h3>
+        <dl>
+          {t.plans.extras.map((extra) => <div><dt>{extra.title}<span>{extra.price}</span></dt><dd>{extra.text}</dd></div>)}
+        </dl>
+      </div>
+      <p class="co-plans__included">{t.plans.included}</p>
+    </div>
+  </section>
+
+  <section class="co-mostra co-waved" aria-labelledby="co-mostra-title">
+    <div class="co-shell co-mostra__grid">
+      <figure class="co-mostra__photo co-reveal">
+        <img src={images.jazz.src} alt={t.mostra.alt} width={images.jazz.w} height={images.jazz.h} loading="lazy" />
+        <figcaption>{t.mostra.caption}</figcaption>
+      </figure>
+      <div class="co-mostra__copy co-reveal">
+        <p class="co-eyebrow">{t.mostra.eyebrow}</p>
+        <h2 id="co-mostra-title" class="co-title">{t.mostra.title} <em>{t.mostra.accent}</em></h2>
+        <p>{t.mostra.text}</p>
+        <p>{t.mostra.optional}</p>
+        <div class="co-ticket">
+          <h3>{t.mostra.ticketTitle}</h3>
+          <dl>{t.mostra.costs.map((cost) => <div><dt>{cost.term}</dt><dd>{cost.value}</dd></div>)}</dl>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="compasso-duvidas" class="co-faq co-waved" aria-labelledby="co-faq-title">
+    <div class="co-shell co-faq__grid">
+      <div class="co-faq__intro co-reveal">
+        <h2 id="co-faq-title" class="co-title">{t.faq.title} <em>{t.faq.accent}</em></h2>
+        <div class="co-faq__aside">
+          <p class="co-faq__aside-title">{t.faq.asideTitle}</p>
+          <p>{t.faq.asideText}</p>
+          <a class="co-link" href="#compasso-contato">{t.faq.asideCta}</a>
+        </div>
+      </div>
+      <div class="co-faq__list co-reveal">
+        {t.faq.items.map((item) => (
+          <details class="co-faq__item">
+            <summary><span>{item.q}</span><span class="co-plus" aria-hidden="true"></span></summary>
+            <p>{item.a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section id="compasso-contato" class="co-contact co-waved" aria-labelledby="co-contact-title">
+    <svg class="co-flow co-flow--contact" viewBox="0 0 1440 900" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M-40 840C240 740 420 920 720 820S1160 600 1500 690" />
+    </svg>
+    <div class="co-shell co-contact__grid">
+      <div class="co-contact__copy">
+        <h2 id="co-contact-title" class="co-title">{t.contact.title} <em>{t.contact.accent}</em></h2>
+        <p>{t.contact.lede}</p>
+        <ul>{t.contact.points.map((point) => <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d={check} /></svg>{point}</li>)}</ul>
+      </div>
+      <div class="co-builder" role="group" aria-label={t.contact.group} data-builder data-msg={JSON.stringify(t.contact.msg)}>
+        <label class="co-field">
+          <span>{t.contact.nameLabel}</span>
+          <input type="text" name="co-nome" autocomplete="given-name" maxlength="60" placeholder={t.contact.namePlaceholder} />
+        </label>
+        <fieldset class="co-chips">
+          <legend>{t.contact.ritmoLabel}</legend>
+          {ritmoChips.map((chip) => <label><input type="checkbox" name="co-ritmo" value={chip} /><span>{chip}</span></label>)}
+        </fieldset>
+        <fieldset class="co-chips">
+          <legend>{t.contact.ageLabel}</legend>
+          {t.contact.ages.map((age) => <label><input type="radio" name="co-idade" value={age} /><span>{age}</span></label>)}
+        </fieldset>
+        <div class="co-builder__pair">
+          <fieldset class="co-chips">
+            <legend>{t.contact.expLabel}</legend>
+            {t.contact.exps.map((exp) => <label><input type="radio" name="co-exp" value={exp} /><span>{exp}</span></label>)}
+          </fieldset>
+          <fieldset class="co-chips">
+            <legend>{t.contact.periodLabel}</legend>
+            {t.contact.periods.map((period) => <label><input type="radio" name="co-periodo" value={period} /><span>{period}</span></label>)}
+          </fieldset>
+        </div>
+        <button type="button" class="co-btn co-btn--block co-btn--plum" data-build>{t.contact.submit}<svg viewBox="0 0 24 24" aria-hidden="true"><path d={arrow} /></svg></button>
+        <div class="co-preview">
+          <p class="co-preview__label">{t.contact.previewLabel}</p>
+          <p class="co-preview__bubble" role="status" aria-live="polite">{t.contact.initial}</p>
+        </div>
+        <p class="co-builder__note">{t.contact.note}</p>
+        <noscript><p class="demo-noscript">{t.contact.noscript}</p></noscript>
+      </div>
+    </div>
+  </section>
+
+  <footer class="co-footer co-waved">
+    <div class="co-shell co-footer__inner">
+      <a class="co-brand" href="#compasso-inicio">
+        <svg class="co-brand__mark" viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="21" fill="var(--co-magenta)" /><path d="M30.5 13.2C24.6 8.6 12.4 10.6 11.8 21.6C11.2 32.2 22.6 36.2 30.8 30.4" fill="none" stroke="var(--co-cream)" stroke-width="3.4" stroke-linecap="round" /><path d="M17.5 25.5C20.5 21 24.5 19.5 28.5 21.5" fill="none" stroke="var(--co-cream)" stroke-width="2.2" stroke-linecap="round" /><circle cx="31.5" cy="20.5" r="3.4" fill="var(--co-orange)" /></svg>
+        <span class="co-brand__name">Estúdio Compasso<small>{t.tagline}</small></span>
+      </a>
+      <p>{t.footer.hours}</p>
+      <div class="co-footer__links">
+        <a href={withLocale(locale, 'contact')}>{t.footer.contact}</a>
+        <a href={withLocale(locale, 'work')}>{t.footer.back}</a>
+      </div>
+    </div>
+  </footer>
+</article>
+
+<script>
+  import { initCompasso } from './escola-danca/client';
+
+  initCompasso();
+</script>
