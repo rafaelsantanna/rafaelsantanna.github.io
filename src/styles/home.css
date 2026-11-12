@@ -188,6 +188,8 @@
 
 /* Experience band */
 .showroom, .home-services { padding-block-end: 0; }
+/* The stack strip now follows the demos, so it needs the same breathing room as a new section. */
+.showroom + .strip { margin-block-start: clamp(4rem, 3rem + 4vw, 7rem); }
 .experience { margin-block-start: var(--section-space); border-block: 1px solid var(--line); background: linear-gradient(180deg, var(--surface-1), var(--canvas) 85%); }
 .experience__grid { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: clamp(2.5rem, 2rem + 4vw, 6rem); }
 .experience__label { margin-block-end: var(--space-5); color: var(--text-muted); font-family: var(--font-display); font-size: var(--step--1); font-weight: 520; letter-spacing: 0; }
