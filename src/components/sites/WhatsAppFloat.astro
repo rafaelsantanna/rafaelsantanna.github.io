@@ -1,0 +1,57 @@
+---
+import Icon from '@/components/ui/Icon.astro';
+import type { Locale } from '@/data/content';
+
+interface Props { href: string; locale: Locale }
+
+const { href, locale } = Astro.props;
+const pt = locale === 'pt';
+// Appears once the page hero leaves the screen and hides again near the closing call to action.
+---
+
+<a class="whatsapp-float" href={href} rel="noopener" hidden data-whatsapp-float>
+  <Icon name="message" />{pt ? 'Chamar no WhatsApp' : 'WhatsApp me'}
+</a>
+
+<script>
+  const float = document.querySelector<HTMLElement>('[data-whatsapp-float]');
+  const hero = document.querySelector('.sites-hero, .niche-hero');
+  const close = document.querySelector('.sites-close');
+  if (float && hero && 'IntersectionObserver' in window) {
+    float.hidden = false;
+    const visible = { hero: true, close: false };
+    const update = () => float.classList.toggle('is-shown', !visible.hero && !visible.close);
+    new IntersectionObserver(([entry]) => { visible.hero = entry.isIntersecting; update(); }).observe(hero);
+    if (close) new IntersectionObserver(([entry]) => { visible.close = entry.isIntersecting; update(); }).observe(close);
+  }
+</script>
+
+<style>
+  .whatsapp-float {
+    position: fixed;
+    inset-inline-end: max(1rem, env(safe-area-inset-right));
+    inset-block-end: max(1rem, env(safe-area-inset-bottom));
+    z-index: 40;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 3rem;
+    padding: 0.7rem 1.1rem;
+    border-radius: var(--radius-pill);
+    background: var(--violet);
+    color: var(--on-violet);
+    font-family: var(--font-display);
+    font-size: 0.9375rem;
+    font-weight: 650;
+    text-decoration: none;
+    box-shadow: 0 14px 30px -12px var(--shade-strong);
+    opacity: 0;
+    visibility: hidden;
+    translate: 0 1rem;
+    transition: opacity var(--dur) var(--ease), translate var(--dur) var(--ease), visibility 0s linear var(--dur);
+  }
+  .whatsapp-float.is-shown { opacity: 1; visibility: visible; translate: 0 0; transition-delay: 0s; }
+  .whatsapp-float:hover { background: var(--violet-hover); }
+  .whatsapp-float:focus-visible { outline: 2px solid var(--text); outline-offset: 3px; }
+  .whatsapp-float .icon { width: 1.2rem; height: 1.2rem; }
+</style>

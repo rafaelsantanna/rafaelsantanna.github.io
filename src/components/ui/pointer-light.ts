@@ -1,5 +1,5 @@
 // Feeds the pointer position to cards so their hover light follows the cursor (styles in motion.css).
-const selector = '.project-card, .niche-card, .sites-steps li, .offer-box, .callout';
+const selector = '.project-card, .landing-card, .sites-steps li, .offer-box, .callout';
 
 export function trackPointerLight(): void {
   if (!matchMedia('(hover: hover) and (pointer: fine)').matches) return;

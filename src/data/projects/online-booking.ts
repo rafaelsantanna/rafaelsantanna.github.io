@@ -4,7 +4,7 @@ import { demoDisclaimer, previewFor } from './shared.ts';
 export const project: DemoProject = {
   slug: 'online-booking',
   name: 'Corte & Prosa',
-  kind: 'site',
+  kind: 'product',
   category: { en: 'Website and booking / Barbershop', pt: 'Site e agendamento / Barbearia' },
   tagline: { en: 'Book your chair in under a minute.', pt: 'Agende seu horário em menos de um minuto.' },
   summary: {

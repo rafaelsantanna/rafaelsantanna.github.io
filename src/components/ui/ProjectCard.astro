@@ -1,42 +1,37 @@
 ---
 import Icon from '@/components/ui/Icon.astro';
 import ProjectFrame from '@/components/ui/ProjectFrame.astro';
+import SystemMini from '@/components/ui/SystemMini.astro';
 import { paletteStyle } from '@/components/ui/palette';
 import { copy, localize, withLocale, type DemoProject, type Locale } from '@/data/content';
 
 interface Props {
   project: DemoProject;
   locale: Locale;
-  /** 1-based position shown as "01"; omit to hide. */
-  number?: number;
   headingLevel?: 'h2' | 'h3' | 'h4';
   loading?: 'lazy' | 'eager';
 }
 
-const { project, locale, number, headingLevel = 'h3', loading = 'lazy' } = Astro.props;
+const { project, locale, headingLevel = 'h3', loading = 'lazy' } = Astro.props;
 const t = copy[locale];
+const pt = locale === 'pt';
 const Heading = headingLevel;
-const demoHref = withLocale(locale, `demos/${project.slug}`);
+const tryItems = project.highlights[locale].slice(0, 2).map((item) => item.title.charAt(0).toLowerCase() + item.title.slice(1));
 ---
 
 <article class="project-card" style={paletteStyle(project.palette)} aria-labelledby={`card-${project.slug}`}>
-  <a class="project-card__stage stage" href={demoHref} tabindex="-1">
+  <div class="project-card__stage stage">
     <ProjectFrame project={project} locale={locale} loading={loading} sizes="(min-width: 64em) 33vw, (min-width: 40em) 50vw, 100vw" />
-  </a>
+    <SystemMini project={project} locale={locale} />
+  </div>
   <div class="project-card__body">
-    <p class="project-card__meta">
-      <span class="eyebrow">{localize(project.category, locale)}</span>
-      {number !== undefined && <span class="project-card__index">{String(number).padStart(2, '0')}</span>}
-    </p>
-    <Heading id={`card-${project.slug}`}>{project.name}</Heading>
-    <p class="project-card__tagline">{localize(project.tagline, locale)}</p>
-    <div class="button-row">
-      <a class="button button--primary button--small" href={demoHref} data-icon="up-right">
-        {t.openDemo}<span class="visually-hidden">: {project.name}</span><Icon name="arrow-up-right" />
-      </a>
-      <a class="text-link" href={withLocale(locale, `work/${project.slug}`)}>
-        {t.viewProject}<span class="visually-hidden">: {project.name}</span><Icon name="arrow-right" />
-      </a>
-    </div>
+    <p class="eyebrow">{localize(project.category, locale)}</p>
+    <Heading id={`card-${project.slug}`} class="project-card__title">
+      <a class="project-card__link" href={withLocale(locale, `work/${project.slug}`)}>{project.name}</a>
+    </Heading>
+    <p class="project-card__try"><Icon name="cursor" /><span>{pt ? 'Teste:' : 'Try:'} {tryItems.join(pt ? ' e ' : ' and ')}</span></p>
+    <a class="project-card__demo" href={withLocale(locale, `demos/${project.slug}`)}>
+      {t.openDemo}<span class="visually-hidden">: {project.name}</span><Icon name="arrow-up-right" />
+    </a>
   </div>
 </article>

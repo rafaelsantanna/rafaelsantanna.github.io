@@ -1,0 +1,58 @@
+---
+import Icon from '@/components/ui/Icon.astro';
+import { paletteStyle } from '@/components/ui/palette';
+import { localize, withLocale, type DemoProject, type Locale } from '@/data/content';
+import { brl, niches, offer } from '@/data/small-business';
+
+interface Props {
+  project: DemoProject;
+  locale: Locale;
+  /** Where the whole card leads: the segment offer page (default) or the project case page. */
+  target?: 'niche' | 'project';
+  headingLevel?: 'h2' | 'h3' | 'h4';
+  loading?: 'lazy' | 'eager';
+}
+
+const { project, locale, target = 'niche', headingLevel = 'h3', loading = 'lazy' } = Astro.props;
+const Heading = headingLevel;
+const pt = locale === 'pt';
+const niche = niches.find((item) => item.demo === project.slug);
+const href = withLocale(locale, target === 'niche' && niche ? `sites/${niche.slug}` : `work/${project.slug}`);
+const strip = `/images/projects/${pt ? '' : 'en/'}mobile/${project.slug}.webp`;
+const segment = niche ? localize(niche.label, locale) : localize(project.category, locale);
+const tryOut = niche ? localize(niche.tryOut, locale) : project.highlights[locale][0]?.title;
+const price = niche?.price ?? offer.price;
+---
+
+<article class="landing-card" style={paletteStyle(project.palette)} aria-labelledby={`landing-${project.slug}`}>
+  <div class="landing-card__stage">
+    <div class="phone">
+      <div class="phone__screen">
+        <img
+          class="phone__strip"
+          src={strip}
+          width="390"
+          height="4000"
+          alt={pt ? `Versão de celular da página ${project.name}, do topo até o pedido pelo WhatsApp` : `Mobile version of the ${project.name} page, from the top down to the WhatsApp request`}
+          loading={loading}
+          decoding="async"
+        />
+      </div>
+    </div>
+  </div>
+  <div class="landing-card__body">
+    <p class="eyebrow">{segment}</p>
+    <Heading id={`landing-${project.slug}`} class="landing-card__title">
+      <a class="landing-card__link" href={href}>{project.name}</a>
+    </Heading>
+    {tryOut && <p class="landing-card__try"><Icon name="cursor" /><span>{pt ? 'Teste:' : 'Try:'} {tryOut}</span></p>}
+    <ul class="landing-card__facts">
+      <li>{pt ? `${offer.businessDays} dias úteis` : `${offer.businessDays} business days`}</li>
+      <li>{pt ? 'a partir de' : 'from'} {brl(price)}</li>
+      <li>{pt ? 'botão no seu WhatsApp' : 'button to your WhatsApp'}</li>
+    </ul>
+    <a class="landing-card__demo" href={withLocale(locale, `demos/${project.slug}`)}>
+      {pt ? 'Abrir o modelo' : 'Open the model'}<span class="visually-hidden">: {project.name}</span><Icon name="arrow-up-right" />
+    </a>
+  </div>
+</article>

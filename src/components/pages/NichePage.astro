@@ -1,10 +1,12 @@
 ---
 import Icon from '@/components/ui/Icon.astro';
 import ProjectFrame from '@/components/ui/ProjectFrame.astro';
-import NicheCard from '@/components/sites/NicheCard.astro';
+import LandingCard from '@/components/ui/LandingCard.astro';
 import OfferBox from '@/components/sites/OfferBox.astro';
 import SitesFaq from '@/components/sites/SitesFaq.astro';
-import { findProject, identity, localize, withLocale, type Locale } from '@/data/content';
+import SitesAuthor from '@/components/sites/SitesAuthor.astro';
+import WhatsAppFloat from '@/components/sites/WhatsAppFloat.astro';
+import { findProject, identity, localize, withLocale, type DemoProject, type Locale } from '@/data/content';
 import { nicheFaq, niches, sitesCopy, whatsappLink, type Niche } from '@/data/small-business';
 
 interface Props { locale: Locale; niche: Niche }
@@ -16,7 +18,7 @@ const project = findProject(niche.demo);
 if (!project) throw new Error(`Unknown demo for niche ${niche.slug}: ${niche.demo}`);
 const whatsapp = whatsappLink(identity.phoneE164, locale, niche);
 const demoHref = withLocale(locale, `demos/${project.slug}`);
-const others = niches.filter((item) => item.slug !== niche.slug);
+const others = niches.filter((item) => item.slug !== niche.slug).map((item) => findProject(item.demo)).filter((item): item is DemoProject => item !== undefined);
 const ui = pt
   ? {
       back: 'Sites para pequenos negócios',
@@ -26,7 +28,6 @@ const ui = pt
       whyIndex: 'Por que vale a pena',
       includesIndex: 'O que entra na página',
       includesTitle: 'Tudo o que o cliente pergunta, respondido antes.',
-      searchesLabel: 'Esta página também responde a quem procura:',
       howIndex: 'Como funciona',
       othersTitle: 'Outros segmentos',
       closeTitle: 'Quer a sua no ar ainda esta semana?',
@@ -40,7 +41,6 @@ const ui = pt
       whyIndex: 'Why it is worth it',
       includesIndex: 'What goes on the page',
       includesTitle: 'Everything customers ask, answered up front.',
-      searchesLabel: 'This page also answers people looking for:',
       howIndex: 'How it works',
       othersTitle: 'Other segments',
       closeTitle: 'Want yours live this week?',
@@ -87,9 +87,8 @@ const ui = pt
         <ul class="niche-includes__list">
           {niche.includes[locale].map((item) => <li><Icon name="check" />{item}</li>)}
         </ul>
-        <p class="niche-includes__searches">{ui.searchesLabel} {niche.searches[locale].join(', ')}.</p>
       </div>
-      <OfferBox locale={locale} price={niche.price} />
+      <OfferBox locale={locale} price={niche.price} compact />
     </div>
   </section>
 
@@ -116,8 +115,8 @@ const ui = pt
   <section class="section" aria-labelledby="niche-others-title">
     <div class="shell">
       <h2 id="niche-others-title" class="niche-others__title">{ui.othersTitle}</h2>
-      <ul class="niche-grid niche-grid--compact">
-        {others.map((item) => <li><NicheCard niche={item} locale={locale} /></li>)}
+      <ul class="landing-grid">
+        {others.map((item) => <li><LandingCard project={item} locale={locale} /></li>)}
       </ul>
     </div>
   </section>
@@ -126,6 +125,7 @@ const ui = pt
     <div class="shell sites-close__inner" data-reveal>
       <h2 id="niche-close-title">{ui.closeTitle}</h2>
       <p class="lede">{ui.closeText}</p>
+      <SitesAuthor locale={locale} />
       <div class="button-row">
         <a class="button button--primary" href={whatsapp} rel="noopener">{ui.order}<Icon name="message" /></a>
         <a class="button button--secondary" href={withLocale(locale, 'sites')}>{ui.back}<Icon name="arrow-right" /></a>
@@ -133,3 +133,5 @@ const ui = pt
     </div>
   </section>
 </article>
+
+<WhatsAppFloat href={whatsapp} locale={locale} />

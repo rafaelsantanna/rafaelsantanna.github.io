@@ -3,9 +3,15 @@ import Icon from '@/components/ui/Icon.astro';
 import type { Locale } from '@/data/content';
 import { brl, offer, sitesCopy } from '@/data/small-business';
 
-interface Props { locale: Locale; price?: number; headingLevel?: 'h2' | 'h3' }
+interface Props {
+  locale: Locale;
+  price?: number;
+  headingLevel?: 'h2' | 'h3';
+  /** On segment pages the page already lists what goes in, so the box keeps only price, terms, and extras. */
+  compact?: boolean;
+}
 
-const { locale, price = offer.price, headingLevel = 'h2' } = Astro.props;
+const { locale, price = offer.price, headingLevel = 'h2', compact = false } = Astro.props;
 const Heading = headingLevel;
 const pt = locale === 'pt';
 const c = sitesCopy[locale];
@@ -18,9 +24,9 @@ const terms = pt
   <Heading id="offer-box-title" class="offer-box__title">{pt ? 'Quanto custa' : 'Price'}</Heading>
   <p class="offer-box__price"><span>{pt ? 'a partir de' : 'from'}</span> <strong>{brl(price)}</strong></p>
   <p class="offer-box__terms">{terms}</p>
-  <ul class="offer-box__list">
-    {c.includes.map((item) => <li><Icon name="check" />{item}</li>)}
-  </ul>
+  {compact
+    ? <p class="offer-box__terms">{pt ? 'Inclui domínio e hospedagem do primeiro ano, versão para celular, preparo para Google e IA e até duas rodadas de ajuste.' : 'Includes the first year of domain and hosting, a mobile version, preparation for Google and AI search, and up to two rounds of changes.'}</p>
+    : <ul class="offer-box__list">{c.includes.map((item) => <li><Icon name="check" />{item}</li>)}</ul>}
   <details class="offer-box__extras">
     <summary>{pt ? 'Depois do primeiro ano e o que fica à parte' : 'After the first year and what costs extra'}</summary>
     <ul>{c.extras.map((item) => <li>{item}</li>)}</ul>

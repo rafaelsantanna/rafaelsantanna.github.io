@@ -124,21 +124,15 @@
 .landing-pair__head h3 { font-size: var(--step-3); letter-spacing: var(--tracking-display); line-height: 1.1; }
 .landing-pair__head p { max-width: 52ch; color: var(--text-soft); }
 .landing-pair__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(1rem, 0.5rem + 1.5vw, 1.75rem); list-style: none; }
-.landing-pair__grid .project-card { height: 100%; }
+.landing-pair__grid .landing-card { height: 100%; }
 
 /* With an odd number of landing pages, the first one leads the grid across the full row, laid out horizontally on wide screens. */
 @media (min-width: 48em) {
   .landing-pair__grid > li:first-child:nth-last-child(odd) { grid-column: 1 / -1; }
 }
 @media (min-width: 64em) {
-  .landing-pair__grid > li:first-child:nth-last-child(odd) .project-card { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); grid-template-rows: auto; }
-  .landing-pair__grid > li:first-child:nth-last-child(odd) .project-card__stage {
-    padding-block-end: clamp(1.25rem, 1rem + 2vw, 2.25rem);
-    border-start-end-radius: 0;
-    border-end-start-radius: inherit;
-  }
-  .landing-pair__grid > li:first-child:nth-last-child(odd) .project-card__stage .frame { border-radius: var(--radius-window); border-block-end: 1px solid var(--window-border); }
-  .landing-pair__grid > li:first-child:nth-last-child(odd) .project-card__body { grid-template-rows: none; align-content: center; padding: clamp(1.5rem, 1rem + 2vw, 3rem); border-block-start: 0; border-inline-start: 1px solid var(--line); }
+  .landing-pair__grid > li:first-child:nth-last-child(odd) .landing-card { --phone-width: clamp(9rem, 4rem + 11vw, 14rem); }
+  .landing-pair__grid > li:first-child:nth-last-child(odd) .landing-card__title { font-size: var(--step-4); }
 }
 
 /* Services */

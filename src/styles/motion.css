@@ -36,15 +36,6 @@
   .desk__minis .desk-item:nth-child(3) { animation-delay: 520ms; }
   .desk__minis .desk-item:nth-child(4) { animation-delay: 600ms; }
 
-  /* The accent word of the home headline gets a slow light sweep. */
-  .hero__accent {
-    background: linear-gradient(100deg, var(--violet) 0 40%, var(--violet-hover) 50%, var(--violet) 60% 100%) 0 0 / 250% 100%;
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    animation: accent-sweep 6s 1.2s ease-in-out infinite;
-  }
-
   /* Primary buttons: a light sheen crosses on hover. */
   .button--primary { position: relative; overflow: hidden; isolation: isolate; }
   .button--primary::after {
@@ -59,20 +50,20 @@
   .button--primary:hover::after { transform: translateX(120%); }
 
   /* Cards light up where the pointer is (coordinates come from motion.ts). */
-  .project-card, .niche-card, .sites-steps li, .offer-box, .callout { position: relative; }
-  .project-card::after, .niche-card::after, .sites-steps li::after, .offer-box::after, .callout::after {
+  .project-card, .landing-card, .sites-steps li, .offer-box, .callout { position: relative; }
+  .project-card::after, .landing-card::after, .sites-steps li::after, .offer-box::after, .callout::after {
     content: '';
     position: absolute;
     inset: 0;
     z-index: 1;
     border-radius: inherit;
-    background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), var(--violet-soft), transparent 60%);
+    background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), color-mix(in oklab, var(--p-accent, var(--violet)) 16%, transparent), transparent 60%);
     opacity: 0;
     pointer-events: none;
     transition: opacity 400ms var(--ease);
   }
-  .project-card:hover::after, .niche-card:hover::after, .sites-steps li:hover::after, .offer-box:hover::after, .callout:hover::after { opacity: 1; }
-  .sites-steps li, .niche-card, .callout { transition: border-color var(--dur) var(--ease), transform var(--dur) var(--ease); }
+  .project-card:hover::after, .landing-card:hover::after, .sites-steps li:hover::after, .offer-box:hover::after, .callout:hover::after { opacity: 1; }
+  .sites-steps li, .landing-card, .callout { transition: border-color var(--dur) var(--ease), transform var(--dur) var(--ease); }
   .sites-steps li:hover, .callout:hover { border-color: var(--violet-line); transform: translateY(-3px); }
 
   @supports (animation-timeline: view()) {
@@ -84,18 +75,12 @@
       animation-range: cover 0% cover 100%;
     }
 
-    /* Step numbers and section labels draw a short line as they arrive. */
-    .section-index::before {
-      content: '';
-      display: inline-block;
-      width: 1.5rem;
-      height: 1px;
-      vertical-align: middle;
-      background: currentColor;
-      transform-origin: left;
-      animation: line-draw linear both;
-      animation-timeline: view();
-      animation-range: entry 10% entry 90%;
+    /* Phone previews scroll the real page from its hero down to the WhatsApp request as the card crosses the viewport. */
+    .phone { view-timeline: --phone block; }
+    .phone__strip {
+      animation: phone-scroll linear both;
+      animation-timeline: --phone;
+      animation-range: cover 12% cover 88%;
     }
   }
 
@@ -120,7 +105,6 @@
 @keyframes page-in { from { opacity: 0; transform: translateY(1rem); } }
 @keyframes rise-in { from { opacity: 0; translate: 0 1.25rem; } }
 @keyframes window-in { from { opacity: 0; translate: 0 1.5rem; scale: 0.96; } }
-@keyframes accent-sweep { 0%, 55% { background-position: 100% 0; } 100% { background-position: -50% 0; } }
 @keyframes frame-pan { from { transform: scale(1.06) translateY(-2.5%); } to { transform: scale(1.06) translateY(2.5%); } }
-@keyframes line-draw { from { transform: scaleX(0); } to { transform: scaleX(1); } }
 @keyframes progress-grow { to { transform: scaleX(1); } }
+@keyframes phone-scroll { to { translate: 0 calc(-100% + 100cqh); } }

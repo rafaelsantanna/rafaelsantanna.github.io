@@ -1,6 +1,7 @@
 ---
 import Icon from '@/components/ui/Icon.astro';
 import ProjectFrame from '@/components/ui/ProjectFrame.astro';
+import SystemMini from '@/components/ui/SystemMini.astro';
 import { paletteStyle } from '@/components/ui/palette';
 import { copy, localize, withLocale, type DemoProject, type Locale } from '@/data/content';
 
@@ -27,6 +28,7 @@ const tryItems = project.highlights[locale].slice(0, 3);
       <div class="exhibit__float">
         <ProjectFrame project={project} locale={locale} />
       </div>
+      <SystemMini project={project} locale={locale} />
     </a>
   </div>
   <div class="exhibit__body">

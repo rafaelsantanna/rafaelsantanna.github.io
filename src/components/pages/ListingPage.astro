@@ -1,6 +1,7 @@
 ---
 import Icon from '@/components/ui/Icon.astro';
 import ProjectCard from '@/components/ui/ProjectCard.astro';
+import LandingCard from '@/components/ui/LandingCard.astro';
 import ServiceList from '@/components/ui/ServiceList.astro';
 import { copy, projects, withLocale, type Locale, type ProjectKind } from '@/data/content';
 
@@ -68,7 +69,9 @@ const ui = pt
       <ul class="work-grid">
         {projects.map((project, index) => (
           <li data-kind={project.kind}>
-            <ProjectCard project={project} locale={locale} number={index + 1} headingLevel="h2" loading={index < 2 ? 'eager' : 'lazy'} />
+            {project.kind === 'site'
+              ? <LandingCard project={project} locale={locale} target="project" headingLevel="h2" loading={index < 2 ? 'eager' : 'lazy'} />
+              : <ProjectCard project={project} locale={locale} headingLevel="h2" loading={index < 2 ? 'eager' : 'lazy'} />}
           </li>
         ))}
       </ul>

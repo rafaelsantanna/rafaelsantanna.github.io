@@ -1,0 +1,33 @@
+---
+import RouteChart from '@/components/home/minis/RouteChart.astro';
+import CitedAnswer from '@/components/home/minis/CitedAnswer.astro';
+import TimeSlots from '@/components/home/minis/TimeSlots.astro';
+import SyncQueue from '@/components/home/minis/SyncQueue.astro';
+import { paletteStyle } from '@/components/ui/palette';
+import type { DemoProject, Locale } from '@/data/content';
+
+interface Props { project: DemoProject; locale: Locale }
+
+const { project, locale } = Astro.props;
+// The same live miniatures as the home desk, built from each demo's own data rather than a screenshot.
+const minis = {
+  'logistics-control': { body: RouteChart, variant: 'window' },
+  'knowledge-assistant': { body: CitedAnswer, variant: 'window' },
+  'online-booking': { body: TimeSlots, variant: 'window' },
+  'field-service-app': { body: SyncQueue, variant: 'phone' },
+} as const;
+const mini = minis[project.slug as keyof typeof minis];
+const Body = mini?.body;
+---
+
+{mini && Body && (
+  <div class:list={['system-mini', 'mini', `mini--${mini.variant}`, `system-mini--${mini.variant}`]} style={paletteStyle(project.palette)} aria-hidden="true">
+    <div class="mini__bar">
+      {mini.variant === 'window'
+        ? <span class="mini__dots"><i></i><i></i><i></i></span>
+        : <span class="mini__time">9:41</span>}
+      <span class="mini__title">{project.name}</span>
+    </div>
+    <div class="mini__body"><Body locale={locale} /></div>
+  </div>
+)}

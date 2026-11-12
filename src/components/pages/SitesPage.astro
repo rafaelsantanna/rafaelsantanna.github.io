@@ -1,10 +1,12 @@
 ---
 import Icon from '@/components/ui/Icon.astro';
-import NicheCard from '@/components/sites/NicheCard.astro';
+import LandingCard from '@/components/ui/LandingCard.astro';
 import OfferBox from '@/components/sites/OfferBox.astro';
+import SitesAuthor from '@/components/sites/SitesAuthor.astro';
 import SitesFaq from '@/components/sites/SitesFaq.astro';
-import { identity, withLocale, type Locale } from '@/data/content';
-import { niches, sitesCopy, whatsappLink } from '@/data/small-business';
+import { findProject, identity, withLocale, type DemoProject, type Locale } from '@/data/content';
+import { niches, sitesCopy, whatsappLink, whatsappNote } from '@/data/small-business';
+import WhatsAppFloat from '@/components/sites/WhatsAppFloat.astro';
 
 interface Props { locale: Locale }
 
@@ -12,6 +14,7 @@ const { locale } = Astro.props;
 const pt = locale === 'pt';
 const c = sitesCopy[locale];
 const whatsapp = whatsappLink(identity.phoneE164, locale);
+const models = niches.map((niche) => findProject(niche.demo)).filter((item): item is DemoProject => item !== undefined);
 const ids = pt ? { segments: 'segmentos', how: 'como-funciona' } : { segments: 'segments', how: 'how-it-works' };
 const ui = pt
   ? {
@@ -52,6 +55,7 @@ const ui = pt
         <a class="button button--primary" href={`#${ids.segments}`}>{ui.seeModels}<Icon name="arrow-down" /></a>
         <a class="button button--secondary" href={whatsapp} rel="noopener">{ui.talk}<Icon name="message" /></a>
       </div>
+      <p class="sites-hero__note">{whatsappNote[locale]}</p>
     </div>
     <OfferBox locale={locale} />
   </header>
@@ -67,8 +71,8 @@ const ui = pt
           <p class="lede">{ui.segmentsLede}</p>
         </div>
       </header>
-      <ul class="niche-grid niche-grid--lead">
-        {niches.map((niche) => <li data-reveal><NicheCard niche={niche} locale={locale} /></li>)}
+      <ul class="landing-grid landing-grid--lead">
+        {models.map((project) => <li data-reveal><LandingCard project={project} locale={locale} /></li>)}
       </ul>
     </div>
   </section>
@@ -115,6 +119,7 @@ const ui = pt
     <div class="shell sites-close__inner" data-reveal>
       <h2 id="sites-close-title">{ui.closeTitle}</h2>
       <p class="lede">{ui.closeText}</p>
+      <SitesAuthor locale={locale} />
       <div class="button-row">
         <a class="button button--primary" href={whatsapp} rel="noopener">{ui.talk}<Icon name="message" /></a>
         <a class="button button--secondary" href={`mailto:${identity.email}`}>{ui.email}<Icon name="mail" /></a>
@@ -122,3 +127,5 @@ const ui = pt
     </div>
   </section>
 </article>
+
+<WhatsAppFloat href={whatsapp} locale={locale} />

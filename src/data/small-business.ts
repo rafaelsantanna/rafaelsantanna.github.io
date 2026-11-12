@@ -24,6 +24,8 @@ export interface Niche {
   title: LocalizedText;
   /** Short label for cards and links. */
   label: LocalizedText;
+  /** The demo's signature interaction, in one short line for cards. */
+  tryOut: LocalizedText;
   description: LocalizedText;
   lede: LocalizedText;
   price: number;
@@ -40,6 +42,7 @@ export const niches: Niche[] = [
     demo: 'climatizacao-local',
     title: { pt: 'Site para empresa de ar-condicionado e climatização', en: 'Website for air-conditioning and HVAC companies' },
     label: { pt: 'Ar-condicionado e climatização', en: 'Air conditioning and HVAC' },
+    tryOut: { pt: 'Guia de sintomas e pedido de orçamento', en: 'Symptom guide and quote request' },
     description: {
       pt: 'Site para empresa de instalação, limpeza e conserto de ar-condicionado, com serviços, preços de partida, bairros atendidos e botão de orçamento no WhatsApp. Pronto em 3 dias úteis, a partir de R$ 700.',
       en: 'Website for air-conditioning installation, cleaning, and repair companies, with services, starting prices, service areas, and a WhatsApp quote button. Ready in 3 business days, from R$ 700.',
@@ -87,6 +90,7 @@ export const niches: Niche[] = [
     demo: 'pousada-boutique',
     title: { pt: 'Site para pousada com reserva direta', en: 'Website for guesthouses with direct booking' },
     label: { pt: 'Pousadas e chalés', en: 'Guesthouses and cabins' },
+    tryOut: { pt: 'Galeria das suítes e pedido de reserva direta', en: 'Suite gallery and direct booking request' },
     description: {
       pt: 'Site para pousada e chalé com suítes, fotos, regras da casa e pedido de reserva direto no WhatsApp, para o hóspede fechar sem pagar comissão de plataforma. A partir de R$ 1.200.',
       en: 'Website for guesthouses and cabins with suites, photos, house rules, and a direct booking request on WhatsApp, so guests book without platform commission. From R$ 1,200.',
@@ -134,6 +138,7 @@ export const niches: Niche[] = [
     demo: 'academia-luta',
     title: { pt: 'Site para academia de jiu-jitsu, muay thai e artes marciais', en: 'Website for jiu-jitsu, muay thai, and martial arts gyms' },
     label: { pt: 'Academias de luta', en: 'Martial arts gyms' },
+    tryOut: { pt: 'Grade de horários e aula experimental', en: 'Class timetable and trial class' },
     description: {
       pt: 'Site para academia de luta com modalidades, grade de horários, planos e botão de aula experimental no WhatsApp. Pronto em 3 dias úteis, a partir de R$ 700.',
       en: 'Website for martial arts gyms with classes, weekly timetable, plans, and a WhatsApp trial class button. Ready in 3 business days, from R$ 700.',
@@ -181,6 +186,7 @@ export const niches: Niche[] = [
     demo: 'escola-danca',
     title: { pt: 'Site para escola de dança e estúdio de dança', en: 'Website for dance schools and studios' },
     label: { pt: 'Escolas de dança', en: 'Dance schools' },
+    tryOut: { pt: 'Teste de ritmo e grade da semana', en: 'Style quiz and weekly schedule' },
     description: {
       pt: 'Site para escola de dança com ritmos, turmas por idade, horários, planos e botão de aula experimental no WhatsApp. Pronto em 3 dias úteis, a partir de R$ 700.',
       en: 'Website for dance schools with styles, classes by age, schedule, plans, and a WhatsApp trial class button. Ready in 3 business days, from R$ 700.',
@@ -228,6 +234,7 @@ export const niches: Niche[] = [
     demo: 'escola-musica',
     title: { pt: 'Site para escola de música e aulas de instrumento', en: 'Website for music schools and instrument lessons' },
     label: { pt: 'Escolas de música', en: 'Music schools' },
+    tryOut: { pt: 'Teclado que toca e escolha do curso', en: 'Playable keyboard and course finder' },
     description: {
       pt: 'Site para escola de música e professor de instrumento com cursos, formatos de aula, preços e botão de aula experimental no WhatsApp. Pronto em 3 dias úteis, a partir de R$ 700.',
       en: 'Website for music schools and instrument teachers with courses, lesson formats, prices, and a WhatsApp trial lesson button. Ready in 3 business days, from R$ 700.',
@@ -275,6 +282,7 @@ export const niches: Niche[] = [
     demo: 'creche-pet',
     title: { pt: 'Site para pet shop, banho e tosa e creche para cães', en: 'Website for pet shops, grooming, and dog daycare' },
     label: { pt: 'Pet shop, banho e tosa', en: 'Pet grooming and daycare' },
+    tryOut: { pt: 'Preço por porte e rotina do dia', en: 'Prices by size and daily routine' },
     description: {
       pt: 'Site para pet shop, banho e tosa, creche e hotel para cães com preços por porte, regras, rotina e botão de agendamento no WhatsApp. Pronto em 3 dias úteis, a partir de R$ 700.',
       en: 'Website for pet shops, grooming, dog daycare, and boarding with prices by size, rules, daily routine, and a WhatsApp booking button. Ready in 3 business days, from R$ 700.',
@@ -322,6 +330,7 @@ export const niches: Niche[] = [
     demo: 'estetica-automotiva',
     title: { pt: 'Site para estética automotiva e lava-rápido', en: 'Website for car detailing and car wash businesses' },
     label: { pt: 'Estética automotiva', en: 'Car detailing' },
+    tryOut: { pt: 'Antes e depois e orçamento por porte', en: 'Before and after and quote by car size' },
     description: {
       pt: 'Site para estética automotiva e lava-rápido com serviços, preços por porte do carro, antes e depois e botão de orçamento no WhatsApp. Pronto em 3 dias úteis, a partir de R$ 700.',
       en: 'Website for car detailing and car wash businesses with services, prices by car size, before and after, and a WhatsApp quote button. Ready in 3 business days, from R$ 700.',
@@ -466,6 +475,12 @@ export function nicheFaq(niche: Niche, locale: Locale): FaqItem[] {
     : { question: `How much does a ${niche.title.en.charAt(0).toLowerCase()}${niche.title.en.slice(1)} cost?`, answer: `From ${brl(niche.price)}, with the first year of domain and hosting. Half to start and half when you approve the page.` };
   return [...niche.faq[locale], price, general[2], general[3]];
 }
+
+/** Why the WhatsApp number is Portuguese, said plainly next to every WhatsApp action aimed at Brazilian owners. */
+export const whatsappNote = {
+  pt: 'Moro em Portugal e atendo clientes em todo o Brasil, por isso o WhatsApp começa com +351. A conversa é pelo WhatsApp mesmo, e o pagamento, por Pix.',
+  en: 'I live in Portugal and work with clients all over Brazil, which is why the WhatsApp number starts with +351. We talk on WhatsApp, and payment in Brazil is by Pix.',
+} satisfies Record<Locale, string>;
 
 /** WhatsApp link with a prefilled first message, so the conversation starts with context. */
 export function whatsappLink(phoneE164: string, locale: Locale, niche?: Niche): string {

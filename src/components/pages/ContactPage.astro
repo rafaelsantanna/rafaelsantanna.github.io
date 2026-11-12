@@ -1,6 +1,7 @@
 ---
 import Icon from '@/components/ui/Icon.astro';
-import { copy, identity, serviceArea, type Locale } from '@/data/content';
+import { copy, identity, serviceArea, withLocale, type Locale } from '@/data/content';
+import { brl, offer, whatsappLink, whatsappNote } from '@/data/small-business';
 
 interface Props { locale: Locale }
 
@@ -83,6 +84,25 @@ const routes = [
     <h1>{t.contactTitle}</h1>
     <p class="lede">{t.contactIntro}</p>
   </header>
+
+  <div class="contact-doors" role="group" aria-label={pt ? 'Por onde começar' : 'Where to start'}>
+    <section class="contact-door" aria-labelledby="door-site-title">
+      <h2 id="door-site-title">{pt ? 'Quero um site para o meu negócio' : 'I want a website for my business'}</h2>
+      <p>{pt ? `Página pronta em ${offer.businessDays} dias úteis, a partir de ${brl(offer.price)}, com o botão caindo no seu WhatsApp.` : `A page ready in ${offer.businessDays} business days, from ${brl(offer.price)}, with the button opening your WhatsApp.`}</p>
+      <div class="button-row">
+        <a class="button button--primary" href={whatsappLink(identity.phoneE164, locale)} rel="noopener">{pt ? 'Chamar no WhatsApp' : 'Message me on WhatsApp'}<Icon name="message" /></a>
+        <a class="text-link" href={withLocale(locale, 'sites')}>{pt ? 'Ver preços e modelos' : 'See prices and models'}<Icon name="arrow-right" /></a>
+      </div>
+      <p class="contact-door__note">{whatsappNote[locale]}</p>
+    </section>
+    <section class="contact-door" aria-labelledby="door-system-title">
+      <h2 id="door-system-title">{pt ? 'Tenho um projeto de sistema, app ou IA' : 'I have a system, app, or AI project'}</h2>
+      <p>{pt ? 'Conte o contexto, quem vai usar e o prazo. O roteiro abaixo ajuda a montar a primeira mensagem.' : 'Tell me the context, who will use it, and the timeline. The outline below helps with the first message.'}</p>
+      <div class="button-row">
+        <a class="button button--secondary" href="#brief-title">{pt ? 'Ver o que mandar' : 'See what to send'}<Icon name="arrow-down" /></a>
+      </div>
+    </section>
+  </div>
 
   <div class="contact__grid">
     <div class="contact__main">

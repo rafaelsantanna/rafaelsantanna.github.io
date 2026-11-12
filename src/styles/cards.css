@@ -1,0 +1,133 @@
+/* Demo cards: landing pages as a phone that scrolls the real page down to WhatsApp, systems with their live miniature. */
+
+/* Grids */
+.landing-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(1rem, 0.5rem + 1.5vw, 1.75rem); list-style: none; }
+.landing-grid > li { min-width: 0; }
+.landing-grid--lead > li:first-child { grid-column: 1 / -1; }
+.landing-grid--lead > li:first-child .landing-card { --phone-width: clamp(9rem, 4rem + 11vw, 14rem); }
+.landing-grid--lead > li:first-child .landing-card__title { font-size: var(--step-4); }
+
+/* Landing-page card */
+.landing-card {
+  --phone-width: clamp(7.5rem, 4.5rem + 8vw, 11.5rem);
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  height: 100%;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-panel);
+  background: var(--surface-1);
+  transition: border-color var(--dur) var(--ease);
+}
+.landing-card:hover { border-color: color-mix(in oklab, var(--p-accent) 55%, var(--line-strong)); }
+.landing-card:has(.landing-card__link:focus-visible) { outline: 2px solid var(--violet); outline-offset: 3px; }
+
+.landing-card__stage {
+  display: grid;
+  place-items: center;
+  padding: clamp(1rem, 0.6rem + 1.6vw, 2rem);
+  border-inline-end: 1px solid var(--line);
+  background: linear-gradient(170deg, color-mix(in oklab, var(--p-accent) 30%, var(--p-base)), var(--p-base) 70%);
+}
+
+/* A small phone with a dark bezel, the same in both themes. */
+.phone {
+  width: var(--phone-width);
+  padding: 0.4rem;
+  border-radius: 1.5rem;
+  background: #0b0b10;
+  box-shadow: 0 0 0 1px rgb(255 255 255 / 10%), 0 22px 40px -20px var(--shade-strong);
+}
+.phone__screen {
+  container-type: size;
+  aspect-ratio: 9 / 19;
+  overflow: hidden;
+  border-radius: 1.1rem;
+  background: #ffffff;
+}
+.phone__strip { display: block; width: 100%; height: auto; }
+
+.landing-card__body { display: grid; align-content: center; gap: var(--space-3); padding: clamp(1.1rem, 0.75rem + 1.4vw, 2rem); }
+.landing-card__title { font-size: var(--step-3); letter-spacing: var(--tracking-display); line-height: 1.05; }
+.landing-card__link { color: inherit; text-decoration: none; }
+.landing-card__link:focus-visible { outline: none; }
+/* The title link covers the whole card; the demo link below sits above it. */
+.landing-card__link::after { content: ''; position: absolute; inset: 0; z-index: 1; }
+
+.landing-card__try, .project-card__try { display: flex; align-items: flex-start; gap: 0.5rem; color: var(--text-soft); line-height: 1.45; }
+.landing-card__try .icon, .project-card__try .icon { margin-block-start: 0.15em; color: color-mix(in oklab, var(--p-accent) 70%, var(--text)); }
+
+.landing-card__facts { display: flex; flex-wrap: wrap; gap: 0.4rem; list-style: none; }
+.landing-card__facts li {
+  padding: 0.25rem 0.65rem;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-pill);
+  color: var(--text-soft);
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+.landing-card__facts li:nth-child(2) { border-color: color-mix(in oklab, var(--p-accent) 55%, var(--line-strong)); color: var(--text); }
+
+.landing-card__demo, .project-card__demo {
+  position: relative;
+  z-index: 2;
+  justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 2.75rem;
+  color: var(--text);
+  font-family: var(--font-display);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: color-mix(in oklab, var(--p-accent) 70%, transparent);
+  text-underline-offset: 0.3em;
+}
+.landing-card__demo .icon, .project-card__demo .icon { color: color-mix(in oklab, var(--p-accent) 70%, var(--text)); transition: transform var(--dur) var(--ease); }
+.landing-card__demo:hover .icon, .project-card__demo:hover .icon { transform: translate(2px, -2px); }
+
+/* System cards: whole card links to the case page. */
+.project-card__link { color: inherit; text-decoration: none; }
+.project-card__link:focus-visible { outline: none; }
+.project-card__link::after { content: ''; position: absolute; inset: 0; z-index: 1; }
+.project-card:has(.project-card__link:focus-visible) { outline: 2px solid var(--violet); outline-offset: 3px; }
+
+/* The live miniature floats over the screenshot, as on the home desk. */
+.system-mini {
+  position: absolute;
+  inset-inline-end: clamp(0.75rem, 0.4rem + 1.4vw, 1.5rem);
+  inset-block-end: clamp(0.75rem, 0.4rem + 1.4vw, 1.5rem);
+  z-index: 2;
+  width: min(48%, 17rem);
+  font-size: clamp(9.5px, 0.42rem + 0.35vw, 12.5px);
+  box-shadow: var(--shadow-float);
+  pointer-events: none;
+}
+.system-mini--phone { width: min(32%, 11rem); }
+.exhibit__stage .system-mini { width: min(42%, 18.5rem); font-size: clamp(10px, 0.45rem + 0.4vw, 13.5px); }
+.exhibit__stage .system-mini--phone { width: min(28%, 12rem); }
+
+@media (prefers-reduced-motion: no-preference) {
+  .system-mini { transition: transform var(--dur-slow) var(--ease); }
+  .project-card:hover .system-mini, .exhibit:hover .system-mini { transform: translate(-4px, -6px) rotate(-1deg); }
+}
+
+/* Without scroll-driven animation, hovering the card scrolls the phone instead. */
+@supports not (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) and (hover: hover) {
+    .phone__strip { transition: translate 7s linear; }
+    .landing-card:hover .phone__strip { translate: 0 calc(-100% + 100cqh); }
+  }
+}
+
+@media (max-width: 63.99em) {
+  .landing-grid { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 29.99em) {
+  .landing-card { --phone-width: 6.75rem; }
+  .landing-card__stage { padding: 0.75rem; }
+  .landing-card__title { font-size: var(--step-2); }
+  .landing-grid--lead > li:first-child .landing-card { --phone-width: 7.5rem; }
+  .landing-grid--lead > li:first-child .landing-card__title { font-size: var(--step-3); }
+}

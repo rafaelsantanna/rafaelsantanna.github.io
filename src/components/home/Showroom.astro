@@ -1,7 +1,7 @@
 ---
 import Icon from '@/components/ui/Icon.astro';
 import Exhibit from '@/components/home/Exhibit.astro';
-import ProjectCard from '@/components/ui/ProjectCard.astro';
+import LandingCard from '@/components/ui/LandingCard.astro';
 import { projects, withLocale, type Locale } from '@/data/content';
 
 interface Props { locale: Locale; id: string; systemsId: string }
@@ -60,7 +60,7 @@ const ui = pt
       </div>
       <ul class="landing-pair__grid">
         {landingPages.map((project, index) => (
-          <li data-reveal><ProjectCard project={project} locale={locale} number={index + 1} headingLevel="h4" /></li>
+          <li data-reveal><LandingCard project={project} locale={locale} headingLevel="h4" /></li>
         ))}
       </ul>
     </section>
@@ -72,7 +72,7 @@ const ui = pt
       </div>
       <ol class="exhibits">
         {products.map((project, index) => (
-          <li><Exhibit project={project} locale={locale} index={landingPages.length + index} showIndex /></li>
+          <li><Exhibit project={project} locale={locale} index={index} /></li>
         ))}
       </ol>
     </section>

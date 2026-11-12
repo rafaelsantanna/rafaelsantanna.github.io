@@ -446,10 +446,7 @@
   border: 1px solid var(--line);
   border-radius: var(--radius-panel);
   background: var(--surface-1);
-  background:
-    radial-gradient(70% 80% at 88% 8%, color-mix(in oklab, var(--p-accent) 34%, transparent), transparent 70%),
-    radial-gradient(60% 70% at 6% 100%, color-mix(in oklab, var(--p-base) 12%, transparent), transparent 75%),
-    color-mix(in oklab, var(--p-base) 7%, var(--surface-1));
+  background: linear-gradient(160deg, color-mix(in oklab, var(--p-accent) 20%, var(--surface-1)), color-mix(in oklab, var(--p-base) 10%, var(--surface-1)) 65%);
 }
 .stage::before {
   content: '';
@@ -479,8 +476,9 @@
 .page-head h1 { max-width: 18ch; }
 .page-head .lede { max-width: 62ch; }
 
-/* Project card (work listing and landing-page pair) */
+/* Project card for systems: the whole card links to the case page; the demo link sits above it. */
 .project-card {
+  position: relative;
   display: grid;
   grid-template-rows: auto 1fr;
   min-width: 0;
@@ -491,16 +489,13 @@
 }
 .project-card__stage { padding: clamp(1.25rem, 1rem + 2vw, 2.25rem) clamp(1.25rem, 1rem + 2vw, 2.25rem) 0; border: 0; border-start-start-radius: inherit; border-start-end-radius: inherit; border-end-start-radius: 0; border-end-end-radius: 0; }
 .project-card__stage .frame { border-end-start-radius: 0; border-end-end-radius: 0; border-block-end: 0; box-shadow: 0 -10px 40px -18px var(--shade); transition: transform var(--dur-slow) var(--ease); }
-/* The last row takes the spare height, so the actions of cards that share a row line up. */
+/* The last row takes the spare height, so the demo links of cards that share a row line up. */
 .project-card__body { display: grid; grid-template-rows: repeat(3, auto) 1fr; align-content: start; gap: var(--space-3); padding: var(--space-5) clamp(1.25rem, 1rem + 1vw, 1.75rem) clamp(1.25rem, 1rem + 1vw, 1.75rem); border-block-start: 1px solid var(--line); }
-.project-card__meta { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-2) var(--space-4); }
-.project-card__index { color: var(--text-muted); font-family: var(--font-mono); font-size: 0.8125rem; font-variant-numeric: tabular-nums; }
-.project-card h3 { font-size: var(--step-3); letter-spacing: var(--tracking-display); line-height: 1.05; }
-.project-card__tagline { color: var(--text-soft); font-size: var(--step-1); line-height: 1.45; }
-.project-card .button-row { align-self: end; margin-block-start: var(--space-3); }
+.project-card__title { font-size: var(--step-3); letter-spacing: var(--tracking-display); line-height: 1.05; }
+.project-card__demo { align-self: end; }
 
 @media (hover: hover) and (pointer: fine) {
-  .project-card:hover { border-color: var(--line-strong); }
+  .project-card:hover { border-color: color-mix(in oklab, var(--p-accent) 55%, var(--line-strong)); }
   .project-card:hover .project-card__stage .frame { transform: translateY(-6px); }
 }
 

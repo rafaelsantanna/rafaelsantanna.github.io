@@ -1,0 +1,18 @@
+---
+import { identity, type Locale } from '@/data/content';
+import { whatsappNote } from '@/data/small-business';
+
+interface Props { locale: Locale }
+
+const { locale } = Astro.props;
+const pt = locale === 'pt';
+---
+
+<div class="sites-author">
+  <img class="sites-author__photo" src="/images/profile.jpg" width="960" height="950" alt={pt ? `${identity.name}, de óculos e fones de ouvido, sorrindo` : `${identity.name} wearing glasses and headphones, smiling`} loading="lazy" decoding="async" />
+  <div>
+    <p class="sites-author__name">{pt ? `Quem faz o seu site: ${identity.name}` : `Who builds your site: ${identity.name}`}</p>
+    <p>{pt ? 'Desenvolvedor há mais de 10 anos. Eu mesmo monto cada página e falo com você direto, sem intermediário.' : 'A developer for more than 10 years. I build every page myself and talk to you directly, with no middleman.'}</p>
+    <p class="sites-author__note">{whatsappNote[locale]}</p>
+  </div>
+</div>
